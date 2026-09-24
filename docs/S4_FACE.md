@@ -438,3 +438,39 @@ pelo **arco** da curva (inserir pontos sobre a elipse entre o ponto de entrada e
 de saída em cada face), e não apenas por um segmento entre dois pontos de
 intersecção — foi exactamente a corda entre a entrada e a saída que produziu as
 faces que atravessavam a boca (3 laços em S4.2b ciclo 1) e o olho.
+
+### 10.8 Ciclos 5 e 6 — a pálpebra (melhoria retida) e o mecanismo do bloqueio
+
+**Retido (medido, nos pins):** a pálpebra passou a assentar na esfera do rebordo e a
+alargar o leque até aos cantos da órbita:
+`rr = r · (1.178 − 0.060·k/NROW)` (antes `1.028 − 0.075·…`) e `sph(t · 1.55, …)`
+(antes `0.92`).
+
+| Medido | Antes | Depois |
+|---|---|---|
+| largura da pálpebra (eixo x) | 17.2 mm | **24.4 mm** (cobre a órbita de 22.9 mm) |
+| distância mínima ao centro do globo | 11.65 mm (**dentro** do globo de 12.33) | **14.53 mm** (fora) |
+| contagens / ngons / `quad_ratio` | 6307/6213 · 0 · 0.8580 | iguais |
+| pins (digests) | `ea31b68319bd27bb` / `1d7b3444b57daccb` | **`af71a975bdfc8998` / `63a579d98df0c8d8`** |
+
+pytest **133 passados, 1 saltado, 1 xfailed**. F5 continua a não ser medido por
+faltar o recorte (a fenda da pálpebra existe: 0 toques no eixo); o `xfail` fica.
+
+**Mecanismo do bloqueio do eixo (medido, fecha a questão):** a face que bloqueia
+tem **arestas de 34.4 e 35.4 mm** com um vértice a 13.8 mm (sobre a curva, puxado
+pela projecção) e o vizinho a 22.3–22.7 mm (onde a grelha o deixou). Não é a
+grelha: é **a projecção a esticar a ligação** entre o rebordo e o resto da
+cabeça. Logo:
+
+* com projecção incondicional: a face que bloqueia é grande (247 mm²) e tem
+  arestas de 25–35 mm — medido em S4.2 e nos ciclos 5/6;
+* **sem** projecção (proibida pelos critérios): o rebordo segue a grelha e o
+  orifício fica irregular, com o maior raio muito além do declarado — medido, a
+  órbita saía a 40.5 × 25.6–35.9 mm, e o instrumento **deixa de a classificar**
+  como órbita (não há um laço dentro do raio de 25 mm do marco).
+
+Conclusão operacional: nesta família de cortes, **o rebordo tem de ser uma curva
+nova, não a grelha projectada** — é o que o recorte com arco (ciclo 3/4)
+tentava, e a dificuldade que o travou está identificada e medida: um buraco
+dentro de uma face é um **anel, não um polígono simples**, e a fronteira tem de
+seguir o arco da curva declarada.

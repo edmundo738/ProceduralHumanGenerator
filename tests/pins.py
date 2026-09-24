@@ -30,8 +30,8 @@ PINS = {
         # mouth 130.9->49.6 mm, vermilion 6.4/10.0 mm, sagittal column correction
         # with sign, globe centre recessed, orbit deepened)
         # (S3.8: hands; S3.7: neck/trapezius/arms/knees, stations sorted by z)
-        "digest": {"pure-python": "ea31b68319bd27bb",
-                   "mathutils": "1d7b3444b57daccb"},
+        "digest": {"pure-python": "af71a975bdfc8998",
+                   "mathutils": "63a579d98df0c8d8"},
     },
 }
 

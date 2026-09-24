@@ -167,8 +167,8 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
                     phi0 = fn(t)
                     spread = mix(0.0, 2.35 if which == "upper" else 1.25, k / NROW)
                     phi = phi0 + sgn * spread * 0.55
-                    rr = r * (1.028 - 0.075 * k / NROW)      # rim tucks under the socket skin
-                    p = sph(t * 0.92, phi, rr)
+                    rr = r * (1.178 - 0.060 * k / NROW)      # rim tucks under the socket skin
+                    p = sph(t * 1.55, phi, rr)
                     if k > 0:
                         p = p - ax * (0.0165 * h) * (k / NROW) ** 1.5
                     row.append(p)
