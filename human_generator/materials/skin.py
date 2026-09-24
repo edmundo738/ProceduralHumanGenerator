@@ -281,6 +281,42 @@ def build_iris(spec):
     return mat
 
 
+def build_hair(spec):
+    """Strand shader: melanin ramp + anisotropic sheen + UV streaks."""
+    hp = spec.hair
+    mat, nt, out = new_material("hcg:hair")
+    dark = (0.013, 0.011, 0.010)
+    light = (0.34, 0.22, 0.13)
+    tint = getattr(spec.extras, "hair_tint", None)
+    if tint and any(tint):
+        base = tuple(0.55 * tint[i] + 0.45 * light[i] for i in range(3))
+    else:
+        m = hp.melanin
+        base = tuple(light[i] * (1.0 - m) + dark[i] * m + 0.02 * (1.0 - m) for i in range(3))
+    b = _node(nt, "ShaderNodeBsdfPrincipled", 0, 0)
+    b.inputs["Base Color"].default_value = (*base, 1.0)
+    b.inputs["Roughness"].default_value = 0.30 + 0.18 * (1.0 - hp.curl * 0.3)
+    if "Anisotropic" in b.inputs:
+        b.inputs["Anisotropic"].default_value = 0.85
+    if "Coat Weight" in b.inputs:
+        b.inputs["Coat Weight"].default_value = 0.25
+    if "Sheen Weight" in b.inputs:
+        b.inputs["Sheen Weight"].default_value = 0.15
+    tex = _node(nt, "ShaderNodeTexCoord", -600, -240)
+    wave = _node(nt, "ShaderNodeTexWave", -420, -240)
+    wave.inputs["Scale"].default_value = 180.0
+    wave.inputs["Distortion"].default_value = 5.0
+    wave.bands_direction = "Y"
+    _link(tex.outputs["UV"], wave.inputs["Vector"])
+    bump = _node(nt, "ShaderNodeBump", -200, -320)
+    bump.inputs["Strength"].default_value = 0.12
+    bump.inputs["Distance"].default_value = 3e-6
+    _link(wave.outputs["Fac"], bump.inputs["Height"])
+    _link(bump.outputs["Normal"], b.inputs["Normal"])
+    _link(b.outputs[0], out.inputs["Surface"])
+    return mat
+
+
 # ----------------------------------------------------------------------------- simple kinds
 def build_generic(kind: str, spec):
     mat, nt, out = new_material(f"hcg:{kind}")
@@ -341,6 +377,7 @@ def build_all(spec, anat):
         "cornea": build_cornea(),
         "iris": build_iris(spec),
     }
+    mats["hair"] = build_hair(spec)
     for k in ("lip", "gum", "mucosa", "enamel", "nail", "cloth", "cybernetic", "wing"):
         mats[k] = build_generic(k, spec)
     return mats

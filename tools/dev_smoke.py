@@ -11,6 +11,7 @@ from human_generator.generators.body import build_body
 from human_generator.generators.head import build_head
 from human_generator.generators.eyes import build_eyes
 from human_generator.generators.mouth import build_mouth
+from human_generator.generators.hair import build_hair, curves_to_object
 from human_generator.core import object as obj
 from human_generator.core.topology import audit
 
@@ -20,9 +21,12 @@ spec = CharacterSpec.from_preset("realistic_female", seed=seed)
 anat = Anatomy.from_spec(spec)
 body = build_body(spec, anat)
 head = build_head(spec, anat)
-build_eyes(spec, anat, head.builder)
+eyes = build_eyes(spec, anat, head.builder)
 build_mouth(head.builder, spec, anat)
 body.builder.merge(head.builder, group_prefix="head.")
+hair_res = build_hair(spec, anat, head.builder, eyes)
+if hair_res.bun is not None:
+    body.builder.merge(hair_res.bun, group_prefix="bun.")
 print("merged stats:", {k: body.builder.stats()[k] for k in ("verts", "faces", "quad_ratio", "degenerate")})
 
 from human_generator import materials as mats
@@ -70,6 +74,10 @@ def render(name, loc, lens=85, res=(640, 800)):
     bpy.ops.render.render(write_still=True)
     print("saved", name)
 
+hair_obj = curves_to_object(hair_res, "hcg:hair", spec.hair.thickness)
+hm = bpy.data.materials.get("hcg:hair")
+if hm: hair_obj.data.materials.append(hm)
+sc.collection.objects.link(hair_obj)
 render("face", (0.0, 0.72, 1.52), 85, (480, 600))
 render("full", (1.55, 1.85, 1.25), 60, (480, 640))
 print(f"total {time.time()-t0:.1f}s")

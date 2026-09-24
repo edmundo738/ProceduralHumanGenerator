@@ -156,6 +156,19 @@ except ImportError:  # pragma: no cover - pure python environments
             o = Vector(other)
             return Vector([x + (y - x) * t for x, y in zip(self._c, o._c)])
 
+        def orthogonal(self):
+            """A vector perpendicular to this one (mathutils-compatible)."""
+            ax, ay, az = abs(self.x), abs(self.y), abs(self.z)
+            if ax <= ay and ax <= az:
+                o = Vector((0.0, -self.z, self.y))
+            elif ay <= az:
+                o = Vector((-self.z, 0.0, self.x))
+            else:
+                o = Vector((-self.y, self.x, 0.0))
+            if o.length < 1e-12:
+                o = Vector((1.0, 0.0, 0.0))
+            return o
+
         @classmethod
         def lerp_to(cls, a, b, t):  # explicit static variant, same maths
             a, b = Vector(a), Vector(b)
