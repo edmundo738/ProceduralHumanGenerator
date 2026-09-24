@@ -32,21 +32,11 @@ from human_generator.pipeline.assemble import (CONTRACT_VERSION,  # noqa: E402
                                                build_character, resolve_spec)
 
 # --------------------------------------------------------------------------- gates
-# Deliberate regression pins.  If geometry changes, these MUST fail until a human
-# updates them on purpose — that is the point of the determinism gate.
-#
-# Digest pins are keyed by numerics backend: core._math uses mathutils (float32)
-# when bpy is imported first, and a pure-python stand-in (float64) otherwise, so
-# the same spec+seed has two legitimate digests (CONFIRMED, RESEARCH_GATE_03/S0).
-PINS = {
-    ("realistic_female", 42): {
-        "fingerprint": "db7fb5c42c0523be",
-        "verts": 5821, "faces": 5642, "strands": 2400,
-        "digest": {"pure-python": "39ce28298fce36de", "mathutils": "34e746aa4e649945"},
-    },
-}
-# Audit pins for the merged, welded, bpy-side mesh (see docs/RESEARCH_GATE_02.md).
-AUDIT_PINS = {"verts": 5695, "faces": 5551, "non_manifold_edges": 36, "degenerate_faces": 0}
+# Pins live in tests/pins.py so the pytest suite and this script cannot drift.
+import pins  # noqa: E402
+
+PINS = pins.PINS
+AUDIT_PINS = pins.AUDIT_PINS
 
 OUT_DIR = os.path.join(ROOT, "out", "s0_api")
 
@@ -71,7 +61,7 @@ def raises(name: str, exc_type, fn, *, match: str = "") -> bool:
 
 
 # --------------------------------------------------------------------------- pure half
-def test_pure() -> None:
+def suite_pure() -> None:
     print("\n== S0 pure (no bpy): geometry, determinism, contract ==")
     check("contract version is exposed", CONTRACT_VERSION == "1.0.0",
           f"hcg.API_CONTRACT_VERSION={hcg.API_CONTRACT_VERSION}")
@@ -107,18 +97,19 @@ def test_pure() -> None:
     r5 = build_character("realistic_female", seed=43)
     check("different seed ⇒ different geometry", r5.digest != r.digest, r5.digest)
 
-    # regression pin (digest is regime-specific — assert the right one)
-    pin = PINS[("realistic_female", 42)]
+    # regression pins (shared with the pytest suite; digest is regime-specific)
     backend = r.numerics.get("backend")
     check("numerics regime reported", backend in ("pure-python", "mathutils"),
           f"{r.numerics} (digests are regime-specific by design)")
-    check("PIN fingerprint", r.fingerprint == pin["fingerprint"],
-          f"{r.fingerprint} vs pin {pin['fingerprint']} (update PIN only on purpose)")
-    check(f"PIN digest [{backend}]", r.digest == pin["digest"].get(backend, ""),
-          f"{r.digest} vs pin {pin['digest'].get(backend)}")
+    check("PIN fingerprint", r.fingerprint == PINS[("realistic_female", 42)]["fingerprint"],
+          f"{r.fingerprint} (update PIN only on purpose)")
+    check(f"PIN digest [{backend}]", r.digest == pins.expected_digest(backend),
+          f"{r.digest} vs pin {pins.expected_digest(backend)}")
     check("PIN counts", (r.verts, r.faces, len(r.hair.strands))
-          == (pin["verts"], pin["faces"], pin["strands"]),
+          == (PINS[("realistic_female", 42)]["verts"], PINS[("realistic_female", 42)]["faces"],
+              PINS[("realistic_female", 42)]["strands"]),
           f"{(r.verts, r.faces, len(r.hair.strands))}")
+    check("shared pin gate agrees", pins.check_build(r) == [], str(pins.check_build(r)))
 
     # every preset is reachable through the public API
     for preset in hcg.list_presets():
@@ -164,7 +155,7 @@ def test_pure() -> None:
 
 
 # --------------------------------------------------------------------------- bpy half
-def test_bpy() -> None:
+def suite_bpy() -> None:
     import bpy          # bpy must come first: bmesh only resolves after the
     import bmesh        # Blender extension module is loaded (headless quirk)
 
@@ -201,14 +192,16 @@ def test_bpy() -> None:
     bm.from_mesh(body.data)
     topo = audit(bm)
     bm.free()
-    check("AUDIT-PIN verts (post-weld)", topo["verts"] == AUDIT_PINS["verts"], f"{topo['verts']}")
-    check("AUDIT-PIN faces (post-weld)", topo["faces"] == AUDIT_PINS["faces"], f"{topo['faces']}")
+    check("AUDIT-PIN verts/faces (post-weld)",
+          (topo["verts"], topo["faces"]) == (AUDIT_PINS["verts"], AUDIT_PINS["faces"]),
+          f"{topo['verts']}v/{topo['faces']}f")
     check("AUDIT-PIN quads", topo["quad_ratio"] > 0.85, f"{topo['quad_ratio']:.3f}")
     check("AUDIT-PIN degenerate_faces = 0",
           topo["degenerate_faces"] == AUDIT_PINS["degenerate_faces"], f"{topo['degenerate_faces']}")
     check("AUDIT-PIN non-manifold = known defect (S2 target)",
           topo["non_manifold_edges"] == AUDIT_PINS["non_manifold_edges"],
           f"{topo['non_manifold_edges']} — flip this pin to 0 in S2, deliberately")
+    check("shared audit pin gate agrees", pins.check_audit(topo) == [], str(pins.check_audit(topo)))
     check("known-defect surfaced as a warning",
           any("non-manifold" in w for w in res.warnings), str(res.warnings))
 
@@ -260,9 +253,9 @@ def test_bpy() -> None:
 def main() -> int:
     bpy_mode = "--bpy" in sys.argv
     print(f"HCG S0 acceptance test | contract {CONTRACT_VERSION} | mode={'bpy' if bpy_mode else 'pure'}")
-    test_pure()
+    suite_pure()
     if bpy_mode:
-        test_bpy()
+        suite_bpy()
     else:
         print("\n(pure mode: skipping the Blender-runtime half — run with "
               "'python tools/headless_blender.py run tests/test_s0_public_api.py --bpy')")

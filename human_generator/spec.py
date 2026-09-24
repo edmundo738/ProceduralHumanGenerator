@@ -172,6 +172,61 @@ _GROUP_TYPES = {
 }
 
 
+PRESET_FORMAT_VERSION = 1
+"""Preset/spec document format version (bumped on incompatible layout changes)."""
+
+_META_KEYS = {"format_version"}
+_TOP_KEYS = ("seed", "name", "preset")
+
+
+class SpecCompatibilityWarning(UserWarning):
+    """Emitted when a spec/preset document is unknown, older or newer than this build.
+
+    Policy (adopted from the comparative study, docs/RESEARCH_COMPARATIVE_01.md F8):
+    unknown data is *reported*, never silently ignored.
+    """
+
+
+def _warn(message: str) -> None:
+    import warnings
+    warnings.warn(message, SpecCompatibilityWarning, stacklevel=3)
+
+
+def _check_document(data: dict, source: str | None) -> None:
+    """Report unknown keys/fields and format-version mismatches.
+
+    ``source=None`` marks an internal field dict (``CharacterSpec.to_dict()``
+    output): unknown keys are still reported, but a missing ``format_version``
+    is not, because a field dict is not a document.
+    """
+    if not isinstance(data, dict):
+        raise TypeError(f"{source}: expected a mapping, got {type(data).__name__}")
+    label = source or "spec"
+    version = data.get("format_version")
+    if version is None:
+        if source is not None:
+            _warn(f"{source}: does not declare 'format_version'; assuming "
+                  f"{PRESET_FORMAT_VERSION}")
+    elif isinstance(version, int) and version > PRESET_FORMAT_VERSION:
+        _warn(f"{source}: declares format_version {version} but this build "
+              f"understands {PRESET_FORMAT_VERSION}; unknown keys will be ignored")
+    for key in data:
+        if key in _top_group_names() or key in _TOP_KEYS or key in _META_KEYS:
+            continue
+        _warn(f"{label}: unknown top-level key {key!r} ignored")
+    for group in _GROUP_TYPES:
+        block = data.get(group)
+        if isinstance(block, dict):
+            valid = {f.name for f in dataclasses.fields(_GROUP_TYPES[group])}
+            for field in block:
+                if field not in valid:
+                    _warn(f"{label}: unknown field {group + '.' + field!r} ignored")
+
+
+def _top_group_names():
+    return tuple(_GROUP_TYPES)
+
+
 def _coerce(cls, data: dict):
     keep = {f.name for f in dataclasses.fields(cls)}
     return cls(**{k: v for k, v in data.items() if k in keep})
@@ -202,13 +257,14 @@ class CharacterSpec:
                 data.setdefault(g, {})[f] = value
             else:
                 data[key] = value
-        spec = cls.from_dict(data)
+        spec = cls.from_dict(data, source=f"preset:{preset}")
         if randomize:
             spec = spec.randomized(seed=int(seed))
         return spec
 
     @classmethod
-    def from_dict(cls, data: dict) -> "CharacterSpec":
+    def from_dict(cls, data: dict, *, source: str | None = None) -> "CharacterSpec":
+        _check_document(data, source)
         kwargs: dict[str, Any] = {}
         for g, cls_ in _GROUP_TYPES.items():
             if g in data:
@@ -223,7 +279,7 @@ class CharacterSpec:
     @classmethod
     def from_json(cls, path: str) -> "CharacterSpec":
         with open(path, "r") as fh:
-            return cls.from_dict(json.load(fh))
+            return cls.from_dict(json.load(fh), source=os.path.basename(path))
 
     def to_dict(self) -> dict:
         d = {"seed": self.seed, "name": self.name, "preset": self.preset}
@@ -236,9 +292,16 @@ class CharacterSpec:
         return d
 
     def to_json(self, path: str) -> None:
+        """Write a spec document (always carrying ``format_version``)."""
+        data = self.to_dict()
+        data["format_version"] = PRESET_FORMAT_VERSION
         os.makedirs(os.path.dirname(os.path.abspath(path)) or ".", exist_ok=True)
         with open(path, "w") as fh:
-            json.dump(self.to_dict(), fh, indent=2, sort_keys=True)
+            json.dump(data, fh, indent=2, sort_keys=True)
+
+    @property
+    def format_version(self) -> int:
+        return PRESET_FORMAT_VERSION
 
     def merged(self, overrides: dict) -> "CharacterSpec":
         data = self.to_dict()

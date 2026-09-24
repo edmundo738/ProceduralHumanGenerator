@@ -39,16 +39,40 @@ python tools/headless_blender.py run tools/dev_smoke.py 42 realistic_female
 Renders land in `out/`. Budget ≈ 160 s for both views with procedural materials
 (Cycles CPU, 480×600 @ 16 spp).
 
-## Acceptance test (S0)
+## Tests
 
 ```bash
-python tests/test_s0_public_api.py                                        # geometry, digests, error contract
-python tools/headless_blender.py run tests/test_s0_public_api.py -- --bpy  # objects, materials, audit, .blend
+python -m pytest tests/ -q                                                 # 76 pure-Python checks, ~20 s (no Blender needed)
+python tests/test_s0_public_api.py                                         # acceptance: geometry, digests, error contract
+python tools/headless_blender.py run tests/test_s0_public_api.py -- --bpy  # acceptance: objects, materials, audit, .blend
 ```
 
-The test pins the spec fingerprint, the mesh digest (per numerics regime), the vertex/face
-counts and the audit numbers; if geometry changes, it fails until a human updates the pin
-on purpose.
+The pins (``tests/pins.py``) protect the spec fingerprint, the mesh digest (per numerics
+regime), vertex/face counts, the pre-weld audit and the construction guard on collapsed
+rings; if geometry changes they fail until a human updates the pin on purpose
+(``tests/test_pins.py`` proves the gate really measures geometry). Contracts covered:
+``core/_math`` ramps (including reversed edges), ``core/rng`` noise bounds and determinism,
+preset documents (``format_version`` + tolerant load), and ``core/topology`` invariants.
+
+### Numerics policy
+
+``core/_math`` uses ``mathutils`` (float32) when ``bpy`` is already imported and a
+pure-python stand-in (float64) otherwise — so the same spec+seed has two legitimate mesh
+digests. Every result declares its regime (``result.numerics``) and the Blender regime
+raises a warning. Set ``HCG_MATHUTILS=0`` to force the float64 backend and make the digest
+independent of import order.
+
+### Contract stability
+
+The public character API is versioned (``hcg-charapi/<major>.<minor>.<patch>``, exported as
+``hcg.API_CONTRACT_VERSION`` and embedded in every JSON report):
+
+* **major** — a caller-visible behaviour change (accepted inputs, return shape, error types,
+  determinism guarantees);
+* **minor** — additive change (new optional argument, new field in the report);
+* **patch** — fix inside the existing behaviour.
+
+Geometry changes never bump the contract by themselves: they are caught by the pins.
 
 ## Architecture
 
@@ -69,8 +93,11 @@ materials/skin ──► procedural PBR node graphs (skin, eye, iris, cornea, ha
 |---|---|
 | Body, head, face features, hands/feet/digits, eyes, mouth (teeth/gums/tongue), hair | implemented; built and rendered headless |
 | Public API, determinism pins, error contract, audit report | implemented + tested (S0, 2026-09-24) |
+| pytest suite: math/RNG/topology/spec contracts, preset `format_version` + tolerant loading, meta-test of the pin gate | implemented + tested (S1, 2026-09-24) |
+| Noise contracts `\|fbm3\| ≤ 1`, `\|ridged3\| ≤ 1` (divisor was a no-op) | fixed + tested in S1 (latent: no caller) |
+| Construction guard: collapsed rings are detected by name | implemented + tested (S1; pins the eye-pole defect for S2) |
 | Extremes: constant topology (5 821 v) across parameter extremes and all presets | measured |
-| Rig / skin weights, shape keys, expression layer, glTF/GLB export, quality passes, UV unwrap beyond per-face rects | **not implemented** |
+| Rig / skin weights, shape keys, expression layer, glTF/GLB export, quality passes, UV unwrap beyond per-face rects | **not implemented** (S3–S5) |
 | Visual realism of fringe hair, mouth corners, eyelids, ears | known defects, see below |
 
 ## Known issues (measured, not fixed)
@@ -84,8 +111,9 @@ materials/skin ──► procedural PBR node graphs (skin, eye, iris, cornea, ha
    Blender regime raises a warning; unifying this is an S1/S2 decision.
 3. Visual: hair fringe covers the eyes at default length; corner tooth tips can peek past
    the lip band; eyelids read as pale caps; ear patches show shading artifacts.
-4. `fbm3`/`ridged3` normalisation is a no-op (`... and 1.0`), so fBm is 1.75× oversized —
-   currently latent (no caller uses `DeformStack.noise` yet).
+4. ~~`fbm3`/`ridged3` normalisation is a no-op~~ — fixed in S1 (divisor = sum of octave
+   amplitudes, contracts in `tests/test_rng.py`); it stays latent because nothing calls
+   `DeformStack.noise` yet.
 
 ## Docs
 

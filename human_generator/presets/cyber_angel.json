@@ -1,4 +1,5 @@
 {
+  "format_version": 1,
   "name": "cyber_angel",
   "body": {"muscle_tone": 0.62, "fat_level": 0.18},
   "face": {"eye_width": 1.06, "cheekbone_height": 1.25, "lip_fullness": 1.12, "asymmetry": 0.4},

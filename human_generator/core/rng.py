@@ -143,22 +143,32 @@ class Rng:
         return lerp(y0, y1, sz)
 
     def fbm3(self, co, octaves: int = 4, lac: float = 2.0, gain: float = 0.5) -> float:
+        """Fractal noise in [-1, 1] (normalised by the sum of octave amplitudes).
+
+        Contract (tests/test_rng.py): |fbm3| <= 1 for any octaves/gain.  The old
+        divisor was ``max(1e-6, 1.0 - 0.5 ** octaves and 1.0)``, which is always
+        ``1.0`` (``X and 1.0`` evaluates to 1.0 whenever X is truthy), so fBm was
+        oversized by the amplitude sum — a latent defect, no caller used it.
+        """
         x, y, z = co[0], co[1], co[2]
-        amp, tot, f = 1.0, 0.0, 1.0
+        amp, tot, f, norm = 1.0, 0.0, 1.0, 0.0
         for _ in range(octaves):
             tot += amp * self.noise3(x * f, y * f, z * f)
+            norm += amp
             f *= lac
             amp *= gain
-        return tot / max(1e-6, 1.0 - 0.5 ** octaves and 1.0)
+        return tot / max(1e-6, norm)
 
     def ridged3(self, co, octaves: int = 4, lac: float = 2.1, gain: float = 0.5) -> float:
+        """Ridged noise in [0, 1] (same normalisation fix as :meth:`fbm3`)."""
         x, y, z = co[0], co[1], co[2]
-        amp, tot, f = 1.0, 0.0, 1.0
+        amp, tot, f, norm = 1.0, 0.0, 1.0, 0.0
         for _ in range(octaves):
             tot += amp * (1.0 - abs(self.noise3(x * f, y * f, z * f)))
+            norm += amp
             f *= lac
             amp *= gain
-        return tot / max(1e-6, 1.0 - 0.5 ** octaves and 1.0)
+        return tot / max(1e-6, norm)
 
     # -- mesh hashing (determinism gate) -----------------------------------
     @staticmethod

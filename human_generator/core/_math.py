@@ -8,8 +8,22 @@ offline previews) without importing ``bpy`` at all.
 from __future__ import annotations
 
 import math as _math
+import os as _os
+
+# Numerics policy (S1).
+# ``mathutils`` is float32; the pure-python stand-in is float64.  Because the
+# backend is chosen at import time, the *same* spec+seed produced two different
+# mesh digests depending on whether ``bpy`` was imported before this package
+# (measured: 39ce28298fce36de vs 34e746aa4e649945 — docs/RESEARCH_GATE_02 §S0).
+# The regime is now explicitly selectable:
+#   HCG_MATHUTILS=auto  (default) mathutils when importable, else pure python
+#   HCG_MATHUTILS=0     always pure python -> digest independent of import order
+MATHUTILS_PREFERENCE = _os.environ.get("HCG_MATHUTILS", "auto").strip().lower()
+_ALLOW_MATHUTILS = MATHUTILS_PREFERENCE not in ("0", "false", "no", "off", "pure", "pure-python")
 
 try:  # pragma: no cover - exercised inside Blender
+    if not _ALLOW_MATHUTILS:
+        raise ImportError("mathutils disabled by HCG_MATHUTILS")
     from mathutils import Matrix, Vector  # type: ignore
 
     MATHUTILS = True
@@ -363,3 +377,12 @@ def smoothstep(a, b, x):
 
 
 __all__ = ["Vector", "Matrix", "clamp", "mix", "smoothstep", "MATHUTILS"]
+
+
+def numerics_info() -> dict:
+    """Describe the active numerics regime (part of the public contract)."""
+    return {
+        "backend": "mathutils" if MATHUTILS else "pure-python",
+        "float_precision": 32 if MATHUTILS else 64,
+        "preference": MATHUTILS_PREFERENCE,
+    }

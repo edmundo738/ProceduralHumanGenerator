@@ -1,4 +1,5 @@
 {
+  "format_version": 1,
   "name": "neon_idol",
   "body": {"stature": 1.72, "bust_relative": 0.85, "waist_hip_ratio": 0.72},
   "face": {"mouth_width": 1.08, "lip_fullness": 1.3, "eye_width": 1.1, "smile_rest": 0.3},

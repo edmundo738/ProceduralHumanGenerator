@@ -169,6 +169,44 @@ class MeshBuilder:
         for i in range(n):
             self.crease(ids[i], ids[(i + 1) % n], weight)
 
+    def rings_degenerate(self, tol: float = 1e-9) -> dict[str, int]:
+        """Ring name → count of vertex pairs closer than ``tol`` (construction guard).
+
+        A ring whose points collapse to (nearly) the same location produces
+        zero-area faces; the weld used to hide that at the cost of non-manifold
+        topology (RESEARCH_GATE_02).  This is the cheap, weld-free detector:
+        every builder must report an empty dict, except where a *documented*
+        defect is pinned (currently the eye globe's first latitude ring, S2).
+        """
+        out: dict[str, int] = {}
+        for name, entry in self.rings.items():
+            ids = self._flatten_ring_ids(entry)
+            pairs = 0
+            for a in range(len(ids)):
+                pa = self.verts[ids[a]]
+                for b in range(a + 1, len(ids)):
+                    if (pa - self.verts[ids[b]]).length < tol:
+                        pairs += 1
+            if pairs:
+                out[name] = pairs
+        return out
+
+    @staticmethod
+    def _flatten_ring_ids(entry) -> list[int]:
+        """Accept both flat ring lists and lists of rings (stable, de-duplicated)."""
+        flat: list[int] = []
+
+        def walk(node):
+            if isinstance(node, int):
+                if node not in flat:
+                    flat.append(node)
+            elif isinstance(node, (list, tuple)):
+                for child in node:
+                    walk(child)
+
+        walk(entry)
+        return flat
+
     def register_ring(self, name: str, ring_ids: Sequence[int]) -> None:
         self.rings[name] = list(ring_ids)
 
