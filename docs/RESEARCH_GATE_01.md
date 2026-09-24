@@ -1,7 +1,8 @@
 # RESEARCH GATE 01 — Checkpoint, Estudo, Comparação e Plano
 
 **Data:** 2026-09-24 · **Branch:** `arena/01a0d308-proceduralhumangenerator`
-**HEAD:** `2e67a82` ("B4 checkpoint: hair strand system…") · prévio `d9861fb` ("face v2…")
+**HEAD código:** `2e67a82` ("B4 checkpoint: hair strand system…") · prévio `d9861fb` ("face v2…")  
+**Errata (Gate 02):** este documento foi comitado *depois* como `d7258a1`; HEAD do branch no momento da leitura = `d7258a1` (documentação apenas). Ver `docs/RESEARCH_GATE_02.md` para as correções de conteúdo.
 **Estado:** GATE FECHADO — este documento é a entrega; nenhuma implementação nova foi feita depois do checkpoint `2e67a82`.
 
 ---
