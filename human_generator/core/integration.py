@@ -21,6 +21,8 @@ Convenções (as mesmas do resto do projeto):
 from __future__ import annotations
 
 import math
+
+import math
 from collections import Counter, defaultdict
 from math import sqrt
 
@@ -718,6 +720,133 @@ def junction_metrics(build, step: float = 0.002) -> dict:
     out["trunk_ramp"] = ramp
     out["trunk_ramp_max_slope"] = max((r["slope"] for r in ramp), default=0.0)
     return out
+
+
+# --------------------------------------------------------------------------- hands
+# S3.8 — métricas da mão.  Como em S3.7, a identidade vem do REGISTO DE ANÉIS
+# (palma: ``hand.<lado>.<k>``) e dos GRUPOS por falange (``L.finger.<raio>.<n>``),
+# nunca de heurísticas de posição.
+
+
+def _digit_vertices(builder, side_tag: str, digit: str) -> set[int]:
+    """Vértices de um dedo (todas as falanges), pelos grupos registados."""
+    out: set[int] = set()
+    for name, weights in builder.groups.items():
+        if name.startswith(f"{side_tag}.finger.{digit}."):
+            out.update(weights.keys())
+    return out
+
+
+def _frame_from(axis: Vector, upref: Vector = None):
+    z = Vector(axis).normalized()
+    up = Vector(upref) if upref is not None else Vector((0.0, -1.0, 0.0))
+    up = up - z * up.dot(z)
+    if up.length_squared < 1e-12:
+        up = Vector((1.0, 0.0, 0.0))
+        up = up - z * up.dot(z)
+    y = up.normalized()
+    x = y.cross(z).normalized()
+    return x, y, z
+
+
+def hand_metrics(build, side: str = "L", comps=None) -> dict:
+    """Comprimento, largura, espessura da mão e folgas entre dedos (m).
+
+    Definições explícitas (as da antropometria, medidas na MALHA):
+
+    * **comprimento** — do ponto articular do punho à ponta mais distal do dedo
+      médio, ao longo do eixo punho→média (FAA: prega do punho → ponta do médio);
+    * **largura** — extensão da malha da palma ao longo do eixo **2.º↔5.º
+      metacarpo** (``hand.<lado>.index.mcp`` → ``hand.<lado>.pinky.mcp``), ou
+      seja a largura "nos nós dos dedos" com tecido mole incluído;
+    * **espessura** — extensão perpendicular a esse eixo e ao eixo da mão;
+    * **folgas** — distância mínima de superfície entre dedos adjacentes.
+
+    As tentativas anteriores mediam a extensão por PCA do anel e davam valores
+    inflacionados (66.3 mm e 56.7 mm de espessura) porque os anéis da palma são
+    inclinados em relação aos eixos globais; a definição por pontos articulares
+    não depende de referencial e é a que a fonte antropométrica usa.
+    """
+    builder, anat = build.builder, build.anatomy
+    V = builder.verts
+    tag = side
+    lm = anat.landmarks
+    try:
+        wrist = Vector(lm["wrist." + tag])
+        idx = Vector(lm["hand." + tag + ".index.mcp"])
+        pky = Vector(lm["hand." + tag + ".pinky.mcp"])
+        mid_tip_lm = Vector(lm["hand." + tag + ".middle.tip"])
+    except KeyError as e:
+        return {"error": "missing landmark %s" % (e,), "side": side}
+    palm_ids = [i for k, ids in builder.rings.items()
+                if k.startswith("hand." + tag + ".") for i in ids]
+    mid = _digit_vertices(builder, tag, "middle")
+    if not palm_ids or not mid:
+        return {"error": "palm rings or middle finger groups missing", "side": side}
+
+    # O eixo da mão NÃO é a recta punho→ponta (a palma é inclinada e o dedo médio
+    # sai desviado): medido, usá-la dava 42.1 mm de espessura para uma geometria
+    # de ~29 mm (o desvio mete largura dentro da espessura).  O eixo correcto é a
+    # NORMAL DOS ANÉIS da palma (a mesma construção do ``cap_pole``).
+    palm_pts = [V[i] for i in palm_ids]
+    ring_pts = [[V[i] for i in ids] for k, ids in builder.rings.items()
+                if k.startswith("hand." + tag + ".")]
+    n_acc = Vector((0.0, 0.0, 0.0))
+    for pts in ring_pts:
+        c0 = Vector((0.0, 0.0, 0.0))
+        for p in pts:
+            c0 += p
+        c0 /= len(pts)
+        for i2 in range(len(pts)):
+            n_acc += (pts[i2] - c0).cross(pts[(i2 + 1) % len(pts)] - c0)
+    axis = n_acc.normalized() if n_acc.length_squared > 1e-18 else (mid_tip_lm - wrist).normalized()
+    breadth_dir = (pky - idx)
+    breadth_dir = breadth_dir - axis * breadth_dir.dot(axis)     # no plano do anel
+    breadth_dir = (breadth_dir.normalized() if breadth_dir.length_squared > 1e-12
+                   else Vector((1.0, 0.0, 0.0)))
+    # Espessura = dentro do plano do anel, perpendicular à largura (o ``axis`` é
+    # o COMPRIMENTO da palma — usá-lo como espessura media 121 mm, que é a
+    # própria extensão longitudinal).
+    thick_dir = axis.cross(breadth_dir)
+    if thick_dir.length_squared < 1e-12:
+        thick_dir = Vector((0.0, 1.0, 0.0))
+    thick_dir = thick_dir.normalized()
+    c = Vector((0.0, 0.0, 0.0))
+    for p in palm_pts:
+        c += p
+    c /= len(palm_pts)
+    pr_b = [(p - c).dot(breadth_dir) for p in palm_pts]
+    pr_t = [(p - c).dot(thick_dir) for p in palm_pts]
+    # a ponta é o vértice do dedo médio MAIS DISTANTE do punho (usar a projecção
+    # no eixo dos anéis depende do sentido da normal, que se inverte no lado
+    # direito — medido: dava 90.9 mm em vez de 181.9 mm)
+    tip = max((V[i] for i in mid), key=lambda p: (p - wrist).length)
+    hand_len = (tip - wrist).length
+    width = max(pr_b) - min(pr_b)
+    thick = max(pr_t) - min(pr_t)
+    fingers = ("index", "middle", "ring", "pinky")
+    gaps = {}
+    for a, b in zip(fingers, fingers[1:]):
+        ia, ib = _digit_vertices(builder, tag, a), _digit_vertices(builder, tag, b)
+        if ia and ib:
+            gaps[a + "-" + b] = part_distance(builder, ia, ib)
+    thumb = _digit_vertices(builder, tag, "thumb")
+    if thumb and _digit_vertices(builder, tag, "index"):
+        gaps["thumb-index"] = part_distance(builder, thumb,
+                                            _digit_vertices(builder, tag, "index"))
+    return {
+        "side": side,
+        "length": hand_len,
+        "length_ratio_faa": hand_len / 0.178,
+        "width": width,
+        "width_ratio_faa": width / 0.076,
+        "thickness": thick,
+        "thickness_over_length": thick / hand_len,
+        "mcp_span": (pky - idx).length,
+        "mcp_span_over_length": (pky - idx).length / hand_len,
+        "palm_rings": len(palm_ids) // 12,
+        "finger_gaps": gaps,
+    }
 
 
 # --------------------------------------------------------------------------- silhouette

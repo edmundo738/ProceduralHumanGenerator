@@ -420,6 +420,54 @@ class TestS37CriteriaOnRealBuild:
             assert gap > 0.0, f"hand.{tag} intersects the leg (gap {gap:.4f} m)"
 
 
+class TestS38CriteriaOnRealBuild:
+    """S3.8 — dimensões da mão (fonte FAA/DOT; ver docs/S3_8_HANDS.md)."""
+
+    @staticmethod
+    def _m(build_default, side="L"):
+        from human_generator.core.integration import hand_metrics
+        return hand_metrics(build_default, side)
+
+    def test_h1_hand_length_within_5_percent_of_faa(self, build_default):
+        for side in ("L", "R"):
+            m = self._m(build_default, side)
+            assert 0.95 <= m["length_ratio_faa"] <= 1.05, (side, m)
+
+    def test_h2_hand_width_within_10_percent_of_faa(self, build_default):
+        for side in ("L", "R"):
+            m = self._m(build_default, side)
+            assert 0.90 <= m["width_ratio_faa"] <= 1.10, (side, m)
+
+    def test_h3_palm_thickness_bounded(self, build_default):
+        for side in ("L", "R"):
+            m = self._m(build_default, side)
+            assert m["thickness_over_length"] <= 0.165, (side, m)
+
+    def test_h4_knuckle_span_is_anatomically_placed(self, build_default):
+        for side in ("L", "R"):
+            m = self._m(build_default, side)
+            assert 0.36 <= m["mcp_span_over_length"] <= 0.42, (side, m)
+
+    def test_h5_fingers_are_separated(self, build_default):
+        for side in ("L", "R"):
+            gaps = self._m(build_default, side)["finger_gaps"]
+            for name, g in gaps.items():
+                if name == "thumb-index":
+                    continue
+                assert g >= 0.001, (side, name, g)
+
+    def test_h6_thumb_is_free_of_the_index(self, build_default):
+        for side in ("L", "R"):
+            g = self._m(build_default, side)["finger_gaps"]["thumb-index"]
+            assert g >= 0.005, (side, g)
+
+    def test_hands_are_mirror_identical(self, build_default):
+        """O pé/mão direita tem de ser o espelho exacto da esquerda (S3.1)."""
+        l, r = self._m(build_default, "L"), self._m(build_default, "R")
+        for key in ("length", "width", "thickness", "mcp_span"):
+            assert abs(l[key] - r[key]) < 1e-9, (key, l[key], r[key])
+
+
 class TestReportOnRealBuild:
     def test_report_has_all_criteria_and_no_floating_part(self, build_default):
         rep = integration_report(build_default)

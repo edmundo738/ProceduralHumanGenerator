@@ -135,11 +135,17 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
             for col in (-1, 1):
                 c = Vector((col * 0.032 * s, anat.waist_half() * 0.80, z0 - row * 0.030 * s))
                 stack.bump(c, 0.0022 * s * (mus - 0.55) * 3.0, sigma=(0.022 * s, 0.014 * s, 0.014 * s))
-    # thenar eminence (palms)
+    # thenar eminence (palms) — S3.8, desvio de âmbito declarado
+    # (docs/S3_8_HANDS.md §7.1): medido, a amplitude antiga de 0.0060·estatura
+    # (10.2 mm) num sigma de (51, 37, 76) mm inflacionava a palma DEPOIS do loft
+    # — com as dimensões da mão já corrigidas a espessura media 33.3 mm em vez
+    # dos 28.7 mm devidos à geometria. O valor 0.0024·estatura (4.1 mm) é
+    # INFERRED do orçamento de espessura; não há fonte recolhida para a altura
+    # da eminência tenar (declarado no contrato).
     if include_hands:
         for tag, side in (("L", 1), ("R", -1)):
             c = Vector(lm[f"wrist.{tag}"]) + Vector((side * 0.020 * s, 0.0, -0.045 * s))
-            stack.bump(c, 0.0060 * s, sigma=(0.030 * s, 0.022 * s, 0.045 * s))
+            stack.bump(c, 0.0024 * s, sigma=(0.024 * s, 0.018 * s, 0.030 * s))
     # slight organic asymmetry: one breast 3% fuller, one glute rounder (seeded)
     a = spec.face.asymmetry * 0.04
     if a > 0:

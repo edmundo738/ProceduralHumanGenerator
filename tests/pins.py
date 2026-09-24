@@ -23,11 +23,12 @@ PINS = {
         "verts": 5955,          # pre-weld (pure build)
         "faces": 5936,
         "strands": 2400,
-        # re-measured in S3.7 (neck with a sourced circumference, trapezius ramp,
-        # hanging arms, knees aligned, shoulder axis medial to the acromion,
-        # trapezius/upper-chest stations sorted by z)
-        "digest": {"pure-python": "c58b94868bb0f879",
-                   "mathutils": "9843b7280144dfe3"},
+        # re-measured in S3.8 (hand breadth/thickness/knuckle span re-dimensioned
+        # from FAA/DOT anthropometry; thenar field reduced 10.2 mm -> 4.1 mm)
+        # (S3.7: neck with a sourced circumference, trapezius ramp, hanging arms,
+        # knees aligned, shoulder axis medial to the acromion, stations sorted by z)
+        "digest": {"pure-python": "35f7076463f570d9",
+                   "mathutils": "2c91d32a7dcc277d"},
     },
 }
 
@@ -86,7 +87,7 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 76, "scalp": 148, "skin": 3072,
+                "palm": 62, "scalp": 148, "skin": 3086,
                 "sole": 40
             },
             "groups": {

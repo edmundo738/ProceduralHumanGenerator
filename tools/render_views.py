@@ -2,7 +2,7 @@
 """Renders ortográficos de referência (frente/lado/costas/três-quartos).
 
 Uso:
-    python tools/headless_blender.py run tools/render_views.py OUT_DIR [preset] [seed] [--hair] [--full]
+    python tools/headless_blender.py run tools/render_views.py OUT_DIR [preset] [seed] [--hair] [--full] [--feet] [--hands]
 
 Serve a BUILD 01 (silhueta) e qualquer verificação visual interna: as mesmas
 vistas, a mesma câmara, para que duas execuções sejam comparáveis imagem a
@@ -90,13 +90,25 @@ def main() -> int:
         ob.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
 
     feet = "--feet" in args
+    hands = "--hands" in args
     if feet:
         cam_data.ortho_scale = 0.38
-    target = (Vector((0.0, 0.02, 0.06)) if feet else
-              Vector((0.0, 0.0, 0.95)) if full else Vector((0.0, 0.02, 1.30)))
+    if hands:
+        # S3.8: a mão tem ~180 mm de comprimento — o enquadramento é centrado no
+        # punho e na ponta do dedo médio, medidos no próprio build (não há valor
+        # fixo: a escala é a da figura, 1684 mm).
+        lm = res.build.anatomy.landmarks
+        w = Vector(lm["wrist.L"])
+        tipm = Vector(lm["hand.L.middle.tip"])
+        cam_data.ortho_scale = 0.34
+        target = (w + tipm) * 0.5
+    else:
+        target = (Vector((0.0, 0.02, 0.06)) if feet else
+                  Vector((0.0, 0.0, 0.95)) if full else Vector((0.0, 0.02, 1.30)))
     dist = 4.0
     views = ({"front": 0.0, "above": 0.5, "side": 1.5708} if feet else
-             {"front": 0.0, "three_quarter": 0.7, "side": 1.5708, "back": 3.1416})
+             ({"out": 0.0, "back": 3.1416, "right": 1.5708, "left": -1.5708} if hands else
+              {"front": 0.0, "three_quarter": 0.7, "side": 1.5708, "back": 3.1416}))
     for tag, ang in views.items():
         cam.location = (target.x + dist * math.sin(ang),
                         target.y + dist * math.cos(ang), target.z)

@@ -75,8 +75,19 @@ def build_hand(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
     hand_len = anat.hand_length()
     palm_len = hand_len * 0.52
     finger_len = hand_len * 0.48 * spec.body.finger_length
-    half_b = hand_len * 0.285 * spec.body.palm_breadth
-    t_half = hand_len * 0.118 * (1.0 + 0.25 * spec.body.fat_level)
+    # S3.8 — dimensões da palma com fonte (docs/S3_8_HANDS.md §2):
+    #   largura da mão (mulher p50) 76 mm = 0.427·comprimento (FAA/DOT Ap. B);
+    #   espessura ≤ 0.165·comprimento.
+    # BASELINE medido (``6b63242``, instrumento ``core.integration.hand_metrics``):
+    # largura 123.6 mm (1.63× os 76 mm canónicos) e espessura 57.2 mm (0.314·L) —
+    # a mão lia-se como uma pá.  Mecanismo: ``half_b = 0.285·L`` com factor de
+    # anel até 1.163 dava 57.4 mm de MEIA-largura nos nós; ``t_half = 0.118·L``
+    # dava ≈ 43 mm geométricos que, somados ao campo tenar do ``body.py``,
+    # chegavam aos 57.2 mm medidos.
+    # DEPOIS (medido): meia-largura de corpo 0.190·L ⇒ 77.5 mm de largura;
+    # espessura de corpo 0.066·L ⇒ 28.7 mm (0.159·L, limite H3 0.165·L).
+    half_b = hand_len * 0.190 * spec.body.palm_breadth
+    t_half = hand_len * 0.066 * (1.0 + 0.25 * spec.body.fat_level)
 
     M, x_ax, y_ax, z_ax = _hand_basis(wrist, palm_tip, side)
     volar = y_ax
@@ -120,7 +131,9 @@ def build_hand(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
                 b.regions[vi] = "palm"
 
     knuckle_z = palm_len
-    sp = hand_len * 0.118
+    # S3.8 — espaçamento dos nós: 0.127·L ⇒ índice↔mindinho medido 65.8 mm =
+    # 0.365·L (canónico H4 0.36–0.42·L).  Antes: 0.118·L ⇒ 61.2 mm = 0.336·L.
+    sp = hand_len * 0.127
     knucklers = {}
     for name in RAY_ORDER:
         idx = RAY_ORDER.index(name)
@@ -148,7 +161,10 @@ def build_hand(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
         p2 = M @ (base + d0 * (seg0 + seg1))
         p3 = M @ (base + d0 * (seg0 + seg1 + seg2))
         plan = DigitPlan(kind="finger", name=name, anchors=[p0, p1, p2, p3],
-                         base_radius=hand_len * 0.052 * RAY_RAD[name],
+                         # S3.8 — raio dos dedos 0.046·L: com 0.052·L os dedos
+                         # encostavam-se (folga medida 0.7 mm no médio↔anelar);
+                         # agora 4.3 / 3.1 / 5.4 mm (critério H5: ≥ 1 mm).
+                         base_radius=hand_len * 0.046 * RAY_RAD[name],
                          flex=list(flexed), volar=Vector((y_ax.x, y_ax.y, y_ax.z)).normalized(),
                          flatness=0.90, segments=3, ring_n=8, nail=True)
         build_digit(b, plan, material="skin", group_prefix=f"{tag}.")
@@ -166,7 +182,7 @@ def build_hand(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
     ip = M @ (tb + tdir * tlen * 0.72)
     tip = M @ (tb + tdir * tlen * 1.0)
     tplan = DigitPlan(kind="finger", name="thumb", anchors=[cmc, mcp, ip, tip],
-                      base_radius=hand_len * 0.058, flex=(0.14, 0.20, 0.12),
+                      base_radius=hand_len * 0.052, flex=(0.14, 0.20, 0.12),
                       volar=Vector((y_ax.x, y_ax.y, y_ax.z)).normalized(),
                       flatness=0.92, segments=3, ring_n=8, nail=True)
     build_digit(b, tplan, material="skin", group_prefix=f"{tag}.")
