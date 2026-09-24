@@ -2,7 +2,10 @@
 """Renders ortográficos de referência (frente/lado/costas/três-quartos).
 
 Uso:
-    python tools/headless_blender.py run tools/render_views.py OUT_DIR [preset] [seed] [--hair] [--full] [--feet] [--hands] [--face] [--hands]
+    python tools/headless_blender.py run tools/render_views.py OUT_DIR [preset] [seed] [--hair] [--full] [--feet] [--hands] [--face] [--hands] [--neutral]
+
+``--neutral`` substitui o material do corpo por um cinzento difuso uniforme
+(avaliação anatómica: o material de pele não pode mascarar a geometria).
 
 Serve a BUILD 01 (silhueta) e qualquer verificação visual interna: as mesmas
 vistas, a mesma câmara, para que duas execuções sejam comparáveis imagem a
@@ -47,6 +50,14 @@ def main() -> int:
     body = bpy.data.objects[res.objects["body"]]
     hair_ob = bpy.data.objects[res.objects["hair"]]
     hair_ob.hide_render = not hair
+    if "--neutral" in args:
+        neutral = bpy.data.materials.new("hcg_neutral_eval")
+        neutral.use_nodes = True
+        bsdf = neutral.node_tree.nodes.get("Principled BSDF")
+        bsdf.inputs["Base Color"].default_value = (0.55, 0.55, 0.55, 1.0)
+        bsdf.inputs["Roughness"].default_value = 0.6
+        body.data.materials.clear()
+        body.data.materials.append(neutral)
 
     # A cena inicial do Blender traz Cube + Light + Camera.  Medido: o Cube
     # (2 m, topo em z=1.0) ficava entre a câmara e a figura e cortava-a pelas

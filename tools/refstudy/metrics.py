@@ -47,6 +47,17 @@ def metrics(name):
     m["buttock_behind_thoracic"]=float(t[1]-b[1])   # + = nádega mais posterior que as costas torácicas
     # abdomen: front midline at omphalion vs under bust
     f_om=om["mid_front"]; f_wn=wn["mid_front"]; m["abdomen_front_minus_waist_front"]=f_om-f_wn
+    # H1 (REF STUDY 01 §4.3): perfil cabeça–pescoço–costas altas na linha média
+    N=[p for p in C if 1330<=p["z"]<=1640 and not math.isnan(p.get("mid_back",float("nan")))]
+    zN=np.array([p["z"] for p in N]); bN=np.array([p["mid_back"] for p in N]); dN=np.array([p["depth"] for p in N])
+    hi=zN>1520; zo=zN[hi][np.argmin(bN[hi])]; bo=bN[hi].min()                       # occipital
+    mid=(zN>1380)&(zN<zo); zn=zN[mid][np.argmax(bN[mid])]; bn=bN[mid].max()           # nuca (mais anterior)
+    lo_=(zN<zn); zs=zN[lo_][np.argmin(bN[lo_])]; bs=bN[lo_].min()                      # costas altas mais posteriores
+    m["occiput_z"]=float(zo); m["nape_z"]=float(zn); m["nape_recess"]=float(bn-bo)
+    m["upper_back_z"]=float(zs); m["upper_back_vs_occiput"]=float(bs-bo)
+    # pico de profundidade na base do pescoço: máx. em [1380,1450] menos máx. em [1300,1360]
+    m["neckbase_depth_max"]=float(dN[(zN>=1380)&(zN<=1450)].max())
+    m["neckbase_depth_excess"]=float(dN[(zN>=1380)&(zN<=1450)].max()-dN[(zN>=1300)&(zN<=1360)].max())
     return m
 ANS={"crotchheight":"crotchheight","chestdepth":"chestdepth","chestbreadth":"chestbreadth","chestcircumference":"chestcircumference",
      "waistbreadth":"waistbreadth","waistdepth":"waistdepth","waistcircumference":"waistcircumference","hipbreadth":"hipbreadth","buttockdepth":"buttockdepth",
@@ -65,5 +76,6 @@ if __name__=="__main__":
     for a,b,key in [("chestdepth","chestbreadth","chestdepth/chestbreadth"),("waistdepth","waistbreadth","waistdepth/waistbreadth"),("buttockdepth","hipbreadth","buttockdepth/hipbreadth"),("waistbreadth","hipbreadth","waistbreadth/hipbreadth"),("waistcircumference","buttockcircumference","waistcircumference/buttockcircumference")]:
         R=A[key]; print(f"{key:40s} ANSUR {R['r']:.3f} [{R['p5']:.3f},{R['p95']:.3f}] "+" ".join(f"{n}={M[n][a]/M[n][b]:.3f}" for n in names))
     print()
-    for k in ["chest_z","waist_nat_z","waist_nat_breadth","hip_z","buttock_z","neck_z","neck_breadth","neck_depth","calf_z","knee_min_circ","leg_cx_thigh","leg_cx_knee","leg_cx_ankle","leg_gap_knee","thoracic_apex_z","buttock_apex_z","lumbar_z","lumbar_concavity","buttock_behind_thoracic","abdomen_front_minus_waist_front"]:
+    for k in ["chest_z","waist_nat_z","waist_nat_breadth","hip_z","buttock_z","neck_z","neck_breadth","neck_depth","calf_z","knee_min_circ","leg_cx_thigh","leg_cx_knee","leg_cx_ankle","leg_gap_knee","thoracic_apex_z","buttock_apex_z","lumbar_z","lumbar_concavity","buttock_behind_thoracic","abdomen_front_minus_waist_front",
+              "occiput_z","nape_z","nape_recess","upper_back_z","upper_back_vs_occiput","neckbase_depth_max","neckbase_depth_excess"]:
         print(f"{k:34s} "+" ".join(f"{n}={M[n].get(k,float('nan')):7.1f}" for n in names))

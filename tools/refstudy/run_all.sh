@@ -8,7 +8,12 @@ PY=${PY:-python}
 export HCG_REFSTUDY_WORK=${HCG_REFSTUDY_WORK:-out/refstudy}
 mkdir -p out/refs "$HCG_REFSTUDY_WORK/build"
 [ -d "out/refs/treino para o arena" ] || git archive 408517a "treino para o arena" | tar -x -C out/refs
-unzip -qo builds/build02_realistic_female_s42.zip -d "$HCG_REFSTUDY_WORK/build"
+if [ "${HCG_BUILD_FROM_TREE:-0}" = "1" ]; then     # experimento: mede a árvore de trabalho atual
+  $PY tools/headless_blender.py run tools/refstudy/gen_blend.py "$HCG_REFSTUDY_WORK/tree" | grep '^GEN'
+  export HCG_BUILD_BLEND="$HCG_REFSTUDY_WORK/tree/tree_realistic_female_s42.blend"
+else                                               # por omissão: a BUILD versionada
+  unzip -qo builds/build02_realistic_female_s42.zip -d "$HCG_REFSTUDY_WORK/build"
+fi
 if [ ! -f "$HCG_REFSTUDY_WORK/ansur_f.csv" ]; then   # espelho público do CSV DCPH-A (sha256 ed7e800a…)
   rm -rf /tmp/ansur_src && git clone -q --depth 1 --filter=blob:none --sparse https://github.com/sharad18/Adidas-Data-Challenge.git /tmp/ansur_src
   git -C /tmp/ansur_src sparse-checkout set --no-cone "/ANSUR II FEMALE Public.csv"

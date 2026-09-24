@@ -4,7 +4,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _paths import WORK  # noqa: E402
 import bpy, os, numpy as np
 R = os.environ.get("HCG_REF_DIR", "out/refs/treino para o arena")
-BUILD = os.environ.get("HCG_BUILD_BLEND", "out/refstudy/build/build02_realistic_female_s42/hcg_realistic_female_ad620a90.blend")
+BUILD = os.environ.get("HCG_BUILD_BLEND", os.path.join(WORK, "build", "build02_realistic_female_s42", "hcg_realistic_female_ad620a90.blend"))
 
 def _eval(objs, subsurf_max=1):
     dg = bpy.context.evaluated_depsgraph_get()

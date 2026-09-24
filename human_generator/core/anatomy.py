@@ -337,9 +337,15 @@ class Anatomy:
         # "gola" que se vê no render 3/4.  A rampa distribui a passagem por 34 mm
         # (superfície inclinada, como o trapézio real); a terceira cota coincide
         # com ``deltoid_line`` e é aí que a estação do ombro já entra.
-        add(zf("neck_top") - 0.002 * s, mix(neck_w, sh, 0.30), 0.075 * s,
+        # H1 (docs/H1_TRAPEZIUS_DEPTH.md) — EXPERIMENTO. ``Section.depth`` é
+        # MEIA-profundidade; aqui os valores 0.075·S / 0.100·S davam 275 / 364 mm
+        # de profundidade total (as estações mais profundas do corpo; costas altas
+        # 104 mm atrás do occipital, REF STUDY 01 §4.3).  Hipótese testada: os
+        # números foram escritos como profundidade TOTAL ⇒ meia-profundidade =
+        # metade.  Só estes dois valores mudam (larguras, bs, y e cotas intactos).
+        add(zf("neck_top") - 0.002 * s, mix(neck_w, sh, 0.30), 0.075 * s * 0.5,
             sup=2.4, bs=1.16, y=-0.010 * s)
-        add(zf("neck_top") - 0.010 * s, mix(neck_w, sh, 0.62), 0.100 * s,
+        add(zf("neck_top") - 0.010 * s, mix(neck_w, sh, 0.62), 0.100 * s * 0.5,
             sup=2.4, bs=1.14, y=-0.010 * s)
         # deltoid line / shoulders
         add(zf("deltoid_line"), dh, chest * 0.62, sup=2.5, fs=1.0, bs=1.02)

@@ -30,8 +30,12 @@ PINS = {
         # mouth 130.9->49.6 mm, vermilion 6.4/10.0 mm, sagittal column correction
         # with sign, globe centre recessed, orbit deepened)
         # (S3.8: hands; S3.7: neck/trapezius/arms/knees, stations sorted by z)
-        "digest": {"pure-python": "af71a975bdfc8998",
-                   "mathutils": "63a579d98df0c8d8"},
+        # (H1: trapezius-ramp station depths x0.5 -- REF STUDY 01 found a
+        # depth peak at z 1380-1450; see docs/H1_TRAPEZIUS_DEPTH.md.  Only the
+        # digest moved: counts, fingerprint, semantic/audit pins unchanged.
+        # previous: pure-python af71a975bdfc8998, mathutils 63a579d98df0c8d8)
+        "digest": {"pure-python": "c0a50b8a261633ad",
+                   "mathutils": "1dfe85655ada5de0"},
     },
 }
 
