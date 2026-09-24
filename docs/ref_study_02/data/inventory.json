@@ -1,0 +1,2319 @@
+{
+ "ours": {
+  "file": "out/rs2/tree/tree_realistic_female_s42.blend",
+  "kind": "blend",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "hcg:hair:tree_realistic_female_s42",
+    "type": "CURVE",
+    "parent": null,
+    "dims": [
+     1.1576,
+     1.2928,
+     0.6328
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "name": "tree_realistic_female_s42",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     0.5184,
+     0.3608,
+     1.6832
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 6307,
+     "edges": 12466,
+     "faces": 6213,
+     "tris": 882,
+     "quads": 5331,
+     "ngons": 0,
+     "boundary_edges": 962,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 234,
+      "4": 5032,
+      "5": 24,
+      "6": 20,
+      "8": 107
+     },
+     "islands": 85
+    },
+    "modifiers": [
+     {
+      "type": "SUBSURF",
+      "name": "hcg_subdiv",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "hcg:skin",
+      "images": []
+     },
+     {
+      "name": "hcg:nail",
+      "images": []
+     },
+     {
+      "name": "hcg:sclera",
+      "images": []
+     },
+     {
+      "name": "hcg:iris",
+      "images": []
+     },
+     {
+      "name": "hcg:cornea",
+      "images": []
+     },
+     {
+      "name": "hcg:mucosa",
+      "images": []
+     },
+     {
+      "name": "hcg:gum",
+      "images": []
+     },
+     {
+      "name": "hcg:enamel",
+      "images": []
+     },
+     {
+      "name": "hcg:mucosa",
+      "images": []
+     },
+     {
+      "name": "hcg:lip",
+      "images": []
+     }
+    ]
+   }
+  ],
+  "images_in_file": [
+   "Render Result"
+  ]
+ },
+ "femalebase": {
+  "file": "Female base.obj",
+  "kind": "obj",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "Female base",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.7816,
+     2.0069,
+     0.3683
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 18577,
+     "edges": 37173,
+     "faces": 18595,
+     "tris": 140,
+     "quads": 18429,
+     "ngons": 26,
+     "boundary_edges": 83,
+     "nonmanifold_edges": 15,
+     "valence_interior": {
+      "2": 2,
+      "3": 484,
+      "4": 17445,
+      "5": 542,
+      "6": 14,
+      "7": 2,
+      "8": 4
+     },
+     "islands": 1
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": []
+   }
+  ],
+  "images_in_file": []
+ },
+ "bodytopo": {
+  "file": "Body Topo.blend",
+  "kind": "blend",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "Geo body",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.2364,
+     0.2455,
+     1.4951
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 5163,
+     "edges": 10291,
+     "faces": 5126,
+     "tris": 0,
+     "quads": 5126,
+     "ngons": 0,
+     "boundary_edges": 78,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 324,
+      "4": 4440,
+      "5": 304,
+      "6": 16
+     },
+     "islands": 2
+    },
+    "modifiers": [
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 2,
+    "vertex_group_sample": [
+     "Head",
+     "Group"
+    ],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": [
+     {
+      "name": "col1",
+      "images": []
+     },
+     {
+      "name": "col2",
+      "images": []
+     },
+     {
+      "name": "Material.003",
+      "images": []
+     },
+     {
+      "name": "Material.004",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "geo cornia",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     0.0915,
+     0.0404,
+     0.0343
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 290,
+     "edges": 584,
+     "faces": 296,
+     "tris": 16,
+     "quads": 280,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 8,
+      "4": 280,
+      "8": 2
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": false
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": [
+     {
+      "name": "eyes",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "geo eyeball",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     0.091,
+     0.0371,
+     0.0339
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 354,
+     "edges": 704,
+     "faces": 352,
+     "tris": 0,
+     "quads": 352,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 16,
+      "4": 336,
+      "8": 2
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": false
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": []
+   },
+   {
+    "name": "temp eyelashes",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     0.1001,
+     0.0137,
+     0.0167
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 96,
+     "edges": 152,
+     "faces": 60,
+     "tris": 0,
+     "quads": 60,
+     "ngons": 0,
+     "boundary_edges": 64,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 32
+     },
+     "islands": 4
+    },
+    "modifiers": [
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": [
+     {
+      "name": "Material.004",
+      "images": []
+     }
+    ]
+   }
+  ],
+  "images_in_file": [
+   "D:\\Effects\\Blender\\Tests\\topo7.png",
+   "OpenfootageNETHDR_ocean_pisa_small.hdr.hdr"
+  ]
+ },
+ "femalechar": {
+  "file": "FemaleCharacter.blend",
+  "kind": "blend",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "Camera",
+    "type": "CAMERA",
+    "parent": null,
+    "dims": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "name": "Hemi.001",
+    "type": "LIGHT",
+    "parent": null,
+    "dims": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "name": "Plane.000",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     0.7341,
+     0.2965,
+     0.1655
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 14,
+     "edges": 19,
+     "faces": 6,
+     "tris": 0,
+     "quads": 6,
+     "ngons": 0,
+     "boundary_edges": 14,
+     "nonmanifold_edges": 0,
+     "valence_interior": {},
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": true
+     },
+     {
+      "type": "SOLIDIFY",
+      "name": "Solidify"
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": [
+     {
+      "name": "Material.001",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "Plane.001",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     3.1903,
+     0.4751,
+     0.455
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 52,
+     "edges": 100,
+     "faces": 50,
+     "tris": 0,
+     "quads": 50,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 12,
+      "4": 36,
+      "5": 4
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": false
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 3,
+      "render_levels": 3
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": []
+   },
+   {
+    "name": "Plane.002",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.6871,
+     0.3614,
+     0.3247
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 18,
+     "edges": 32,
+     "faces": 16,
+     "tris": 0,
+     "quads": 16,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 8,
+      "4": 10
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": false
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 3,
+      "render_levels": 3
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": []
+   },
+   {
+    "name": "Plane.003",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     56.3492,
+     8.6496,
+     55.0279
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 2160,
+     "edges": 4251,
+     "faces": 2089,
+     "tris": 9,
+     "quads": 2080,
+     "ngons": 0,
+     "boundary_edges": 155,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 142,
+      "4": 1719,
+      "5": 129,
+      "6": 13,
+      "7": 2
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": true
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 1,
+      "render_levels": 1
+     }
+    ],
+    "vertex_groups": 3,
+    "vertex_group_sample": [
+     "Bone.001",
+     "Bone",
+     "Bone.002"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Material",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "Plane.004",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     8.8813,
+     8.98,
+     7.5576
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 209,
+     "edges": 382,
+     "faces": 174,
+     "tris": 0,
+     "quads": 174,
+     "ngons": 0,
+     "boundary_edges": 68,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 139,
+      "5": 2
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": true
+     },
+     {
+      "type": "SOLIDIFY",
+      "name": "Solidify"
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": [
+     {
+      "name": "Material.001",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "Plane.005",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     10.3203,
+     5.4535,
+     8.293
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 91,
+     "edges": 162,
+     "faces": 71,
+     "tris": 0,
+     "quads": 71,
+     "ngons": 0,
+     "boundary_edges": 40,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 51
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": true
+     },
+     {
+      "type": "SOLIDIFY",
+      "name": "Solidify"
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 2,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": [
+     {
+      "name": "Material.001",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "Sphere",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     3.178,
+     1.2109,
+     1.2234
+    ],
+    "scale": [
+     0.6117,
+     0.6117,
+     0.6117
+    ],
+    "topology": {
+     "verts": 114,
+     "edges": 240,
+     "faces": 128,
+     "tris": 32,
+     "quads": 96,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 112,
+      "8": 2
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": false
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 1,
+      "render_levels": 1
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": []
+   }
+  ],
+  "images_in_file": [
+   "IMG_1892.jpg",
+   "Render Result",
+   "Spec.jpg"
+  ]
+ },
+ "lucia_fbx": {
+  "file": "Lucia_Prototype_v01.fbx",
+  "kind": "fbx",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "crudebra.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     1.9331,
+     0.9203,
+     0.214
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 54,
+     "edges": 84,
+     "faces": 32,
+     "tris": 0,
+     "quads": 32,
+     "ngons": 0,
+     "boundary_edges": 40,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 14
+     },
+     "islands": 2
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 17,
+    "vertex_group_sample": [
+     "spine02",
+     "breast.L",
+     "breast.R",
+     "spine01",
+     "clavicle.L",
+     "shoulder01.L",
+     "upperarm01.L",
+     "upperarm02.L",
+     "clavicle.R",
+     "shoulder01.R",
+     "upperarm01.R",
+     "upperarm02.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'crudebra.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "crudebra.obj",
+      "images": [
+       "CrudeBraDiffuse.png",
+       "CrudeBraDiffuse.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "crudefemaletshirt.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     2.6832,
+     2.2944,
+     4.3529
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 1035,
+     "edges": 1962,
+     "faces": 928,
+     "tris": 0,
+     "quads": 928,
+     "ngons": 0,
+     "boundary_edges": 212,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 2,
+      "4": 817,
+      "5": 4
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 26,
+    "vertex_group_sample": [
+     "spine05",
+     "spine04",
+     "spine03",
+     "spine02",
+     "breast.L",
+     "breast.R",
+     "spine01",
+     "clavicle.L",
+     "shoulder01.L",
+     "upperarm01.L",
+     "upperarm02.L",
+     "clavicle.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'crudefemaletshirt.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "crudefemaletshirt.obj",
+      "images": [
+       "CrudeFemaleTshirtDiffuse.png",
+       "CrudeFemaleTshirtDiffuse.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "denim_jacket.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     8.7887,
+     3.1859,
+     5.108
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 14351,
+     "edges": 28308,
+     "faces": 13976,
+     "tris": 0,
+     "quads": 13976,
+     "ngons": 0,
+     "boundary_edges": 712,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 226,
+      "4": 13291,
+      "5": 116,
+      "6": 6
+     },
+     "islands": 21
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 40,
+    "vertex_group_sample": [
+     "spine05",
+     "spine04",
+     "spine03",
+     "spine02",
+     "breast.L",
+     "breast.R",
+     "spine01",
+     "clavicle.L",
+     "shoulder01.L",
+     "upperarm01.L",
+     "upperarm02.L",
+     "lowerarm01.L"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'denim_jacket.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "denim_jacket.obj",
+      "images": [
+       "denim_jacket.png",
+       "denim_jacket.png",
+       "denim_jacket_normals.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "eyebrow005.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     1.0115,
+     0.2355,
+     0.111
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 438,
+     "edges": 820,
+     "faces": 384,
+     "tris": 0,
+     "quads": 384,
+     "ngons": 0,
+     "boundary_edges": 104,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 8,
+      "4": 326
+     },
+     "islands": 2
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 7,
+    "vertex_group_sample": [
+     "head",
+     "orbicularis03.L",
+     "orbicularis03.R",
+     "oculi01.L",
+     "oculi01.R",
+     "risorius03.L",
+     "risorius03.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'eyebrow005.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "eyebrow005.obj",
+      "images": [
+       "eyebrow005.png",
+       "eyebrow005.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "eyelashes01.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     0.8992,
+     0.1134,
+     0.1195
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 864,
+     "edges": 1596,
+     "faces": 736,
+     "tris": 0,
+     "quads": 736,
+     "ngons": 0,
+     "boundary_edges": 248,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 616
+     },
+     "islands": 4
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 7,
+    "vertex_group_sample": [
+     "head",
+     "eye.L",
+     "orbicularis03.L",
+     "orbicularis04.L",
+     "eye.R",
+     "orbicularis03.R",
+     "orbicularis04.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'eyelashes01.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "eyelashes01.obj",
+      "images": [
+       "eyelashes01.png",
+       "eyelashes01.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "f_panties_01.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     2.9524,
+     2.1497,
+     1.6974
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 3137,
+     "edges": 6174,
+     "faces": 3036,
+     "tris": 0,
+     "quads": 3036,
+     "ngons": 0,
+     "boundary_edges": 204,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 3,
+      "4": 2923,
+      "5": 7
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 10,
+    "vertex_group_sample": [
+     "spine05",
+     "spine04",
+     "spine03",
+     "spine02",
+     "pelvis.L",
+     "upperleg01.L",
+     "upperleg02.L",
+     "pelvis.R",
+     "upperleg01.R",
+     "upperleg02.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'f_panties_01.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "f_panties_01.obj",
+      "images": [
+       "f_panties_01_diffuse.png",
+       "f_panties_01_diffuse.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "female_fingernails.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     9.404,
+     0.8043,
+     0.748
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 510,
+     "edges": 868,
+     "faces": 368,
+     "tris": 0,
+     "quads": 368,
+     "ngons": 0,
+     "boundary_edges": 264,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 246
+     },
+     "islands": 10
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 14,
+    "vertex_group_sample": [
+     "finger1-3.L",
+     "finger2-2.L",
+     "finger2-3.L",
+     "finger3-2.L",
+     "finger3-3.L",
+     "finger4-3.L",
+     "finger5-3.L",
+     "finger1-3.R",
+     "finger2-2.R",
+     "finger2-3.R",
+     "finger3-2.R",
+     "finger3-3.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'female_fingernails.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "female_fingernails.obj",
+      "images": [
+       "female_fingernails_diffuse.png",
+       "female_fingernails_diffuse.png",
+       "female_fingernails_normal.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "female_generic.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     9.405,
+     3.3055,
+     7.0723
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 32035,
+     "edges": 63842,
+     "faces": 31800,
+     "tris": 0,
+     "quads": 31800,
+     "ngons": 0,
+     "boundary_edges": 484,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 66,
+      "4": 31389,
+      "5": 96
+     },
+     "islands": 3
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 81,
+    "vertex_group_sample": [
+     "spine02",
+     "breast.L",
+     "breast.R",
+     "spine01",
+     "clavicle.L",
+     "shoulder01.L",
+     "upperarm01.L",
+     "upperarm02.L",
+     "lowerarm01.L",
+     "lowerarm02.L",
+     "wrist.L",
+     "finger1-1.L"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'female_generic.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "female_generic.obj",
+      "images": [
+       "young_darkskinned_female_diffuse.png",
+       "young_darkskinned_female_diffuse.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "halfboots.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     4.1213,
+     2.1554,
+     2.7075
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 9340,
+     "edges": 18600,
+     "faces": 9264,
+     "tris": 0,
+     "quads": 9264,
+     "ngons": 0,
+     "boundary_edges": 144,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 136,
+      "4": 8968,
+      "5": 68,
+      "6": 20,
+      "7": 4
+     },
+     "islands": 6
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 11,
+    "vertex_group_sample": [
+     "lowerleg01.L",
+     "lowerleg02.L",
+     "foot.L",
+     "toe2-1.L",
+     "toe2-2.L",
+     "toe2-3.L",
+     "lowerleg01.R",
+     "lowerleg02.R",
+     "foot.R",
+     "toe2-2.R",
+     "toe2-3.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'halfboots.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "halfboots.obj",
+      "images": [
+       "halfboots.png",
+       "halfboots.png",
+       "halfboots_normals.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "high-poly.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     0.8365,
+     0.2127,
+     0.2819
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 4164,
+     "edges": 8240,
+     "faces": 4080,
+     "tris": 0,
+     "quads": 4080,
+     "ngons": 0,
+     "boundary_edges": 160,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 16,
+      "4": 3988
+     },
+     "islands": 4
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 6,
+    "vertex_group_sample": [
+     "eye.L",
+     "orbicularis03.L",
+     "eye.R",
+     "orbicularis03.R",
+     "oculi01.L",
+     "oculi01.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'high-poly.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "high-poly.obj",
+      "images": [
+       "brown_eye.png",
+       "brown_eye.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "MakeHuman default skeleton",
+    "type": "ARMATURE",
+    "parent": null,
+    "dims": [
+     45.5337,
+     40.2713,
+     42.6339
+    ],
+    "scale": [
+     0.1,
+     0.1,
+     0.1
+    ],
+    "bones": 163,
+    "root_bones": [
+     "root"
+    ],
+    "bone_sample": [
+     "root",
+     "spine05",
+     "spine04",
+     "spine03",
+     "spine02",
+     "breast.L",
+     "breast.R",
+     "spine01",
+     "clavicle.L",
+     "shoulder01.L",
+     "upperarm01.L",
+     "upperarm02.L",
+     "lowerarm01.L",
+     "lowerarm02.L",
+     "wrist.L",
+     "finger1-1.L",
+     "finger1-2.L",
+     "finger1-3.L",
+     "metacarpal1.L",
+     "finger2-1.L",
+     "finger2-2.L",
+     "finger2-3.L",
+     "metacarpal2.L",
+     "finger3-1.L",
+     "finger3-2.L",
+     "finger3-3.L",
+     "metacarpal3.L",
+     "finger4-1.L",
+     "finger4-2.L",
+     "finger4-3.L",
+     "metacarpal4.L",
+     "finger5-1.L",
+     "finger5-2.L",
+     "finger5-3.L",
+     "clavicle.R",
+     "shoulder01.R",
+     "upperarm01.R",
+     "upperarm02.R",
+     "lowerarm01.R",
+     "lowerarm02.R"
+    ]
+   },
+   {
+    "name": "ponytail01.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     1.3839,
+     2.3678,
+     3.5226
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 12743,
+     "edges": 23402,
+     "faces": 10704,
+     "tris": 0,
+     "quads": 10704,
+     "ngons": 0,
+     "boundary_edges": 3988,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 8755
+     },
+     "islands": 48
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 15,
+    "vertex_group_sample": [
+     "spine02",
+     "spine01",
+     "clavicle.L",
+     "upperarm01.L",
+     "clavicle.R",
+     "upperarm01.R",
+     "neck01",
+     "neck02",
+     "neck03",
+     "head",
+     "jaw",
+     "oculi01.L"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'ponytail01.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "ponytail01.obj",
+      "images": [
+       "ponytail01_diffuse.png",
+       "ponytail01_diffuse.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "teeth_base.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     0.5566,
+     0.6996,
+     0.4606
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 14824,
+     "edges": 29032,
+     "faces": 14240,
+     "tris": 0,
+     "quads": 14240,
+     "ngons": 0,
+     "boundary_edges": 1104,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 138,
+      "4": 13572,
+      "5": 10
+     },
+     "islands": 33
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 2,
+    "vertex_group_sample": [
+     "head",
+     "jaw"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'teeth_base.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "teeth_base.obj",
+      "images": [
+       "teeth.png",
+       "teeth.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "tightjeans.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     4.0389,
+     2.4472,
+     8.1371
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 7117,
+     "edges": 13820,
+     "faces": 6708,
+     "tris": 0,
+     "quads": 6708,
+     "ngons": 0,
+     "boundary_edges": 808,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 11,
+      "4": 6289,
+      "5": 9
+     },
+     "islands": 8
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 16,
+    "vertex_group_sample": [
+     "spine05",
+     "spine04",
+     "spine03",
+     "spine02",
+     "pelvis.L",
+     "upperleg01.L",
+     "upperleg02.L",
+     "lowerleg01.L",
+     "lowerleg02.L",
+     "foot.L",
+     "pelvis.R",
+     "upperleg01.R"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'tightjeans.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "tightjeans.obj",
+      "images": [
+       "tightjeans.png",
+       "tightjeans.png",
+       "tightjeans_normals.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "tongue01.objMesh",
+    "type": "MESH",
+    "parent": "MakeHuman default skeleton",
+    "dims": [
+     0.3934,
+     0.6468,
+     0.2081
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 898,
+     "edges": 1792,
+     "faces": 896,
+     "tris": 0,
+     "quads": 896,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 8,
+      "4": 890
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "ARMATURE",
+      "name": "MakeHuman default skeleton",
+      "object": "MakeHuman default skeleton"
+     }
+    ],
+    "vertex_groups": 17,
+    "vertex_group_sample": [
+     "head",
+     "jaw",
+     "oris01",
+     "tongue01",
+     "tongue02",
+     "tongue03",
+     "tongue04",
+     "tongue07.L",
+     "tongue07.R",
+     "tongue06.L",
+     "tongue06.R",
+     "tongue05.L"
+    ],
+    "shape_keys": [],
+    "uv_layers": [
+     "b'tongue01.obj_UV'"
+    ],
+    "materials": [
+     {
+      "name": "tongue01.obj",
+      "images": [
+       "tongue01_diffuse.png",
+       "tongue01_diffuse.png"
+      ]
+     }
+    ]
+   }
+  ],
+  "images_in_file": [
+   "CrudeBraDiffuse.png",
+   "CrudeFemaleTshirtDiffuse.png",
+   "brown_eye.png",
+   "denim_jacket.png",
+   "denim_jacket_normals.png",
+   "eyebrow005.png",
+   "eyelashes01.png",
+   "f_panties_01_diffuse.png",
+   "female_fingernails_diffuse.png",
+   "female_fingernails_normal.png",
+   "halfboots.png",
+   "halfboots_normals.png",
+   "ponytail01_diffuse.png",
+   "teeth.png",
+   "tightjeans.png",
+   "tightjeans_normals.png",
+   "tongue01_diffuse.png",
+   "young_darkskinned_female_diffuse.png"
+  ]
+ },
+ "whitewalker": {
+  "file": "whitewalker-2016-06-06.blend",
+  "kind": "blend",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "Cube",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     0.1496,
+     0.1912,
+     0.2832
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 926,
+     "edges": 1798,
+     "faces": 875,
+     "tris": 24,
+     "quads": 849,
+     "ngons": 2,
+     "boundary_edges": 99,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "3": 48,
+      "4": 731,
+      "5": 40,
+      "6": 6
+     },
+     "islands": 3
+    },
+    "modifiers": [
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": true
+     },
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 1,
+      "render_levels": 2
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Material",
+      "images": []
+     }
+    ]
+   },
+   {
+    "name": "Sphere",
+    "type": "MESH",
+    "parent": "Cube",
+    "dims": [
+     0.0746,
+     0.0249,
+     0.0244
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 266,
+     "edges": 552,
+     "faces": 288,
+     "tris": 48,
+     "quads": 240,
+     "ngons": 0,
+     "boundary_edges": 0,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 264,
+      "8": 2
+     },
+     "islands": 1
+    },
+    "modifiers": [
+     {
+      "type": "SUBSURF",
+      "name": "Subsurf",
+      "levels": 1,
+      "render_levels": 2
+     },
+     {
+      "type": "MIRROR",
+      "name": "Mirror",
+      "object": null,
+      "use_axis": [
+       true,
+       false,
+       false
+      ],
+      "use_clip": false
+     }
+    ],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [],
+    "materials": []
+   }
+  ],
+  "images_in_file": [
+   "Material Diffuse Color.png",
+   "Untitled"
+  ]
+ },
+ "ff11": {
+  "file": "fffemale 11.obj",
+  "kind": "obj",
+  "unit_scale": 1.0,
+  "objects": [
+   {
+    "name": "accs",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.0005,
+     1.0401,
+     0.2515
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 318,
+     "edges": 637,
+     "faces": 338,
+     "tris": 338,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 260,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 8,
+      "5": 17,
+      "6": 23,
+      "7": 3,
+      "8": 7
+     },
+     "islands": 19
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Tex_1144_0.dds",
+      "images": [
+       "ff_female11_accs.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "body",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.9446,
+     4.8212,
+     1.1322
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 598,
+     "edges": 1532,
+     "faces": 942,
+     "tris": 942,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 238,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 8,
+      "5": 62,
+      "6": 218,
+      "7": 72
+     },
+     "islands": 8
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Tex_1064_0.dds",
+      "images": [
+       "ff_female11_body.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "bottom",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.3857,
+     0.9507,
+     1.0536
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 136,
+     "edges": 309,
+     "faces": 176,
+     "tris": 176,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 90,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 3,
+      "5": 5,
+      "6": 27,
+      "7": 9,
+      "8": 2
+     },
+     "islands": 3
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Tex_1112_0.dds",
+      "images": [
+       "ff_female11_bottom.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "hair",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.0256,
+     1.8606,
+     1.3064
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 1476,
+     "edges": 2944,
+     "faces": 1545,
+     "tris": 1545,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 1253,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 3,
+      "5": 40,
+      "6": 131,
+      "7": 48,
+      "8": 1
+     },
+     "islands": 77
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Tex_1272_0.dds",
+      "images": [
+       "ff_female11_hair.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "head",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     4.484,
+     3.9971,
+     1.0748
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 2347,
+     "edges": 6166,
+     "faces": 3832,
+     "tris": 3832,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 836,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 52,
+      "5": 347,
+      "6": 726,
+      "7": 317,
+      "8": 69
+     },
+     "islands": 13
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "bodyhead",
+      "images": [
+       "ff_female11_head.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "shoes",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.9931,
+     1.1729,
+     0.9366
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 1484,
+     "edges": 3248,
+     "faces": 1806,
+     "tris": 1806,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 1078,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 18,
+      "5": 80,
+      "6": 236,
+      "7": 56,
+      "8": 16
+     },
+     "islands": 46
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Tex_1096_0.dds",
+      "images": [
+       "ff_female11_shoes.png"
+      ]
+     }
+    ]
+   },
+   {
+    "name": "top",
+    "type": "MESH",
+    "parent": null,
+    "dims": [
+     1.7665,
+     2.9199,
+     1.3046
+    ],
+    "scale": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "topology": {
+     "verts": 941,
+     "edges": 2406,
+     "faces": 1474,
+     "tris": 1474,
+     "quads": 0,
+     "ngons": 0,
+     "boundary_edges": 390,
+     "nonmanifold_edges": 0,
+     "valence_interior": {
+      "4": 21,
+      "5": 123,
+      "6": 256,
+      "7": 122,
+      "8": 29
+     },
+     "islands": 9
+    },
+    "modifiers": [],
+    "vertex_groups": 0,
+    "vertex_group_sample": [],
+    "shape_keys": [],
+    "uv_layers": [
+     "UVMap"
+    ],
+    "materials": [
+     {
+      "name": "Tex_1128_0.dds",
+      "images": [
+       "ff_female11_top.png"
+      ]
+     }
+    ]
+   }
+  ],
+  "images_in_file": [
+   "ff_female11_accs.png",
+   "ff_female11_body.png",
+   "ff_female11_bottom.png",
+   "ff_female11_hair.png",
+   "ff_female11_head.png",
+   "ff_female11_shoes.png",
+   "ff_female11_top.png"
+  ]
+ }
+}

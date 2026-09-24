@@ -1,0 +1,32 @@
+
+ours: orientação das arestas no tronco {'horizontal': 0.5084745762711864, 'vertical': 0.211864406779661, 'diagonal': 0.2796610169491525, 'n': 354}
+   pernas           faces= 1806 área=  78.1 dm² densidade=  23.1/dm² aresta_med=  6.3 mm poles3=   0 poles5+=  24
+   pelve            faces=  630 área=  56.2 dm² densidade=  11.2/dm² aresta_med= 13.4 mm poles3=   0 poles5+=   7
+   abdómen/cintura  faces=  104 área=  26.7 dm² densidade=   3.9/dm² aresta_med= 48.8 mm poles3=   0 poles5+=   0
+   tórax            faces=   80 área=  26.4 dm² densidade=   3.0/dm² aresta_med= 67.1 mm poles3=   0 poles5+=   0
+   pescoço/ombro    faces=  163 área=  22.4 dm² densidade=   7.3/dm² aresta_med= 34.6 mm poles3=   0 poles5+=   2
+   cabeça           faces= 3430 área=  18.5 dm² densidade= 185.0/dm² aresta_med=  2.7 mm poles3= 234 poles5+= 118
+
+femalebase: orientação das arestas no tronco {'horizontal': 0.4309854442027773, 'vertical': 0.25062740505270203, 'diagonal': 0.3183871507445207, 'n': 5977}
+   pernas           faces= 5790 área=  58.8 dm² densidade=  98.5/dm² aresta_med=  3.8 mm poles3= 240 poles5+= 220
+   pelve            faces= 1135 área=  21.0 dm² densidade=  54.2/dm² aresta_med= 12.6 mm poles3=   0 poles5+=  16
+   abdómen/cintura  faces=  636 área=  11.1 dm² densidade=  57.4/dm² aresta_med= 12.2 mm poles3=   2 poles5+=   4
+   tórax            faces= 2346 área=  20.7 dm² densidade= 113.1/dm² aresta_med=  8.8 mm poles3=  26 poles5+=  26
+   pescoço/ombro    faces= 5288 área=  28.6 dm² densidade= 185.2/dm² aresta_med=  6.0 mm poles3= 186 poles5+= 218
+   cabeça           faces= 3400 área=  12.1 dm² densidade= 280.3/dm² aresta_med=  3.6 mm poles3=  30 poles5+=  78
+
+bodytopo: orientação das arestas no tronco {'horizontal': 0.4015444015444015, 'vertical': 0.2676962676962677, 'diagonal': 0.3307593307593308, 'n': 777}
+   pernas           faces=  354 área=  43.0 dm² densidade=   8.2/dm² aresta_med= 33.8 mm poles3=   0 poles5+=   2
+   pelve            faces= 1602 área=  26.6 dm² densidade=  60.3/dm² aresta_med=  5.9 mm poles3= 176 poles5+= 152
+   abdómen/cintura  faces=  908 área=  22.8 dm² densidade=  39.7/dm² aresta_med=  9.8 mm poles3=  62 poles5+=  68
+   tórax            faces=  376 área=  27.2 dm² densidade=  13.8/dm² aresta_med= 25.4 mm poles3=  16 poles5+=  20
+   pescoço/ombro    faces=  268 área=  11.0 dm² densidade=  24.3/dm² aresta_med= 19.0 mm poles3=   8 poles5+=  12
+   cabeça           faces= 1618 área=  13.2 dm² densidade= 122.7/dm² aresta_med=  5.4 mm poles3=  62 poles5+=  66
+
+femalechar: orientação das arestas no tronco {'horizontal': 0.313458262350937, 'vertical': 0.18824531516183987, 'diagonal': 0.49829642248722317, 'n': 1174}
+   pernas           faces=  894 área=  62.3 dm² densidade=  14.4/dm² aresta_med= 18.0 mm poles3=  68 poles5+=  58
+   pelve            faces=  266 área=  20.2 dm² densidade=  13.1/dm² aresta_med= 24.7 mm poles3=  30 poles5+=  24
+   abdómen/cintura  faces=  130 área=  12.6 dm² densidade=  10.3/dm² aresta_med= 31.3 mm poles3=   0 poles5+=   8
+   tórax            faces= 1518 área=  44.5 dm² densidade=  34.1/dm² aresta_med= 11.6 mm poles3= 122 poles5+= 118
+   pescoço/ombro    faces=  302 área=  12.0 dm² densidade=  25.2/dm² aresta_med= 16.1 mm poles3=  14 poles5+=  18
+   cabeça           faces= 1068 área=  13.9 dm² densidade=  76.9/dm² aresta_med=  6.8 mm poles3=  50 poles5+=  62

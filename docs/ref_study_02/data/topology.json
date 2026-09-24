@@ -1,0 +1,311 @@
+{
+ "ours": {
+  "bands": [
+   {
+    "band": "pernas",
+    "faces": 1806,
+    "area_dm2": 78.10756908400981,
+    "faces_per_dm2": 23.121958872609756,
+    "edge_med_mm": 6.334840882676032,
+    "poles3": 0,
+    "poles5p": 24
+   },
+   {
+    "band": "pelve",
+    "faces": 630,
+    "area_dm2": 56.22609510337505,
+    "faces_per_dm2": 11.20476175415894,
+    "edge_med_mm": 13.415974282671668,
+    "poles3": 0,
+    "poles5p": 7
+   },
+   {
+    "band": "abd\u00f3men/cintura",
+    "faces": 104,
+    "area_dm2": 26.6581399843798,
+    "faces_per_dm2": 3.901247426149696,
+    "edge_med_mm": 48.76240697630836,
+    "poles3": 0,
+    "poles5p": 0
+   },
+   {
+    "band": "t\u00f3rax",
+    "faces": 80,
+    "area_dm2": 26.376281793878665,
+    "faces_per_dm2": 3.033027953870518,
+    "edge_med_mm": 67.14111221932656,
+    "poles3": 0,
+    "poles5p": 0
+   },
+   {
+    "band": "pesco\u00e7o/ombro",
+    "faces": 163,
+    "area_dm2": 22.390872282714707,
+    "faces_per_dm2": 7.279752121396032,
+    "edge_med_mm": 34.60618216697809,
+    "poles3": 0,
+    "poles5p": 2
+   },
+   {
+    "band": "cabe\u00e7a",
+    "faces": 3430,
+    "area_dm2": 18.545371101179157,
+    "faces_per_dm2": 184.95181257289119,
+    "edge_med_mm": 2.726599057616351,
+    "poles3": 234,
+    "poles5p": 118
+   }
+  ],
+  "torso_edge_orientation": {
+   "horizontal": 0.5084745762711864,
+   "vertical": 0.211864406779661,
+   "diagonal": 0.2796610169491525,
+   "n": 354
+  },
+  "valence_hist": {
+   "3": 234,
+   "4": 5032,
+   "5": 24,
+   "6": 20,
+   "8": 84,
+   "10": 3,
+   "12": 12,
+   "13": 4,
+   "16": 4
+  }
+ },
+ "femalebase": {
+  "bands": [
+   {
+    "band": "pernas",
+    "faces": 5790,
+    "area_dm2": 58.76970845807913,
+    "faces_per_dm2": 98.52014161564286,
+    "edge_med_mm": 3.8209824336838274,
+    "poles3": 240,
+    "poles5p": 220
+   },
+   {
+    "band": "pelve",
+    "faces": 1135,
+    "area_dm2": 20.951367906840808,
+    "faces_per_dm2": 54.1730738081981,
+    "edge_med_mm": 12.593247369648797,
+    "poles3": 0,
+    "poles5p": 16
+   },
+   {
+    "band": "abd\u00f3men/cintura",
+    "faces": 636,
+    "area_dm2": 11.076709764789399,
+    "faces_per_dm2": 57.417772380541585,
+    "edge_med_mm": 12.153162024957318,
+    "poles3": 2,
+    "poles5p": 4
+   },
+   {
+    "band": "t\u00f3rax",
+    "faces": 2346,
+    "area_dm2": 20.74570654940899,
+    "faces_per_dm2": 113.08363947078166,
+    "edge_med_mm": 8.844778815727963,
+    "poles3": 26,
+    "poles5p": 26
+   },
+   {
+    "band": "pesco\u00e7o/ombro",
+    "faces": 5288,
+    "area_dm2": 28.555103047752496,
+    "faces_per_dm2": 185.1858139386475,
+    "edge_med_mm": 6.024403840455477,
+    "poles3": 186,
+    "poles5p": 218
+   },
+   {
+    "band": "cabe\u00e7a",
+    "faces": 3400,
+    "area_dm2": 12.131662479663216,
+    "faces_per_dm2": 280.25837396148745,
+    "edge_med_mm": 3.583804282241645,
+    "poles3": 30,
+    "poles5p": 78
+   }
+  ],
+  "torso_edge_orientation": {
+   "horizontal": 0.4309854442027773,
+   "vertical": 0.25062740505270203,
+   "diagonal": 0.3183871507445207,
+   "n": 5977
+  },
+  "valence_hist": {
+   "2": 2,
+   "3": 484,
+   "4": 17445,
+   "5": 542,
+   "6": 14,
+   "7": 2,
+   "12": 2,
+   "13": 2
+  }
+ },
+ "bodytopo": {
+  "bands": [
+   {
+    "band": "pernas",
+    "faces": 354,
+    "area_dm2": 42.963494560159,
+    "faces_per_dm2": 8.239553221265945,
+    "edge_med_mm": 33.76407359127299,
+    "poles3": 0,
+    "poles5p": 2
+   },
+   {
+    "band": "pelve",
+    "faces": 1602,
+    "area_dm2": 26.584585976590304,
+    "faces_per_dm2": 60.26048332709336,
+    "edge_med_mm": 5.855849184480173,
+    "poles3": 176,
+    "poles5p": 152
+   },
+   {
+    "band": "abd\u00f3men/cintura",
+    "faces": 908,
+    "area_dm2": 22.84629792745639,
+    "faces_per_dm2": 39.74385709593575,
+    "edge_med_mm": 9.78780465821552,
+    "poles3": 62,
+    "poles5p": 68
+   },
+   {
+    "band": "t\u00f3rax",
+    "faces": 376,
+    "area_dm2": 27.24845042980821,
+    "faces_per_dm2": 13.798949814360013,
+    "edge_med_mm": 25.3835520895799,
+    "poles3": 16,
+    "poles5p": 20
+   },
+   {
+    "band": "pesco\u00e7o/ombro",
+    "faces": 268,
+    "area_dm2": 11.038458677190507,
+    "faces_per_dm2": 24.278751937875715,
+    "edge_med_mm": 19.02085197253278,
+    "poles3": 8,
+    "poles5p": 12
+   },
+   {
+    "band": "cabe\u00e7a",
+    "faces": 1618,
+    "area_dm2": 13.182423932729145,
+    "faces_per_dm2": 122.7391872888302,
+    "edge_med_mm": 5.372478324589213,
+    "poles3": 62,
+    "poles5p": 66
+   }
+  ],
+  "torso_edge_orientation": {
+   "horizontal": 0.4015444015444015,
+   "vertical": 0.2676962676962677,
+   "diagonal": 0.3307593307593308,
+   "n": 777
+  },
+  "valence_hist": {
+   "0": 1,
+   "3": 324,
+   "4": 4440,
+   "5": 304,
+   "6": 16
+  }
+ },
+ "femalechar": {
+  "bands": [
+   {
+    "band": "pernas",
+    "faces": 894,
+    "area_dm2": 62.27382798192948,
+    "faces_per_dm2": 14.355950629202038,
+    "edge_med_mm": 18.00195563267625,
+    "poles3": 68,
+    "poles5p": 58
+   },
+   {
+    "band": "pelve",
+    "faces": 266,
+    "area_dm2": 20.24957235320536,
+    "faces_per_dm2": 13.136079881602742,
+    "edge_med_mm": 24.69071064191678,
+    "poles3": 30,
+    "poles5p": 24
+   },
+   {
+    "band": "abd\u00f3men/cintura",
+    "faces": 130,
+    "area_dm2": 12.581732107142754,
+    "faces_per_dm2": 10.33244062844081,
+    "edge_med_mm": 31.281474413978877,
+    "poles3": 0,
+    "poles5p": 8
+   },
+   {
+    "band": "t\u00f3rax",
+    "faces": 1518,
+    "area_dm2": 44.52714828144337,
+    "faces_per_dm2": 34.0915611843174,
+    "edge_med_mm": 11.568439122272439,
+    "poles3": 122,
+    "poles5p": 118
+   },
+   {
+    "band": "pesco\u00e7o/ombro",
+    "faces": 302,
+    "area_dm2": 11.987653675257883,
+    "faces_per_dm2": 25.19258632098439,
+    "edge_med_mm": 16.061539068837188,
+    "poles3": 14,
+    "poles5p": 18
+   },
+   {
+    "band": "cabe\u00e7a",
+    "faces": 1068,
+    "area_dm2": 13.893452586489806,
+    "faces_per_dm2": 76.8707413331182,
+    "edge_med_mm": 6.7757249536661845,
+    "poles3": 50,
+    "poles5p": 62
+   }
+  ],
+  "torso_edge_orientation": {
+   "horizontal": 0.313458262350937,
+   "vertical": 0.18824531516183987,
+   "diagonal": 0.49829642248722317,
+   "n": 1174
+  },
+  "valence_hist": {
+   "3": 284,
+   "4": 3553,
+   "5": 258,
+   "6": 26,
+   "7": 4
+  }
+ },
+ "makehuman": {
+  "valence_hist": {
+   "3": 66,
+   "4": 31389,
+   "5": 96
+  },
+  "faces": 31800
+ },
+ "whitewalker": {
+  "valence_hist": {
+   "0": 4,
+   "3": 96,
+   "4": 1531,
+   "5": 80,
+   "6": 12
+  },
+  "faces": 1750
+ }
+}

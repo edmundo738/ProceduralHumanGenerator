@@ -1,0 +1,24 @@
+MEASURED — pontos de viragem (largura frontal só onde válida; profundidade em todas)
+ours
+    cintura_min z=1105 (0.650S) w=289 | anca_max z=845 (0.497S) w=391 | anca/cintura=1.35
+    prof: tórax_max z=1305 d=311 | cintura_min z=1100 d=225 | nádega_max z=955 d=262 | tórax/cintura=1.38 nádega/cintura=1.16
+    z=0.72: depth/width=0.82
+    z=0.66: depth/width=0.77
+    z=0.52: depth/width=0.58
+femalebase
+    cintura_min z=1125 (0.662S) w=213 | anca_max z=845 (0.497S) w=336 | anca/cintura=1.58
+    prof: tórax_max z=1360 d=222 | cintura_min z=1100 d=154 | nádega_max z=940 d=204 | tórax/cintura=1.44 nádega/cintura=1.32
+    z=0.72: depth/width=0.73
+    z=0.66: depth/width=0.74
+    z=0.52: depth/width=0.60
+femalechar
+    cintura_min z=1055 (0.621S) w=220 | anca_max z=785 (0.462S) w=335 | anca/cintura=1.52
+    prof: tórax_max z=1250 d=234 | cintura_min z=1025 d=176 | nádega_max z=855 d=231 | tórax/cintura=1.33 nádega/cintura=1.31
+    z=0.72: depth/width=0.88
+    z=0.66: depth/width=0.85
+    z=0.52: depth/width=0.74
+bodytopo
+    prof: tórax_max z=1300 d=222 | cintura_min z=1085 d=170 | nádega_max z=925 d=208 | tórax/cintura=1.30 nádega/cintura=1.22
+    z=0.72: depth/width=0.30  (largura inválida)
+    z=0.66: depth/width=0.34  (largura inválida)
+    z=0.52: depth/width=0.58  (largura inválida)

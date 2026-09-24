@@ -1,0 +1,16 @@
+                                            ours            femalebase            femalechar              bodytopo
+thoracic_apex                      z=1310 y=-141          z=1350 y=-88          z=1310 y=-55         z=1340 y=-116
+lumbar_deepest                     z=1095 y=-127          z=1095 y=-29           z=1045 y=+9          z=1090 y=-40
+lumbar_depth_vs_chord                       19.5                  54.5                  51.8                  68.0
+gluteal_apex                        z=945 y=-150           z=920 y=-80           z=855 y=-34          z=895 y=-101
+gluteal_fold                        z=870 y=-123           z=870 y=-63           z=800 y=-23           z=830 y=-69
+bust_apex                          z=1305 y=+168         z=1360 y=+122         z=1160 y=+188         z=1160 y=+123
+underbust                           z=1100 y=+96          z=1340 y=+87         z=1055 y=+183         z=1160 y=+123
+abdomen_low                         z=975 y=+111         z=1020 y=+123         z=1050 y=+182         z=1050 y=+124
+neck_z                                    1485.0                1475.0                1440.0                1480.0
+neckbase_front_z                          1405.0                1410.0                1350.0                1335.0
+neckbase_back_z                           1445.0                1430.0                1410.0                1420.0
+neckbase_tilt_dz                            40.0                  20.0                  60.0                  85.0
+axis_pelvis_0.50-0.58                       -3.3                   6.9                  11.5                  10.4
+axis_lumbar_0.60-0.68                        1.4                   3.5                  -3.3                  -6.7
+axis_thorax_0.70-0.78                        9.3                 -12.3                 -29.0                 -12.5
