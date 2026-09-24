@@ -17,25 +17,35 @@ from __future__ import annotations
 
 from .spec import (BodyParams, CharacterSpec, FaceParams, HairParams,
                    PipelineParams, ExtrasParams, load_preset, list_presets)
+from .pipeline.assemble import CONTRACT_VERSION as API_CONTRACT_VERSION
 
 __version__ = "0.4.0"
 __all__ = [
     "CharacterSpec", "BodyParams", "FaceParams", "HairParams",
     "PipelineParams", "ExtrasParams", "load_preset", "list_presets",
-    "generate_character", "Anatomy", "__version__",
+    "generate_character", "build_character", "API_CONTRACT_VERSION",
+    "Anatomy", "__version__",
 ]
 
 
 def generate_character(spec=None, **kwargs):
-    """Build a character. ``spec`` may be a CharacterSpec or kwargs for one."""
+    """Build a character in the current Blender scene (contract v1.0.0).
+
+    ``spec`` may be a :class:`CharacterSpec`, a preset name, or ``None``.
+    Accepts ``seed``, ``preset``, ``overrides``, ``out_dir``, ``name``,
+    ``weld``, ``subdivide``, ``write_blend``, ``save_report`` and returns a
+    :class:`~human_generator.pipeline.assemble.GenerationResult`.
+    Requires the Blender runtime; use :func:`build_character` for the
+    geometry-only path.
+    """
     from .pipeline.assemble import generate_character as _gc
-    if spec is None:
-        spec = CharacterSpec.from_preset(**kwargs)
-    elif isinstance(spec, str):
-        spec = CharacterSpec.from_preset(spec, **kwargs)
-    elif kwargs:
-        spec = spec.merged(kwargs)
-    return _gc(spec)
+    return _gc(spec, **kwargs)
+
+
+def build_character(spec=None, **kwargs):
+    """Geometry + hair only, pure Python, no ``bpy`` (contract v1.0.0)."""
+    from .pipeline.assemble import build_character as _bc
+    return _bc(spec, **kwargs)
 
 
 def __getattr__(name):  # lazy: Anatomy pulls in mathutils shim etc.
