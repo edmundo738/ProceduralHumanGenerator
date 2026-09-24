@@ -95,20 +95,28 @@ materials/skin ──► procedural PBR node graphs (skin, eye, iris, cornea, ha
 | Public API, determinism pins, error contract, audit report | implemented + tested (S0, 2026-09-24) |
 | pytest suite: math/RNG/topology/spec contracts, preset `format_version` + tolerant loading, meta-test of the pin gate | implemented + tested (S1, 2026-09-24) |
 | Noise contracts `\|fbm3\| ≤ 1`, `\|ridged3\| ≤ 1` (divisor was a no-op) | fixed + tested in S1 (latent: no caller) |
-| Construction guard: collapsed rings are detected by name | implemented + tested (S1; pins the eye-pole defect for S2) |
-| Extremes: constant topology (5 821 v) across parameter extremes and all presets | measured |
+| Construction guard: collapsed rings are detected by name | implemented + tested (S1); clean since S2 (pin deliberately empty) |
+| Topology defects (non-manifold, loose edges, degenerate faces/rings, coincident verts) | **fixed at the sources + pinned** (S2, 2026-09-24) — see `docs/S2_TOPOLOGY.md` |
+| Semantic label pins (region populations + vertex-group sizes) | implemented + tested (S2) |
+| Extremes: constant topology (5 759 v) across parameter extremes and all presets | measured |
 | Rig / skin weights, shape keys, expression layer, glTF/GLB export, quality passes, UV unwrap beyond per-face rects | **not implemented** (S3–S5) |
 | Visual realism of fringe hair, mouth corners, eyelids, ears | known defects, see below |
 
 ## Known issues (measured, not fixed)
 
-1. **36 non-manifold edges + 2 loose edges** after the weld, introduced by the mouth
-   clamp (projection collapsing distinct tooth vertices) and a degenerate eye-pole ring.
-   Root-caused with attribution A/B — `docs/RESEARCH_GATE_02.md`. Scheduled: S2.
+1. ~~**36 non-manifold edges + 2 loose edges**, 67 degenerate faces, 2 collapsed eye
+   rings~~ — **fixed in S2** at the sources (eye pole/limbus/cornea seam, the head
+   sagittal pass and the tooth clamp were absolute projections that collapse ray
+   columns; both are now order-preserving / rigid). Result: 0 non-manifold, 0 loose,
+   0 degenerate, 0 collapsed rings, 0 coincident vertices, identical in all four
+   `weld`/`dissolve` regimes and in both numerics regimes. The weld and the
+   `dissolve_degenerate` wash are now provably **no-ops** (0 operations) and stay as
+   guards. Full measurement tables: `docs/S2_TOPOLOGY.md`.
 2. **Numerics regimes**: `core/_math.py` uses `mathutils` (float32) when `bpy` is imported
    *before* the package, and a pure-python stand-in (float64) otherwise. The same
    spec+seed therefore has two legitimate digests. Results carry `numerics` and the
-   Blender regime raises a warning; unifying this is an S1/S2 decision.
+   Blender regime raises a warning; the policy is CONTROLLED (documented), not yet
+   resolved.
 3. Visual: hair fringe covers the eyes at default length; corner tooth tips can peek past
    the lip band; eyelids read as pale caps; ear patches show shading artifacts.
 4. ~~`fbm3`/`ridged3` normalisation is a no-op~~ — fixed in S1 (divisor = sum of octave
@@ -120,3 +128,4 @@ materials/skin ──► procedural PBR node graphs (skin, eye, iris, cornea, ha
 - `docs/RESEARCH_GATE_01.md` — checkpoint state + external study (MPFB2, 2026-human-body-generator)
 - `docs/RESEARCH_GATE_02.md` — second audit: root causes, measurements, retractions
 - `docs/RESEARCH_COMPARATIVE_01.md` — deep comparative investigation + slice plan S1–S6
+- `docs/S2_TOPOLOGY.md` — S2: root causes, fixes, before/after measurement tables, open items

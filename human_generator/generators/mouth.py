@@ -135,8 +135,10 @@ def build_teeth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
         # axis leans slightly forward (incisor bevel); width runs along the
         # arch tangent.  (v1 grew crowns along +y, which poked them out of
         # the closed lips — the floating-grill render bug.)
+        crowns: list[range] = []
         for ti, (tname, tw, thh, cusps, kind) in enumerate(TOOTH_TYPES):
             for side in (1, -1):
+                crown_start = into.n_verts
                 u = mix(0.06, 0.98, ti / (len(TOOTH_TYPES) - 1)) * side
                 x, yd = arch(u)
                 lean = Vector((0.0, 0.30, -sign * 1.0)).normalized()
@@ -170,6 +172,8 @@ def build_teeth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
                 into.loft(rings, close=True, region="enamel", material="enamel",
                           uv_rect=(0.3, 0.7, 0.0, 0.55),
                           cap_start="pole", cap_end="pole")
+                crowns.append(range(crown_start, into.n_verts))
+        counts["crowns_rigid"] = _clamp_rigid_groups(into, anat, crowns, 0.0090)
     return counts
 
 
@@ -228,6 +232,36 @@ def build_tongue(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> None
     mid_crease = [i for ring in res["rings"] for i in (ring[0], ring[-1])]
 
 
+def _clamp_rigid_groups(builder, anat, groups, margin: float) -> int:
+    """Pull *rigid* groups (one tooth crown each) behind the skull line.
+
+    A per-vertex clamp is the pure function ``y := skull_front_y(x, z) - margin``,
+    so any two vertices of the same crown that share (x, z) — measured: occlusal
+    cusp vertices and the cap cone, which sit at the ring's own centre line —
+    collapse onto the same point (0 -> 32 coincident pairs, all intra-tooth,
+    pre-clamp |dy| up to 2.9 mm; docs/RESEARCH_GATE_02.md).  Teeth are rigid
+    bodies, so translating the whole crown is both physically right and
+    provably coincidence-free: intra-crown distances are preserved, and
+    containment still holds because every vertex moves by the group maximum.
+    Returns the number of groups moved.
+    """
+    h = anat.h
+    margin *= h
+    moved = 0
+    for ids in groups:
+        need = 0.0
+        for i in ids:
+            p = builder.verts[i]
+            need = max(need, p.y - (anat.skull_front_y(p.x, p.z) - margin))
+        if need <= 0.0:
+            continue
+        for i in ids:
+            v = builder.verts[i]
+            builder.verts[i] = Vector((v.x, v.y - need, v.z))
+        moved += 1
+    return moved
+
+
 def _clamp_behind(builder, anat, regions, margin: float) -> None:
     """Per-vertex pull-back: interior parts may never exceed the skull line.
 
@@ -249,8 +283,11 @@ def build_mouth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
     counts = build_teeth(into, spec, anat, mouth_open)
     build_tongue(into, spec, anat, mouth_open)
     build_lips(into, spec, anat, mouth_open)
+    # "enamel" is absent on purpose: crowns were already pulled back rigidly,
+    # per tooth, inside build_teeth (a per-vertex clamp here would re-collapse
+    # vertices that share (x, z)).
     if mouth_open < 0.02:
-        _clamp_behind(into, anat, ("enamel", "gum", "oral"), 0.0090)
+        _clamp_behind(into, anat, ("gum", "oral"), 0.0090)
         _clamp_behind(into, anat, ("tongue",), 0.0075)
     else:                       # open mouth: teeth may pass the lip line
         _clamp_behind(into, anat, ("gum", "oral"), 0.0090)

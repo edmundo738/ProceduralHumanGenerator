@@ -7,6 +7,8 @@ presets (the property the whole rig/shape-key plan depends on).
 """
 from __future__ import annotations
 
+import copy
+
 import pytest
 
 import human_generator as hcg
@@ -32,17 +34,33 @@ class TestGateIsLive:
         assert pins.check_build(other), "a different seed must not satisfy the pin"
         assert pins.check_build(other) != [], "pin should compare fingerprint/digest"
 
-    def test_audit_pins_are_live(self):
+    @pytest.mark.parametrize("field", ["non_manifold_edges", "degenerate_faces",
+                                       "loose_edges", "ngons", "boundary_edges"])
+    def test_audit_pins_are_live(self, field):
+        """Meta-test: every pinned audit counter must react to a change.
+
+        Values are derived from the pin (pin + 1) rather than hard-coded, so the
+        meta-test stays live when the pins are deliberately flipped.
+        """
         audit = dict(pins.AUDIT_PINS)
         assert pins.check_audit(audit) == []
-        broken = dict(audit, non_manifold_edges=0)
-        assert pins.check_audit(broken), "changing the audit defect count must fail the pin"
+        broken = dict(audit, **{field: pins.AUDIT_PINS[field] + 1})
+        assert pins.check_audit(broken), f"changing audit[{field}] must fail the pin"
+
+    def test_semantic_pins_are_live(self, build_default):
+        """The label populations are pinned, and the gate reacts to drift."""
+        assert pins.check_semantics(build_default) == []
+        broken = copy.deepcopy(build_default)
+        broken.builder.regions[0] = "not-a-region"
+        failures = pins.check_semantics(broken)
+        assert failures, "a changed region label must fail the semantic pin"
+        assert any("regions" in f for f in failures)
 
     def test_missing_numerics_backend_is_reported(self, build_default):
         class Fake:
             contract_version = pins.CONTRACT_VERSION_PIN
             fingerprint = pins.PINS[("realistic_female", 42)]["fingerprint"]
-            verts, faces = 5821, 5642
+            verts, faces = 5759, 5608
             digest = "whatever"
             numerics = {}
             hair = type("H", (), {"strands": [0] * 2400})()

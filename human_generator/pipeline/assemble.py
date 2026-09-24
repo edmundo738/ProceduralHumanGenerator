@@ -338,6 +338,7 @@ def generate_character(spec: CharacterSpec | str | None = None, *,
                        out_dir: str | None = None,
                        name: str | None = None,
                        weld: float = 1e-5,
+                       dissolve: float = 1e-5,
                        subdivide: int | None = None,
                        write_blend: bool = True,
                        save_report: bool = True) -> GenerationResult:
@@ -362,7 +363,8 @@ def generate_character(spec: CharacterSpec | str | None = None, *,
 
     mat_map = mats.build_all(build.spec, build.anatomy)
 
-    me = obj.mesh_from_builder(build.builder, f"hcg:{name}", weld=weld)
+    me = obj.mesh_from_builder(build.builder, f"hcg:{name}", weld=weld,
+                              dissolve=dissolve)
     for poly in me.polygons:
         poly.use_smooth = True
 
@@ -389,11 +391,13 @@ def generate_character(spec: CharacterSpec | str | None = None, *,
 
     warnings = list(build.warnings)
     if int(topo.get("non_manifold_edges", 0)) > 0:
-        warnings.append(
-            f"audit: {topo['non_manifold_edges']} non-manifold edges — known defect, "
-            "root-caused in docs/RESEARCH_GATE_02.md (scheduled for S2)")
+        warnings.append(f"audit: {topo['non_manifold_edges']} non-manifold edges "
+                        f"after weld={weld:g}/dissolve={dissolve:g}")
     if int(topo.get("degenerate_faces", 0)) > 0:
         warnings.append(f"audit: {topo['degenerate_faces']} degenerate faces after weld")
+    if int(topo.get("loose_edges", 0)) > 0:
+        warnings.append(f"audit: {topo['loose_edges']} loose edges "
+                        "(edges with no face) after weld")
 
     files: dict[str, str] = {}
     result = GenerationResult(

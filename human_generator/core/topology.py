@@ -443,8 +443,17 @@ class MeshBuilder:
         return c / len(self.faces[fi])
 
     # -- bmesh -------------------------------------------------------------------
-    def to_bmesh(self, weld: float = 1e-5):
+    def to_bmesh(self, weld: float = 1e-5, dissolve: float = 0.0):
         """Build a bmesh with UVs, region attribute, crease edge attribute.
+
+        ``dissolve > 0`` runs ``bmesh.ops.dissolve_degenerate`` with that
+        distance *after* the weld: it collapses edges shorter than the
+        threshold and removes the zero-area faces they leave behind, without
+        fusing distinct shells (measured in docs/RESEARCH_COMPARATIVE_01.md
+        §dissolve experiment: ``weld=0`` + ``dissolve=1e-5`` gives 0
+        non-manifold / 0 degenerate / 10 ngons where ``weld=1e-5`` alone gave
+        36 non-manifold).  It is the wash of last resort *on top of* the
+        source-level fixes, not a replacement for them.
 
         IMPORTANT: all custom-data layers are created *before* geometry —
         creating a layer mid-edit invalidates BMVert references.
@@ -481,9 +490,23 @@ class MeshBuilder:
             e = edge_by_pair.get((min(a, b), max(a, b)))
             if e is not None:
                 e[cre_l] = max(e[cre_l], w)
+        self.op_counts = {"weld_removed": 0, "dissolve_collapsed": 0}
         if weld and weld > 0.0:
             try:
+                n0 = len(bm.verts)
                 B.ops.remove_doubles(bm, verts=bm.verts[:], dist=weld)
+                bm.verts.ensure_lookup_table()
+                self.op_counts["weld_removed"] = n0 - len(bm.verts)
+            except Exception:
+                pass
+        if dissolve and dissolve > 0.0:
+            try:
+                e0, v0 = len(bm.edges), len(bm.verts)
+                B.ops.dissolve_degenerate(bm, dist=dissolve, edges=bm.edges[:])
+                bm.verts.ensure_lookup_table()
+                bm.edges.ensure_lookup_table()
+                self.op_counts["dissolve_collapsed"] = max(e0 - len(bm.edges),
+                                                           v0 - len(bm.verts))
             except Exception:
                 pass
         try:
@@ -515,11 +538,13 @@ def audit(bm) -> dict:
     for f in bm.faces:
         if f.calc_area() < 1e-10:
             degenerate += 1
+    loose = sum(1 for e in bm.edges if len(e.link_faces) == 0)
     return {
         "verts": len(bm.verts), "faces": len(bm.faces), "edges": len(bm.edges),
         "quads": quads, "tris": tris, "ngons": ngons,
         "boundary_edges": boundary, "non_manifold_edges": non_manifold,
-        "degenerate_faces": degenerate, "irregular_valence_verts": irregular,
+        "degenerate_faces": degenerate, "loose_edges": loose,
+        "irregular_valence_verts": irregular,
         "quad_ratio": quads / max(1, len(bm.faces)),
         "watertight": boundary == 0 and non_manifold == 0,
     }

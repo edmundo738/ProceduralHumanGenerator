@@ -112,11 +112,12 @@ class TestDegeneracyGuard:
         head = build_head(spec, anat).builder
         assert head.rings_degenerate() == {}
 
-    def test_eyes_report_the_documented_defect(self, head_builder):
-        """S2 target: fixing eyes.py must flip this pin to ``{}`` deliberately."""
+    def test_eyes_are_clean_after_the_s2_fix(self, head_builder):
+        """S2 resolved the eye-pole defect: the guard must find no collapsed
+        ring at all (head + eyes + mouth), and the pin is deliberately empty."""
         found = head_builder.rings_degenerate()
-        assert found == pins.DEGENERATE_RING_PINS, \
-            f"eye-pole pin changed: {found} != {pins.DEGENERATE_RING_PINS}"
+        assert pins.DEGENERATE_RING_PINS == {}
+        assert found == {}, f"a ring collapsed again: {found}"
 
 
 class TestMirrorAndTransform:

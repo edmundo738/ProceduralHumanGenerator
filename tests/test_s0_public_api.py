@@ -198,12 +198,23 @@ def suite_bpy() -> None:
     check("AUDIT-PIN quads", topo["quad_ratio"] > 0.85, f"{topo['quad_ratio']:.3f}")
     check("AUDIT-PIN degenerate_faces = 0",
           topo["degenerate_faces"] == AUDIT_PINS["degenerate_faces"], f"{topo['degenerate_faces']}")
-    check("AUDIT-PIN non-manifold = known defect (S2 target)",
+    check("AUDIT-PIN non-manifold = 0 (S2 closed this defect deliberately)",
           topo["non_manifold_edges"] == AUDIT_PINS["non_manifold_edges"],
-          f"{topo['non_manifold_edges']} — flip this pin to 0 in S2, deliberately")
+          f"{topo['non_manifold_edges']}")
+    check("AUDIT-PIN loose edges = 0 (S2)",
+          topo.get("loose_edges") == AUDIT_PINS["loose_edges"], f"{topo.get('loose_edges')}")
+    check("AUDIT-PIN ngons = 0 (dissolve wash kept in budget)",
+          topo.get("ngons") == AUDIT_PINS["ngons"], f"{topo.get('ngons')}")
+    check("weld/dissolve are no-ops on the default build (S2)",
+          getattr(res.build.builder, "op_counts", None) ==
+          {"weld_removed": 0, "dissolve_collapsed": 0},
+          str(getattr(res.build.builder, "op_counts", None)))
+    check("semantic label pins agree",
+          pins.check_semantics(res.build) == [], str(pins.check_semantics(res.build)))
     check("shared audit pin gate agrees", pins.check_audit(topo) == [], str(pins.check_audit(topo)))
-    check("known-defect surfaced as a warning",
-          any("non-manifold" in w for w in res.warnings), str(res.warnings))
+    check("no audit defect surfaced as a warning (S2: all counters are 0)",
+          not any(k in w for w in res.warnings
+                  for k in ("non-manifold", "degenerate", "loose")), str(res.warnings))
 
     # files
     check(".blend written", os.path.isfile(res.files.get("blend", ""))
@@ -245,8 +256,9 @@ def suite_bpy() -> None:
     res5 = hcg.generate_character("cyber_angel", seed=1, name="s0_neon", write_blend=False)
     check("other preset via API works", res5.audit["verts"] > 1000,
           f"{res5.audit['verts']}v, nm={res5.audit['non_manifold_edges']}")
-    check("other preset keeps the same known defect count",
-          res5.audit["non_manifold_edges"] > 0, "defect is spec-independent so far")
+    check("other preset is defect-free too (S2: spec-independent)",
+          res5.audit["non_manifold_edges"] == 0,
+          f"{res5.audit['non_manifold_edges']}")
     print(f"      total bpy half: {time.perf_counter() - t0:.1f}s")
 
 

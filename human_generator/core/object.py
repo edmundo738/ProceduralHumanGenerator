@@ -53,9 +53,17 @@ def link_to(obj: "bpy.types.Object", coll: "bpy.types.Collection") -> None:
 
 
 # ----------------------------------------------------------------------------- mesh
-def mesh_from_builder(builder, name: str | None = None, *, weld: float = 1e-5) -> bpy.types.Mesh:
-    """bmesh → Mesh with UVs, region + crease attributes (from the builder)."""
-    bm = builder.to_bmesh(weld=weld)
+def mesh_from_builder(builder, name: str | None = None, *, weld: float = 1e-5,
+                      dissolve: float = 1e-5) -> bpy.types.Mesh:
+    """bmesh → Mesh with UVs, region + crease attributes (from the builder).
+
+    ``dissolve`` is the S2 last-resort wash (``bmesh.ops.dissolve_degenerate``),
+    applied after the weld.  Measured on the default build (S2): both the weld
+    and the wash are now no-ops (0 vertices removed, 0 edges collapsed) because
+    the sources of coincident geometry were fixed at construction; they stay in
+    place as guards for extreme parameters and third-party generators.
+    """
+    bm = builder.to_bmesh(weld=weld, dissolve=dissolve)
     me = bpy.data.meshes.new(name or f"hcg:{builder.name}")
     bm.to_mesh(me)
     bm.free()

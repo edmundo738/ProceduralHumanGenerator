@@ -70,19 +70,38 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
             return c + d.normalized() * radius
 
         # ---- globe: latitude rings from back pole toward the iris --------
+        # k = 0 (phi = -pi/2) IS the back pole: cos(phi) = 6.1e-17, so every one
+        # of its 13 points lands on the same spot and cap_pole then stacks a
+        # second collapsed ring on top of it (26 coincident verts per eye => 52
+        # zero-area faces; docs/RESEARCH_GATE_02.md).  The pole is now built by
+        # cap_pole alone.  The globe is a single loft: splitting it into two
+        # lofts re-emitted the shared limbus ring (13 more coincident pairs per
+        # eye).  Only the face material differs across the limbus, and
+        # materials/skin.py:build_iris is driven by object coordinates and
+        # normals — not by UVs — so a single uv_rect is exact.
         rings = []
         NR, NC = 8, 12
-        for k in range(NR + 1):
+        face0 = len(into.faces)
+        for k in range(1, NR + 1):
             phi = mix(-math.pi * 0.5, math.pi * 0.34, k / NR)
             rings.append([sph(mix(-1, 1, j / NC) * math.pi * 0.5, phi, r) for j in range(NC + 1)])
-        res = into.loft(rings[:6], close=False, region="eye", material="eye",
+        res = into.loft(rings, close=False, region="eye", material="eye",
                         uv_rect=(0.0, 1.0, 0.0, 1.0), register=f"eye.{tag}",
                         cap_start="pole", cap_end="none")
-        into.loft(rings[5:], close=False, region="eye", material="iris",
-                  uv_rect=(0.5, 1.0, 0.0, 1.0), cap_start="none", cap_end="pole")
-        ids = res["rings"]
-        front_ids = set(ids[-1])
-        for ring in ids:
+        ids = res["rings"]                 # k = 1..8 (k = 0 was the pole)
+        # Iris material is assigned STRUCTURALLY — a face is iris iff all of its
+        # vertices belong to rings k >= 5 (limbus .. last) — never by position in
+        # the face list.  Measured: slicing the last N appended faces instead
+        # mis-labels the back pole (it is appended last) as iris and splits one
+        # band (10 quads iris / 2 quads eye), even though the per-material totals
+        # happen to match.  The pupil-facing pole cap is front-only and is the
+        # explicit ``cap_pole`` call further down.
+        iris_verts = set(ids[4]) | set(ids[5]) | set(ids[6]) | set(ids[7])
+        for fi in range(face0, len(into.faces)):
+            if all(v in iris_verts for v in into.faces[fi]):
+                into.face_mat[fi] = "iris"
+        front_ids = set(ids[4])            # limbus ring (k = 5): eyelid anchor
+        for ring in ids[:5]:               # k = 1..5 (the old pass covered k = 0..5)
             for vi in ring:
                 d = into.verts[vi] - c
                 if d.length < 1e-9:
@@ -92,6 +111,25 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
                     into.set_group(f"iris.{tag}", vi, 1.0)
                 if cosang > math.cos(math.radians(15)):
                     into.set_group(f"cornea.{tag}", vi, 1.0)
+        # UVs.  Measured on the pre-S2 tree: the globe loft (6 rings) registered
+        # rings 0..5 with v = k/5 and u = i/12, and the iris loft emitted a
+        # SECOND, unregistered copy of rings 5..8 carrying the iris rect
+        # (u 0.5..1.0, v = 0, 1/3, 2/3, 1).  Removing that duplicate seam leaves
+        # one vertex set for those four rings, so a single mapping must be
+        # chosen: the sclera rings (1..4, 8 of the 16 surviving ring/eye pairs)
+        # keep their pre-S2 values bit for bit, and the limbus..pole rings keep
+        # the iris mapping, i.e. the region the iris faces were drawn from
+        # before.  The globe copy's v = 1.0 for the limbus no longer exists
+        # anywhere, because the vertex that carried it is gone.
+        for k in range(0, 4):                       # rings 1..4  -> v = k/5 (pre-S2)
+            v = mix(0.0, 1.0, (k + 1) / 5.0)
+            for i, vi in enumerate(ids[k]):
+                into.uvs[vi] = (mix(0.0, 1.0, i / NC), v)
+        for k in range(4, len(ids)):                # rings 5..8  -> iris rect
+            v = mix(0.0, 1.0, (k - 4) / (len(ids) - 1 - 4))
+            for i, vi in enumerate(ids[k]):
+                into.uvs[vi] = (mix(0.5, 1.0, i / NC), v)
+        into.cap_pole(ids[-1], +1, region="eye", material="iris", shrink=0.42, uv_v=1.0)
         into.rings[f"eye.{tag}.front"] = [i for i in front_ids]
 
         # ---- cornea cap (protruding shell, glass material) ----------------
@@ -102,7 +140,7 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
             phi = mix(math.pi * 0.44, math.pi * 0.06, k / 3)   # base → apex
             cor_rings.append([cc + (ax * math.cos(phi) +
                                     (upv * math.sin(uu) + right * math.cos(uu)) * math.sin(phi)) * cr
-                              for uu in [2 * math.pi * j / 10 for j in range(11)]])
+                              for uu in [2 * math.pi * j / 10 for j in range(10)]])
         into.loft(cor_rings, close=True, region="cornea", material="cornea",
                   uv_rect=(0.0, 1.0, 0.0, 1.0), cap_start="none", cap_end="pole")
 

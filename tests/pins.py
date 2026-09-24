@@ -19,29 +19,124 @@ CONTRACT_VERSION_PIN = "1.0.0"
 # ("preset", seed) -> pins
 PINS = {
     ("realistic_female", 42): {
-        "fingerprint": "db7fb5c42c0523be",
-        "verts": 5821,          # pre-weld (pure build)
-        "faces": 5642,
+        "fingerprint": "db7fb5c42c0523be",   # spec hash: unchanged by S2
+        "verts": 5759,          # pre-weld (pure build)
+        "faces": 5608,
         "strands": 2400,
-        "digest": {"pure-python": "39ce28298fce36de",
-                   "mathutils": "34e746aa4e649945"},
+        # re-measured in S2 (eye ring/limbus/cornea seam fixed, head sagittal
+        # pass made column-rigid, teeth clamped rigidly per crown)
+        "digest": {"pure-python": "dfb13c52c84f4982",
+                   "mathutils": "69a638369e902297"},
     },
 }
 
 # topology must be constant across presets (Gate 02 §6) — seed 7
+# ``verts/faces`` are S2 numbers; ``strands`` are the *pure-python* regime
+# values (pytest runs without bpy).  The strand count is regime-sensitive for
+# cyber_angel only (2764 float64 / 2766 float32) and was already so before S2 —
+# measured on both trees, see docs/S2_TOPOLOGY.md §5.
 PRESET_COUNTS = {
-    "cyber_angel": (5821, 5642, 2764),
-    "neon_idol": (5821, 5642, 3200),
-    "realistic_female": (5821, 5642, 2400),
+    "cyber_angel": (5759, 5608, 2764),
+    "neon_idol": (5759, 5608, 3200),
+    "realistic_female": (5759, 5608, 2400),
 }
 
-# post-weld audit, Blender-side (docs/RESEARCH_GATE_02.md)
-AUDIT_PINS = {"verts": 5695, "faces": 5551,
-              "non_manifold_edges": 36,   # known defect — S2 target, flip to 0 deliberately
-              "degenerate_faces": 0}
+# post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
+# S2 flipped these deliberately: the weld and the dissolve wash are now both
+# no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
+# audited mesh IS the built mesh and every defect counter reads 0.  Measured
+# identically in the mathutils (float32) and pure-python (float64) regimes.
+AUDIT_PINS = {"verts": 5759, "faces": 5608,
+              "non_manifold_edges": 0,
+              "degenerate_faces": 0,
+              "loose_edges": 0,
+              "ngons": 0,
+              "boundary_edges": 946}
 
-# construction guard (S1): rings whose points collapse; documented defect, S2 target
-DEGENERATE_RING_PINS = {"eye.L.0": 78, "eye.R.0": 78}
+# construction guard (S1): rings whose points collapse.
+# S2 fixed eyes.py (the pole is now built by cap_pole only and the limbus ring
+# is no longer emitted twice), so the pin is deliberately EMPTY: the guard still
+# runs on every build and any future collapsed ring shows up as a new key.
+DEGENERATE_RING_PINS: dict[str, int] = {}
+
+# --- semantic vertex labels (S2 criterion 6) ---------------------------------
+# A "semantic flip" = any change in the number of vertices carrying a region
+# label, or in the size of a named vertex group.  Vertex *ids* are deliberately
+# not pinned: ids shift whenever a generator's construction order changes (the
+# eyes were rebuilt in S2), and pins must not forbid legitimate construction
+# changes — they must catch label drift.
+#
+# The pins are keyed by numerics backend ON PURPOSE: measured in S2, the
+# ``sole``/``palm`` predicates sit exactly on a knife edge (the sole is a flat
+# run of vertices and the threshold lands on it), so float32 vs float64 shifts
+# those two populations by tens of vertices.  That sensitivity is PRE-EXISTING
+# (identical on the pre-S2 tree) and is recorded here instead of being hidden;
+# it is part of the still-open numerics-regime question, not an S2 regression.
+SEMANTIC_PINS = {
+    ("realistic_female", 42): {
+        "pure-python": {
+            "regions": {
+                "brow": 2, "cornea": 102, "enamel": 1400,
+                "eye": 264, "eyelid": 240, "gum": 196,
+                "lip": 96, "nail": 192, "oral": 127,
+                "palm": 98, "scalp": 148, "skin": 2792,
+                "sole": 102,
+            },
+            "groups": {
+                "L.finger.index.0": 40, "L.finger.index.1": 32, "L.finger.index.2": 8,
+                "L.finger.middle.0": 40, "L.finger.middle.1": 32, "L.finger.middle.2": 8,
+                "L.finger.pinky.0": 40, "L.finger.pinky.1": 32, "L.finger.pinky.2": 8,
+                "L.finger.ring.0": 40, "L.finger.ring.1": 32, "L.finger.ring.2": 8,
+                "L.finger.thumb.0": 40, "L.finger.thumb.1": 32, "L.finger.thumb.2": 8,
+                "L.toe.big.0": 32, "L.toe.big.1": 8, "L.toe.little.0": 32,
+                "L.toe.little.1": 8, "L.toe.long.0": 32, "L.toe.long.1": 8,
+                "L.toe.second.0": 32, "L.toe.second.1": 8, "L.toe.third.0": 32,
+                "L.toe.third.1": 8, "R.finger.index.0": 40, "R.finger.index.1": 32,
+                "R.finger.index.2": 8, "R.finger.middle.0": 40, "R.finger.middle.1": 32,
+                "R.finger.middle.2": 8, "R.finger.pinky.0": 40, "R.finger.pinky.1": 32,
+                "R.finger.pinky.2": 8, "R.finger.ring.0": 40, "R.finger.ring.1": 32,
+                "R.finger.ring.2": 8, "R.finger.thumb.0": 40, "R.finger.thumb.1": 32,
+                "R.finger.thumb.2": 8, "R.toe.big.0": 32, "R.toe.big.1": 8,
+                "R.toe.little.0": 32, "R.toe.little.1": 8, "R.toe.long.0": 32,
+                "R.toe.long.1": 8, "R.toe.second.0": 32, "R.toe.second.1": 8,
+                "R.toe.third.0": 32, "R.toe.third.1": 8, "head.brow": 2,
+                "head.cornea.L": 2, "head.cornea.R": 2, "head.eyelid.L": 100,
+                "head.eyelid.R": 100, "head.iris.L": 13, "head.iris.R": 13,
+                "head.scalp": 148,
+            },
+        },
+        "mathutils": {
+            "regions": {
+                "brow": 2, "cornea": 102, "enamel": 1400,
+                "eye": 264, "eyelid": 240, "gum": 196,
+                "lip": 96, "nail": 192, "oral": 127,
+                "palm": 90, "scalp": 148, "skin": 2902,
+            },
+            "groups": {
+                "L.finger.index.0": 40, "L.finger.index.1": 32, "L.finger.index.2": 8,
+                "L.finger.middle.0": 40, "L.finger.middle.1": 32, "L.finger.middle.2": 8,
+                "L.finger.pinky.0": 40, "L.finger.pinky.1": 32, "L.finger.pinky.2": 8,
+                "L.finger.ring.0": 40, "L.finger.ring.1": 32, "L.finger.ring.2": 8,
+                "L.finger.thumb.0": 40, "L.finger.thumb.1": 32, "L.finger.thumb.2": 8,
+                "L.toe.big.0": 32, "L.toe.big.1": 8, "L.toe.little.0": 32,
+                "L.toe.little.1": 8, "L.toe.long.0": 32, "L.toe.long.1": 8,
+                "L.toe.second.0": 32, "L.toe.second.1": 8, "L.toe.third.0": 32,
+                "L.toe.third.1": 8, "R.finger.index.0": 40, "R.finger.index.1": 32,
+                "R.finger.index.2": 8, "R.finger.middle.0": 40, "R.finger.middle.1": 32,
+                "R.finger.middle.2": 8, "R.finger.pinky.0": 40, "R.finger.pinky.1": 32,
+                "R.finger.pinky.2": 8, "R.finger.ring.0": 40, "R.finger.ring.1": 32,
+                "R.finger.ring.2": 8, "R.finger.thumb.0": 40, "R.finger.thumb.1": 32,
+                "R.finger.thumb.2": 8, "R.toe.big.0": 32, "R.toe.big.1": 8,
+                "R.toe.little.0": 32, "R.toe.little.1": 8, "R.toe.long.0": 32,
+                "R.toe.long.1": 8, "R.toe.second.0": 32, "R.toe.second.1": 8,
+                "R.toe.third.0": 32, "R.toe.third.1": 8, "head.brow": 2,
+                "head.cornea.L": 2, "head.cornea.R": 2, "head.eyelid.L": 100,
+                "head.eyelid.R": 100, "head.iris.L": 13, "head.iris.R": 13,
+                "head.scalp": 148,
+            },
+        },
+    },
+}
 
 
 def expected_digest(backend: str, key=("realistic_female", 42)) -> str:
@@ -77,4 +172,37 @@ def check_audit(audit: dict) -> list[str]:
         got = audit.get(field)
         if got != want:
             failures.append(f"audit[{field}] {got} != pin {want}")
+    return failures
+
+
+def _semantic_histogram(builder) -> dict:
+    from collections import Counter
+    return {
+        "regions": dict(Counter(builder.regions)),
+        "groups": {name: len(weights) for name, weights in builder.groups.items()},
+    }
+
+
+def check_semantics(result, key=("realistic_female", 42)) -> list[str]:
+    """Return a list of semantic-label violations for a BuildResult.
+
+    A violation is any region population or group size that differs from the
+    pin for the *result's own numerics backend*, in either direction (added and
+    removed labels both count).  An unpinned backend is reported as a violation
+    rather than silently accepted.
+    """
+    backend = (result.numerics or {}).get("backend", "")
+    by_regime = SEMANTIC_PINS[key]
+    if backend not in by_regime:
+        return [f"semantic pins have no entry for backend {backend!r} "
+                f"(pinned: {sorted(by_regime)})"]
+    pin = by_regime[backend]
+    got = _semantic_histogram(result.builder)
+    failures: list[str] = []
+    for kind in ("regions", "groups"):
+        want_h, got_h = pin[kind], got[kind]
+        for name in sorted(set(want_h) | set(got_h)):
+            if want_h.get(name) != got_h.get(name):
+                failures.append(f"semantic[{kind}][{name}] {got_h.get(name)} != "
+                                f"pin {want_h.get(name)}")
     return failures

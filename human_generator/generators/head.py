@@ -100,8 +100,16 @@ def box_sphere(builder: MeshBuilder, *, center, radii, n: int = 7,
                     continue
                 # outward orientation
                 builder.add_face((a, b, cc, d), material="skin")
-    builder.faces = [f for f in builder.faces if len(set(f)) == len(f)]
-    return {"n": len(ids)}
+    before = len(builder.faces)
+    # Drop collapsed faces AND their material entries together: filtering only
+    # ``faces`` desynchronised ``face_mat`` (it stayed longer), which silently
+    # shifted the material of every later face in the builder (measured below).
+    kept = [(f, m) for f, m in zip(builder.faces, builder.face_mat)
+            if len(set(f)) == len(f)]
+    builder.faces = [f for f, _ in kept]
+    builder.face_mat = [m for _, m in kept]
+    return {"n": len(ids), "keys": len(pos), "faces": len(builder.faces),
+            "faces_dropped": before - len(builder.faces)}
 
 
 def _qkey(p: Vector) -> tuple[int, int, int]:
@@ -219,18 +227,37 @@ def build_head(spec, anat) -> HeadResult:
     #    ellipsoid points near the chin have small y exactly where the face
     #    block is largest, and a position-based weight would sink the chin.
     lm = anat.landmarks
-    new_verts = []
-    for p in b.verts:
-        p = Vector(p)
-        if abs(p.x) < 0.80 * rx and (c.z - 0.72 * h) < p.z < (c.z + 0.56 * h) and p.y > c.y - 0.15 * ry:
-            surf = anat.skull_front_y(p.x, p.z)
-            if surf > p.y + 0.0002:
-                edge = smoothstep(0.80 * rx, 0.52 * rx, abs(p.x)) * \
-                    smoothstep(c.z - 0.70 * h, c.z - 0.550 * h, p.z) * \
-                    smoothstep(c.z + 0.56 * h, c.z + 0.470 * h, p.z)
-                p = Vector((p.x, mix(p.y, surf, clamp(edge, 0.0, 1.0)), p.z))
-        new_verts.append(p)
-    b.verts = new_verts
+    #    The target ``surf = skull_front_y(x, z)`` is a function of the ray
+    #    column alone, and ``edge`` depends only on (x, z) too — so blending
+    #    each vertex toward it independently made every column that holds two
+    #    samples collapse onto a single point wherever the weight reaches 1
+    #    (measured: 8 columns -> 16 coincident verts -> 5 zero-area faces in
+    #    the builder).  The eligible vertices of a column now translate
+    #    rigidly instead: the exposed (front-most) vertex still lands exactly
+    #    on ``surf`` — the documented intent — while the column keeps its
+    #    internal spacing exactly, because a shared translation cannot change
+    #    any distance inside the group.  A column whose front-most vertex is
+    #    already at ``surf`` is left alone (the old code used to drag the
+    #    vertices behind it onto that same point).
+    columns: dict[tuple[float, float], list[int]] = {}
+    for i, p in enumerate(b.verts):
+        if abs(p.x) < 0.80 * rx and (c.z - 0.72 * h) < p.z < (c.z + 0.56 * h) \
+                and p.y > c.y - 0.15 * ry:
+            columns.setdefault((round(p.x, 9), round(p.z, 9)), []).append(i)
+    for (qx, qz), idxs in columns.items():
+        surf = anat.skull_front_y(qx, qz)
+        need = surf - max(b.verts[i].y for i in idxs)
+        if need <= 0.0002:
+            continue
+        edge = smoothstep(0.80 * rx, 0.52 * rx, abs(qx)) * \
+            smoothstep(c.z - 0.70 * h, c.z - 0.550 * h, qz) * \
+            smoothstep(c.z + 0.56 * h, c.z + 0.470 * h, qz)
+        shift = need * clamp(edge, 0.0, 1.0)
+        if abs(shift) < 1e-12:
+            continue
+        for i in idxs:
+            v = b.verts[i]
+            b.verts[i] = Vector((v.x, v.y + shift, v.z))
 
     # 3) feature loops (holding loops under subdivision)
     lm = anat.landmarks
