@@ -47,6 +47,10 @@ def metrics(name):
     m["buttock_behind_thoracic"]=float(t[1]-b[1])   # + = nádega mais posterior que as costas torácicas
     # abdomen: front midline at omphalion vs under bust
     f_om=om["mid_front"]; f_wn=wn["mid_front"]; m["abdomen_front_minus_waist_front"]=f_om-f_wn
+    # H3 (pré-registo docs/H3H2_TRUNK.md): barriga em COTAS FIXAS -- a métrica
+    # acima usa a cota da largura mínima, que H3 desloca (risco de melhorar por
+    # construção).  frente(omphalion 0.6017·S) - frente(0.70·S).
+    f70=min(C,key=lambda p:abs(p["z"]-0.70*S))["mid_front"]; m["belly_front_fixed"]=f_om-f70
     # H1 (REF STUDY 01 §4.3): perfil cabeça–pescoço–costas altas na linha média
     N=[p for p in C if 1330<=p["z"]<=1640 and not math.isnan(p.get("mid_back",float("nan")))]
     zN=np.array([p["z"] for p in N]); bN=np.array([p["mid_back"] for p in N]); dN=np.array([p["depth"] for p in N])
@@ -76,6 +80,6 @@ if __name__=="__main__":
     for a,b,key in [("chestdepth","chestbreadth","chestdepth/chestbreadth"),("waistdepth","waistbreadth","waistdepth/waistbreadth"),("buttockdepth","hipbreadth","buttockdepth/hipbreadth"),("waistbreadth","hipbreadth","waistbreadth/hipbreadth"),("waistcircumference","buttockcircumference","waistcircumference/buttockcircumference")]:
         R=A[key]; print(f"{key:40s} ANSUR {R['r']:.3f} [{R['p5']:.3f},{R['p95']:.3f}] "+" ".join(f"{n}={M[n][a]/M[n][b]:.3f}" for n in names))
     print()
-    for k in ["chest_z","waist_nat_z","waist_nat_breadth","hip_z","buttock_z","neck_z","neck_breadth","neck_depth","calf_z","knee_min_circ","leg_cx_thigh","leg_cx_knee","leg_cx_ankle","leg_gap_knee","thoracic_apex_z","buttock_apex_z","lumbar_z","lumbar_concavity","buttock_behind_thoracic","abdomen_front_minus_waist_front",
+    for k in ["chest_z","waist_nat_z","waist_nat_breadth","hip_z","buttock_z","neck_z","neck_breadth","neck_depth","calf_z","knee_min_circ","leg_cx_thigh","leg_cx_knee","leg_cx_ankle","leg_gap_knee","thoracic_apex_z","buttock_apex_z","lumbar_z","lumbar_concavity","buttock_behind_thoracic","abdomen_front_minus_waist_front","belly_front_fixed",
               "occiput_z","nape_z","nape_recess","upper_back_z","upper_back_vs_occiput","neckbase_depth_max","neckbase_depth_excess"]:
         print(f"{k:34s} "+" ".join(f"{n}={M[n].get(k,float('nan')):7.1f}" for n in names))
