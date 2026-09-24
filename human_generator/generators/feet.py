@@ -19,22 +19,39 @@ TOE_RAD = {"big": 1.0, "long": 0.86, "second": 0.78, "third": 0.70, "little": 0.
 
 
 def _foot_basis(ankle: Vector, toe: Vector, side: int) -> Matrix:
-    z = (Vector(toe) - Vector(ankle))
-    z.y = max(z.y, 0.35 * z.length)  # always some forward
+    """Referencial local do pé; o lado direito é o **espelho exato** do esquerdo.
+
+    S3.1 — mesma correcção do referencial da mão (``hands.py:_hand_basis``):
+    ``x = z.cross(y) * side`` não produz um espelho (o produto externo não é
+    equivariante sob reflexão).  Medido antes: 7.5–8.3 mm de Hausdorff entre os
+    dedos dos dois pés.  O lado esquerdo mantém-se exactamente como estava.
+    """
+    mirror = side < 0
+    a = Vector(ankle)
+    t = Vector(toe)
+    if mirror:                                  # trabalhar no lado canónico
+        a = Vector((-a.x, a.y, a.z))
+        t = Vector((-t.x, t.y, t.z))
+    z = (t - a)
+    z.y = max(z.y, 0.35 * z.length)             # sempre algum avanço
     z = z.normalized()
     y = Vector((0, 0, 1.0))
     y -= z * y.dot(z)
     y = y.normalized()
     x = z.cross(y)
     if x.length_squared < 1e-9:
-        x = Vector((side, 0, 0))
-    x = x.normalized() * side
+        x = Vector((1.0, 0.0, 0.0))
+    x = x.normalized()
     y = z.cross(x).normalized()
-    rows = ((x.x, y.x, z.x, ankle.x),
-            (x.y, y.y, z.y, ankle.y),
-            (x.z, y.z, z.z, ankle.z),
+    rows = ((x.x, y.x, z.x, a.x),
+            (x.y, y.y, z.y, a.y),
+            (x.z, y.z, z.z, a.z),
             (0.0, 0.0, 0.0, 1.0))
-    return Matrix(rows)
+    M = Matrix(rows)
+    if mirror:
+        M = Matrix(((-1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0),
+                    (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0))) @ M
+    return M
 
 
 def build_foot(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
@@ -70,8 +87,11 @@ def build_foot(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
         secs = make_section((0.0, depth * 0.28 + y_off, zf), tangent=(1, 0, 0), front=(0, 1, 0),
                             width=w, depth=depth, front_scale=fs, back_scale=bs, superellipse=e)
         rings.append([M @ p for p in secs.points(12)])
+    # S3.5 — o pé era uma casca ABERTA (24 arestas de fronteira medidas em
+    # z 0.012..0.178): via-se o interior através da boca do tornozelo e da ponta.
     created = b.loft(rings, close=True, region="skin", material="skin",
-                     uv_rect=(0.05, 0.95, 0.0, 0.4), register=f"foot.{tag}")
+                     uv_rect=(0.05, 0.95, 0.0, 0.4), register=f"foot.{tag}",
+                     cap_start="pole", cap_end="pole")
     # sole region on bottom side
     inv = M.inverted()
     for k, ring in enumerate(created["rings"]):

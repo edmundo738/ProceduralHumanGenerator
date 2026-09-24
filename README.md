@@ -98,7 +98,8 @@ materials/skin ──► procedural PBR node graphs (skin, eye, iris, cornea, ha
 | Construction guard: collapsed rings are detected by name | implemented + tested (S1); clean since S2 (pin deliberately empty) |
 | Topology defects (non-manifold, loose edges, degenerate faces/rings, coincident verts) | **fixed at the sources + pinned** (S2, 2026-09-24) — see `docs/S2_TOPOLOGY.md` |
 | Semantic label pins (region populations + vertex-group sizes) | implemented + tested (S2) |
-| Extremes: constant topology (5 759 v) across parameter extremes and all presets | measured |
+| Integração corporal: instrumento (`core/integration.py`), simetria L/R exata, raízes inseridas, chão, cascas fechadas | implementado + medido (S3, 2026-09-24) — `docs/S3_BODY_INTEGRATION.md` |
+| Extremes: constant topology (5 915 v) across parameter extremes and all presets | measured |
 | Rig / skin weights, shape keys, expression layer, glTF/GLB export, quality passes, UV unwrap beyond per-face rects | **not implemented** (S3–S5) |
 | Visual realism of fringe hair, mouth corners, eyelids, ears | known defects, see below |
 
@@ -129,3 +130,5 @@ materials/skin ──► procedural PBR node graphs (skin, eye, iris, cornea, ha
 - `docs/RESEARCH_GATE_02.md` — second audit: root causes, measurements, retractions
 - `docs/RESEARCH_COMPARATIVE_01.md` — deep comparative investigation + slice plan S1–S6
 - `docs/S2_TOPOLOGY.md` — S2: root causes, fixes, before/after measurement tables, open items
+- `docs/S3_BODY_INTEGRATION.md` — S3: contrato da fatia, critérios I1–I9, baseline medido, resultados
+- `docs/DEVELOPMENT_AGREEMENT.md` — acordo de desenvolvimento/builds/visão independente (registo)

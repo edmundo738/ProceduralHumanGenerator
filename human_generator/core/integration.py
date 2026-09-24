@@ -1,0 +1,482 @@
+# -*- coding: utf-8 -*-
+"""S3 — instrumento de integração corporal (python puro, sem ``bpy``).
+
+Mede as propriedades que a pergunta de BUILD 01 exige — *a estrutura corporal
+básica forma uma figura humana coerente?* — e que antes eram medidas por
+scripts descartáveis em ``/tmp``.  Ver ``docs/S3_BODY_INTEGRATION.md`` §2 para a
+definição exacta de cada critério e §3 para o baseline medido.
+
+Tudo aqui é determinístico e independente do backend numérico (nada de
+comparações de igualdade sobre floats calculados de formas diferentes): o
+critério de espelho usa tolerância explícita, o de fronteira usa o número de
+faces por aresta, e o de silhueta usa uma grelha com resolução declarada.
+
+Convenções (as mesmas do resto do projeto):
+  * ``builder`` é um ``MeshBuilder`` já *merged* (a personagem inteira);
+  * "componente" = componente conexa por faces (união-busca sobre os loops);
+  * "flutuante" = componente sem nenhuma outra componente a ≤ ``gap`` mm
+    (medida vértice-a-vértice, não por bbox: bboxes que se cruzam podem estar
+    longe uma da outra em geometria real).
+"""
+from __future__ import annotations
+
+from collections import Counter, defaultdict
+from math import sqrt
+
+from ._math import Vector
+
+__all__ = [
+    "connected_components", "component_labels", "overlap_graph", "floating_components",
+    "boundary_edges", "mirror_stats", "structure_mirror_hausdorff",
+    "floor_contact", "height_envelope", "silhouette", "integration_report",
+    "points_inside", "is_closed", "root_insertion",
+]
+
+
+# --------------------------------------------------------------------------- components
+def connected_components(builder) -> list[list[int]]:
+    """Componentes conexas por faces (união-busca).  Ordenadas por tamanho desc."""
+    n = len(builder.verts)
+    parent = list(range(n))
+
+    def find(x: int) -> int:
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+
+    for f in builder.faces:
+        a = f[0]
+        for i in range(1, len(f)):
+            ra, rb = find(a), find(f[i])
+            if ra != rb:
+                parent[ra] = rb
+    groups: dict[int, list[int]] = defaultdict(list)
+    for i in range(n):
+        groups[find(i)].append(i)
+    return sorted(groups.values(), key=len, reverse=True)
+
+
+def _bbox(verts, ids) -> tuple[float, float, float, float, float, float]:
+    xs = [verts[i].x for i in ids]
+    ys = [verts[i].y for i in ids]
+    zs = [verts[i].z for i in ids]
+    return (min(xs), max(xs), min(ys), max(ys), min(zs), max(zs))
+
+
+def component_labels(builder, comps=None) -> list[str]:
+    """Rótulo anatómico de cada componente (maior grupo nomeado, senão região)."""
+    comps = comps or connected_components(builder)
+    owner: dict[int, str] = {}
+    for gname, weights in builder.groups.items():
+        for i in weights:
+            owner.setdefault(i, gname)
+    labels = []
+    for ids in comps:
+        named = Counter(owner[i] for i in ids if i in owner)
+        if named:
+            labels.append(named.most_common(1)[0][0])
+        else:
+            labels.append("region:" + Counter(builder.regions[i] for i in ids).most_common(1)[0][0])
+    return labels
+
+
+def _grid_index(verts, cell: float) -> dict[tuple[int, int, int], list[int]]:
+    grid: dict[tuple[int, int, int], list[int]] = defaultdict(list)
+    for i, p in enumerate(verts):
+        grid[(int(p.x // cell), int(p.y // cell), int(p.z // cell))].append(i)
+    return grid
+
+
+def _sample_points(builder, comps) -> tuple[list, list[int]]:
+    """Pontos de amostragem = vértices + centros de face (uma vez por face).
+
+    Medido (S3): só com vértices, componentes que se **interpenetram** podem
+    parecer afastadas — a malha do tronco tem ~16 vértices por anel, logo os
+    vértices de duas cascas que se cruzam distam centímetros uns dos outros.
+    Os centros de face dão uma amostra da superfície com espaçamento da ordem
+    do tamanho da face e tornam a adjacência mensurável.
+    """
+    of = [0] * len(builder.verts)
+    for ci, ids in enumerate(comps):
+        for i in ids:
+            of[i] = ci
+    pts: list = list(builder.verts)
+    owner: list[int] = list(of)
+    for f in builder.faces:
+        c = Vector((0.0, 0.0, 0.0))
+        for i in f:
+            c = c + builder.verts[i]
+        pts.append(c / len(f))
+        owner.append(of[f[0]])
+    return pts, owner
+
+
+def overlap_graph(builder, gap: float = 0.010, comps=None, labels=None) -> dict:
+    """Grafo de adjacência entre componentes, por distância mínima amostrada.
+
+    ``gap`` é a distância (m) abaixo da qual duas componentes contam como
+    adjacentes; a grelha de 1 cm com pesquisa 3×3×3 limita ``gap`` a 10 mm
+    (validado com ``ValueError`` para não prometer o que não mede).
+    """
+    if gap > 0.010:
+        raise ValueError("gap > 10 mm exceeds the 3x3x3 search of a 10 mm grid")
+    comps = comps or connected_components(builder)
+    labels = labels or component_labels(builder, comps)
+    cell = 0.01
+    pts, owner = _sample_points(builder, comps)
+    grid: dict[tuple[int, int, int], list[int]] = defaultdict(list)
+    for i, p in enumerate(pts):
+        grid[(int(p.x // cell), int(p.y // cell), int(p.z // cell))].append(i)
+    best: dict[tuple[int, int], float] = {}
+    g2 = gap * gap
+    for i, p in enumerate(pts):
+        key = (int(p.x // cell), int(p.y // cell), int(p.z // cell))
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for dz in (-1, 0, 1):
+                    for j in grid.get((key[0] + dx, key[1] + dy, key[2] + dz), ()):
+                        if j == i or owner[j] == owner[i]:
+                            continue
+                        q = pts[j]
+                        d2 = (p.x - q.x) ** 2 + (p.y - q.y) ** 2 + (p.z - q.z) ** 2
+                        if d2 <= g2:
+                            pair = (owner[i], owner[j]) if owner[i] < owner[j] else (owner[j], owner[i])
+                            if pair not in best or d2 < best[pair] ** 2:
+                                best[pair] = sqrt(d2)
+    label_pairs: Counter = Counter()
+    for (a, b) in best:
+        label_pairs[tuple(sorted((labels[a], labels[b])))] += 1
+    return {"n_components": len(comps), "labels": labels, "edges": best,
+            "label_edges": dict(label_pairs), "gap": gap,
+            "sample_points": len(pts)}
+
+
+def floating_components(builder, gap: float = 0.010) -> list[dict]:
+    """Componentes sem nenhuma vizinha a ≤ ``gap`` mm (o critério I1 do contrato)."""
+    comps = connected_components(builder)
+    labels = component_labels(builder, comps)
+    graph = overlap_graph(builder, gap=gap, comps=comps, labels=labels)
+    touched = {c for pair in graph["edges"] for c in pair}
+    out = []
+    for ci, ids in enumerate(comps):
+        if ci not in touched:
+            out.append({"label": labels[ci], "n": len(ids),
+                        "bbox": _bbox(builder.verts, ids)})
+    return out
+
+
+# --------------------------------------------------------------------------- boundaries
+def boundary_edges(builder) -> dict[tuple[str, str], int]:
+    """Arestas com uma só face, agrupadas pelo par de regiões (ordenado)."""
+    count: Counter = Counter()
+    for f in builder.faces:
+        n = len(f)
+        for i in range(n):
+            a, b = f[i], f[(i + 1) % n]
+            count[(a, b) if a < b else (b, a)] += 1
+    out: Counter = Counter()
+    for (a, b), k in count.items():
+        if k == 1:
+            out[tuple(sorted((builder.regions[a], builder.regions[b])))] += 1
+    return dict(out)
+
+
+# --------------------------------------------------------------------------- mirror
+def mirror_stats(builder, tol: float = 1e-5) -> dict:
+    """Vértices cujo par espelhado a ``(-x, y, z)`` não existe dentro de ``tol``."""
+    pos: dict[tuple[int, int, int], list[int]] = defaultdict(list)
+    q = max(tol, 1e-9)
+    for i, p in enumerate(builder.verts):
+        pos[(round(p.x / q), round(p.y / q), round(p.z / q))].append(i)
+    miss_region: Counter = Counter()
+    total_region: Counter = Counter()
+    misses = 0
+    for i, p in enumerate(builder.verts):
+        total_region[builder.regions[i]] += 1
+        key = (round(-p.x / q), round(p.y / q), round(p.z / q))
+        if not pos.get(key):
+            misses += 1
+            miss_region[builder.regions[i]] += 1
+    return {"n": len(builder.verts), "misses": misses,
+            "ratio": misses / max(1, len(builder.verts)),
+            "tol": tol,
+            "misses_by_region": dict(miss_region),
+            "total_by_region": dict(total_region)}
+
+
+def _hausdorff(a: list[tuple[float, float, float]],
+               b: list[tuple[float, float, float]]) -> float:
+    def one_way(p: list, q: list) -> float:
+        worst = 0.0
+        for x, y, z in p:
+            best = min((x - u) ** 2 + (y - v) ** 2 + (z - w) ** 2 for u, v, w in q)
+            worst = max(worst, best)
+        return sqrt(worst)
+    return max(one_way(a, b), one_way(b, a))
+
+
+def structure_mirror_hausdorff(builder) -> dict[str, float]:
+    """Hausdorff entre cada estrutura ``L.<nome>`` e o espelho de ``R.<nome>``.
+
+    É a medida válida para I6 (a comparação por listas ordenadas é frágil à
+    ordem dos anéis — registado em ``docs/S3_BODY_INTEGRATION.md`` §5).
+    """
+    out: dict[str, float] = {}
+    names = {g.split(".", 1)[1] for g in builder.groups if g.startswith("L.")}
+    for base in sorted(names):
+        L = builder.groups.get(f"L.{base}")
+        R = builder.groups.get(f"R.{base}")
+        if not L or not R:
+            continue
+        a = [(builder.verts[i].x, builder.verts[i].y, builder.verts[i].z) for i in L]
+        b = [(-builder.verts[i].x, builder.verts[i].y, builder.verts[i].z) for i in R]
+        if len(a) > 400:                        # keep the O(n^2) part small
+            step = len(a) // 200 + 1
+            a, b = a[::step], b[::step]
+        out[base] = _hausdorff(a, b)
+    return out
+
+
+# --------------------------------------------------------------------------- inside tests
+def _tri_hits_ray(orig, direction, a, b, c, eps=1e-12) -> bool:
+    """Möller–Trumbore: o raio ``orig + t*direction`` cruza o triângulo abc?"""
+    e1 = (b[0] - a[0], b[1] - a[1], b[2] - a[2])
+    e2 = (c[0] - a[0], c[1] - a[1], c[2] - a[2])
+    px = direction[1] * e2[2] - direction[2] * e2[1]
+    py = direction[2] * e2[0] - direction[0] * e2[2]
+    pz = direction[0] * e2[1] - direction[1] * e2[0]
+    det = e1[0] * px + e1[1] * py + e1[2] * pz
+    if -eps < det < eps:
+        return False
+    inv = 1.0 / det
+    t0 = (orig[0] - a[0], orig[1] - a[1], orig[2] - a[2])
+    u = (t0[0] * px + t0[1] * py + t0[2] * pz) * inv
+    if u < 0.0 or u > 1.0:
+        return False
+    qx = t0[1] * e1[2] - t0[2] * e1[1]
+    qy = t0[2] * e1[0] - t0[0] * e1[2]
+    qz = t0[0] * e1[1] - t0[1] * e1[0]
+    v = (direction[0] * qx + direction[1] * qy + direction[2] * qz) * inv
+    if v < 0.0 or u + v > 1.0:
+        return False
+    t = (e2[0] * qx + e2[1] * qy + e2[2] * qz) * inv
+    return t > eps
+
+
+def points_inside(builder, comp_ids, points, direction=(1.0, 0.0, 0.0)) -> list[bool]:
+    """Teste de paridade de raio: cada ponto está dentro da casca fechada?
+
+    ``comp_ids`` são os índices de vértices de UMA componente (a casca-mãe).
+    Só funciona com cascas fechadas (manifold, sem fronteira) — os olhos, os
+    dentes, o tronco e os membros são; cascas abertas devolvem resultado
+    indefinido, por isso o chamador deve verificar ``is_closed``.
+    """
+    verts = builder.verts
+    faces = [f for f in builder.faces if all(i in comp_ids for i in f)]
+    inside: list[bool] = []
+    for p in points:
+        hits = 0
+        for f in faces:
+            n = len(f)
+            a = verts[f[0]]
+            pa = (a.x, a.y, a.z)
+            for k in range(1, n - 1):
+                b = verts[f[k]]
+                c = verts[f[k + 1]]
+                if _tri_hits_ray((p[0], p[1], p[2]), direction, pa,
+                                 (b.x, b.y, b.z), (c.x, c.y, c.z)):
+                    hits += 1
+        inside.append(hits % 2 == 1)
+    return inside
+
+
+def is_closed(builder, comp_ids) -> bool:
+    """Casca fechada: toda a aresta da componente tem exactamente 2 faces."""
+    counts: Counter = Counter()
+    s_ids = set(comp_ids)
+    for f in builder.faces:
+        if not all(i in s_ids for i in f):
+            continue
+        n = len(f)
+        for i in range(n):
+            a, c = f[i], f[(i + 1) % n]
+            counts[(a, c) if a < c else (c, a)] += 1
+    return bool(counts) and all(k == 2 for k in counts.values())
+
+
+def root_insertion(builder, comps=None, labels=None) -> dict:
+    """Quanto de cada casca-filha está DENTRO da sua casca-mãe (S3 — inserção).
+
+    Medido em S3 (§3): as raízes dos membros ficavam fora dos pais — arm↔tronco
+    7.5 mm, perna↔tronco 9.2 mm, cabeça↔tronco 4.0 mm de folga mínima, apesar de
+    ``generators/body.py`` documentar "limb roots are *inserted* into the trunk".
+    Este é o teste objectivo que faltava: por cada par (mãe, filha) conta quantos
+    pontos de amostra da filha caem dentro da mãe.
+    """
+    comps = comps or connected_components(builder)
+    labels = labels or component_labels(builder, comps)
+    sizes = [len(c) for c in comps]
+    out: dict[str, dict] = {}
+
+    def pick(*sizes_wanted):
+        for ci, c in enumerate(comps):
+            if len(c) in sizes_wanted:
+                return ci
+        return None
+
+    trunk = pick(242)
+    if trunk is None:
+        return out
+    pairs = []
+    for ci, c in enumerate(comps):
+        if ci == trunk:
+            continue
+        if len(c) in (120, 132, 108, 536):        # arms, legs/hands-pairs, hands, head
+            pairs.append(ci)
+    if not is_closed(builder, comps[trunk]):
+        return {"error": "parent shell is not closed"}
+    for ci in pairs:
+        pts = [builder.verts[i] for i in comps[ci]]
+        step = max(1, len(pts) // 60)
+        sample = pts[::step]
+        flags = points_inside(builder, set(comps[trunk]), sample)
+        out[f"{labels[ci]}#{len(comps[ci])}"] = {
+            "n_sampled": len(sample),
+            "n_inside": sum(1 for f in flags if f),
+            "child_closed": is_closed(builder, comps[ci]),
+        }
+    return out
+
+
+# --------------------------------------------------------------------------- envelope
+def floor_contact(builder, plane: float = 0.0) -> dict:
+    """Contacto com o plano do chão (critério I2)."""
+    zs = [(p.z, i) for i, p in enumerate(builder.verts)]
+    if not zs:
+        return {"min_z": 0.0, "below": 0, "deepest": 0.0, "regions_below": {}}
+    min_z, min_i = min(zs)
+    below = [i for z, i in zs if z < plane - 1e-12]
+    return {"min_z": min_z,
+            "min_vertex": min_i,
+            "min_region": builder.regions[min_i],
+            "below": len(below),
+            "deepest": min(0.0, min_z - plane),
+            "regions_below": dict(Counter(builder.regions[i] for i in below))}
+
+
+def height_envelope(builder, anat) -> dict:
+    """Alturas medidas vs estações do canon (critérios I3, I4)."""
+    zs = [p.z for p in builder.verts]
+    top = max(zs)
+    scalp = [p.z for i, p in enumerate(builder.verts) if builder.regions[i] == "scalp"]
+    out = {"stature": anat.stature,
+           "z_min": min(zs), "z_max": top,
+           "height": top - min(zs),
+           "height_minus_stature": (top - min(zs)) - anat.stature,
+           "toe_offset": -min(zs)}
+    if scalp:
+        out["scalp_z_max"] = max(scalp)
+        out["scalp_minus_vertex"] = max(scalp) - anat.z("vertex")
+    return out
+
+
+# --------------------------------------------------------------------------- silhouette
+def silhouette(builder, view: str = "front", res: int = 128) -> dict:
+    """Silhueta ortográfica rasterizada, com **preenchimento** por scanline.
+
+    A primeira versão marcava só pontos ao longo das arestas; medido, isso
+    produzia um contorno de uma célula de espessura com falhas na diagonal e a
+    contagem de regiões 2D explodia (52 "regiões" para um cubo fechado — o
+    instrumento a medir-se a si próprio).  Preencher cada face projetada com
+    regra par-ímpar dá a silhueta real (1 região para o cubo), área em m² e
+    linhas vazias que significam lacunas de verdade.
+    """
+    axes = {"front": (0, 2), "side": (1, 2), "top": (0, 1)}[view]
+    ax, ay = axes
+    verts = builder.verts
+    a0 = min(p[ax] for p in verts)
+    a1 = max(p[ax] for p in verts)
+    b0 = min(p[ay] for p in verts)
+    b1 = max(p[ay] for p in verts)
+    # Cell size = extent/res (not (res-1)/extent): the earlier form put the last
+    # scanline centre *outside* the geometry, leaving the extreme row empty —
+    # measured on a closed cube (1 empty row), fixed here.
+    fa = res / max(1e-9, a1 - a0)
+    fb = res / max(1e-9, b1 - b0)
+    grid = [[0] * res for _ in range(res)]
+    for f in builder.faces:
+        pts = [(verts[i][ax], verts[i][ay]) for i in f]
+        lo = min(y for _, y in pts)
+        hi = max(y for _, y in pts)
+        r0 = max(0, int((lo - b0) * fb))
+        r1 = min(res - 1, int((hi - b0) * fb))
+        n = len(pts)
+        for row in range(r0, r1 + 1):
+            yc = b0 + (row + 0.5) / fb
+            xs = []
+            for i in range(n):
+                x0, y0 = pts[i]
+                x1, y1 = pts[(i + 1) % n]
+                if (y0 <= yc < y1) or (y1 <= yc < y0):
+                    t = (yc - y0) / (y1 - y0)
+                    xs.append(x0 + (x1 - x0) * t)
+            xs.sort()
+            for k in range(0, len(xs) - 1, 2):
+                c0 = max(0, min(res - 1, int((xs[k] - a0) * fa)))
+                c1 = max(0, min(res - 1, int((xs[k + 1] - a0) * fa)))
+                for cell in range(c0, c1 + 1):
+                    grid[row][cell] = 1
+    seen = [[False] * res for _ in range(res)]
+    regions = 0
+    area = 0
+    for y0 in range(res):
+        for x0 in range(res):
+            if not grid[y0][x0] or seen[y0][x0]:
+                continue
+            regions += 1
+            stack = [(y0, x0)]
+            seen[y0][x0] = True
+            while stack:
+                y, x = stack.pop()
+                area += 1
+                for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    yy, xx = y + dy, x + dx
+                    if 0 <= yy < res and 0 <= xx < res and grid[yy][xx] and not seen[yy][xx]:
+                        seen[yy][xx] = True
+                        stack.append((yy, xx))
+    widths = [sum(row) for row in grid]
+    cell_area = (1.0 / fa) * (1.0 / fb)
+    return {"view": view, "res": res, "a_extent": a1 - a0, "b_extent": b1 - b0,
+            "area_cells": area, "area_m2": area * cell_area,
+            "regions": regions,
+            "max_row_width": max(widths) if widths else 0,
+            "empty_rows": sum(1 for w in widths if w == 0)}
+
+
+# --------------------------------------------------------------------------- report
+def integration_report(build) -> dict:
+    """Relatório completo de integração para um ``BuildResult``."""
+    b = build.builder
+    anat = build.anatomy if hasattr(build, "anatomy") else None
+    comps = connected_components(b)
+    labels = component_labels(b, comps)
+    graph = overlap_graph(b, comps=comps, labels=labels)
+    report = {
+        "components": len(comps),
+        "component_sizes": [len(c) for c in comps[:12]],
+        "component_labels": labels[:12],
+        "overlap_edges": len(graph["edges"]),
+        "label_edges": {f"{a}|{b}": n for (a, b), n in sorted(graph["label_edges"].items())},
+        "floating": floating_components(b),
+        "boundary_edges": sum(boundary_edges(b).values()),
+        "boundary_by_regions": {f"{a}/{b}": n for (a, b), n in boundary_edges(b).items()},
+        "mirror": mirror_stats(b, tol=1e-5),
+        "mirror_hausdorff": structure_mirror_hausdorff(b),
+        "root_insertion": root_insertion(b, comps=comps, labels=labels),
+        "floor": floor_contact(b),
+        "silhouette": {v: silhouette(b, v) for v in ("front", "side")},
+    }
+    if anat is not None:
+        report["envelope"] = height_envelope(b, anat)
+    return report

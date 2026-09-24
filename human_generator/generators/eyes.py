@@ -61,6 +61,17 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
             right = Vector((1.0, 0.0, 0.0))
         right = right.normalized()
         upv = right.cross(ax).normalized()
+        if side < 0:
+            # S3.1 — espelho exacto do referencial.  ``ax_R = espelho(ax_L)``
+            # (as landmarks já são espelhadas) e o produto externo não é
+            # equivariante sob reflexão — ``(Ma)×(Mb) = -M(a×b)`` — logo
+            # ``right = ax × z`` saía com o sinal trocado no olho direito:
+            # medido, 240 de 240 vértices de pálpebra não tinham par espelhado
+            # (a pálpebra direita era a esquerda *sem* espelho).  ``upv`` já
+            # saía correcto (dois trocos de sinal cancelam); só ``right`` é
+            # invertido, e a parametrização esférica (theta ao longo de
+            # ``right``) espelha então exactamente.
+            right = Vector((-right.x, right.y, right.z))
 
         def sph(theta: float, phi: float, radius: float) -> Vector:
             # theta: azimuth along `right`, phi: elevation along `upv` from axis

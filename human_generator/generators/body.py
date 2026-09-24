@@ -30,7 +30,16 @@ class BodyResult:
 
 def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
                include_feet: bool = True) -> BodyResult:
-    rng = Rng(spec.seed, salt=17)
+    # S3.1 — simetria L/R.  Medido antes da correcção (docs/S3_BODY_INTEGRATION.md
+    # §3): um único fluxo ``Rng(spec.seed, salt=17)`` era consumido pelos dois
+    # lados, e como ``hands.py`` usa ``rng.f`` para o espalhamento dos dedos e
+    # ``feet.py`` para o comprimento dos dedos do pé, o lado direito recebia
+    # desenhos diferentes do esquerdo (Hausdorff L↔espelho(R) até 13.4 mm numa
+    # mão, 8.3 mm num pé).  Cada lado passa a começar o seu próprio fluxo com o
+    # MESMO salt: os dois lados consomem exactamente a mesma sequência (logo a
+    # geometria espelha-se) e a assimetria intencional continua a vir dos
+    # parâmetros do spec (sobrancelha, mama — anatomia/body, não rng).
+    SALT_SIDE = 17          # sal do fluxo por lado (igual nos dois lados, de propósito)
     b = MeshBuilder("body")
     notes: list[str] = []
 
@@ -45,10 +54,17 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
     for side, tag in ((1, "L"), (-1, "R")):
         a_secs = anat.arm_sections(side)
         a_rings = [s.points(12) for s in a_secs]
+        # S3.5 — tampas: medido, o tubo do braço era uma casca ABERTA nas duas
+        # pontas (a raiz, agora dentro do tronco, e o punho, agora dentro da
+        # palma).  As tampas fecham a casca sem custo visível (ambas as pontas
+        # estão dentro de outra casca) e eliminam a possibilidade de se ver o
+        # interior do membro através de uma fronteira.
         b.loft(a_rings, close=True, region="skin", material="skin",
-               uv_rect=(0.0, 1.0, 0.0, 1.0), register=f"arm.{tag}")
+               uv_rect=(0.0, 1.0, 0.0, 1.0), register=f"arm.{tag}",
+               cap_start="pole", cap_end="pole")
         if include_hands:
-            hb, hj = build_hand(spec, anat, side=side, rng=rng)
+            hb, hj = build_hand(spec, anat, side=side,
+                                rng=Rng(spec.seed, salt=SALT_SIDE))
             b.merge(hb, group_prefix="")
             notes.append(f"hand.{tag} merged")
         for k, v in hj.items():
@@ -59,9 +75,11 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
         l_secs = anat.leg_sections(side)
         l_rings = [s.points(12) for s in l_secs]
         b.loft(l_rings, close=True, region="skin", material="skin",
-               uv_rect=(0.0, 1.0, 0.0, 1.0), register=f"leg.{tag}")
+               uv_rect=(0.0, 1.0, 0.0, 1.0), register=f"leg.{tag}",
+               cap_start="pole", cap_end="pole")
         if include_feet:
-            fb, fj = build_foot(spec, anat, side=side, rng=rng)
+            fb, fj = build_foot(spec, anat, side=side,
+                                rng=Rng(spec.seed, salt=SALT_SIDE))
             b.merge(fb)
             notes.append(f"foot.{tag} merged")
         for k, v in fj.items():
@@ -123,6 +141,19 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
                    sigma=(0.06 * h, 0.05 * h, 0.06 * h), direction=Vector((0, 1, 0)))
 
     b.verts = stack.apply(b.verts)
+
+    # S3.3 — plano do chão.  Medido antes: min(z) = −7.70 mm (3 vértices do
+    # calcanhar).  O clamp que existe em feet.py usa ``Deformer("flatten")`` com
+    # o plano em z = +sole_z e uma correcção suavizada que nunca chega ao plano
+    # (por construção: disp = over·soft/(over+soft) < over), e só toca a casca do
+    # pé — o fundo da perna também passava abaixo de zero.  Aqui o chão é o chão:
+    # clamp duro, aplicado à malha final do corpo (depois dos campos, para que
+    # nenhum campo possa voltar a empurrar geometria para baixo do plano).  O
+    # critério medido é min(z) == 0.0 e nenhum vértice abaixo de zero.
+    floor = 0.0
+    for i, v in enumerate(b.verts):
+        if v.z < floor:
+            b.verts[i] = Vector((v.x, v.y, floor))
 
     # ------------------------------------------------------------- armpit rim
     # crease a subtle lat/anterior axillary fold line? authored by loops: skip

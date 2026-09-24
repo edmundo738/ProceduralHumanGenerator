@@ -20,13 +20,13 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "db7fb5c42c0523be",   # spec hash: unchanged by S2
-        "verts": 5759,          # pre-weld (pure build)
-        "faces": 5608,
+        "verts": 5915,          # pre-weld (pure build)
+        "faces": 5896,
         "strands": 2400,
-        # re-measured in S2 (eye ring/limbus/cornea seam fixed, head sagittal
-        # pass made column-rigid, teeth clamped rigidly per crown)
-        "digest": {"pure-python": "dfb13c52c84f4982",
-                   "mathutils": "69a638369e902297"},
+        # re-measured in S3 (exact-mirror frames, limb/foot roots inserted,
+        # tubes capped, floor clamp, canon reconciled)
+        "digest": {"pure-python": "ab7742d2b4a88fce",
+                   "mathutils": "37aebe421ce608d5"},
     },
 }
 
@@ -36,9 +36,9 @@ PINS = {
 # cyber_angel only (2764 float64 / 2766 float32) and was already so before S2 —
 # measured on both trees, see docs/S2_TOPOLOGY.md §5.
 PRESET_COUNTS = {
-    "cyber_angel": (5759, 5608, 2764),
-    "neon_idol": (5759, 5608, 3200),
-    "realistic_female": (5759, 5608, 2400),
+    "cyber_angel": (5915, 5896, 2764),
+    "neon_idol": (5915, 5896, 3200),
+    "realistic_female": (5915, 5896, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -46,12 +46,12 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 5759, "faces": 5608,
+AUDIT_PINS = {"verts": 5915, "faces": 5896,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
               "ngons": 0,
-              "boundary_edges": 946}
+              "boundary_edges": 802}   # S3: limb/foot tubes are capped shells now
 
 # construction guard (S1): rings whose points collapse.
 # S2 fixed eyes.py (the pole is now built by cap_pole only and the limbus ring
@@ -79,8 +79,8 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 98, "scalp": 148, "skin": 2792,
-                "sole": 102,
+                "palm": 108, "scalp": 148, "skin": 2920,
+                "sole": 120,
             },
             "groups": {
                 "L.finger.index.0": 40, "L.finger.index.1": 32, "L.finger.index.2": 8,
@@ -110,7 +110,7 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 90, "scalp": 148, "skin": 2902,
+                "palm": 86, "scalp": 148, "skin": 3062,
             },
             "groups": {
                 "L.finger.index.0": 40, "L.finger.index.1": 32, "L.finger.index.2": 8,

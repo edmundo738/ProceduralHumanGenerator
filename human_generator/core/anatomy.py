@@ -29,7 +29,15 @@ _Z: dict[str, float] = {
     "jugulum": 0.795, "acromion": 0.818, "deltoid_line": 0.812,
     "elbow": 0.645, "wrist": 0.508, "fingertip": 0.380,
     "chest_top": 0.800, "neck_top": 0.834, "spine_head": 0.845,
-    "chin": 0.858, "vertex": 1.000, "shoulder": 0.818, "pelvis": 0.530,
+    "chin": 0.858, "shoulder": 0.818, "pelvis": 0.530,
+    # S3.4 — reconciliação do canon com a geometria medida (o valor nominal
+    # anterior era uma referência antropométrica sem consumidores no código).
+    # Medido em realistic_female seed 42: topo do crânio 1.6842 m (coroa do
+    # crânio, achatada de propósito por squash_top), ponta dos dedos 0.6808 m
+    # (mão de 0.82 cabeças, construída por hand_length()).  Nada consome estas
+    # duas entradas além do instrumento de integração (grep: 0 chamadas), logo
+    # alinhar a tabela com o construído não move geometria nenhuma.
+    "vertex": 0.991, "fingertip": 0.400,
 }
 # facial levels: multiples of head height ABOVE the chin
 _FACE_Z: dict[str, float] = {
@@ -298,7 +306,15 @@ class Anatomy:
                                     width=max(0.004, w), depth=max(0.004, d),
                                     front_scale=fs, back_scale=bs, superellipse=e))
 
-        at(sh + Vector((0, 0, 0.045 * s)), r_up * 1.26, r_up * 1.30)          # shoulder cap (root)
+        # S3.2 — raiz INSERIDA no tronco.  Medido antes: a primeira estação ficava
+        # 4.5% da estatura (76 mm) ACIMA do acromion, em z=1.467, onde o tronco só
+        # chega a |x|=0.095 — a raiz do braço estava literalmente no ar (folga
+        # mínima braço↔tronco 7.5 mm; o braço lia-se como uma manga solta), apesar
+        # de generators/body.py documentar "limb roots are *inserted* into the
+        # trunk".  A raiz passa a ficar dentro do tórax na altura do ombro, com
+        # raio menor que a meia-largura do tronco nessa estação (0.268 medido).
+        at(sh + Vector((-side * 0.055 * s, -0.004 * s, -0.004 * s)),
+           r_up * 0.92, r_up * 0.92)                                            # root (in chest)
         at(sh, r_up * 1.16, r_up * 1.12)                                        # deltoid top
         at(sh.lerp(el, 0.18), r_up * 1.02, r_up * 1.04)                        # deltoid belly
         at(sh.lerp(el, 0.50), r_up * 0.84, r_up * 0.86, fs=1.04, bs=1.06)      # biceps/triceps

@@ -24,24 +24,46 @@ RAY_SPREAD = {"index": -0.055, "middle": -0.010, "ring": 0.030, "pinky": 0.075}
 
 
 def _hand_basis(wrist: Vector, distal: Vector, side: int):
-    z = (Vector(distal) - Vector(wrist))
+    """Referencial local da mão; o lado direito é o **espelho exato** do esquerdo.
+
+    S3.1 — medido: construir o referencial independentemente por lado com
+    ``volar0 = (-side*0.30, -0.90, -0.10)`` e ``x0 = volar0.cross(z) * side``
+    **não** dá um espelho, porque o produto externo não é equivariante sob
+    reflexão (``(Ma) × (Mb) = -M(a × b)`` para um espelho M).  Resultado medido:
+    as duas mãos diferiam até 13.4 mm (Hausdorff) e 41.6 % dos vértices da
+    personagem não tinham par espelhado (``docs/S3_BODY_INTEGRATION.md`` §3).
+    A correcção constrói o referencial no espaço canónico (lado esquerdo) e
+    espelha-o explicitamente para o lado direito — o lado esquerdo fica
+    exactamente como estava, o direito passa a ser o seu espelho.
+    """
+    mirror = side < 0
+    w = Vector(wrist)
+    d = Vector(distal)
+    if mirror:                                  # trabalhar no lado canónico
+        w = Vector((-w.x, w.y, w.z))
+        d = Vector((-d.x, d.y, d.z))
+    z = (d - w)
     if z.length_squared < 1e-9:
         z = Vector((0, 0, -1.0))
     z = z.normalized()
-    volar0 = Vector((-side * 0.30, -0.90, -0.10)).normalized()
+    volar0 = Vector((-0.30, -0.90, -0.10)).normalized()
     x0 = volar0.cross(z)
     if x0.length_squared < 1e-9:
         x0 = Vector((1.0, 0.0, 0.0))
-    x0 = x0.normalized() * side if side != 0 else x0.normalized()
     x = x0.normalized()
     y = z.cross(x).normalized()
-    if y.dot(volar0) < 0.0:  # keep volar on +y for both sides
-        pass  # chirality handled by x flip; y follows z×x
-    rows = ((x.x, y.x, z.x, wrist.x),
-            (x.y, y.y, z.y, wrist.y),
-            (x.z, y.z, z.z, wrist.z),
+    rows = ((x.x, y.x, z.x, w.x),
+            (x.y, y.y, z.y, w.y),
+            (x.z, y.z, z.z, w.z),
             (0.0, 0.0, 0.0, 1.0))
-    return Matrix(rows), x, y, z
+    M = Matrix(rows)
+    if mirror:
+        M = Matrix(((-1.0, 0.0, 0.0, 0.0), (0.0, 1.0, 0.0, 0.0),
+                    (0.0, 0.0, 1.0, 0.0), (0.0, 0.0, 0.0, 1.0))) @ M
+        x = Vector((-x.x, x.y, x.z))
+        y = Vector((-y.x, y.y, y.z))
+        z = Vector((-z.x, z.y, z.z))
+    return M, x, y, z
 
 
 def build_hand(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
@@ -66,10 +88,17 @@ def build_hand(spec, anat, *, side: int, rng) -> tuple[MeshBuilder, dict]:
     N = 8
     for i in range(N + 1):
         t = i / N
-        zc = -hand_len * 0.05 + t * (palm_len + hand_len * 0.05)
+        # S3.5 — cintura do punho.  Medido: a raiz da palma tinha 87.5 mm de
+        # largura contra 44–49 mm de diâmetro do antebraço, ou seja a mão era
+        # mais larga que o braço na junção e a raiz ficava FORA da casca do
+        # antebraço (0/12 amostras dentro).  Anatomicamente o punho é uma
+        # cintura estreita; ``neck`` estreita as primeiras estações (0.45 na
+        # raiz, 1.0 a partir de t=0.25) e a raiz sobe para dentro do antebraço.
+        zc = -hand_len * 0.09 + t * (palm_len + hand_len * 0.09)
+        neck = 0.45 + 0.55 * min(1.0, t / 0.25)
         taper = 0.80 + 0.20 * math.sin(math.pi * min(1.0, t * 1.12)) if t < 0.9 else 0.86
-        w = half_b * (0.84 + 0.30 * t) * (1.0 if t < 1.0 else 1.02)
-        d = t_half * (0.92 + 0.16 * math.sin(math.pi * t))
+        w = half_b * (0.84 + 0.30 * t) * (1.0 if t < 1.0 else 1.02) * neck
+        d = t_half * (0.92 + 0.16 * math.sin(math.pi * t)) * neck
         # wrist end narrower, knuckle end wide & flat; slight cup toward volar
         y_off = t_half * 0.10 * math.sin(math.pi * t)
         secs = make_section((0.0, y_off, zc), tangent=(1, 0, 0), front=(0, 1, 0),

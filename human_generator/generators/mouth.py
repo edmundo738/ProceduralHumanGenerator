@@ -161,8 +161,16 @@ def build_teeth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
                                        + (0.6 if rk == 3 else 0.0))
                     pts = [Vector(q) for q in sec.points(8)]
                     if kind == "canine" and rk == 3:  # cusp point
+                        # S3.1 — a modulação tem de escolher a metade do anel pelo
+                        # lado MUNDIAL do dente, não só pelo índice do anel:
+                        # ``max(0, cos(2*pi*pi/8))`` não é equivariante sob reflexão
+                        # e quebrava o espelho exactamente dos 4 caninos (200 de
+                        # 1400 vértices de esmalte, medido).  O dente do lado +x
+                        # mantém a geometria bit a bit; o de −x passa a ser o seu
+                        # espelho.
+                        outward = 1.0 if x >= 0.0 else -1.0
                         pts = [q - Vector((0, 0, sign * 0.0035 * h *
-                                           max(0.0, math.cos(2 * math.pi * pi / 8))) )
+                                           max(0.0, outward * math.cos(2 * math.pi * pi / 8))))
                                for pi, q in enumerate(pts)]
                     if kind in ("molar", "premolar") and rk == 3:
                         pts = [q + Vector((0, 0, sign * 0.0022 * h *
