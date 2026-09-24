@@ -1,0 +1,17 @@
+{
+  "name": "cyber_angel",
+  "body": {"muscle_tone": 0.62, "fat_level": 0.18},
+  "face": {"eye_width": 1.06, "cheekbone_height": 1.25, "lip_fullness": 1.12, "asymmetry": 0.4},
+  "skin": {"melanin": 0.28, "hemoglobin": 0.42, "subsurface_strength": 0.72, "freckle_amount": 0.06},
+  "hair": {"style": "sleek", "hair_length": 0.42, "curl": 0.12, "melanin": 0.16, "strand_count": 2800, "part_offset": 0.65},
+  "extras": {
+    "clothing": "armorsuit",
+    "cybernetic": 1.0,
+    "neon": 0.85,
+    "angelic": 1.0,
+    "wing_span": 1.05,
+    "iris_tint": [0.25, 0.62, 0.72],
+    "hair_tint": [0.36, 0.30, 0.44]
+  },
+  "pipeline": {"subdiv_render": 2, "micro_detail": 0.6, "poly_budget": 150000}
+}

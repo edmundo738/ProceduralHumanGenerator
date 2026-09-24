@@ -1,0 +1,10 @@
+{
+  "name": "neon_idol",
+  "body": {"stature": 1.72, "bust_relative": 0.85, "waist_hip_ratio": 0.72},
+  "face": {"mouth_width": 1.08, "lip_fullness": 1.3, "eye_width": 1.1, "smile_rest": 0.3},
+  "skin": {"melanin": 0.22, "hemoglobin": 0.55, "roughness_mid": 0.4},
+  "hair": {"style": "loose", "hair_length": 0.72, "curl": 0.55, "melanin": 0.12, "strand_count": 3200},
+  "extras": {"clothing": "crop_leggings", "neon": 1.0, "cybernetic": 0.25, "angelic": 0.0,
+             "iris_tint": [0.75, 0.20, 0.55], "hair_tint": [0.55, 0.25, 0.62]},
+  "pipeline": {"micro_detail": 0.55}
+}
