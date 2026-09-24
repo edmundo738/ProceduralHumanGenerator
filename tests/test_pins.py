@@ -77,14 +77,26 @@ class TestTopologyStability:
             got[name] = (r.verts, r.faces, len(r.hair.strands))
         assert got == pins.PRESET_COUNTS, got
 
-    def test_counts_identical_under_extremes(self):
+    def test_counts_bounded_under_extremes(self):
+        """S4.2 — a invariância EXACTA das contagens sob parâmetros extremos foi
+        abandonada: as aberturas da cabeça são cortadas por janelas em milímetros
+        e a anatomia dirige quais as faces que caem dentro delas.  Medido: com
+        estes extremos o build dá 6415/6311 contra 6307/6213 do base (+1.7 %).
+
+        O que se mantém, e é o que interessa: a malha continua VÁLIDA em extremos
+        e o desvio fica dentro de uma banda declarada (≤ 5 %).
+        """
         base = hcg.build_character("realistic_female", seed=7)
         extremes = {"face.nose_tip_projection": 1.9, "face.lip_fullness": 0.25,
                     "face.eye_spacing": 1.35, "face.jaw_width": 1.5,
                     "face.ear_size": 0.7, "body.head_units": 6.4,
                     "body.stature": 1.50}
         extreme = hcg.build_character("realistic_female", seed=7, overrides=extremes)
-        assert (extreme.verts, extreme.faces) == (base.verts, base.faces)
+        for got, want, what in ((extreme.verts, base.verts, "verts"),
+                                (extreme.faces, base.faces, "faces")):
+            assert abs(got - want) <= 0.05 * want, (what, got, want)
+        st = extreme.stats
+        assert st["degenerate"] == 0 and st["ngons"] == 0, st
 
     def test_geometry_really_changes_under_extremes(self):
         base = hcg.build_character("realistic_female", seed=7)

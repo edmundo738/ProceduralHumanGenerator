@@ -197,3 +197,100 @@ Regressões (todas declaradas):
   802 mm deixa de valer e é re-derivado).
 - **A5 regressões**: 0 non-manifold / 0 loose / 0 degeneradas / 0 ngons na grelha
   completa; J1–J5 e F1–F4 verdes.
+
+## 9. Resultado de S4.2 — aberturas da cabeça (medido)
+
+O bloqueador estrutural de S4.1 está fechado: **a casca do crânio deixou de ser
+um ovo fechado**. Medido na casca da cabeça (`build_head`), instrumento
+`core.integration.head_openings_metrics` (novo):
+
+| Abertura | Laço | Extensão medida (x, y, z) | Alvo | Estado |
+|---|---|---|---|---|
+| `orbita.L` | 32 | 22.9 × 6.7 × 12.7 mm | fissura 30 × 10 mm | parcial (§9.3) |
+| `orbita.R` | 32 | 22.8 × 6.6 × 12.7 mm | idem | parcial |
+| `oral` | 76 | **41.5 × 16.8 × 5.0 mm** | 42 × 5 mm (menor que os lábios, 49.6) | ✓ A2 |
+| `narina.L` | 10 | 11.6 × 5.3 × 5.5 mm | narina sob a asa | ✓ A3 |
+| `narina.R` | 10 | 11.6 × 5.7 × 6.1 mm | idem | ✓ A3 |
+
+* **A4 (contabilidade da fronteira)**: 168 arestas de fronteira na casca antes do
+  corte → **328** depois. A diferença, **160**, é exactamente a soma dos cinco
+  laços (32+32+76+10+10). Nenhum outro buraco aparece.
+* **Laços totais da casca**: 7 — os 5 do corte mais as 2 orelhas (48+48, S4.3).
+* Grelha `weld × dissolve` × 2 regimes: 0 non-manifold, 0 degeneradas, 0 loose,
+  **0 ngons** (a primeira versão deixava 2 pentágonos na malha entregue: ver
+  §9.2), fronteira 962 exacta em todas as células.
+* Contagens: **6307 v / 6213 f** (eram 5951/5932), `quad_ratio` 0.8580, grupos
+  59, creases 786. Pins re-medidos nos 2 regimes: digests
+  **`ea31b68319bd27bb` (puro)** / **`1d7b3444b57daccb` (mathutils)**.
+  pytest **133 passados, 1 saltado, 1 xfail** (o xfail é a lacuna §9.3, com o
+  número medido na razão). S0 nos 3 regimes: **33/33, 72/72, 72/72**.
+
+### 9.1 O que foi preciso mudar (para além do corte)
+
+| Sítio | Antes | Depois | Porquê (medido) |
+|---|---|---|---|
+| `add_feature_loops` selecção de faces | distância ao **centro** da face | distância **ponto↔face** (`poly_dist`) | a célula mede ~25 mm: um alvo a 8 mm do centro nunca seleccionava a face e o refinamento nunca chegava abaixo de uma célula (a janela da fissura tinha **2 vértices**, a das narinas **0**) |
+| `add_feature_loops` iterações | máximo global | **por alvo** (o `it` de cada alvo era ignorado) | contrato declarado |
+| alvos do refinamento | raio 0.034·H (olho) | **0.070·H / 0.095·H + 2 passagens** | a abertura tem 30 mm (olho) e 42 mm (boca); com o raio antigo a abertura ficava numa única célula |
+| campo do **nariz** (σ_z) | 0.9·H (**200 mm**) | **0.10·H** (22 mm) | **desvio de âmbito declarado**: a pele da linha média estava 25–35 mm à frente da máscara facial em metade da cara (excesso máx. **+34.9 mm**), o que punha boca/nariz/globo *dentro* da cabeça e tornava impossível colocar as aberturas por marcos |
+| campo do nariz (σ_x, amostras) | (wid+6 mm)·H, 4 amostras | (34+wid mm)·H, **2 amostras** | gaussianas sobrepostas somam: 4 amostras davam +32 mm na ponta; 2 dão **+17.6 mm**, que é a protrusão do próprio marco |
+| asas do nariz | ±0.016·H (3.6 mm) | **±0.050·H** (11.1 mm) | as asas estavam dentro da crista |
+| região/grupo `nostril` | 0 vértices | **1** (`nostril.L`/`R` no grupo, 59 grupos) | as narinas passaram a existir |
+| **novo** deform `conform` (`field.py`) | — | pálpebra concêntrica com o globo | o *socket* punha o fundo da cova a **9.1 mm** de um centro de globo de 12.3 mm: a pele intersectava o olho |
+
+### 9.2 Erros meus e defeitos apanhados por medição
+
+1. **Janela de corte ≠ elipse projectada**: se forem iguais, as faces das pontas
+   da fissura não têm vértice dentro e o buraco sai curto — medido: **15.7 mm**
+   em vez de 30. A janela é maior (21 × 9.5 mm) e o rebordo é projectado na
+   elipse declarada (15 × 5 mm).
+2. **Rebordo projectado a partir do plano errado**: a fissura estava definida no
+   plano ⊥ ao **eixo do globo** (inclinado ~38°), logo o buraco saía *de perfil*
+   (19 × 17 mm). Passou ao plano da **pele** (direita horizontal, cima vertical).
+3. **Rebordo com dois vértices a 0.01 mm**: a projecção independente deixava dois
+   vértices vizinhos quase coincidentes; o `dissolve_degenerate` colapsava a
+   aresta e nascia um **pentágono** (2 ngons, 24 mm², simétricos, em ±41.7 mm).
+   Corrigido com re-amostragem de **passo angular uniforme** no rebordo.
+4. **Face-ponte a atravessar a abertura**: com o critério "qualquer vértice
+   dentro" ficavam faces cujo centro cai dentro do buraco (a face atravessa-o) e
+   o raio do globo batia numa delas. Critério passou a **união** (vértice, centro
+   ou ponto médio de aresta dentro).
+5. **Teste meu errado (outra vez do mesmo tipo)**: escrevi `loops == 208` (soma
+   dos laços + orelhas) quando a soma dos laços classificados é **160** — e a
+   soma dos comprimentos dos laços nem sequer é igual ao número de arestas de
+   fronteira (um vértice de aperto pertence a dois laços: 160 contra 328).
+   Corrigido para o medido, com a razão escrita no teste.
+6. **Invariância G2 das contagens abandonada** (declarado): as aberturas são
+   cortadas por janelas em milímetros e a anatomia dirige as faces que caem
+   dentro delas. Medido: `neon_idol` difere em **2 faces** (boca 3 mm maior ⇒ 2
+   faces caem do outro lado da janela); sob parâmetros extremos o build passa de
+   6307/6213 para **6415/6311 (+1.7 %)**. O teste passa a exigir banda declarada
+   de 5 % + malha válida, em vez de igualdade exacta (em `tests/test_pins.py` e
+   no S0, com o motivo escrito nos dois sítios).
+
+### 9.3 Lacuna medida, deixada ABERTA para S4.2b (não resolvida nesta fatia)
+
+O critério **A1** ("nenhum vértice da casca dentro do cilindro do globo") foi
+**refutado como escrito**: uma fissura de 30 × 10 mm não pode evitar um cilindro
+de 24.6 mm de diâmetro — o critério correcto é de *linha de vista*: o primeiro
+toque de pele a partir do centro do globo ao longo do eixo do olho.
+
+Medido agora: **4.17 mm (L) / 3.90 mm (R)** — há pele à frente do globo, dentro
+de um globo de **12.33 mm** de raio. Causa localizada: **faces grossas da grelha**
+com um vértice no rebordo e três na face (ex.: face#241, vértices em
+(20.7, 66.8, 1572.2) e (45.6, 57.8, 1552.9), (51.9, 48.9, 1555.6),
+(55.1, 48.6, 1567.9) mm) que **atravessam** a abertura. A abertura existe, é
+medida e é contabilizada (laço de 32 vértices); o que falta é recortar essas
+faces, o que exige refinar a banda do rebordo com a densidade do rebordo — é
+trabalho da sub-fatia dos olhos (S4.2b), onde a pálpebra e o globo são o tema.
+Fica como `xfail` com este número na razão do teste.
+
+Também **não resolvido**: simetria L/R do rebordo é aproximada, não exacta
+(órbita 22.9 × 6.7 × 12.7 contra 22.8 × 6.6 × 12.7 mm; narinas 11.6/11.6 de
+largura com centros a 0.2 mm do espelho) — a re-amostragem uniforme de cada lado
+não partilha a fase. A simetria exacta precisa da correspondência de índices
+*antes* do corte (S4.2b).
+
+Efeitos colaterais declarados: região `brow` **volta a 0** (era 2 em S4.1) e o
+grupo `head.brow` desaparece — o débito do §7.4 (máscara da testa sem anéis
+próprios) fica mais visível, não foi tratado; `lip` 96 → 126; `scalp` 134 → 132.

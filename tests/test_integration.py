@@ -523,6 +523,75 @@ class TestS41FaceCriteriaOnRealBuild:
             assert not over or max(over) <= 0.006, (sgn, max(over) if over else None)
 
 
+class TestS42HeadOpenings:
+    """S4.2 — aberturas da cabeça (contrato docs/S4_FACE.md §8/§9)."""
+
+    @staticmethod
+    def _m(build_default):
+        from human_generator.core.integration import head_openings_metrics
+        return head_openings_metrics(build_default)
+
+    def test_every_declared_opening_exists(self, build_default):
+        m = self._m(build_default)
+        names = {l["abertura"] for l in m["loops"]}
+        for want in ("orbita.L", "orbita.R", "oral", "narina.L", "narina.R"):
+            assert want in names, (want, sorted(names))
+
+    def test_mouth_aperture_is_smaller_than_the_lips(self, build_default):
+        m = self._m(build_default)["mouth"]
+        assert m["menor_que_labios"], m
+        assert m["abertura_altura_mm"] <= 8.0, m
+
+    @pytest.mark.xfail(reason="S4.2b: faces grossas da grelha atravessam a abertura "
+                              "do olho (medido: primeiro toque de pele a 4.17 mm "
+                              "do centro de um globo de raio 12.33 mm); a abertura "
+                              "existe e está medida (laço de 32 vértices, 22.9 x "
+                              "12.7 mm), falta o recorte das faces que a cruzam",
+                       strict=False)
+    def test_globe_is_no_longer_covered_by_skin(self, build_default):
+        m = self._m(build_default)["globe_visible"]
+        for tag in ("L", "R"):
+            assert m[tag]["visivel"], (tag, m[tag])
+
+    def test_nostrils_are_two_and_separated(self, build_default):
+        n = self._m(build_default)["nostrils"]
+        assert n["folga_mm"] >= 5.0, n
+        assert n["largura_L_mm"] >= 3.0 and n["largura_R_mm"] >= 3.0, n
+
+    def test_left_and_right_openings_are_mirror_images(self, build_default):
+        m = self._m(build_default)
+        by = {}
+        for l in m["loops"]:
+            by.setdefault(l["abertura"], []).append(l)
+        # Tolerância MEDIDA, não escolhida: o rebordo é re-amostrado com passo
+        # angular uniforme em cada lado e as duas re-amostragens não partilham a
+        # fase (o conjunto de vértices de partida não é espelho exacto).  Medido
+        # depois da passagem de espelho: órbita 22.9/6.7/12.7 contra
+        # 22.8/6.6/12.7 mm; narinas 11.6/11.6 mm de largura, centros a 0.2 mm do
+        # espelho.  A simetria EXACTA do rebordo fica para S4.2b (precisa da
+        # correspondência de índices antes do corte).
+        for a, b in (("orbita.L", "orbita.R"), ("narina.L", "narina.R")):
+            assert len(by[a]) == len(by[b]) == 1, (a, b, by)
+            assert by[a][0]["n"] == by[b][0]["n"], (a, b)
+            for ea, eb in zip(by[a][0]["bbox_mm"], by[b][0]["bbox_mm"]):
+                assert abs(ea - eb) < 1.5, (a, b, ea, eb)
+            assert abs(by[a][0]["centro_mm"][0] + by[b][0]["centro_mm"][0]) < 1.5, (a, b)
+
+    def test_boundary_accounting_is_exact(self, build_default):
+        """A fronteira da casca da cabeça cresce EXACTAMENTE com o corte.
+
+        Medido: 168 arestas de fronteira antes do corte (orelhas incluídas) e
+        328 depois — a diferença, 160, é exactamente a soma dos 5 laços do corte
+        (32+32+76+10+10).  Nenhum outro buraco pode aparecer sem que este número
+        mude.  Nota: a soma dos comprimentos dos laços NÃO é igual ao número de
+        arestas de fronteira, porque um vértice de aperto pertence a dois laços
+        (medido: 160 contra 328; a contagem de arestas é a que manda).
+        """
+        m = self._m(build_default)
+        assert sum(l["n"] for l in m["loops"]) == 160, m["loops"]
+        assert m["boundary_edges"] == 328, m["boundary_edges"]
+
+
 class TestReportOnRealBuild:
     def test_report_has_all_criteria_and_no_floating_part(self, build_default):
         rep = integration_report(build_default)

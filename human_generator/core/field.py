@@ -89,13 +89,20 @@ class Deformer:
     """
 
     __slots__ = ("mode", "centre", "sigma", "amp", "direction", "a", "b",
-                 "plane_n", "plane_d", "angle", "freq", "rng", "mask")
+                 "plane_n", "plane_d", "angle", "freq", "rng", "mask", "basis")
+
+    # `basis` (S4.2b): dois eixos que definem a footprint elíptica do modo
+    # `conform` (a fissura palpebral é uma elipse de 30 × 10 mm, não um círculo;
+    # um cilindro de sigma 0.030·H deixava o socket intacto nas pontas).
 
     def __init__(self, mode: str, *, centre=None, sigma=(0.05, 0.05, 0.05),
                  amp: float = 0.0, direction=None, a=None, b=None,
                  plane_n=None, plane_d: float = 0.0, angle: float = 0.0,
                  freq: float = 1.0, rng: Rng | None = None,
-                 mask: Callable[[Vector], float] | None = None):
+                 mask: Callable[[Vector], float] | None = None,
+                 basis=None):
+        self.basis = ((Vector(basis[0]).normalized(), Vector(basis[1]).normalized())
+                      if basis is not None else None)
         self.mode = mode
         self.centre = Vector(centre) if centre is not None else Vector((0, 0, 0))
         self.sigma = tuple(float(s) for s in sigma)
@@ -137,6 +144,42 @@ class Deformer:
                 return Vector((0, 0, 0))
             d = self.direction if self.direction is not None else (normal or Vector((0, 1, 0)))
             return d * (self.amp * g)  # amp negative → inward
+        if mode == "conform" and self.a is not None:
+            # S4.2 — conforma a pele a uma esfera (centro ``a``) dentro de um
+            # cilindro de raio ``sigma[1]`` em torno do eixo ``self.direction``.
+            # Mesmo sentido do deslocamento para todos os pontos: radial, para
+            # fora/para dentro conforme o ponto está dentro/fora da esfera.
+            # Medido (S4.2): o *socket* de 5.5 mm punha o fundo da cova a
+            # 9.1 mm do centro do globo — dentro de um globo de 12.3 mm — e a
+            # pele intersectava o olho em volta da abertura; a pálpebra passa a
+            # ser concêntrica com o globo (raio + espessura da pálpebra).
+            to_c = p - self.a
+            dist = to_c.length
+            axis = self.direction if self.direction is not None else Vector((0, 1, 0))
+            if self.basis is not None:
+                e1, e2 = self.basis
+                q = math.sqrt((to_c.dot(e1) / max(1e-6, self.sigma[1])) ** 2 +
+                              (to_c.dot(e2) / max(1e-6, self.sigma[2])) ** 2)
+                # núcleo com g = 1 (medido: com a transição a começar em q=0 a
+                # gaussiana valia 0.65 a meio da footprint e sobravam vértices
+                # 2 mm dentro do globo); a transição só nos 45 % exteriores.
+                core = 0.55
+                g = falloff(clamp((q - core) / (1.0 - core), 0.0, 1.0), 1.0,
+                            shape="smooth")
+            else:
+                dn = to_c.dot(axis)
+                r_ax = (to_c - axis * dn).length
+                g = falloff(r_ax, max(1e-6, self.sigma[1]), shape="smooth")
+            # S4.2b — SÓ EMPURRA PARA FORA.  Medido: a versão simétrica puxava
+            # para dentro tudo o que estivesse a mais de ``radius`` dentro da
+            # footprint (a testa, a maçã do rosto) — uma correcção de 3 mm na
+            # testa por causa de um problema da pálpebra.  A pálpebra cobre o
+            # globo e nunca pode estar dentro dele: só os pontos com
+            # ``dist < amp`` (dentro da esfera) são empurrados para a superfície.
+            delta = self.amp - dist
+            if g < 1e-4 or dist < 1e-9 or delta <= 0.0:
+                return Vector((0, 0, 0))
+            return to_c * (delta * g / dist)
         if mode == "ridge" and self.a is not None and self.b is not None:
             q, _ = segment_closest(p, self.a, self.b)
             d = (p - q).length
@@ -212,6 +255,16 @@ class DeformStack:
         return self.add(Deformer("socket", centre=centre,
                                  sigma=(radius, radius, radius),
                                  amp=-abs(depth), direction=direction, mask=mask))
+
+    def conform(self, centre, radius: float, axis, width, *, width2=None,
+                basis=None, mask=None) -> Deformer:
+        """Conforma a pele à esfera (``centre``, ``radius``) numa footprint em
+        torno de ``axis``.  ``width``/``width2`` + ``basis`` dão uma footprint
+        elíptica orientada (usado na fissura palpebral)."""
+        w2 = width if width2 is None else width2
+        return self.add(Deformer("conform", a=centre, sigma=(radius, width, w2),
+                                 amp=radius, direction=axis, mask=mask,
+                                 basis=basis))
 
     def ridge(self, a, b, amp: float, width: float, *, direction=None, mask=None) -> Deformer:
         return self.add(Deformer("ridge", a=a, b=b, sigma=(width, width, width),

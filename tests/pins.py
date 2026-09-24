@@ -20,15 +20,18 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "ad620a90b8eba085",   # S3.7: shoulder_head_ratio now has a source
-        "verts": 5951,          # pre-weld (pure build)
-        "faces": 5932,
+        "verts": 6307,          # pre-weld (pure build)
+        "faces": 6213,
         "strands": 2400,
-        # re-measured in S4.1 (skull breadth 169.2->144.1 mm and depth 223.1->185.1,
+        # re-measured in S4.2 (a casca do crânio deixou de ser fechada: orbita,
+        # boca e narinas cortadas; refinamento local em 2 passagens cobrindo
+        # cada abertura; campo do nariz localizado - ver docs/S4_FACE.md §9)
+        # (S4.1: skull breadth 169.2->144.1 mm and depth 223.1->185.1,
         # mouth 130.9->49.6 mm, vermilion 6.4/10.0 mm, sagittal column correction
         # with sign, globe centre recessed, orbit deepened)
         # (S3.8: hands; S3.7: neck/trapezius/arms/knees, stations sorted by z)
-        "digest": {"pure-python": "3f23485d4117c50a",
-                   "mathutils": "cdd24607c7567e54"},
+        "digest": {"pure-python": "ea31b68319bd27bb",
+                   "mathutils": "1d7b3444b57daccb"},
     },
 }
 
@@ -37,10 +40,14 @@ PINS = {
 # values (pytest runs without bpy).  The strand count is regime-sensitive for
 # cyber_angel only (2764 float64 / 2766 float32) and was already so before S2 —
 # measured on both trees, see docs/S2_TOPOLOGY.md §5.
+# S4.2 — a casca da cabeça passa a ter aberturas (orbita ×2, boca, narinas ×2) e
+# o refinamento local cresce; as contagens deixam de ser IGUAIS entre presets
+# (6307 vs 6309): o corte é dirigido pela anatomia e 2 faces do `neon_idol`
+# caem do lado oposto da janela da boca (medido, doc S4_FACE §10).
 PRESET_COUNTS = {
-    "cyber_angel": (5951, 5932, 2763),
-    "neon_idol": (5951, 5932, 3200),
-    "realistic_female": (5951, 5932, 2400),
+    "cyber_angel": (6307, 6213, 2800),
+    "neon_idol": (6309, 6215, 3200),
+    "realistic_female": (6307, 6213, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -48,12 +55,12 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 5951, "faces": 5932,
+AUDIT_PINS = {"verts": 6307, "faces": 6213,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
               "ngons": 0,
-              "boundary_edges": 802}   # S3: limb/foot tubes are capped shells now
+              "boundary_edges": 962}   # S3: limb/foot tubes are capped shells now
 # S3.6: ``weld`` and ``dissolve`` are no-ops in ALL FOUR grid combinations in
 # both regimes (``ops 0/0``) — the build has no vertex pair closer than the
 # default weld (1e-5).  Before the ``cap_pole`` fix, weld=1e-5 merged 2 vertices
@@ -86,11 +93,11 @@ DEGENERATE_RING_PINS: dict[str, int] = {}
 SEMANTIC_PINS = {
     ("realistic_female", 42): {
         "pure-python": {
-            "regions": {
-                "brow": 2, "cornea": 102, "enamel": 1400,
-                "eye": 264, "eyelid": 240, "gum": 196,
-                "lip": 96, "nail": 192, "oral": 127,
-                "palm": 62, "scalp": 134, "skin": 3096,
+                                    "regions": {
+                "cornea": 102, "enamel": 1400, "eye": 264,
+                "eyelid": 240, "gum": 196, "lip": 126,
+                "nail": 192, "nostril": 1, "oral": 127,
+                "palm": 62, "scalp": 132, "skin": 3425,
                 "sole": 40
             },
             "groups": {
@@ -110,18 +117,18 @@ SEMANTIC_PINS = {
                 "R.finger.thumb.2": 8, "R.toe.big.0": 32, "R.toe.big.1": 8,
                 "R.toe.little.0": 32, "R.toe.little.1": 8, "R.toe.long.0": 32,
                 "R.toe.long.1": 8, "R.toe.second.0": 32, "R.toe.second.1": 8,
-                "R.toe.third.0": 32, "R.toe.third.1": 8, "head.brow": 2,
-                "head.cornea.L": 2, "head.cornea.R": 2, "head.eyelid.L": 100,
-                "head.eyelid.R": 100, "head.iris.L": 13, "head.iris.R": 13,
-                "head.scalp": 134
+                "R.toe.third.0": 32, "R.toe.third.1": 8, "head.cornea.L": 2,
+                "head.cornea.R": 2, "head.eyelid.L": 100, "head.eyelid.R": 100,
+                "head.iris.L": 13, "head.iris.R": 13, "head.lip": 30,
+                "head.nostril": 1, "head.scalp": 132
             },
         },
         "mathutils": {
-            "regions": {
-                "brow": 2, "cornea": 102, "enamel": 1400,
-                "eye": 264, "eyelid": 240, "gum": 196,
-                "lip": 96, "nail": 192, "oral": 127,
-                "palm": 62, "scalp": 134, "skin": 3096,
+                                    "regions": {
+                "cornea": 102, "enamel": 1400, "eye": 264,
+                "eyelid": 240, "gum": 196, "lip": 126,
+                "nail": 192, "nostril": 1, "oral": 127,
+                "palm": 62, "scalp": 132, "skin": 3425,
                 "sole": 40
             },
             "groups": {
@@ -141,10 +148,10 @@ SEMANTIC_PINS = {
                 "R.finger.thumb.2": 8, "R.toe.big.0": 32, "R.toe.big.1": 8,
                 "R.toe.little.0": 32, "R.toe.little.1": 8, "R.toe.long.0": 32,
                 "R.toe.long.1": 8, "R.toe.second.0": 32, "R.toe.second.1": 8,
-                "R.toe.third.0": 32, "R.toe.third.1": 8, "head.brow": 2,
-                "head.cornea.L": 2, "head.cornea.R": 2, "head.eyelid.L": 100,
-                "head.eyelid.R": 100, "head.iris.L": 13, "head.iris.R": 13,
-                "head.scalp": 134
+                "R.toe.third.0": 32, "R.toe.third.1": 8, "head.cornea.L": 2,
+                "head.cornea.R": 2, "head.eyelid.L": 100, "head.eyelid.R": 100,
+                "head.iris.L": 13, "head.iris.R": 13, "head.lip": 30,
+                "head.nostril": 1, "head.scalp": 132
             },
         },
     },

@@ -122,8 +122,16 @@ def suite_pure() -> None:
                 "face.eye_spacing": 1.35, "face.jaw_width": 1.5,
                 "face.ear_size": 0.7, "body.head_units": 6.4, "body.stature": 1.50}
     r6 = build_character("realistic_female", seed=7, overrides=extremes)
-    check("extreme overrides build", r6.verts == r.verts and r6.faces == r.faces,
-          f"{r6.verts}v (constant topology)")
+    # S4.2 — as aberturas da cabeça são cortadas por janelas em milímetros: a
+    # anatomia dirige quais as faces que caem dentro delas, logo a contagem deixa
+    # de ser EXACTAMENTE constante sob parâmetros extremos (medido: 6415/6311
+    # contra 6307/6213 = +1.7 %).  O critério passa a ser a banda declarada de
+    # 5 % mais a validade da malha — não a igualdade exacta.
+    _band = all(abs(a - b) <= 0.05 * b
+                for a, b in ((r6.verts, r.verts), (r6.faces, r.faces)))
+    check("extreme overrides build (counts within the declared 5% band)",
+          _band and r6.stats["degenerate"] == 0 and r6.stats["ngons"] == 0,
+          f"{r6.verts}v/{r6.faces}f (band + valid)")
     check("extreme overrides change geometry", r6.digest != r.digest)
 
     # spec resolution & precedence

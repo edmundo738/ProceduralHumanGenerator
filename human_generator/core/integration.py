@@ -1040,3 +1040,169 @@ def integration_report(build) -> dict:
         report["envelope"] = height_envelope(b, anat)
         report["feet"] = foot_metrics(b, anat, comps=comps)
     return report
+
+
+# --------------------------------------------------------------------------- openings (S4.2)
+def _boundary_loops(builder) -> list[list[int]]:
+    """Laços de fronteira (arestas com exactamente uma face), por componentes."""
+    from collections import Counter
+    cnt: Counter = Counter()
+    for f in builder.faces:
+        for a, b in zip(f, f[1:] + f[:1]):
+            cnt[tuple(sorted((a, b)))] += 1
+    adj: dict[int, list[int]] = {}
+    for (a, b), n in cnt.items():
+        if n == 1:
+            adj.setdefault(a, []).append(b)
+            adj.setdefault(b, []).append(a)
+    seen, loops = set(), []
+    for v0 in list(adj):
+        if v0 in seen:
+            continue
+        stack, comp = [v0], []
+        seen.add(v0)
+        while stack:
+            v = stack.pop()
+            comp.append(v)
+            for w in adj[v]:
+                if w not in seen:
+                    seen.add(w)
+                    stack.append(w)
+        loops.append(sorted(comp))
+    return loops
+
+
+def head_openings_metrics(build) -> dict:
+    """Aberturas da cabeça (S4.2): laços de fronteira + visibilidade do globo.
+
+    Definições (nenhuma medida sem critério escrito):
+
+    * ``loops`` — laços de fronteira da malha da CABEÇA (``skull.*`` + orelhas),
+      classificados por proximidade ao centro declarado da abertura:
+      ``orbita.L/R`` (marco ``eye.<lado>``, ≤ 25 mm), ``oral`` (marco ``mouth``,
+      ≤ 30 mm) e ``narina.L/R`` (±0.043·H da base do nariz, ≤ 15 mm).
+    * ``globe_visible`` — o primeiro toque de um raio lançado do CENTRO do globo
+      ao longo do eixo do olho (``eyes.eye_axis``) contra as faces de pele da
+      cabeça.  ``None`` = não há pele à frente do globo ⇒ a abertura existe.
+      (O critério original A1, "nenhum vértice dentro do cilindro do globo", é
+      geometricamente impossível — ver docs/S4_FACE.md §9.)
+    * ``mouth_open_mm`` — largura do laço ``oral``; comparada com a distância
+      entre as comissuras (``mouth_corner.L``↔``mouth_corner.R``).
+    * ``nostril_span_mm`` — distância entre os extremos exteriores dos dois
+      laços das narinas; ``nostril_gap_mm`` — folga entre eles.
+    """
+    # S4.2 — a medição é feita na CASCA DA CABEÇA (`build_head`), não no
+    # construtor fundido: no fundido convivem as pálpebras, os lábios e as
+    # gengivas, que têm as suas próprias fronteiras abertas perto dos mesmos
+    # marcos.  Medido com o construtor fundido: 19 laços dentro do raio de
+    # classificação (8 deles das pálpebras/lábios), o que torna a contagem de
+    # aberturas ambígua.  A casca da cabeça, isolada, tem exactamente 7 laços:
+    # boca (76), orelhas (48 + 48), órbitas (32 + 32) e narinas (10 + 10).
+    from ..generators.head import build_head          # noqa: PLC0415  (evita ciclo)
+    anat = getattr(build, "anatomy", None) or getattr(build.build, "anatomy", None)
+    spec = getattr(build, "spec", None) or getattr(build.build, "spec", None)
+    b = build_head(spec, anat).builder
+    lm = anat.landmarks
+    h = anat.h
+    V = b.verts
+    loops = _boundary_loops(b)
+    out = {"loops": [], "boundary_edges": 0, "globe_visible": {}, "mouth": {}, "nostrils": {}}
+    from collections import Counter
+    cnt: Counter = Counter()
+    for f in b.faces:
+        for a, bb in zip(f, f[1:] + f[:1]):
+            cnt[tuple(sorted((a, bb)))] += 1
+    out["boundary_edges"] = sum(1 for n in cnt.values() if n == 1)
+
+    def bbox(ids):
+        xs = [V[i].x for i in ids]; ys = [V[i].y for i in ids]; zs = [V[i].z for i in ids]
+        return (max(xs) - min(xs), max(ys) - min(ys), max(zs) - min(zs))
+
+    def centre(ids):
+        n = len(ids)
+        return Vector((sum(V[i].x for i in ids) / n, sum(V[i].y for i in ids) / n,
+                       sum(V[i].z for i in ids) / n))
+
+    targets = {
+        "orbita.L": (Vector(lm["eye.L"]), 0.025),
+        "orbita.R": (Vector(lm["eye.R"]), 0.025),
+        "oral": (Vector(lm["mouth"]), 0.030),
+        "narina.L": (Vector(lm["nose_base"]) + Vector((0.043 * h, 0.002 * h, -0.010 * h)), 0.015),
+        "narina.R": (Vector(lm["nose_base"]) + Vector((-0.043 * h, 0.002 * h, -0.010 * h)), 0.015),
+    }
+    found: dict[str, list[int]] = {}
+    for ids in loops:
+        if len(ids) < 4:
+            continue
+        c = centre(ids)
+        best = None
+        for name, (t, rad) in targets.items():
+            d = (c - t).length
+            if d < rad and (best is None or d < best[1]):
+                best = (name, d)
+        if best is None:
+            continue
+        ext = bbox(ids)
+        out["loops"].append({"abertura": best[0], "n": len(ids),
+                             "bbox_mm": [round(e * 1000, 1) for e in ext],
+                             "centro_mm": [round(v * 1000, 1) for v in c]})
+        found.setdefault(best[0], []).append(ids)
+
+    # globo: primeiro toque de pele a partir do centro do globo, ao longo do eixo
+    from ..generators.eyes import eye_axis          # noqa: PLC0415  (evita ciclo no import)
+
+    def ray_tri(o, d, p0, p1, p2):
+        e1, e2 = p1 - p0, p2 - p0
+        pv = d.cross(e2)
+        det = e1.dot(pv)
+        if abs(det) < 1e-12:
+            return None
+        inv = 1.0 / det
+        tv = o - p0
+        u = tv.dot(pv) * inv
+        if u < 0.0 or u > 1.0:
+            return None
+        qv = tv.cross(e1)
+        v = d.dot(qv) * inv
+        if v < 0.0 or u + v > 1.0:
+            return None
+        t = e2.dot(qv) * inv
+        return t if t > 1e-9 else None
+
+    skin = [(f, m) for f, m in zip(b.faces, b.face_mat) if m == "skin"]
+    for side, tag in ((1, "L"), (-1, "R")):
+        c = Vector(lm[f"eye.{tag}"])
+        ax = eye_axis(anat, side)
+        best = None
+        for f, _m in skin:
+            pts = [V[i] for i in f]
+            for k in range(1, len(pts) - 1):
+                t = ray_tri(c, ax, pts[0], pts[k], pts[k + 1])
+                if t is not None and (best is None or t < best):
+                    best = t
+        out["globe_visible"][tag] = {
+            "primeiro_toque_pele_mm": None if best is None else round(best * 1000.0, 2),
+            "raio_globo_mm": round(0.0555 * h * 1000.0, 2),
+            "visivel": best is None or best > 0.0555 * h,
+        }
+
+    if "oral" in found:
+        ids = max(found["oral"], key=len)
+        ext = bbox(ids)
+        lips = (Vector(lm["mouth_corner.L"]) - Vector(lm["mouth_corner.R"])).length
+        out["mouth"] = {"abertura_largura_mm": round(ext[0] * 1000, 1),
+                        "abertura_altura_mm": round(ext[2] * 1000, 1),
+                        "boca_labios_mm": round(lips * 1000, 1),
+                        "menor_que_labios": ext[0] < lips}
+    if "narina.L" in found and "narina.R" in found:
+        l = max(found["narina.L"], key=len)
+        r = max(found["narina.R"], key=len)
+        xl = [V[i].x for i in l]
+        xr = [V[i].x for i in r]
+        gap = min(xl) - max(xr)
+        span = max(xl) - min(xr)
+        out["nostrils"] = {"largura_L_mm": round((max(xl) - min(xl)) * 1000, 1),
+                           "largura_R_mm": round((max(xr) - min(xr)) * 1000, 1),
+                           "folga_mm": round(gap * 1000, 1),
+                           "vão_exterior_mm": round(span * 1000, 1)}
+    return out
