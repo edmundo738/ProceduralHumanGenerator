@@ -402,3 +402,39 @@ da órbita.
 3. O instrumento passa a reportar a abertura no **frame do olho** (`dr`, `du`) e
    a **linha de vista como percentagem de direcções abertas** (não um único raio
    no eixo: é isso que a fissura é).
+
+### 10.7 Segunda tentativa (ciclo 2): o globo fica visível, mas os orifícios crescem
+
+Aplicado e medido (código guardado fora da árvore: `work/s42b_variantE.patch`):
+`n=17` + **limite de arrasto** na projecção (só projecta o vértice que está a
+≤ 8 mm da curva; os outros ficam na grelha) + **limite da re-amostragem angular**
+(só move ≤ 2 mm) + janela de corte mais apertada (35 × 14 mm).
+
+| Critério | S4.2 (`d7a859e`) | **Variante E** | Veredicto |
+|---|---|---|---|
+| X2 globo exposto (toque de pele no eixo) | 4.17 / 4.00 mm | **nenhum toque (L e R)** | ✓ RESOLVE |
+| A2 boca menor que os lábios (49.6 mm) | 41.5 × 5.0 mm ✓ | **52.0 × 20.9 mm** | ✗ |
+| F5/órbita | 22.9 × 12.7 mm | **39.0 × 20.1 mm** | ✗ |
+| F7 vão alar (28–38 mm) | 30.7 mm ✓ | **47.2 mm** (narinas de 19.7 mm cada) | ✗ |
+| laços da boca | **3** (fragmentada) | **1** (106 vértices) | ✓ |
+| contagens | 6307 v / 6213 f | 8219 v / 8074 f | — |
+| `quad_ratio` | 0.8580 | 0.8908 | — |
+| ngons | 0 | 0 | ✓ |
+
+Mecanismo medido, e é o resultado importante deste ciclo: **o tamanho do orifício
+não é a curva declarada, é a janela de corte mais a célula local.** Em S4.2 a
+grelha era grossa (células de 15–25 mm) e poucos vértices caíam dentro da janela,
+logo o buraco saía *pequeno* (22.9 mm) — e as faces maiores que a fissura
+fechavam-no por cima. Com `n=17` (células ~8 mm) cai muito mais vértice dentro da
+janela e o buraco sai *grande* (39 mm para uma janela de 35 mm). As duas pontas
+desta família de cortes (remover + projectar) são incompatíveis com os critérios:
+pequeno fecha o olho, grande viola A2/F7. Não há valor de janela que sirva os
+dois porque o alvo não é a janela — é a curva.
+
+**Regra de desenho que esta medição impõe** (para o ciclo seguinte, não
+implementada): o orifício tem de ter a fronteira *exactamente* na curva declarada
+**e** arestas curtas. Isso obriga a que cada corda do recorte seja substituída
+pelo **arco** da curva (inserir pontos sobre a elipse entre o ponto de entrada e o
+de saída em cada face), e não apenas por um segmento entre dois pontos de
+intersecção — foi exactamente a corda entre a entrada e a saída que produziu as
+faces que atravessavam a boca (3 laços em S4.2b ciclo 1) e o olho.
