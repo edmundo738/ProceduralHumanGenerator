@@ -185,6 +185,117 @@ class TestSilhouette:
         assert sil["empty_rows"] == 0
 
 
+class TestFeetAreAnthropometric:
+    """S3.6 — o critério dos pés como gate permanente.
+
+    Baseline medido antes da correcção: largura 182.8 mm (canonical 93.5 mm,
+    +96 %), comprimento 288.6 mm (canonical 258.4 mm, +12 %) e as duas cascas a
+    tocarem-se no plano médio (|x| min = 0.2 mm), o que as fundia numa massa só.
+    """
+
+    def test_foot_metrics_present(self, build_default):
+        """O pé é um conjunto de cascas por lado (casca + cinco dedos + unha)."""
+        from human_generator.core.integration import foot_metrics
+        m = foot_metrics(build_default.builder, build_default.anatomy)
+        assert set(m["feet"]) == {"L", "R"}, m
+        assert m["n_shells"]["L"] >= 6, m["n_shells"]   # foot + toes (+nail)
+        assert m["n_shells"]["L"] == m["n_shells"]["R"], m["n_shells"]
+
+    def test_foot_width_within_15_percent_of_canon(self, build_default):
+        from human_generator.core.integration import foot_metrics
+        m = foot_metrics(build_default.builder, build_default.anatomy)
+        for side, f in m["feet"].items():
+            assert f["width_ratio"] <= 1.15, f"foot {side} width ratio {f['width_ratio']:.3f}"
+
+    def test_foot_length_within_5_percent_of_canon(self, build_default):
+        """Banda de dois lados: um pé demasiado CURTO também é defeito."""
+        from human_generator.core.integration import foot_metrics
+        m = foot_metrics(build_default.builder, build_default.anatomy)
+        for side, f in m["feet"].items():
+            assert 0.90 <= f["length_ratio"] <= 1.05, \
+                f"foot {side} length ratio {f['length_ratio']:.3f}"
+
+    def test_feet_do_not_touch_at_the_midline(self, build_default):
+        from human_generator.core.integration import foot_metrics
+        m = foot_metrics(build_default.builder, build_default.anatomy)
+        assert m["separation"] >= 0.010, \
+            f"feet only {m['separation']*1000:.1f} mm apart — they read as one mass"
+
+    def test_foot_height_is_plausible(self, build_default):
+        """Altura do pé (tornozelo incluído) ≤ 0.075·estatura ≈ 128 mm."""
+        from human_generator.core.integration import foot_metrics
+        m = foot_metrics(build_default.builder, build_default.anatomy)
+        limit = 0.075 * build_default.anatomy.stature
+        for side, f in m["feet"].items():
+            assert f["height"] <= limit, f"foot {side} height {f['height']*1000:.1f} mm > {limit*1000:.1f}"
+
+
+class TestNoCoincidentVertices:
+    """S3.6 — guarda contra um defeito medido, não hipotético.
+
+    ``cap_pole`` deslocava o pólo 1.68 mm FIXOS, independentemente do raio do
+    anel; na ponta de um dedo (r = 5.5 mm) o pólo caía a 9.2e-6 m de um vértice
+    do próprio anel e o ``weld`` por omissão da API pública (``1e-5``) fundia-os
+    — 2 arestas non-manifold num build que se dizia limpo.  A propriedade que
+    tem de valer é esta: **nenhum par de vértices distintos mais próximo do que
+    o weld por omissão**, senão o weld muda a topologia (e o ``weld`` é no-op
+    em toda a grelha S2).
+    """
+
+    WELD = 1e-5   # default of hcg.generate_character
+
+    @staticmethod
+    def _closest_pair(verts):
+        cell = TestNoCoincidentVertices.WELD
+        buckets: dict = {}
+        for i, v in enumerate(verts):
+            buckets.setdefault((round(v.x / cell), round(v.y / cell),
+                                round(v.z / cell)), []).append(i)
+        best = (float("inf"), -1, -1)
+        for (kx, ky, kz), ids in buckets.items():
+            for dx in (0, 1):
+                for dy in (-1, 0, 1):
+                    for dz in (-1, 0, 1):
+                        if (dx, dy, dz) <= (0, 0, 0):
+                            continue
+                        other = buckets.get((kx + dx, ky + dy, kz + dz), ())
+                        for i in ids:
+                            for j in other:
+                                d = (verts[i] - verts[j]).length
+                                if d < best[0]:
+                                    best = (d, i, j)
+        return best
+
+    def test_no_two_vertices_are_closer_than_the_default_weld(self, build_default):
+        verts = list(build_default.builder.verts)
+        d, i, j = self._closest_pair(verts)
+        assert d >= self.WELD, (
+            f"v{i} and v{j} are {d:.3e} m apart (< weld {self.WELD:g}); the "
+            f"default weld would merge them and change the topology")
+
+    def test_weld_is_a_no_op_on_the_default_build(self, build_default):
+        """O weld por omissão não pode remover vértices (senão NM sobe).
+
+        Precisa de ``bmesh`` (só existe dentro do Blender): em pytest puro o
+        teste é SALTADO com motivo declarado, não silenciado — a propriedade
+        equivalente e independente do backend é a do teste anterior e corre
+        sempre.
+        """
+        bmesh_ok = True
+        try:
+            import bmesh  # noqa: F401
+        except ImportError:
+            bmesh_ok = False
+        if not bmesh_ok:
+            import pytest
+            pytest.skip("bmesh requires Blender; vertex-pair guard above covers it")
+        bm = build_default.builder.to_bmesh(weld=1e-5, dissolve=1e-5)
+        n = len(bm.verts)
+        bm.free()
+        assert n == len(build_default.builder.verts), (
+            f"weld+dissolve removed {len(build_default.builder.verts) - n} verts")
+
+
 class TestReportOnRealBuild:
     def test_report_has_all_criteria_and_no_floating_part(self, build_default):
         rep = integration_report(build_default)

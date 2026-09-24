@@ -20,6 +20,7 @@ Convenções (as mesmas do resto do projeto):
 """
 from __future__ import annotations
 
+import math
 from collections import Counter, defaultdict
 from math import sqrt
 
@@ -29,7 +30,7 @@ __all__ = [
     "connected_components", "component_labels", "overlap_graph", "floating_components",
     "boundary_edges", "mirror_stats", "structure_mirror_hausdorff",
     "floor_contact", "height_envelope", "silhouette", "integration_report",
-    "points_inside", "is_closed", "root_insertion",
+    "points_inside", "is_closed", "root_insertion", "foot_metrics",
 ]
 
 
@@ -381,6 +382,80 @@ def height_envelope(builder, anat) -> dict:
     return out
 
 
+# --------------------------------------------------------------------------- feet
+def foot_metrics(builder, anat, comps=None) -> dict:
+    """Métricas do pé no seu PRÓPRIO eixo (S3.6).
+
+    Encontra as cascas do pé (as que tocam o chão e têm tamanho de casca) e mede
+    comprimento e largura **perpendiculares ao eixo do pé**, mais o yaw desse eixo
+    em relação ao plano sagital.
+
+    Porquê o eixo próprio: o eixo do pé não é paralelo a +y (medido: o ``toe_end``
+    do canon está 34 mm medial do tornozelo ⇒ ~7.6° de rotação), e a extensão em x
+    de um pé rodado inclui uma parcela do comprimento (``L·sin(yaw)`` ≈ 35 mm).
+    Comparar essa extensão com a largura antropométrica (0.055·estatura) seria
+    comparar coisas diferentes — foi o que a primeira versão desta métrica fez, e
+    está registado como erro meu.  O yaw certo é **toe-out** (dedos para fora) no
+    pé esquerdo; a convenção aqui é: positivo = toe-out.
+
+    Referências (antropometria standard): comprimento ≈ 0.152·estatura,
+    largura ≈ 0.055·estatura.
+    """
+    comps = comps or connected_components(builder)
+    V = builder.verts
+    # "Pé" = TODAS as cascas que tocam o chão desse lado (casca principal + os
+    # cinco dedos).  Medido: medir só a casca principal dava 193.9 mm de
+    # comprimento (0.75× o canónico) porque os dedos são cascas separadas — o
+    # instrumento sub-reportava o pé em ~60 mm.
+    cand = [ci for ci, ids in enumerate(comps)
+            if len(ids) >= 8 and min(V[i].z for i in ids) <= 0.005]
+    sides: dict[str, list[int]] = {"L": [], "R": []}
+    for ci in cand:
+        cx = sum(V[i].x for i in comps[ci]) / len(comps[ci])
+        sides["L" if cx > 0 else "R"].append(ci)
+    feet = [ci for side in ("L", "R") for ci in sides[side]]
+    if len(sides["L"]) == 0 or len(sides["R"]) == 0:
+        return {"n_feet": 0, "error": "expected foot shells on both sides"}
+    out: dict = {"n_feet": len(feet),
+                 "ref_length": 0.152 * anat.stature,
+                 "ref_width": 0.055 * anat.stature}
+    per: dict = {}
+    for side_name in ("L", "R"):
+        ids = [i for ci in sides[side_name] for i in comps[ci]]
+        xs = [V[i].x for i in ids]
+        ys = [V[i].y for i in ids]
+        zs = [V[i].z for i in ids]
+        cx = sum(xs) / len(xs)
+        cy = sum(ys) / len(ys)
+        # eixo longitudinal: PCA 2D (direcção dominante em xy)
+        sxx = sum((x - cx) ** 2 for x in xs)
+        syy = sum((y - cy) ** 2 for y in ys)
+        sxy = sum((xs[k] - cx) * (ys[k] - cy) for k in range(len(xs)))
+        theta = 0.5 * math.atan2(2.0 * sxy, sxx - syy)      # ângulo do eixo vs +x
+        ax = (math.cos(theta), math.sin(theta))
+        px = (-ax[1], ax[0])
+        lon = [ (x - cx) * ax[0] + (y - cy) * ax[1] for x, y in zip(xs, ys) ]
+        lat = [ (x - cx) * px[0] + (y - cy) * px[1] for x, y in zip(xs, ys) ]
+        side = side_name
+        # yaw: ângulo entre o eixo (apontando para +y) e +y; toe-out no pé L
+        fwd = ax if ax[1] >= 0 else (-ax[0], -ax[1])
+        yaw = math.degrees(math.atan2(fwd[0] * (1 if side == "L" else -1), fwd[1]))
+        per[side] = {
+            "length": max(lon) - min(lon), "width": max(lat) - min(lat),
+            "height": max(zs) - min(zs), "yaw_deg": yaw,
+            "x_range": (min(xs), max(xs)), "n": len(ids),
+        }
+        per[side]["length_ratio"] = per[side]["length"] / out["ref_length"]
+        per[side]["width_ratio"] = per[side]["width"] / out["ref_width"]
+    out["feet"] = per
+    left = [i for ci in sides["L"] for i in comps[ci]]
+    right = [i for ci in sides["R"] for i in comps[ci]]
+    if left and right:
+        out["separation"] = min(abs(V[i].x - V[j].x) for i in left for j in right)
+    out["n_shells"] = {"L": len(sides["L"]), "R": len(sides["R"])}
+    return out
+
+
 # --------------------------------------------------------------------------- silhouette
 def silhouette(builder, view: str = "front", res: int = 128) -> dict:
     """Silhueta ortográfica rasterizada, com **preenchimento** por scanline.
@@ -479,4 +554,5 @@ def integration_report(build) -> dict:
     }
     if anat is not None:
         report["envelope"] = height_envelope(b, anat)
+        report["feet"] = foot_metrics(b, anat, comps=comps)
     return report

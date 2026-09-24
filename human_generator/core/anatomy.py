@@ -22,7 +22,13 @@ from ..spec import CharacterSpec
 
 # fractions of stature for body stations
 _Z: dict[str, float] = {
-    "floor": 0.0, "toe_end": 0.018, "heel": 0.020, "ankle": 0.075,
+    # S3.6 — "ankle" é a altura do JOINT do tornozelo acima do chão:
+    # antropométrico ≈ 0.042·estatura (≈71 mm a 1.70 m).  Estava em 0.075
+    # (127.5 mm, ~1.8× demasiado alto), o que tornava a perna mais curta e o pé
+    # mais alto: medido, o pé tinha 177.8 mm de altura e a casca do pé subia
+    # 106 mm acima do tornozelo.  Efeito colateral desejado: foot_len =
+    # |toe_end − ankle| cai de 277 mm para 262 mm (canonical 258 mm).
+    "floor": 0.0, "toe_end": 0.018, "heel": 0.020, "ankle": 0.042,
     "ball": 0.030, "calf": 0.222, "knee": 0.287, "midthigh": 0.400,
     "crotch": 0.490, "hip": 0.530, "iliac": 0.630, "navel": 0.645,
     "waist": 0.700, "inframammary": 0.720, "nipple": 0.768, "bust": 0.758,

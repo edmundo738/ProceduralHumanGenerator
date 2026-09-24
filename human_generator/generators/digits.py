@@ -142,7 +142,13 @@ def add_nail(builder: MeshBuilder, plan: DigitPlan) -> None:
     rows: list[list[Vector]] = []
     for ri in range(4):
         t = ri / 3.0
-        zc = -L * 0.28 + L * t
+        # S3.6 — defeito medido: a placa ia de −0.28·L a **+0.72·L** a contar da
+        # âncora do ápice, ou seja a borda livre ficava 4.1–5.7 mm ALÉM da ponta
+        # arredondada do dedo (medido em dedos e dedo do pé grande: unha em
+        # +7.1 mm, cap em +3.5 mm).  A unha é agora um prato de comprimento L que
+        # acaba no plano do ápice (zc de −L a 0): borda livre na ponta, como
+        # anatomicamente.
+        zc = -L * (1.0 - t)
         arch = r * (0.34 + 0.42 * math.sin(math.pi * (0.20 + 0.62 * t)))
         width = W * (1.0 - 0.30 * t)
         row = []

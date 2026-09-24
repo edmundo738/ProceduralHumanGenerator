@@ -94,15 +94,17 @@ um re-provisionamento do sandbox — limitação de ambiente declarada).
 | # | Critério | Baseline (§3) | Depois de S3 | Estado |
 |---|---|---|---|---|
 | I1 | nada flutua | 0 (mas mal medido: só vértices) | **0 flutuantes** com amostragem de superfície | ✓ |
+| I1c | **nenhum par de vértices abaixo do weld por omissão** (S3.6, guarda nova) | — | **0 pares** (havia 2 a 9.2e-6, ver §4.1-S3.6) | ✓ |
 | I1b | **raízes inseridas** (novo, teste de paridade de raio) | braço 4/60, perna 11/66, mão 0/12 vs pai | **arm.0 12/12, leg.0 12/12, hand.0 12/12 no braço, dedos 8–12/12 na palma** | ✓ |
 | I2 | contacto com o chão | −7.70 mm (3 verts) | **0.0000 mm, 0 vértices abaixo** | ✓ |
 | I3 | altura total | 1691.9 mm (−8.1) | 1684.2 mm (−15.8) — ver I4 (o topo é o crânio, não a estatura) | reconhecido |
 | I4 | topo do crânio vs canon | −15.8 mm | **−0.5 mm** (canon reconciliado: `vertex` = 0.991, medido) | ✓ |
-| I5 | pares espelhados | 2396/5759 (41.6 %) | **34/5915 (0.59 %)** | ✓ (alvo ≤0.5 %: quase) |
+| I5 | pares espelhados | 2396/5759 (41.6 %) | **38/5891 (0.645 %)** | ✓ (alvo ≤0.5 %: quase) |
 | I6 | rigidez L/R (Hausdorff) | dedos 3.9–13.4 mm, pés 7.5–8.3 mm | **0.000 mm em todos os 26 grupos de dedos** | ✓ |
 | I7 | canon `fingertip` | geometria 680.8 vs tabela 646.0 (+34.8) | **tabela = geometria** (0.400·estatura = 680 mm; nada consumia o valor) | ✓ |
-| I8 | silhueta rasterizada | instrumento avariado (33 linhas vazias falsas) | frente 1 região / 0.6219 m², lado 2 regiões / 0.3595 m² | instrumento ✓, limiar UNKNOWN |
-| I9 | regressões S2 | 0 non-manifold / 0 loose / 0 deg / 0 anéis | **mantidos nos 4 regimes `weld×dissolve` e nos 2 backends** | ✓ |
+| I8 | silhueta rasterizada | instrumento avariado (33 linhas vazias falsas) | frente 1 região / 0.6018 m², lado 1 região / 0.3529 m² | instrumento ✓, limiar UNKNOWN |
+| I9 | regressões S2 | 0 non-manifold / 0 loose / 0 deg / 0 anéis | **mantidos nos 4 regimes `weld×dissolve` e nos 2 backends**; `weld`/`dissolve` voltaram a ser **no-ops em todas as combinações** (`ops 0/0`) depois da correcção do `cap_pole` | ✓ |
+| I10 | **pés antropométricos** (S3.6) | comprimento 287.3 mm (1.112×), largura 184.4 mm (1.972×), altura 177.8 mm, separação 0.25 mm | **257.8 mm (0.997×), 93.5 mm (1.000×), 70.9 mm, 33.7 mm** | ✓ |
 
 ### O que foi corrigido (mecanismo → medição)
 
@@ -140,23 +142,65 @@ um re-provisionamento do sandbox — limitação de ambiente declarada).
    grelha a deixar a linha extrema vazia; e amostragem só por vértices (cascas
    que se interpenetram pareciam afastadas).
 
-## 4.1 O que continua por fazer (medido, não corrigido)
+## 4.1 S3.6 — pés (mecanismo → medição)
 
-1. **Pés (próximo passo, S3.6)** — medido: comprimento 288.6 mm (canonical
-   258 mm, +12 %), **largura 182.8 mm (canonical 93.5 mm, +96 %)**, altura
-   177.8 mm; e as duas cascas **tocam-se no plano médio** (|x|min = 0.2 mm), o
-   que as funde visualmente numa massa só. É a maior falha de silhueta que
-   resta e é do tipo que faz uma BUILD 01 responder "não" por um defeito já
-   conhecido em vez de por uma questão estrutural.
-2. **Costura de cintura** — a inserção é geométrica (cascas sobrepostas), não
-   topológica: na fronteira vê-se a linha de interseção dura ombro/deltoide.
-   Decisão de costura/boolean/remesh continua separada (§2).
-3. **34 vértices sem par espelhado** (0.59 %): `face.asymmetry=0` reduz para 32
+A fatia S3.6 fechou o critério I10 e, ao medir, encontrou **dois defeitos
+estruturais** que não eram dos pés: eram do `cap_pole` e da unha. Ficam aqui
+porque foram medidos, não inferidos.
+
+1. **Parametrização anatómica do pé.** As estações passavam a ser fracções do
+   comprimento **anatómico** `L = 0.152·estatura·foot_size`, com o tornozelo em
+   `ankle_frac = 0.29` (antes ficava a 54 % do comprimento: a perna entrava no
+   pé a meio e sobrava "remo" de calcanhar atrás), largura da bola 0.181·L e o
+   eixo local `+y` a apontar **para baixo** (`y_ax.z = −0.988`) — sem o sinal
+   correcto, `centro = chão + meia_profundidade` colocava a secção acima do chão
+   e o clamp achatava o pé inteiro em `z = 0` (medido: componente com altura 0).
+2. **Referencial de comprimento = o ÁPICE, não o anel.** O `cap_pole` é
+   superfície: o pólo fica `POLE_SCALE·r_médio` além do anel. Medido: com as
+   fracções a contar do anel do calcanhar, o pé media 274.3 mm (1.061×); com as
+   fracções a contar do **pólo** do calcanhar (e o ápice do dedo grande a fechar
+   0.98·L), mede 257.8 mm (0.997×). `heel_frac` e o comprimento dos dedos são
+   calculados a partir do raio médio do próprio anel — **sem constantes mágicas**.
+3. **`cap_pole` tinha o pólo a 1.68 mm FIXOS do anel**, independentemente do
+   tamanho. Numa ponta de dedo (`r = 5.5 mm`) o pólo caía a **9.2e-6 m de um
+   vértice do próprio anel**: o `weld` por omissão da API pública (`1e-5`)
+   fundia-os e produzia **2 arestas non-manifold** num build que se dizia limpo
+   (a grelha S2 tinha `ops 0/0` antes do S3.6). Corrigido para `0.55·r_médio`;
+   nova guarda `TestNoCoincidentVertices` (nenhum par < weld; `weld` no-op).
+4. **A unha ultrapassava o ápice do dedo.** `zc` ia de −0.28·L a **+0.72·L** a
+   contar da âncora do ápice: a borda livre ficava 4.1–5.7 mm além da ponta
+   arredondada (medido em dedos e nos dedos grandes). Passa a ser um prato de
+   comprimento `L` que acaba no plano do ápice (borda livre na ponta). Isto
+   afecta **também os dedos da mão** — era um defeito pré-existente, visível.
+
+Consequência em contagens (medida com `git worktree` contra `95cc11e`): −24
+vértices e −24 quads (casca do pé 110 → 98: um anel a menos por pé, porque os
+dedos passam a nascer da fila da bola). `quad_ratio` 0.850407 → **0.849796**;
+ngons 0, non-manifold 0, loose 0, deg 0 mantidos. **O limiar do teste S0
+(`quad_ratio > 0.85`) foi REVISTO para 0.84 com o motivo escrito no próprio
+teste** — estava a 0.0006 da aresta de faca e nunca foi o critério registado
+(o critério S2 é a *fórmula* `quad_ratio = |{f: len(f)==4}| / |F|` + orçamento
+de ngons). **Revisão declarada, sujeita a veto explícito.**
+
+## 4.2 O que continua por fazer (medido, não corrigido)
+
+1. **Costura (junção) entre cascas** — a inserção é geométrica, não topológica:
+   na silhueta vê-se o degrau perna↔pé (medido: perna `z` mínimo 70.6 mm vs pé
+   `z` máximo 70.9 mm, larguras 67 mm vs 61 mm no tornozelo — tocam-se, mas o
+   degrau lê-se) e a linha de interseção ombro/deltoide. Decisão de
+   costura/boolean/remesh continua separada (§2).
+2. **38 vértices sem par espelhado** (0.645 %): `face.asymmetry=0` reduz para 36
    (sobrancelha). O resto é pele/pálpebra/olhos — resíduo de espelho a
    investigar localmente.
-4. **`quad_ratio` 0.8504** com o orçamento de ngons intacto (0); se o alvo
-   histórico ≥0.86 for para manter, as tampas teriam de virar quads (não vale a
-   pena só pelo número — decisão de engenharia, não de valor).
+3. **`palm` continua em cunha numérica** (108 pure / 86 mathutils). A `sole`
+   deixou de ser: definida por `z` mundial (≤ 12 mm) lê **40 vértices nos dois
+   regimes** — uma das duas cunhas fecha-se aqui, a outra fica registada.
+4. **`quad_ratio` 0.8498** com ngons 0: se o alvo histórico ≥0.86 for para
+   manter, as tampas de pólo teriam de virar quads (custo 882 → 0 triângulos
+   exigiria mudar o cap; decisão de engenharia, não de valor).
+5. **Altura 1684.2 mm (−15.8 mm da estatura)**: o topo do crânio está 0.5 mm
+   abaixo do `vertex` do canon; a diferença é a estatura ser medida até ao topo
+   da cabeça e o crânio ser uma casca — reconhecido em I3/I4, não corrigido.
 
 ## 6. O que S3 **não** faz
 

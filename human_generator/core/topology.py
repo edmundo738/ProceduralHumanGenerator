@@ -118,6 +118,12 @@ def make_section(center, tangent=(1, 0, 0), front=(0, 1, 0), *, width=0.1, depth
 
 
 # ----------------------------------------------------------------------------- builder
+# ``cap_pole`` coloca o pólo a ``POLE_SCALE · r_médio`` do anel: é o ápice real
+# da superfície, por isso os geradores que precisam de respeitar uma medida
+# anatómica (pé, dedos) têm de o descontar — ver ``generators/feet.py``.
+POLE_SCALE = 0.55
+
+
 class MeshBuilder:
     """Accumulates verts/faces/metadata; converts to bmesh/mesh at the end."""
 
@@ -281,7 +287,19 @@ class MeshBuilder:
             d, cc = mid_ids[(i + 1) % n], mid_ids[i]
             self.add_face((a, b, d, cc), material=material)
         pole_uv = (0.5, uv_v)
-        pole = self.add_vert(c + nr * (0.004 * max(0.2, shrink)), region, pole_uv)
+        # S3.6 — defeito medido: o deslocamento do pólo era 1.68 mm FIXOS,
+        # independente do tamanho do anel.  Na ponta de um dedo (r = 5.5 mm) o
+        # pólo caía a 9.2e-6 m de um vértice do próprio anel — o ``cap`` ficava
+        # dobrado sobre si mesmo e o weld por omissão da API pública (1e-5)
+        # fundia os dois, produzindo 2 arestas non-manifold (medido).
+        # O deslocamento passa a ser proporcional ao raio do anel (0.55·r ≈
+        # ponta arredondada), o que mantém caps pequenos pequenos e caps
+        # grandes arredondados.
+        r_mean = 0.0
+        for i in ids:
+            r_mean += (self.verts[i] - c).length
+        r_mean /= n
+        pole = self.add_vert(c + nr * (POLE_SCALE * r_mean), region, pole_uv)
         for i in range(n):
             a, b = mid_ids[i], mid_ids[(i + 1) % n]
             self.add_face((a, b, pole), material=material)

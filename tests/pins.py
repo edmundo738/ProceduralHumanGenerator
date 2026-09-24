@@ -20,13 +20,13 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "db7fb5c42c0523be",   # spec hash: unchanged by S2
-        "verts": 5915,          # pre-weld (pure build)
-        "faces": 5896,
+        "verts": 5891,          # pre-weld (pure build)
+        "faces": 5872,
         "strands": 2400,
-        # re-measured in S3 (exact-mirror frames, limb/foot roots inserted,
-        # tubes capped, floor clamp, canon reconciled)
-        "digest": {"pure-python": "ab7742d2b4a88fce",
-                   "mathutils": "37aebe421ce608d5"},
+        # re-measured in S3.6 (feet: pole-relative length frame, rounded tips,
+        # nails ending at the tip apex, sole labelled by world z)
+        "digest": {"pure-python": "79bbe2aade711af6",
+                   "mathutils": "3192f8da92d56b67"},
     },
 }
 
@@ -36,9 +36,9 @@ PINS = {
 # cyber_angel only (2764 float64 / 2766 float32) and was already so before S2 —
 # measured on both trees, see docs/S2_TOPOLOGY.md §5.
 PRESET_COUNTS = {
-    "cyber_angel": (5915, 5896, 2764),
-    "neon_idol": (5915, 5896, 3200),
-    "realistic_female": (5915, 5896, 2400),
+    "cyber_angel": (5891, 5872, 2764),
+    "neon_idol": (5891, 5872, 3200),
+    "realistic_female": (5891, 5872, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -46,12 +46,16 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 5915, "faces": 5896,
+AUDIT_PINS = {"verts": 5891, "faces": 5872,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
               "ngons": 0,
               "boundary_edges": 802}   # S3: limb/foot tubes are capped shells now
+# S3.6: ``weld`` and ``dissolve`` are no-ops in ALL FOUR grid combinations in
+# both regimes (``ops 0/0``) — the build has no vertex pair closer than the
+# default weld (1e-5).  Before the ``cap_pole`` fix, weld=1e-5 merged 2 vertices
+# and produced 2 non-manifold edges.
 
 # construction guard (S1): rings whose points collapse.
 # S2 fixed eyes.py (the pole is now built by cap_pole only and the limbus ring
@@ -67,11 +71,13 @@ DEGENERATE_RING_PINS: dict[str, int] = {}
 # changes — they must catch label drift.
 #
 # The pins are keyed by numerics backend ON PURPOSE: measured in S2, the
-# ``sole``/``palm`` predicates sit exactly on a knife edge (the sole is a flat
-# run of vertices and the threshold lands on it), so float32 vs float64 shifts
-# those two populations by tens of vertices.  That sensitivity is PRE-EXISTING
-# (identical on the pre-S2 tree) and is recorded here instead of being hidden;
-# it is part of the still-open numerics-regime question, not an S2 regression.
+# ``sole``/``palm`` predicates sat exactly on a knife edge (the sole was a flat
+# run of vertices and the threshold landed on it), so float32 vs float64 shifted
+# those two populations by tens of vertices.  S3.6 removed ONE of the two
+# knife edges: ``sole`` is now defined by world z (<= 12 mm) and reads the SAME
+# 40 vertices in both regimes.  ``palm`` is still knife-edged (108 pure / 86
+# mathutils) and remains the recorded, still-open part of the numerics-regime
+# question.
 SEMANTIC_PINS = {
     ("realistic_female", 42): {
         "pure-python": {
@@ -79,8 +85,8 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 108, "scalp": 148, "skin": 2920,
-                "sole": 120,
+                "palm": 108, "scalp": 148, "skin": 2976,
+                "sole": 40
             },
             "groups": {
                 "L.finger.index.0": 40, "L.finger.index.1": 32, "L.finger.index.2": 8,
@@ -110,7 +116,8 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 86, "scalp": 148, "skin": 3062,
+                "palm": 86, "scalp": 148, "skin": 2998,
+                "sole": 40
             },
             "groups": {
                 "L.finger.index.0": 40, "L.finger.index.1": 32, "L.finger.index.2": 8,
