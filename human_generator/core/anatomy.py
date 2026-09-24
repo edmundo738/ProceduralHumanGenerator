@@ -30,8 +30,16 @@ _Z: dict[str, float] = {
     # |toe_end − ankle| cai de 277 mm para 262 mm (canonical 258 mm).
     "floor": 0.0, "toe_end": 0.018, "heel": 0.020, "ankle": 0.042,
     "ball": 0.030, "calf": 0.222, "knee": 0.287, "midthigh": 0.400,
-    "crotch": 0.490, "hip": 0.530, "iliac": 0.630, "navel": 0.645,
-    "waist": 0.700, "inframammary": 0.720, "nipple": 0.768, "bust": 0.758,
+    "crotch": 0.490, "hip": 0.530, "iliac": 0.630,
+    # H3 (docs/H3H2_TRUNK.md) — cotas das estações abdominais.  Antes: navel
+    # 0.645 (+74 mm contra o omphalion ANSUR 0.6017) e waist 0.700 (+110 mm
+    # contra a largura mínima das referências 3D, 0.612–0.656).  ``iliac``
+    # continua 0.630: é o LANDMARK da crista (ANSUR p95 0.632) e âncora do bump
+    # glúteo, que pertence a H4 e não se move aqui.  A ESTAÇÃO do tronco que
+    # tinha 0.97×anca à cota da crista passa a ``hip_flare`` (ponto médio
+    # umbigo–anca; as referências só chegam a 0.90×anca em 0.53–0.57·S).
+    "navel": 0.602, "hip_flare": 0.566,
+    "waist": 0.635, "inframammary": 0.720, "nipple": 0.768, "bust": 0.758,
     "jugulum": 0.795, "acromion": 0.818, "deltoid_line": 0.812,
     "elbow": 0.645, "wrist": 0.508, "fingertip": 0.380,
     "chest_top": 0.800, "neck_top": 0.834, "spine_head": 0.845,
@@ -359,15 +367,24 @@ class Anatomy:
             fs=1.0 + bust / max(1e-4, chest * 0.8), y=0.004 * s)
         # inframammary / ribs
         add(zf("inframammary"), chest * 0.92, chest * 0.70, sup=2.05, fs=1.0, bs=1.0)
+        # H2 (docs/H3H2_TRUNK.md) — a profundidade destas quatro estações deixa
+        # de ser uma fração quase circular da meia-largura (0.82–0.86: prof./larg.
+        # total 0.81–0.89) e passa a vir da razão ANSUR prof./larg. TOTAL:
+        # cintura 0.709 (waistdepth/waistbreadth), anca 0.658
+        # (buttockdepth/hipbreadth).  ``d`` é MEIA-profundidade; com fs/bs
+        # assimétricos a total é d·(fs+bs), daí o divisor.  fs/bs/sup/y intactos.
+        def depth_for(ratio, half_w, fs, bs):
+            return ratio * 2.0 * half_w / (fs + bs)
+
         # natural waist (narrowest)
-        add(zf("waist"), waist, waist * 0.82, sup=2.0, fs=0.98, bs=1.0)
+        add(zf("waist"), waist, depth_for(0.709, waist, 0.98, 1.0), sup=2.0, fs=0.98, bs=1.0)
         # navel
-        add(zf("navel"), mix(waist, hip, 0.45), mix(waist, hip, 0.45) * 0.84,
-            sup=2.05, fs=1.02)
+        navel_w = mix(waist, hip, 0.45)
+        add(zf("navel"), navel_w, depth_for(0.709, navel_w, 1.02, 1.0), sup=2.05, fs=1.02)
         # iliac flare
-        add(zf("iliac"), hip * 0.97, hip * 0.84, sup=2.1, bs=1.04)
+        add(zf("hip_flare"), hip * 0.97, depth_for(0.658, hip * 0.97, 1.0, 1.04), sup=2.1, bs=1.04)
         # hip widest (trochanteric level)
-        add(zf("hip"), hip, hip * 0.86, sup=2.05, y=-0.004 * s, bs=1.06)
+        add(zf("hip"), hip, depth_for(0.658, hip, 1.0, 1.06), sup=2.05, y=-0.004 * s, bs=1.06)
         # perineum cap
         add(zf("crotch"), hip * 0.52, hip * 0.40, sup=2.2, y=-0.010 * s)
         return secs

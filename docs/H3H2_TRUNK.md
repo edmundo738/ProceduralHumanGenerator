@@ -212,4 +212,183 @@ falta de lordose e o glúteo alto **mantêm-se** (H4). O ombro e o peito largos 
 
 # PARTE II — RESULTADOS
 
-*(preenchida depois da medição; ver abaixo)*
+A Parte I foi congelada no commit `1f854c2`, antes de qualquer alteração ao gerador. Os resultados
+abaixo vêm das quatro execuções da §4. Métricas completas estão em `docs/h3h2_trunk/metrics_*.txt` e
+em `compare_2x2.txt`.
+
+## 9. Implementação (FACT)
+
+Só `human_generator/core/anatomy.py`, exatamente como na §3:
+- `_Z`: `waist` 0.700 → 0.635, `navel` 0.645 → 0.602, e uma chave nova `hip_flare` = 0.566 para a
+  estação ilíaca. `_Z["iliac"]` (landmark e âncora do glúteo) fica em 0.630.
+- As quatro profundidades passam a `depth_for(r, meia_largura, fs, bs)` com r = 0.709 / 0.709 / 0.658 /
+  0.658. fs/bs/sup/y e todas as outras estações ficam intactos.
+- Nenhum valor foi ajustado depois de medir.
+
+## 10. Resultados por hipótese (MEASURED, @1700 mm)
+
+| métrica | base | só H3 | só H2 | H3+H2 | alvo congelado | veredicto |
+|---|---|---|---|---|---|---|
+| **H3.a** `waist_nat_z` | 1185 | **1100** | 1185 | 1100 | [1040, 1115] | **PASSA** |
+| **H3.b** `belly_front_fixed` | +40 | **+14** (−26) | +14 | **−6** | −20 em H3; ≤ +10 em H3+H2 | **PASSA** |
+| **H3.c** `waistbreadth/hipbreadth` | 0.939 | **0.837** | 0.939 | 0.837 | [0.760, 0.949] | **PASSA** (ANSUR 0.847) |
+| (inf.) `abdomen_front_minus_waist_front` | +40 | +22 | +14 | +12 | ≤ 10 | sem peso |
+| **H2.a** `waistdepth/waistbreadth` | 0.929 | 0.915 | **0.717** | **0.756** | [0.623, 0.809] | **PASSA** (previsto 0.75–0.78) |
+| **H2.b** `buttockdepth/hipbreadth` | 0.872 | 0.878 | **0.663** | **0.668** | [0.590, 0.740] | **PASSA** |
+| **H2.c** `waistdepth` / `buttockdepth` | 342 / 342 | 300 / 344 | 264 / 260 | **248 / 262** | [177, 284] / [206, 291] | **PASSA** |
+| **H2.d** `chestdepth` | 314 | 314 | 314 | **314** | [216, 307] | **FALHA (prevista)** |
+| conjunto `waistcirc/buttockcirc` | 1.000 | **0.873** | 1.002 | **0.902** | [0.749, 0.946] | dentro (H3 e H3+H2) |
+| herdado `upper_back_vs_occiput` | −52 | −52 | −52 | **−52** | previsão: inalterado ±4 | **previsão confirmada** (0 mm) |
+
+Absolutos contra ANSUR (MEASURED, H3+H2):
+- circunferência da cintura 911 (ANSUR 899, p5–p95 750–1082)
+- circunferência das nádegas 1010 (1067, 953–1196)
+- largura da cintura 328 (313, 264–372)
+
+**Atribuição causal pelo 2×2 (INFERRED a partir de MEASURED):**
+- H3 sozinha move a largura mínima e resolve a razão das larguras e das circunferências. Não mexe na
+  razão de profundidade (0.915).
+- H2 sozinha resolve as razões de profundidade. Não mexe na cota da cintura nem na razão das
+  circunferências (1.002).
+- A barriga em cotas fixas cai 26 mm com qualquer uma das duas, e só fica ≤ +10 com as duas juntas.
+  As duas hipóteses são necessárias e cada uma resolve a sua parte, **sem sobreposição relevante**.
+
+## 11. Invariância: um critério congelado foi acionado (desvio declarado)
+
+**Facto:** várias métricas da lista "exatamente iguais" (§5) mudaram. Pela §6 à letra, o experimento
+seria **INVÁLIDO**:
+
+| métrica | base | H3 | H2 | H3+H2 |
+|---|---|---|---|---|
+| `calf_z` | 365 | 390 | 365 | 365 |
+| `knee_min_circ` | 377.0 | 377.0 | 374.0 | 377.0 |
+| `calfcircumference` | 389.8 | 390.0 | 389.8 | 393.0 |
+| `occiput_z` | 1580 | 1580 | 1590 | 1590 |
+| `neck_depth` | 154 | 154 | 156 | 156 |
+| `nape_z` / `nape_recess` | 1515 / 18 | = | 1515 / 20 | 1520 / 20 |
+| `neckcircumference`, `leg_cx_*`, `leg_gap_knee` | | ±0.1–0.6 | | |
+
+**Investigação (MEASURED):**
+1. **Vértices, pure-python, base contra variante:** pernas 0/1752, ombro/pescoço 0/140 e cabeça
+   0/3456 vértices diferentes. São **bit a bit idênticos**. Só mudam 48–62 vértices do tronco.
+2. **Mecanismo:** o instrumento centra Y pelo centro da caixa envolvente do corpo inteiro e rasteriza
+   cada corte numa grelha de 2 mm. Com H2, a nádega deixa de ser o ponto mais posterior (ymin passa de
+   −198.8 para −157.2). O centro desloca-se 20.8 mm, com H3 0.1 mm, e a rasterização e os argmax em
+   patamares reagem.
+3. **Controlo:** a malha **base**, medida com o centramento de cada variante (`measure.py`, parâmetro
+   `y_shift`, omissão 0), reproduz **exatamente** todas as mudanças da tabela nas três variantes
+   (`docs/h3h2_trunk/control_centering_*.txt`). Única exceção: a `chestcircumference` difere
+   0.04–0.06 mm (≤ 0.6 mm no total, dentro do grupo ±5 mm). É influência real da subdivisão junto à
+   inframamária.
+
+**Decisão (ENGINEERING JUDGMENT, submetida ao utilizador):** não declarei o experimento inválido. A
+regra da §6 existia para apanhar fugas de geometria para fora do tronco, e a identidade bit a bit dos
+vértices mais o controlo são um teste mais forte dessa mesma coisa. **A regra, tal como escrita, foi
+acionada**, e isto é um desvio ao pré-registo, não uma reinterpretação silenciosa.
+Para os próximos pré-registos, o critério de invariância passa a ser **vértices idênticos por região,
+mais métricas medidas com o centramento controlado**. Fica registado já aqui, antes do próximo
+experimento.
+
+## 12. Métricas monitorizadas (H4; não são critérios)
+
+| métrica | base | H3 | H2 | H3+H2 | refs |
+|---|---|---|---|---|---|
+| `buttock_behind_thoracic` | +50 | +50 | +10 | **+10** | −8 / −20 / −16 |
+| `lumbar_concavity` | 26.5 | 29.4 | 25.3 | **19.7** | 55.7 / 53.7 / 69.7 |
+| `buttock_apex_z` | 980 | 935 | 975 | **930** | 910 / 845 / 880 |
+| `lumbar_z` | 1185 | 1100 | 1190 | 1085 | 1105 / 1055 / 1100 |
+| `thoracic_apex_z` | 1305 | 1300 | 1295 | 1290 | 1330 / 1280 / 1335 |
+
+- **A previsão confirma-se:** `buttock_behind_thoracic` desce.
+- **A concavidade lombar PIORA** (26.5 → 19.7). A anca perdeu 45 mm de profundidade atrás e as costas
+  torácicas não mudaram, por isso a linha costas–nádega ficou mais reta (INFERRED).
+- `buttock_apex_z` desceu 50 mm **sem o bump glúteo se ter movido** (landmark `iliac` intacto). A
+  descida vem da estação `hip_flare`.
+
+## 13. Evidência visual (OBSERVED)
+
+`docs/h3h2_trunk/h3h2_2x2.png` (quatro variantes, lado/frente/3-4) e `h3h2_side_back.png`. Sem cabelo,
+material neutro, mesma câmara.
+
+- **Base:** barriga "de grávida" de perfil e tronco em cabaça de frente.
+- **Só H3:** a barriga desce e encolhe, mas continua como volume baixo. A cintura desce.
+- **Só H2:** o perfil afina, mas de frente continua um barril com a cintura alta.
+- **H3+H2:** a cabaça e a barriga desaparecem em grande parte. Fica um volume pequeno acima do púbis.
+- **Leitura nova e negativa:** de lado e de costas, o tronco de H3+H2 lê-se como uma **coluna quase
+  reta**, sem lordose e sem forma glútea. A nádega continua as costas sem se destacar, e a cintura, de
+  costas, é fraca. O jarro saiu e ficou à vista a ausência de curva sagital (H4), que antes estava
+  mascarada pelo volume.
+
+## 14. Garantias S2/S3 (MEASURED)
+
+| verificação | resultado |
+|---|---|
+| pytest (antes do re-pin) | 1 falha: só o digest (`c0a50b8a…` → `cb4e8559…`) |
+| pytest (depois do re-pin) | 133 passed · 1 skipped · 1 xfailed |
+| S0 pure-python / bpy | 33/33 PASS · 72/72 PASS |
+| auditoria (três variantes) | 6307 v / 6213 f · non-manifold 0 · boundary 962 |
+| fingerprint | `ad620a90b8eba085` (inalterado) |
+| digest re-pinado | pure-python `cb4e855996c2f1fd`, mathutils `c7ab2932f5d66ede` (anteriores no comentário) |
+
+## 15. Veredicto
+
+- **H3: PASSA** nos três critérios congelados.
+- **H2: PASSA** em H2.a, H2.b e H2.c. **H2.d FALHA, como previsto:** a profundidade do peito não mudou
+  (314 contra p95 307), porque o tórax não foi tocado.
+- **Critério herdado:** o −52 ficou **exatamente igual**, como previsto. H3/H2 não testa o tórax. A
+  hipótese "o resíduo está no tórax" **continua INFERRED**, nem confirmada nem refutada por este
+  experimento.
+- **Invariância:** a regra congelada foi acionada por um artefacto do instrumento, demonstrado com
+  controlo (§11). A decisão de aceitar é do utilizador.
+- **Leitura anatómica:** a forma em frente e em corte aproximou-se da humana (razões dentro do ANSUR).
+  O perfil sagital ficou mais exposto como problema: a concavidade lombar piorou.
+  **Não é "tronco resolvido".**
+
+## 16. Dívida registada (sem refactor)
+
+1. **Instrumento:** o centramento Y pela caixa envolvente faz as métricas depender de regiões
+   distantes. Proposta: centrar por um referencial fixo (por exemplo, o ponto médio dos tornozelos) e
+   declarar essa mudança com um controlo próprio. Não foi mudado agora para não mudar o instrumento a
+   meio de uma comparação.
+2. **A profundidade continua derivada da largura** (agora com a razão ANSUR). Uma largura errada
+   propaga-se para a profundidade.
+3. `hip_flare` 0.566 é ENGINEERING JUDGMENT (ponto médio). Deve passar a ser derivado quando houver uma
+   referência para a cota a que a largura atinge 0.97×anca.
+4. **A estação `navel` está no omphalion e a crista ilíaca (landmark) acima dela:** a ordem anatómica
+   está certa, mas a estação ilíaca do tronco já não tem nome anatómico. Rever quando a pélvis for
+   tratada (H4).
+5. **Cota do busto (+66 mm) aberta**, fora de H3 por decisão pré-registada.
+
+## Minha avaliação
+
+**Concordo porque:**
+- Cada hipótese resolveu exatamente a parte que previa, e o 2×2 mostra-o sem sobreposição.
+- As razões ficaram dentro do ANSUR sem se ajustar nenhum valor depois de medir.
+- A geometria fora do tronco ficou bit a bit idêntica.
+- O jarro e a barriga, que eram os defeitos mais visíveis do tronco, reduziram-se claramente na imagem
+  neutra.
+
+**Discordo de:**
+- Chamar a isto uma melhoria do tronco sem ressalva. A vista lateral tem agora uma coluna reta, e a
+  concavidade lombar piorou (19.7 contra 54–70).
+- Considerar o −52 explicado. Este experimento não o podia testar e não testou.
+
+**Riscos:**
+1. Aceitar o desvio da §11 cria precedente. Mitigação: o critério de invariância por vértices fica já
+   escrito para o próximo pré-registo.
+2. Levar H4 a compensar a nádega "achatada" empurrando o glúteo para trás. Isso seria corrigir o
+   sintoma: H4 tem de introduzir a curva da coluna, não só volume.
+3. A razão ANSUR militar aplicada à Lucia. Tem de vir a ser variação do spec, não uma constante.
+
+**Próximo passo que recomendo:** antes de H4, fazer **H7** (largura do peito a partir da chestbreadth
+ANSUR), isolada e pré-registada. A previsão congelável é `upper_back_vs_occiput` ≈ −20
+(aritmética da tabela de estações), `chestdepth` para dentro de p5–p95, e nenhuma mudança abaixo de
+0.72·S. Depois disso, H4 com o tronco completo estável.
+
+**Por quê:**
+- O tronco só está "estabilizado" na metade inferior. O tórax continua 22–25 % sobredimensionado nas
+  duas dimensões e é a causa mais provável do −52.
+- H4 (curva sagital) depende das costas torácicas como ponto de referência posterior. Fazê-la com o
+  tórax ainda grande obrigaria a refazê-la depois de H7.
+- É uma recomendação que altera a ordem que aprovaste (H4 antes de H7). **A decisão é tua.** Não
+  iniciei nem H7 nem H4.

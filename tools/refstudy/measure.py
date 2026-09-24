@@ -44,7 +44,7 @@ def slice_grid(V, T, lab, z0, xr=(-320, 320), yr=(-260, 260)):
         g |= geom.fill(segs, xr[0], yr[0], RES, nx, ny)
     return g
 
-def analyse(name, drop_labels=(), flip_y=False, stature_override=None, floor_override=None):
+def analyse(name, drop_labels=(), flip_y=False, stature_override=None, floor_override=None, y_shift=0.0):
     V, T, lab = prep(name)
     V = V.copy()
     zmin, zmax = V[:, 2].min(), V[:, 2].max()
@@ -57,6 +57,10 @@ def analyse(name, drop_labels=(), flip_y=False, stature_override=None, floor_ove
     keep = ~np.isin(lab, list(drop_labels)); T = T[keep[T[:, 0]]]
     # centre Y on body midline at mid-thigh-ish later; for now use bbox centre
     V[:, 1] -= (V[keep][:, 1].max() + V[keep][:, 1].min()) / 2
+    # y_shift (mm @1700, omissão 0): SÓ para controlos do instrumento — permite
+    # medir uma malha com o centramento Y de outra (H3/H2 §II: artefacto de
+    # rasterização por deslocamento sub-pixel do centro da caixa envolvente).
+    V[:, 1] += y_shift
     xr, yr = (-320, 320), (-260, 260)
     x_axis = xr[0] + (np.arange(int((xr[1]-xr[0])/RES)) + .5) * RES
     y_axis = yr[0] + (np.arange(int((yr[1]-yr[0])/RES)) + .5) * RES

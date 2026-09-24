@@ -34,8 +34,13 @@ PINS = {
         # depth peak at z 1380-1450; see docs/H1_TRAPEZIUS_DEPTH.md.  Only the
         # digest moved: counts, fingerprint, semantic/audit pins unchanged.
         # previous: pure-python af71a975bdfc8998, mathutils 63a579d98df0c8d8)
-        "digest": {"pure-python": "c0a50b8a261633ad",
-                   "mathutils": "1dfe85655ada5de0"},
+        # (H3/H2: abdominal station heights waist 0.635 / navel 0.602 /
+        # hip_flare 0.566 + depth from ANSUR depth/breadth ratios 0.709/0.658 on
+        # waist/navel/hip_flare/hip; see docs/H3H2_TRUNK.md.  Only the digest
+        # moved; leg/neck/head vertices bitwise identical.
+        # previous: pure-python c0a50b8a261633ad, mathutils 1dfe85655ada5de0)
+        "digest": {"pure-python": "cb4e855996c2f1fd",
+                   "mathutils": "c7ab2932f5d66ede"},
     },
 }
 
