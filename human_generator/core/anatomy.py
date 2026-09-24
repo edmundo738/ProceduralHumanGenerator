@@ -77,8 +77,21 @@ class Anatomy:
         return Vector((0.0, -0.004 * self.stature, self.z("chin") + 0.52 * self.h))
 
     def head_radii(self) -> tuple[float, float, float]:
+        """Raios do crânio (meia-largura, meia-profundidade, meia-altura).
+
+        S4.1 — BASELINE medido: 0.3777·H de meia-largura e 0.50·H de
+        meia-profundidade davam **169.2 mm** de largura craniana e **223.1 mm**
+        de comprimento por 226.1 mm de altura.  Canónico (FAA/DOT Ap. B,
+        mulheres p50): largura da cabeça **144 mm**, comprimento craniano
+        **183 mm** (docs/S4_FACE.md §2).  As duas constantes passam a ser
+        derivadas da malha medida: `144 / (2·1.015·0.976) = 72.7 mm` e
+        `183 / (2·1.015·0.9726) = 92.6 mm` para H = 226.1 mm ⇒ 0.3215·H e
+        0.4095·H.
+        """
         h = self.h
-        return (0.365 * h * 0.98 + 0.02 * h, 0.50 * h, 0.52 * h)  # (breadth, depth, height)
+        return (0.3215 * h, 0.3917 * h, 0.52 * h)  # (breadth, depth, height)
+        # profundidade: 0.4095 dava 191.3 mm (1.05× os 183 mm) — re-medido e
+        # corrigido para 0.3917 (183 / 2·1.015·0.9726·H com o ajuste fino da malha).
 
     def _shell_y(self, x: float, z: float) -> float:
         c = self.head_center()
@@ -202,9 +215,19 @@ class Anatomy:
         # head/face (surface-derived)
         c = self.head_center()
         rx, ry, rz = self.head_radii()
-        eye_x = 0.148 * h * self.spec.face.eye_spacing
-        lm["eye.L"] = self.face_front(eye_x, zf("eye"), -0.032 * h)
-        lm["eye.R"] = self.face_front(-eye_x, zf("eye"), -0.032 * h)
+        # S4.1 — distância interpupilar canónica (FAA/DOT Ap. B, mulher p50):
+        # 62 mm ⇒ meia-distância 31 mm = 0.1371·H.  O valor anterior
+        # (0.148·H = 33.5 mm ⇒ 67.0 mm entre pupilas, 1.08×) estava fora.
+        eye_x = 0.1371 * h * self.spec.face.eye_spacing
+        # S4.2 — o globo tem raio 0.0555·H (12.3 mm) e estava centrado na
+        # SUPERFÍCIE da pele (−0.032·H = 7.2 mm de recuo), ou seja 12.3 mm do
+        # globo ficavam à frente da face (medido: bbox y do globo até 75.6 mm
+        # contra pele a 63.3 mm na mesma coluna).  O centro passa a estar
+        # recuado raio + 0.010·H (2.3 mm) — a pálpebra fica fina como na
+        # anatomia.  Medido antes do ajuste: exposição do globo +12.3 mm.
+        _globe_back = (0.0555 + 0.010) * h
+        lm["eye.L"] = self.face_front(eye_x, zf("eye"), -_globe_back)
+        lm["eye.R"] = self.face_front(-eye_x, zf("eye"), -_globe_back)
         lm["eye"] = (lm["eye.L"] + lm["eye.R"]) / 2
         lm["glabella"] = self.face_front(0.0, zf("glabella"), 0.006 * h)
         lm["brow.L"] = self.face_front(eye_x * 0.9, zf("brow"), 0.004 * h)
@@ -217,7 +240,12 @@ class Anatomy:
         mouth_z = zf("mouth")
         lm["mouth"] = self.face_front(0.0, mouth_z, 0.010 * h)
         lm["mouth_center"] = lm["mouth"]
-        mhw = 0.0770 * s * self.spec.face.mouth_width * 0.5
+        # S4.1 — meia-largura da boca: canónico ch-ch 49.2 mm (mulher,
+        # Indonesia 2023; 48.1 mm na caucasiana 2024), ou seja 24.6 mm de
+        # meia-largura a esta estatura ⇒ 0.0146·estatura.  O valor anterior
+        # (0.0385·estatura = 64.8 mm) punha as comissuras fora da silhueta do
+        # rosto — medido: boca com 130.9 mm = 2.66× o canónico.
+        mhw = 0.0146 * s * self.spec.face.mouth_width
         lm["mouth_corner.L"] = self.face_front(mhw, mouth_z, -0.004 * h)
         lm["mouth_corner.R"] = self.face_front(-mhw, mouth_z, -0.004 * h)
         lm["chin_front"] = self.face_front(0.0, zf("chin") + 0.008 * h, 0.008 * h * self.spec.face.chin_projection)

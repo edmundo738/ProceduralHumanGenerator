@@ -850,6 +850,97 @@ def hand_metrics(build, side: str = "L", comps=None) -> dict:
 
 
 # --------------------------------------------------------------------------- silhouette
+def face_metrics(build, comps=None) -> dict:
+    """S4 — métricas da FACE, todas por identidade registada.
+
+    Definições (nenhuma medida sem denominador declarado):
+
+    * ``head_breadth`` — extensão em X dos anéis ``head.skull.*`` (latitudes do
+      crânio), ou seja a largura máxima do crânio SEM as orelhas.  Canónico
+      (FAA/DOT Ap. B, mulher p50): **144 mm**.
+    * ``head_depth`` — extensão em Y dos mesmos anéis.  Canónico (comprimento
+      craniano glabela→opistocrânio, mulher): **183 mm**.
+    * ``head_height`` — ``vertex.z − chin.z`` (altura da cabeça); igual a
+      ``H = estatura / head_units`` por construção (226.1 mm).
+    * ``interpupillary`` — distância entre os marcos ``eye.L`` e ``eye.R``.
+      Canónico (FAA): **62 mm**.
+    * ``mouth_width`` — extensão em X da região ``lip`` (malha) e do par de
+      marcos ``mouth_corner.*``.  Canónico (ch-ch, mulher): **49.2 mm**
+      (Indonesia 2023) / 48.1 mm (caucasiana 2024).
+    * ``lip_vermilion`` — altura da malha acima/abaixo do marco ``mouth``.
+      Canónico: vermelhão superior **6.5 mm**, inferior **10.0–11.6 mm**.
+    * ``eye_aperture`` — extensão (X, Z) da região ``eye`` por lado.
+      Canónico (fissura palpebral): **27–30 mm × 8–11 mm**.
+    * ``nose_length`` — ``|nose_root.z − nose_tip.z|``; canónico 45.3 mm.
+    * ``arch_upper`` / ``arch_lower`` — extensão em X da região ``gum`` acima /
+      abaixo de ``mouth.z``; canónico (arco maxilar, mulher): intermolar
+      **47.9 mm**, intercanino 34.3 mm (arco mandibular 39.9 / 26.2).
+    * ``teeth_span`` — extensão em X da região ``enamel``.
+    * ``ear_*`` — por anel registado ``head.ear.<lado>`` (S4.2).
+    """
+    builder, anat = build.builder, build.anatomy
+    V, lm = builder.verts, anat.landmarks
+    out: dict = {}
+
+    def _span(ids, ax):
+        vals = [V[i][ax] for i in ids]
+        return (max(vals) - min(vals)) if ids else None
+
+    skull = sorted({i for name, ids in builder.rings.items()
+                    if name.startswith("head.skull.") for i in ids})
+    out["head_breadth"] = _span(skull, 0)
+    out["head_depth"] = _span(skull, 1)
+    out["head_height"] = lm["vertex"].z - lm["chin"].z
+    out["interpupillary"] = (lm["eye.L"] - lm["eye.R"]).length
+
+    lip = [i for i, r in enumerate(builder.regions) if r == "lip"]
+    out["mouth_width"] = _span(lip, 0)
+    out["mouth_width_landmarks"] = abs(lm["mouth_corner.L"].x - lm["mouth_corner.R"].x)
+    if lip:
+        out["lip_vermilion"] = {
+            "upper": max(V[i].z for i in lip) - lm["mouth"].z,
+            "lower": lm["mouth"].z - min(V[i].z for i in lip),
+            "protrusion": max(V[i].y for i in lip) - lm["mouth"].y,
+        }
+    else:
+        out["lip_vermilion"] = None
+
+    for tag, sgn in (("L", 1), ("R", -1)):
+        ids = [i for i, r in enumerate(builder.regions)
+               if r == "eye" and (V[i].x > 0) == (sgn > 0)]
+        out[f"eye_aperture.{tag}"] = (_span(ids, 0), _span(ids, 2)) if ids else None
+
+    out["nose_length"] = abs(lm["nose_root"].z - lm["nose_tip"].z)
+    out["nose_protrusion"] = lm["nose_tip"].y - lm["nose_root"].y
+    nost = [i for i, r in enumerate(builder.regions) if r == "nostril"]
+    out["nose_breadth"] = _span(nost, 0) if nost else None
+
+    gum = [i for i, r in enumerate(builder.regions) if r == "gum"]
+    out["arch_upper"] = _span([i for i in gum if V[i].z > lm["mouth"].z], 0)
+    out["arch_lower"] = _span([i for i in gum if V[i].z <= lm["mouth"].z], 0)
+    tooth = [i for i, r in enumerate(builder.regions) if r == "enamel"]
+    out["teeth_span"] = _span(tooth, 0)
+
+    for tag in ("L", "R"):
+        ids = sorted({i for name, ring in builder.rings.items()
+                      if name.startswith(f"head.ear.{tag}") for i in ring})
+        if ids:
+            out[f"ear.{tag}"] = {
+                "length": _span(ids, 2),
+                "breadth": _span(ids, 1),           # profundidade ântero-posterior
+                "protrusion": (max(abs(V[i].x) for i in ids)
+                               - abs(lm[f"ear.{tag}"].x)),
+                "top_above_eye": max(V[i].z for i in ids) - lm["eye"].z,
+                "bottom_above_nose_base": min(V[i].z for i in ids) - lm["nose_base"].z,
+            }
+        else:
+            out[f"ear.{tag}"] = None
+    ears = [i for name, ids in builder.rings.items() if name.startswith("head.ear.")
+            for i in ids]
+    out["bitragion"] = 2.0 * max(abs(V[i].x) for i in ears) if ears else None
+    return out
+
+
 def silhouette(builder, view: str = "front", res: int = 128) -> dict:
     """Silhueta ortográfica rasterizada, com **preenchimento** por scanline.
 

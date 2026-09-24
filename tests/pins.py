@@ -20,15 +20,15 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "ad620a90b8eba085",   # S3.7: shoulder_head_ratio now has a source
-        "verts": 5955,          # pre-weld (pure build)
-        "faces": 5936,
+        "verts": 5951,          # pre-weld (pure build)
+        "faces": 5932,
         "strands": 2400,
-        # re-measured in S3.8 (hand breadth/thickness/knuckle span re-dimensioned
-        # from FAA/DOT anthropometry; thenar field reduced 10.2 mm -> 4.1 mm)
-        # (S3.7: neck with a sourced circumference, trapezius ramp, hanging arms,
-        # knees aligned, shoulder axis medial to the acromion, stations sorted by z)
-        "digest": {"pure-python": "35f7076463f570d9",
-                   "mathutils": "2c91d32a7dcc277d"},
+        # re-measured in S4.1 (skull breadth 169.2->144.1 mm and depth 223.1->185.1,
+        # mouth 130.9->49.6 mm, vermilion 6.4/10.0 mm, sagittal column correction
+        # with sign, globe centre recessed, orbit deepened)
+        # (S3.8: hands; S3.7: neck/trapezius/arms/knees, stations sorted by z)
+        "digest": {"pure-python": "3f23485d4117c50a",
+                   "mathutils": "cdd24607c7567e54"},
     },
 }
 
@@ -38,9 +38,9 @@ PINS = {
 # cyber_angel only (2764 float64 / 2766 float32) and was already so before S2 —
 # measured on both trees, see docs/S2_TOPOLOGY.md §5.
 PRESET_COUNTS = {
-    "cyber_angel": (5955, 5936, 2764),
-    "neon_idol": (5955, 5936, 3200),
-    "realistic_female": (5955, 5936, 2400),
+    "cyber_angel": (5951, 5932, 2763),
+    "neon_idol": (5951, 5932, 3200),
+    "realistic_female": (5951, 5932, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -48,7 +48,7 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 5955, "faces": 5936,
+AUDIT_PINS = {"verts": 5951, "faces": 5932,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
@@ -76,10 +76,13 @@ DEGENERATE_RING_PINS: dict[str, int] = {}
 # ``sole``/``palm`` predicates sat exactly on a knife edge (the sole was a flat
 # run of vertices and the threshold landed on it), so float32 vs float64 shifted
 # those two populations by tens of vertices.  S3.6 removed ONE of the two
-# knife edges: ``sole`` is now defined by world z (<= 12 mm) and reads the SAME
-# 40 vertices in both regimes.  ``palm`` is still knife-edged (108 pure / 86
-# mathutils) and remains the recorded, still-open part of the numerics-regime
-# question.
+# knife edge: ``sole`` is now defined by world z (<= 12 mm) and reads the SAME
+# 40 vertices in both regimes.  S4.1 removed the second one by accident of the
+# hand re-dimensioning: ``palm`` now reads 62 vertices in BOTH regimes (it was
+# 108 pure / 86 mathutils in S3.8).  The regime sensitivity of ``palm`` is
+# therefore CLOSED for this geometry, but the underlying knife-edge question
+# (a region predicate sitting exactly on a float32/float64 boundary) is not
+# resolved in general — recorded, not promoted.
 SEMANTIC_PINS = {
     ("realistic_female", 42): {
         "pure-python": {
@@ -87,7 +90,7 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 62, "scalp": 148, "skin": 3086,
+                "palm": 62, "scalp": 134, "skin": 3096,
                 "sole": 40
             },
             "groups": {
@@ -110,7 +113,7 @@ SEMANTIC_PINS = {
                 "R.toe.third.0": 32, "R.toe.third.1": 8, "head.brow": 2,
                 "head.cornea.L": 2, "head.cornea.R": 2, "head.eyelid.L": 100,
                 "head.eyelid.R": 100, "head.iris.L": 13, "head.iris.R": 13,
-                "head.scalp": 148,
+                "head.scalp": 134
             },
         },
         "mathutils": {
@@ -118,7 +121,7 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 86, "scalp": 148, "skin": 3062,
+                "palm": 62, "scalp": 134, "skin": 3096,
                 "sole": 40
             },
             "groups": {
@@ -141,12 +144,11 @@ SEMANTIC_PINS = {
                 "R.toe.third.0": 32, "R.toe.third.1": 8, "head.brow": 2,
                 "head.cornea.L": 2, "head.cornea.R": 2, "head.eyelid.L": 100,
                 "head.eyelid.R": 100, "head.iris.L": 13, "head.iris.R": 13,
-                "head.scalp": 148,
+                "head.scalp": 134
             },
         },
     },
 }
-
 
 def expected_digest(backend: str, key=("realistic_female", 42)) -> str:
     return PINS[key]["digest"].get(backend, "")

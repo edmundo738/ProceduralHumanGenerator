@@ -25,9 +25,21 @@ def mouth_aperture(anat, half_w: float, open_amt: float = 0.0):
     """
     h = anat.h
     f = anat.spec.face
-    up_amp = (0.030 + 0.075 * open_amt) * half_w + 0.0035 * h * f.lip_fullness
-    dn_amp = (0.034 + 0.30 * open_amt) * half_w + 0.0045 * h * f.lip_fullness
+    # S4.1 — o vermelhão é ABSOLUTO e não proporcional à largura da boca.
+    # Canónico (mulher): vermelhão superior 6.5 mm, inferior 10.0–11.6 mm
+    # (Indonesia 2023: 6.59/10.02; caucasiana 2024: 6.47/11.64).
+    # 6.5 mm = 0.0287·H e 10.0 mm = 0.0442·H.  O BASELINE escalava a altura com
+    # a meia-largura (0.030·half_w): com a largura de boca corrigida isso daria
+    # 1.5 mm de vermelhão superior (medido antes: 3.2 mm com a boca a 130 mm).
     bow = 0.018 * h * f.cupid_bow
+    # O arco de cupido levanta o pico central em 0.58·bow acima da amplitude,
+    # por isso a amplitude é derivada do PICO canónico: 6.5 mm = 0.0287·H
+    # (medido com a primeira versão: 8.70 mm de vermelhão superior).
+    up_amp = max(0.35 * 0.0287 * h,
+                 (0.0287 + 0.060 * open_amt) * h * (0.75 + 0.25 * f.lip_fullness)
+                 - 0.58 * bow)
+    # inferior: medido 9.82 mm com 0.0442·H ⇒ 0.0450·H dá os 10.0 mm canónicos.
+    dn_amp = (0.0450 + 0.220 * open_amt) * h * (0.75 + 0.25 * f.lip_fullness)
 
     def curve(t: float):
         a = 2.0 * math.pi * t
@@ -48,7 +60,7 @@ def build_lips(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> None:
     lm = anat.landmarks
     mouth = Vector(lm["mouth"])
     corners = Vector(lm["mouth_corner.L"])
-    half_w = (corners.x - mouth.x) if corners.x != 0 else 0.038 * anat.stature
+    half_w = (corners.x - mouth.x) if corners.x != 0 else 0.0146 * anat.stature
     curve = mouth_aperture(anat, half_w, mouth_open)
     f = spec.face
     N_A, N_T = 16, 5

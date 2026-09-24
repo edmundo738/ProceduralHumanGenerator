@@ -468,6 +468,61 @@ class TestS38CriteriaOnRealBuild:
             assert abs(l[key] - r[key]) < 1e-9, (key, l[key], r[key])
 
 
+class TestS41FaceCriteriaOnRealBuild:
+    """S4.1 — proporções da face (fontes em docs/S4_FACE.md §2)."""
+
+    @staticmethod
+    def _f(build_default):
+        from human_generator.core.integration import face_metrics
+        return face_metrics(build_default)
+
+    def test_f1_skull_breadth(self, build_default):
+        m = self._f(build_default)
+        assert 0.93 <= m["head_breadth"] / 0.144 <= 1.07, m["head_breadth"]
+
+    def test_f2_cranial_depth(self, build_default):
+        m = self._f(build_default)
+        assert 0.93 <= m["head_depth"] / 0.183 <= 1.07, m["head_depth"]
+
+    def test_f3_mouth_width(self, build_default):
+        m = self._f(build_default)
+        assert 0.88 <= m["mouth_width"] / 0.0492 <= 1.12, m["mouth_width"]
+        # malha e marcos têm de concordar (2 mm)
+        assert abs(m["mouth_width"] - m["mouth_width_landmarks"]) < 0.002
+
+    def test_f4_vermilion(self, build_default):
+        v = self._f(build_default)["lip_vermilion"]
+        assert 0.75 <= v["upper"] / 0.0065 <= 1.35, v["upper"]
+        assert 0.75 <= v["lower"] / 0.0100 <= 1.30, v["lower"]
+
+    def test_f6_interpupillary(self, build_default):
+        m = self._f(build_default)
+        assert 0.94 <= m["interpupillary"] / 0.062 <= 1.06, m["interpupillary"]
+
+    def test_globe_is_covered_by_the_face_surface(self, build_default):
+        """O globo não pode sobressair da pele: a córnea é a única parte exposta.
+
+        S4.2 — medido antes do recuo do centro: o globo (r = 12.3 mm) estava
+        centrado na própria superfície e 12.3 mm dele ficavam fora da face.
+        """
+        from human_generator.core._math import Vector  # noqa: F401
+        b = build_default.builder
+        V = b.verts
+        skull = sorted({i for n, ids in b.rings.items()
+                        if n.startswith("head.skull.") for i in ids})
+        for sgn in (1, -1):
+            eye = [i for i, reg in enumerate(b.regions)
+                   if reg == "eye" and (V[i].x > 0) == (sgn > 0)]
+            over = []
+            for i in eye:
+                p = V[i]
+                cand = [V[j].y for j in skull
+                        if abs(V[j].x - p.x) < 0.012 and abs(V[j].z - p.z) < 0.012]
+                if cand and p.y > max(cand):
+                    over.append(p.y - max(cand))
+            assert not over or max(over) <= 0.006, (sgn, max(over) if over else None)
+
+
 class TestReportOnRealBuild:
     def test_report_has_all_criteria_and_no_floating_part(self, build_default):
         rep = integration_report(build_default)

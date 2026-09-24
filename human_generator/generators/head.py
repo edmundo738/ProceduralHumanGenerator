@@ -256,8 +256,16 @@ def build_head(spec, anat) -> HeadResult:
             columns.setdefault((round(p.x, 9), round(p.z, 9)), []).append(i)
     for (qx, qz), idxs in columns.items():
         surf = anat.skull_front_y(qx, qz)
+        # S4.1/§7.2 — a correcção era só para a FRENTE (``need <= 0`` saía).
+        # Medido: o elipsoide era mais gordo que a máscara facial em 108 das 160
+        # colunas frontais (até −17.7 mm), e por isso os marcos faciais (olhos,
+        # boca, nariz — todos calculados sobre ``skull_front_y``) ficavam **dentro**
+        # do crânio: medido, o marco ``eye`` estava 22 mm atrás da superfície e o
+        # globo ocular 9.6 mm atrás da pele.  A coluna passa a ser transladada
+        # para a máscara com o sinal correcto (o mecanismo de translação rígida
+        # por coluna, que evita colapsos internos, mantém-se).
         need = surf - max(b.verts[i].y for i in idxs)
-        if need <= 0.0002:
+        if abs(need) <= 0.0002:
             continue
         edge = smoothstep(0.80 * rx, 0.52 * rx, abs(qx)) * \
             smoothstep(c.z - 0.70 * h, c.z - 0.550 * h, qz) * \
@@ -289,10 +297,21 @@ def build_head(spec, anat) -> HeadResult:
         stack.bump(lm[f"brow.{tag}"], 0.010 * h * (0.7 + 0.6 * face.brow_thickness),
                    sigma=(0.055 * h, 0.018 * h, 0.020 * h), direction=(0, 1, 0.10))
     stack.bump(lm["glabella"], 0.008 * h, sigma=(0.022 * h, 0.016 * h, 0.016 * h))
-    # sockets (shallow)
-    for tag in ("L", "R"):
-        stack.socket(lm[f"eye.{tag}"], 0.0125 * h * face.eye_depth,
-                     radius=0.048 * h)
+    # sockets — S4.2: a pele da pálpebra tem de ficar ao nível da pele da face
+    # que a rodeia.  Medido com o socket antigo (0.0125·H, r 0.048·H): a
+    # pálpebra ficava **4.9 mm dentro** da cara (y 68.3 contra pele 73.2 na
+    # coluna do olho) e o globo só expunha 7 vértices.  A órbita passa a
+    # 0.0245·H (5.5 mm) de profundidade com raio 0.055·H, e o rebordo
+    # orbitário ganha um anel de relevo (o osso por baixo da pele).
+    for tag, sgn in (("L", 1), ("R", -1)):
+        stack.socket(lm[f"eye.{tag}"], 0.0245 * h * face.eye_depth,
+                     radius=0.055 * h)
+        stack.bump(lm[f"eye.{tag}"] + Vector((0.0, 0.0, 0.030 * h)),
+                   0.0035 * h, sigma=(0.052 * h, 0.024 * h, 0.020 * h),
+                   direction=(0.0, 1.0, 0.15))
+        stack.bump(lm[f"eye.{tag}"] + Vector((0.0, 0.0, -0.034 * h)),
+                   0.0030 * h, sigma=(0.050 * h, 0.022 * h, 0.018 * h),
+                   direction=(0.0, 1.0, -0.20))
     # nose — sampled from the cartilage line: skin is lifted onto the
     # root→tip profile (gaussians anchored on the SURFACE, amplitude =
     # landmark-minus-surface, so the field always blends flush at its rim)
