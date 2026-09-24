@@ -294,3 +294,111 @@ não partilha a fase. A simetria exacta precisa da correspondência de índices
 Efeitos colaterais declarados: região `brow` **volta a 0** (era 2 em S4.1) e o
 grupo `head.brow` desaparece — o débito do §7.4 (máscara da testa sem anéis
 próprios) fica mais visível, não foi tratado; `lip` 96 → 126; `scalp` 134 → 132.
+
+## 10. S4.2b — diagnóstico medido (nenhuma alteração de código ficou na árvore)
+
+A lacuna §9.3 ("há pele à frente do globo") foi investigada até à causa-raiz. O
+corte proposto foi **implementado, medido e revertido** (§10.4): a árvore
+continua em `d7a859e`. Isto é registo de investigação, não resultado.
+
+### 10.1 A geometria declarada era incompatível (medido)
+
+| Quantidade | Valor medido |
+|---|---|
+| centro do globo `eye.L` | (30.5, 57.3, 1569.7) mm |
+| raio do globo | 12.33 mm (polo frontal a y = 69.6 mm) |
+| pele no marco do olho | 14.56 mm do centro |
+| plano `S` da fissura declarada (`surf + 0.002·n`) | **15.55 mm** do centro |
+| raio da esfera do rebordo | 13.83 mm |
+
+A elipse declarada de 30 × 10 mm tem o seu ponto extremo a
+sqrt(15.55² + 15²) = 21.6 mm do centro — **fora** da esfera do rebordo, e
+`13.83² − 15.55² < 0`: não existe solução. A projecção na esfera (feita depois da
+projecção na elipse) encolhia a fissura para **22.9 × 12.7 mm** (o que se mede no
+§9). Numa esfera de raio R′ a largura máxima de uma curva fechada é **2·R′ =
+27.7 mm**: é um **tecto geométrico**, não uma escolha.
+
+### 10.2 A causa-raiz é a AMOSTRAGEM, não o recorte
+
+* grelha base `n=9`: aresta mediana **15.0 mm**, máxima **25.4 mm**;
+* diâmetro do globo: **24.66 mm** — as células são da ordem do globo;
+* a corda de uma célula sobre a esfera da pálpebra mergulha `c²/(8R)` = **5.8 mm**
+  (25.4 mm de aresta) ⇒ a pele chega a **8.0 mm** do centro, dentro do globo;
+* medido: a face que bloqueia tem **todos os vértices fora do globo**
+  (13.8–18.7 mm) e a sua **corda** passa a **5.3 mm** — o bloqueio não é um
+  vértice dentro do globo, é uma aresta;
+
+Subir a resolução sozinho **não** resolve (medido, com o corte de S4.2): `n=9` →
+`n=13` → `n=17` → `n=21` (881 → 3804 faces na casca) dá primeiros toques de
+**4.17 / 3.72 / 4.43 / 4.29 mm** — praticamente constantes. Porque…
+
+### 10.3 …o corte de S4.2 é ele próprio quem cria as faces que tapam o olho
+
+Medido, com insets e orelhas desligados, isolando cada passo:
+
+| Passo | Maior célula a <45 mm do olho |
+|---|---|
+| grelha + perfil sagital + campos | **20.6 mm** |
+| **+ `cut_openings`** | **82.4 mm** |
+
+O corte remove uma face se **qualquer** vértice cai na janela e depois
+**projecta** os vértices do rebordo na elipse. Isso arrasta vértices que estavam
+a 40 mm para cima da elipse: nascem faces oblíquas de 80 mm cuja corda atravessa
+o globo. (Também medido: a máscara facial tem gradiente até **6.6 mm/mm**, mas
+não é ela a causa — a grelha base não tem nenhuma aresta > 40 mm.)
+
+### 10.4 O corte por RECORTE — implementado, medido, revertido
+
+Implementei `cut_openings` v2 (recorte com vértices de cruzamento partilhados
+por aresta ⇒ sem T-junctions; pentágono ⇒ quad + triângulo ⇒ 0 ngons; face que
+cobre a abertura ⇒ subdivisão + recursão), órbita declarada a 26 × 24 mm sobre a
+esfera da pálpebra, casca a `n=17` e pálpebra a 2.2 mm. Resultado medido:
+
+* **ganhos**: rebordo da órbita **24.2 × 23.9 mm** e **L/R idênticos**;
+  boca **42.0 × 5.0 mm** exacta; narinas voltam (11.5/11.1 mm, folga 7.8 mm);
+  maior célula junto ao olho **82.4 → 30.2 mm**;
+* **falhas**: a boca **fragmentou-se em 3 laços** (19.3 / 18.3 / 18.2 mm) e o
+  raio continuou bloqueado a **6.96 / 6.48 mm**.
+
+Causa da minha falha, identificada e escrita: o meu recorte assume que a parte
+**de fora** de uma face é *um* polígono. Quando a abertura a divide em duas
+(a boca é uma faixa de 42 × 5 mm e uma célula pode estradar-se sobre ela), a
+volta liga os dois pedaços por uma **corda que atravessa o buraco** — o mesmo
+defeito no caso "cobre", onde a corda passa necessariamente pelo centro da
+abertura e mergulha no globo.
+
+Revertido (árvore = `d7a859e`): commitar uma boca fragmentada seria uma regressão
+a fingir que não existe.
+
+### 10.5 A pálpebra (medida) — existe, tem fenda, mas está dentro do globo
+
+| Região | n | extensão `dr` (mm) | extensão `du` (mm) | distância do centro | toques no eixo |
+|---|---|---|---|---|---|
+| `eyelid` (L) | 120 | −5.0 … +11.4 | −8.5 … +11.6 | **9.7 … 12.7** | **0** |
+| `eye` (L) | 132 | −7.3 … +12.1 | −11.5 … +11.1 | 11.1 … 12.3 | — |
+| `cornea` (L) | 51 | −4.9 … +9.5 | −7.1 … +7.7 | 10.1 … 12.8 | — |
+
+A pálpebra **já tem fissura** (a linha de vista atravessa-a sem tocar em nenhuma
+face dela) — o problema é que assenta a 9.7–12.7 mm do centro, ou seja **por
+dentro** de um globo de 12.33 mm, e a sua extensão (±11 mm) não chega aos 13 mm
+da órbita.
+
+### 10.6 Desenho que as medições sustentam (próximo passo)
+
+1. **A fissura passa a ser da pálpebra** (`generators/eyes.py`), que é o objecto
+   que já a tem: assente na esfera da pálpebra (raio + 2.2 mm, medido com a
+   margem da corda), extensão ≥ 13 mm para fechar a órbita, fenda de 26 × 10 mm.
+   O critério **F5** passa a ser medido aí (nas margens superior/inferior), não no
+   rebordo da casca — e fica com o tecto geométrico de **27.7 mm** documentado.
+2. **A casca do crânio abre a órbita**, não a fissura: orifício > 24.66 mm (a
+   silhueta do globo) e amostragem da região orbital a ≲ 8 mm de aresta. Duas
+   vias medidas: (a) densificar só a banda orbital com transição explícita
+   (quads + triângulos na fronteira — o orçamento de `quad_ratio` não aguenta
+   2 passagens: 0.858 → ~0.83, abaixo da fasquia 0.84 declarada em S2) ou
+   (b) recortar com **teia radial** (cada face que cobre a abertura é dividida em
+   cunhas a partir do centro da abertura, e cada cunha é recortada: as cordas
+   ficam radiais e curtas, nunca a atravessar o buraco). A (b) não gasta malha e
+   é a que respeita a fasquia.
+3. O instrumento passa a reportar a abertura no **frame do olho** (`dr`, `du`) e
+   a **linha de vista como percentagem de direcções abertas** (não um único raio
+   no eixo: é isso que a fissura é).
