@@ -75,11 +75,13 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
         for k in range(NR + 1):
             phi = mix(-math.pi * 0.5, math.pi * 0.34, k / NR)
             rings.append([sph(mix(-1, 1, j / NC) * math.pi * 0.5, phi, r) for j in range(NC + 1)])
-        res = into.loft(rings, close=False, region="eye", material="eye",
+        res = into.loft(rings[:6], close=False, region="eye", material="eye",
                         uv_rect=(0.0, 1.0, 0.0, 1.0), register=f"eye.{tag}",
                         cap_start="pole", cap_end="none")
+        into.loft(rings[5:], close=False, region="eye", material="iris",
+                  uv_rect=(0.5, 1.0, 0.0, 1.0), cap_start="none", cap_end="pole")
         ids = res["rings"]
-        front_ids = set(ids[-1]) | set(ids[-2])
+        front_ids = set(ids[-1])
         for ring in ids:
             for vi in ring:
                 d = into.verts[vi] - c
@@ -114,12 +116,12 @@ def build_eyes(spec, anat, into: MeshBuilder) -> dict:
                 t_list = [mix(-1, 1, j / NCOL) for j in range(NCOL + 1)]
                 for t in t_list:
                     phi0 = fn(t)
-                    spread = mix(0.0, 1.9 if which == "upper" else 1.05, k / NROW)
+                    spread = mix(0.0, 2.35 if which == "upper" else 1.25, k / NROW)
                     phi = phi0 + sgn * spread * 0.55
-                    rr = r * (1.045 - 0.10 * k / NROW)      # rim tucks under the socket skin
+                    rr = r * (1.028 - 0.075 * k / NROW)      # rim tucks under the socket skin
                     p = sph(t * 0.92, phi, rr)
                     if k > 0:
-                        p = p - ax * (0.013 * h) * (k / NROW) ** 1.6
+                        p = p - ax * (0.0165 * h) * (k / NROW) ** 1.5
                     row.append(p)
                 rows.append(row)
                 if k == 0:

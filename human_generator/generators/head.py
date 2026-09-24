@@ -155,37 +155,35 @@ def add_feature_loops(builder: MeshBuilder, targets: list[tuple[Vector, float, i
 
 # ----------------------------------------------------------------------------- ears
 def add_ear(builder: MeshBuilder, anat, side: int, rng: Rng) -> None:
-    """Surface-following auricle: 5×7 grid patch + concha socket + lobule."""
-    s = anat.stature
+    """Auricle: an ellipsoid-conforming 6×8 patch (so it hugs the skull at
+    every proportion), rim creased, concha hollowed by the head field stack."""
     h = anat.h
-    lm = anat.landmarks
-    cx = 1.0 if side > 0 else -1.0
-    c = Vector(lm[f"ear.{('L','R')[side < 0]}"])
+    c = Vector(anat.landmarks["ear.L" if side > 0 else "ear.R"])
+    c0 = anat.head_center()
     rx, ry, rz = anat.head_radii()
-    head_c = anat.head_center()
+    cx = 1.0 if side > 0 else -1.0
     rows, cols = 6, 8
-    ear_h = 0.30 * h * anat.spec.face.ear_size
+    ear_h = 0.29 * h * anat.spec.face.ear_size
     grid = []
     for ri in range(rows):
-        tv = ri / (rows - 1)
+        v = ri / (rows - 1)
         row = []
         for ci in range(cols):
-            tu = ci / (cols - 1)
-            # ellipse in (forward, vertical) plane hugging the skull side
-            ang = (tu - 0.5) * 1.15 * math.pi
-            zz = (0.5 - tv) * 2.0 * ear_h * 0.5
-            x_ring = math.cos(ang)
-            yb = math.sin(ang) * ear_h * 0.34
-            x = cx * rx * 0.965 * (1.0 - 0.06 * abs(zz) / ear_h) - yb * 0.25 * cx * 0.0
-            p = Vector((cx * (rx * 0.962 - 0.010 * h * max(0.0, math.sin(ang))),
-                        c.y + yb * 1.0 + 0.004 * h,
-                        c.z + zz))
-            # conform to the skull front/back curvature
-            dxz = p - head_c
-            ell = (dxz.x / rx) ** 2 + ((p.z - head_c.z) / rz) ** 2
-            bulge = clamp(1.0 - math.sqrt(max(0.0, ell)), 0.0, 1.0)
-            p.y += 0.006 * h * (1.0 - bulge) * cx * cx * (0.6 if p.y > c.y else 1.0)
-            row.append(builder.add_vert(p, "skin", (tu, tv)))
+            u = -1.0 + 2.0 * ci / (cols - 1)
+            z = c.z + (0.5 - v) * ear_h
+            y = c.y + u * ear_h * 0.34
+            ty = (y - c0.y) / ry
+            tz = (z - c0.z) / rz
+            s = 1.0 - ty * ty - tz * tz
+            s = max(0.04, s)
+            x = cx * rx * math.sqrt(s) * 1.006
+            # helix rim lifts off the skull toward the middle, rim crest at u≈±0.8
+            rim = math.exp(-((abs(u) - 0.78) ** 2) / 0.10) * math.exp(-((v - 0.55) ** 2) / 0.30)
+            x += cx * (0.0060 * h + 0.0046 * h * rim)
+            # lobe droop: bottom rows relax inward-forward
+            if v > 0.82:
+                x -= cx * 0.0022 * h * (v - 0.82) / 0.18
+            row.append(builder.add_vert(Vector((x, y, z)), "skin", (ci / (cols - 1), v)))
         grid.append(row)
     for ri in range(rows - 1):
         for ci in range(cols - 1):
@@ -195,12 +193,10 @@ def add_ear(builder: MeshBuilder, anat, side: int, rng: Rng) -> None:
                 builder.add_face((a, b, cc, d), material="skin")
             else:
                 builder.add_face((a, d, cc, b), material="skin")
-    # rim: crease the outer border ring
-    border = [v for row in grid for v in (row[0], row[-1])]
-    builder.crease_ring([v for v in grid[0]], 0.25)
-    builder.crease_ring([grid[r][0] for r in range(rows)], 0.22)
-    builder.crease_ring([grid[r][-1] for r in range(rows)], 0.22)
-    # ear canal + concha fields are in the head stack
+    builder.crease_ring([grid[r][0] for r in range(rows)], 0.30)
+    builder.crease_ring([grid[r][-1] for r in range(rows)], 0.30)
+    builder.crease_ring(grid[0], 0.26)
+    builder.crease_ring(grid[-1], 0.18)
 
 
 # ----------------------------------------------------------------------------- main
@@ -217,18 +213,22 @@ def build_head(spec, anat) -> HeadResult:
     box_sphere(b, center=c, radii=(rx * 1.015, ry * 1.015, rz * 1.015), n=9,
                squash_top=0.045, temple_pull=0.05)
 
-    # 2) sagittal profile: push the anterior shell onto the face surface
-    #    (stronger the lower the point — brow→chin follow the midface block)
+    # 2) sagittal profile: the anterior shell is set to the *dominant* of the
+    #    two skull shells (cranium ∪ midface/mandible block).  This is why
+    #    the correction must key off surface comparison, not position: raw
+    #    ellipsoid points near the chin have small y exactly where the face
+    #    block is largest, and a position-based weight would sink the chin.
+    lm = anat.landmarks
     new_verts = []
     for p in b.verts:
         p = Vector(p)
-        front = clamp((p.y - c.y) / max(1e-6, ry), -1.0, 1.0)
-        if front > 0.05:
+        if abs(p.x) < 0.80 * rx and (c.z - 0.72 * h) < p.z < (c.z + 0.56 * h) and p.y > c.y - 0.15 * ry:
             surf = anat.skull_front_y(p.x, p.z)
-            low = smoothstep(c.z + 0.10 * h, c.z - 0.30 * h, p.z)
-            w = clamp(smoothstep(0.05, 0.75, front) * (0.45 + 0.55 * low), 0.0, 1.0)
-            py = mix(p.y, max(p.y, surf), w)
-            p = Vector((p.x, py, p.z))
+            if surf > p.y + 0.0002:
+                edge = smoothstep(0.80 * rx, 0.52 * rx, abs(p.x)) * \
+                    smoothstep(c.z - 0.70 * h, c.z - 0.550 * h, p.z) * \
+                    smoothstep(c.z + 0.56 * h, c.z + 0.470 * h, p.z)
+                p = Vector((p.x, mix(p.y, surf, clamp(edge, 0.0, 1.0)), p.z))
         new_verts.append(p)
     b.verts = new_verts
 
@@ -254,30 +254,56 @@ def build_head(spec, anat) -> HeadResult:
     stack.bump(lm["glabella"], 0.008 * h, sigma=(0.022 * h, 0.016 * h, 0.016 * h))
     # sockets (shallow)
     for tag in ("L", "R"):
-        stack.socket(lm[f"eye.{tag}"], 0.010 * h * face.eye_depth,
-                     radius=0.042 * h)
-    # nose — bridge + tip handled by loft; add blend volumes
-    stack.ridge(lm["nose_root"], lm["nose_tip"], 0.004 * h,
-                0.016 * h * spec.face.nose_bridge)
+        stack.socket(lm[f"eye.{tag}"], 0.0125 * h * face.eye_depth,
+                     radius=0.048 * h)
+    # nose — sampled from the cartilage line: skin is lifted onto the
+    # root→tip profile (gaussians anchored on the SURFACE, amplitude =
+    # landmark-minus-surface, so the field always blends flush at its rim)
+    proj = spec.face.nose_tip_projection
+    tip_extra = 0.004 * h * proj
+    for k, wid in ((0.28, 0.011), (0.52, 0.014), (0.75, 0.016), (1.0, 0.014)):
+        q = lm["nose_root"].lerp(lm["nose_tip"], k)
+        y0 = anat.skull_front_y(0.0, q.z)
+        amp = max(0.0006, q.y - y0) + tip_extra * k * k
+        stack.bump(Vector((0.0, y0, q.z)), amp,
+                   sigma=((wid + 0.006) * h, 0.5 * h, 0.9 * h * (0.7 + 0.5 * k)),
+                   direction=(0, 1, 0.18))
+    stack.bump(Vector((0.0, anat.skull_front_y(0.0, lm["nose_tip"].z) - 0.001 * h,
+                        lm["nose_tip"].z)), tip_extra + 0.004 * h,
+               sigma=(0.016 * h, 0.016 * h, 0.012 * h), direction=(0, 1, -0.30))
+    for sx in (1, -1):
+        stack.bump(lm["nose_tip"] + Vector((sx * 0.016 * h, -0.006 * h, -0.007 * h)),
+                   0.0048 * h * spec.face.nostril_flare,
+                   sigma=(0.011 * h, 0.010 * h, 0.009 * h),
+                   direction=(sx * 0.45, 0.85, -0.30))
+    stack.bump(lm["nose_base"], 0.0040 * h, sigma=(0.020 * h, 0.013 * h, 0.011 * h))
     # cheeks / malar
     for tag in ("L", "R"):
         stack.bump(lm[f"cheek.{tag}"], 0.010 * h * (0.5 + face.cheek_fullness),
                    sigma=(0.050 * h, 0.030 * h, 0.045 * h), direction=(0.25 * (1 if tag == "L" else -1), 0.8, -0.2))
     # chin / jaw
-    stack.bump(lm["chin_front"], 0.007 * h * face.chin_projection,
-               sigma=(0.034 * h, 0.022 * h, 0.026 * h), direction=(0, 1, -0.15))
+    stack.bump(lm["chin_front"], 0.0090 * h * face.chin_projection,
+               sigma=(0.042 * h, 0.024 * h, 0.032 * h), direction=(0, 1, -0.12))
     for tag, sx in (("L", 1), ("R", -1)):
         stack.bump(lm[f"jaw_angle.{tag}"], 0.006 * h,
                    sigma=(0.020 * h, 0.020 * h, 0.030 * h), direction=(sx * 0.4, 0.3, -0.3))
     # lips mound + philtrum groove
-    stack.bump(lm["mouth"], 0.0055 * h * face.lip_fullness,
+    stack.bump(lm["mouth"], 0.0040 * h * face.lip_fullness,
                sigma=(0.055 * h * face.mouth_width, 0.020 * h, 0.026 * h), direction=(0, 1, 0))
     stack.bump(lm["philtrum"], -0.0022 * h * face.philtrum_length,
                sigma=(0.012 * h, 0.016 * h, 0.016 * h), direction=(0, 1, 0))
-    # nostrils
+    # nostril openings + ear conchae
     for sx in (1, -1):
-        stack.bump(lm["nose_base"] + Vector((sx * 0.020 * h, 0.006 * h, -0.006 * h)),
-                   0.0055 * h * spec.face.nostril_flare, sigma=(0.014 * h, 0.012 * h, 0.012 * h))
+        stack.socket(lm["nose_base"] + Vector((sx * 0.0135 * h, 0.004 * h, -0.010 * h)),
+                     0.0045 * h * spec.face.nostril_flare, radius=0.0075 * h)
+    for side in (1, -1):
+        ec = Vector(anat.landmarks["ear.L" if side > 0 else "ear.R"])
+        stack.socket(ec + Vector((-0.010 * h * side * side, 0.006 * h, -0.004 * h)),
+                     0.0052 * h, radius=0.020 * h)
+        # direction: push skin toward skull (-x·side)
+        stack.items[-1].direction = Vector((-side, 0.10, 0.0)).normalized()
+        stack.items[-1].sigma = (0.020 * h, 0.020 * h, 0.026 * h)
+        stack.items[-1].centre = ec + Vector((-0.002 * h * side, 0.008 * h, -0.006 * h))
     # temple hollow + neck blend
     for tag in ("L", "R"):
         stack.bump(lm[f"temple.{tag}"], -0.0035 * h, sigma=(0.045 * h, 0.030 * h, 0.055 * h))

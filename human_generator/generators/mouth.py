@@ -18,12 +18,15 @@ from ..core.topology import MeshBuilder, make_section
 
 # ----------------------------------------------------------------------------- aperture
 def mouth_aperture(anat, half_w: float, open_amt: float = 0.0):
-    """Closed curve (x,z,y-plane offsets) around the mouth centre."""
-    lm = anat.landmarks["mouth"]
+    """Closed curve (x,z offsets) around the mouth centre.
+
+    ``open_amt=0`` → a narrow sealed slit (lips touching); opening grows the
+    lower half downward (mandible hinge) far more than the upper.
+    """
     h = anat.h
     f = anat.spec.face
-    up_amp = 0.115 * half_w + 0.006 * h * f.lip_fullness
-    dn_amp = 0.150 * half_w + 0.008 * h * f.lip_fullness
+    up_amp = (0.030 + 0.075 * open_amt) * half_w + 0.0035 * h * f.lip_fullness
+    dn_amp = (0.034 + 0.30 * open_amt) * half_w + 0.0045 * h * f.lip_fullness
     bow = 0.018 * h * f.cupid_bow
 
     def curve(t: float):
@@ -34,7 +37,7 @@ def mouth_aperture(anat, half_w: float, open_amt: float = 0.0):
             z = s * up_amp * (1.0 + 0.10 * open_amt)
             z += bow * math.exp(-((abs(x) / max(1e-6, half_w * 0.16)) ** 2)) - 0.42 * bow
         else:
-            z = s * dn_amp * (1.0 + 1.7 * open_amt)
+            z = s * dn_amp
         return x, z
 
     return curve
@@ -49,26 +52,27 @@ def build_lips(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> None:
     curve = mouth_aperture(anat, half_w, mouth_open)
     f = spec.face
     N_A, N_T = 16, 5
-    protr = 0.0135 * h * f.lip_fullness           # vermilion forward reach
-    in_depth = 0.020 * h                          # inner mucosa depth
+    protr = 0.0195 * h * f.lip_fullness           # vermilion forward reach
     rows: list[list[Vector]] = []
     for k in range(N_T + 1):
-        t = k / N_T
+        t = k / N_T                                # 0 = wet-line rim, 1 = skin border
         row = []
         for a in range(N_A):
             x, z = curve(a / N_A)
-            surf_y = anat.skull_front_y(mouth.x + x, mouth.z + z) - 0.004 * h
-            y = mix(mouth.y - in_depth, surf_y, smooth01(t, 0.15, 0.85))
-            # vermilion bulge: strongest mid-band, wider on the lower lip
-            band = math.sin(math.pi * t) ** 1.3
-            lower = 1.0 if z < 0 else 0.72
-            bulge = band * protr * lower * (0.75 + 0.65 * f.lip_fullness * 0.5)
-            row.append(Vector((mouth.x + x, y + bulge, mouth.z + z)))
+            surf_y = anat.skull_front_y(mouth.x + x, mouth.z + z)
+            # lips ride IN FRONT of the raw skull line: the head stack has
+            # already lifted the skin a few mm there, so the vermilion must
+            # clear it (+6..9 mm at the bulge), while the wet line stays 2 mm
+            # under the surface. A closed mouth is a sealed crease, never a
+            # tunnel (v1: -20 mm deep hole), never a floating ring either.
+            y = mix(surf_y - 0.0020 * h, surf_y + 0.0062 * h, smooth01(t, 0.08, 0.9))
+            band = math.sin(math.pi * t) ** 1.25
+            lower = 1.0 if z < 0 else 0.74
+            row.append(Vector((mouth.x + x, y + band * protr * lower, mouth.z + z)))
         rows.append(row)
     created = into.loft(rows, close=True, region="lip", material="lip",
                         uv_rect=(0.0, 1.0, 0.0, 1.0), register="lips")
-    # aperture rim (inner ring) crease holds the dark line
-    into.crease_ring(created["rings"][0], 0.40)
+    into.crease_ring(created["rings"][0], 0.55)    # wet line holds under subdivision
 
 
 def smooth01(x, a, b):
@@ -107,7 +111,7 @@ def build_teeth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
     depth = 0.030 * h
     counts = {"crown": 0}
 
-    for sign, z_off in ((1.0, 0.011 * h), (-1.0, -0.010 * h)):
+    for sign, z_off in ((1.0, 0.0105 * h), (-1.0, -0.0095 * h)):
         arch = dental_arch(anat, half_w, depth)
         gum_r = 0.0080 * h
         # gum = semicircular tube swept along the arch
@@ -115,8 +119,8 @@ def build_teeth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
         for k in range(14):
             u = mix(-1, 1, k / 13)
             x, yd = arch(u)
-            cy = mouth.y - yd
             cz = mouth.z + sign * z_off
+            cy = min(mouth.y - yd, anat.skull_front_y(x, cz) - 0.016 * h)
             c = Vector((x, cy, cz))
             ring = []
             for j in range(7):
@@ -127,37 +131,45 @@ def build_teeth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
             gum.append(ring)
         gumres = into.loft(gum, close=False, region="gum", material="gum",
                            uv_rect=(0.0, 1.0, 0.0, 1.0))
-        # individual crowns
+        # individual crowns — hang from the gum line along ±z, the crown
+        # axis leans slightly forward (incisor bevel); width runs along the
+        # arch tangent.  (v1 grew crowns along +y, which poked them out of
+        # the closed lips — the floating-grill render bug.)
         for ti, (tname, tw, thh, cusps, kind) in enumerate(TOOTH_TYPES):
             for side in (1, -1):
-                u = mix(0.06, 0.98, ti / max(1, len(TOOTH_TYPES) - 1)) * side
+                u = mix(0.06, 0.98, ti / (len(TOOTH_TYPES) - 1)) * side
                 x, yd = arch(u)
-                c = Vector((x, mouth.y - yd, mouth.z + sign * (z_off + sign * 0.0 + 0.0035 * h * (1 if sign > 0 else -1))))
-                # outward direction (away from cavity centre); crowns angle out
-                outw = Vector((x / max(1e-6, half_w) * 0.55, 1.0, 0.0)).normalized()
+                lean = Vector((0.0, 0.30, -sign * 1.0)).normalized()
+                bz = mouth.z + sign * (z_off + 0.052 * h * 0.42)
+                # arch depth follows the skull: corners recede, teeth must too
+                ty_cap = anat.skull_front_y(x, bz) - 0.026 * h
+                base = Vector((x, min(mouth.y - yd + 0.0016 * h, ty_cap), bz))
                 w = tw * h * 0.5
-                d = w * 0.82
+                d = w * 0.72
                 rings = []
-                for rk in range(3):
-                    t = rk / 2.0
-                    rr = 1.0 - 0.16 * t
-                    sec = make_section(c + outw * (0.010 * h * t) + Vector((0, 0, sign * thh * h * (0.5 - t * 1.0))),
-                                       tangent=(1, 0, 0), front=tuple(outw),
+                for rk in range(4):
+                    t = rk / 3.0
+                    rr = 1.0 - 0.18 * t * t
+                    cen = base + lean * (thh * h * t)
+                    if rk == 3:                       # occlusal: flatten, taper
+                        rr *= 0.92
+                    sec = make_section(cen, tangent=(1, 0, 0), front=(0, 1, 0),
                                        width=w * rr, depth=d * rr,
-                                       superellipse=2.2 + (0.6 if kind == "incisor" else 0.0))
-                    pts = sec.points(8)
-                    if cusps and rk == 2:
-                        pts2 = []
-                        for pi, p in enumerate(pts):
-                            ang = 2 * math.pi * pi / 8
-                            bump = 0.0028 * h * (1.6 if kind in ("molar", "premolar") else 0.7)
-                            pts2.append(p + outw * (math.cos(ang * cusps) * bump * 0.4) +
-                                        Vector((0, 0, sign * abs(math.sin(ang * 0.5 + math.pi * 0.25)) * bump * (1 if kind in ("canine",) else 0.5))))
-                        pts = pts2
+                                       superellipse=2.0 + (0.8 if kind == "incisor" else 0.0)
+                                       + (0.6 if rk == 3 else 0.0))
+                    pts = [Vector(q) for q in sec.points(8)]
+                    if kind == "canine" and rk == 3:  # cusp point
+                        pts = [q - Vector((0, 0, sign * 0.0035 * h *
+                                           max(0.0, math.cos(2 * math.pi * pi / 8))) )
+                               for pi, q in enumerate(pts)]
+                    if kind in ("molar", "premolar") and rk == 3:
+                        pts = [q + Vector((0, 0, sign * 0.0022 * h *
+                                           math.cos(2 * math.pi * cusps * pi / 8)))
+                               for pi, q in enumerate(pts)]
                     rings.append(pts)
                 into.loft(rings, close=True, region="enamel", material="enamel",
-                          uv_rect=(0.3, 0.7, 0.0, 0.55), cap_end="pole")
-                counts["crown"] += 1
+                          uv_rect=(0.3, 0.7, 0.0, 0.55),
+                          cap_start="pole", cap_end="pole")
     return counts
 
 
@@ -216,9 +228,31 @@ def build_tongue(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> None
     mid_crease = [i for ring in res["rings"] for i in (ring[0], ring[-1])]
 
 
+def _clamp_behind(builder, anat, regions, margin: float) -> None:
+    """Per-vertex pull-back: interior parts may never exceed the skull line.
+
+    Clamping the *bases* is not enough — crown rings have width and lean, and
+    the skull surface recedes fast toward the arch corners, so each vertex is
+    checked against the surface at its own (x, z).  Bonus: the front row of
+    incisors ends up curved along the arch for free.
+    """
+    h = anat.h
+    for i, p in enumerate(builder.verts):
+        if builder.regions[i] in regions:
+            lim = anat.skull_front_y(p.x, p.z) - margin * h
+            if p.y > lim:
+                builder.verts[i] = Vector((p.x, lim, p.z))
+
+
 def build_mouth(into: MeshBuilder, spec, anat, mouth_open: float = 0.0) -> dict:
     build_oral_cavity(into, spec, anat)
     counts = build_teeth(into, spec, anat, mouth_open)
-    build_lips(into, spec, anat, mouth_open)
     build_tongue(into, spec, anat, mouth_open)
+    build_lips(into, spec, anat, mouth_open)
+    if mouth_open < 0.02:
+        _clamp_behind(into, anat, ("enamel", "gum", "oral"), 0.0090)
+        _clamp_behind(into, anat, ("tongue",), 0.0075)
+    else:                       # open mouth: teeth may pass the lip line
+        _clamp_behind(into, anat, ("gum", "oral"), 0.0090)
+        _clamp_behind(into, anat, ("tongue",), 0.0040)
     return counts

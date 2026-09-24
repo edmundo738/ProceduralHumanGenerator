@@ -25,6 +25,8 @@ build_mouth(head.builder, spec, anat)
 body.builder.merge(head.builder, group_prefix="head.")
 print("merged stats:", {k: body.builder.stats()[k] for k in ("verts", "faces", "quad_ratio", "degenerate")})
 
+from human_generator import materials as mats
+mats.build_all(spec, anat)
 me = obj.mesh_from_builder(body.builder, "hcg:preview")
 bm = bmesh.new(); bm.from_mesh(me)
 a = audit(bm); bm.free()
@@ -34,12 +36,11 @@ sc = bpy.context.scene
 ob = bpy.data.objects.new("body", me)
 sc.collection.objects.link(ob)
 
-mat = bpy.data.materials.new("clay"); mat.use_nodes = True
-bsdf = mat.node_tree.nodes.get("Principled BSDF")
-bsdf.inputs["Base Color"].default_value = (0.62, 0.60, 0.58, 1)
-bsdf.inputs["Roughness"].default_value = 0.55
-me.materials.clear(); me.materials.append(mat)
 for p in me.polygons: p.use_smooth = True
+for raw in body.builder.materials:
+    nm = obj.material_slot_name(raw)
+    m = bpy.data.materials.get(nm) or bpy.data.materials.new(nm)
+    me.materials.append(m)
 
 # subdivision for preview
 mod = ob.modifiers.new("ss", "SUBSURF"); mod.levels = 2; mod.render_levels = 2
@@ -55,7 +56,7 @@ def render(name, loc, lens=85, res=(640, 800)):
     d = target - cam.location
     cam.rotation_euler = d.to_track_quat("-Z", "Y").to_euler()
     sc.camera = cam
-    sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = 24
+    sc.render.engine = "CYCLES"; sc.cycles.device = "CPU"; sc.cycles.samples = 16
     sc.render.resolution_x, sc.render.resolution_y = res
     w = bpy.data.worlds.new(name); sc.world = w
     w.use_nodes = True
@@ -69,6 +70,6 @@ def render(name, loc, lens=85, res=(640, 800)):
     bpy.ops.render.render(write_still=True)
     print("saved", name)
 
-render("face", (0.0, 0.72, 1.52), 85, (640, 800))
-render("full", (1.55, 1.85, 1.25), 60, (680, 900))
+render("face", (0.0, 0.72, 1.52), 85, (480, 600))
+render("full", (1.55, 1.85, 1.25), 60, (480, 640))
 print(f"total {time.time()-t0:.1f}s")

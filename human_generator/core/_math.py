@@ -342,7 +342,8 @@ def mix(a, b, t):
 
 
 def smoothstep(a, b, x):
-    if b <= a:
+    """Smooth 0→1 ramp from ``a`` to ``b``; works decreasing too (b < a)."""
+    if b == a:
         return 1.0 if x >= b else 0.0
     t = clamp((x - a) / (b - a), 0.0, 1.0)
     return t * t * (3.0 - 2.0 * t)

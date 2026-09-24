@@ -171,8 +171,8 @@ class Anatomy:
         c = self.head_center()
         rx, ry, rz = self.head_radii()
         eye_x = 0.148 * h * self.spec.face.eye_spacing
-        lm["eye.L"] = self.face_front(eye_x, zf("eye"), -0.030 * h)
-        lm["eye.R"] = self.face_front(-eye_x, zf("eye"), -0.030 * h)
+        lm["eye.L"] = self.face_front(eye_x, zf("eye"), -0.032 * h)
+        lm["eye.R"] = self.face_front(-eye_x, zf("eye"), -0.032 * h)
         lm["eye"] = (lm["eye.L"] + lm["eye.R"]) / 2
         lm["glabella"] = self.face_front(0.0, zf("glabella"), 0.006 * h)
         lm["brow.L"] = self.face_front(eye_x * 0.9, zf("brow"), 0.004 * h)
@@ -180,7 +180,7 @@ class Anatomy:
         nose_base_z = zf("nose_base")
         nose_tip_z = zf("nose_tip")
         lm["nose_base"] = self.face_front(0.0, nose_base_z, 0.012 * h)
-        lm["nose_tip"] = self.face_front(0.0, nose_tip_z, 0.020 * h + 0.030 * h * (self.spec.face.nose_tip_projection - 1.0))
+        lm["nose_tip"] = self.face_front(0.0, nose_tip_z, 0.078 * h + 0.030 * h * (self.spec.face.nose_tip_projection - 1.0))
         lm["nose_root"] = self.face_front(0.0, zf("eye") + 0.035 * h, -0.004 * h)
         mouth_z = zf("mouth")
         lm["mouth"] = self.face_front(0.0, mouth_z, 0.010 * h)
