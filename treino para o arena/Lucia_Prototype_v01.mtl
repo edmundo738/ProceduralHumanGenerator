@@ -1,0 +1,101 @@
+# MakeHuman exported MTL
+# www.makehumancommunity.org
+
+
+newmtl young_african_female
+Kd 0.5 0.5 0.5
+Ks 0.04314 0.02745 0.02745
+d 0
+map_Kd textures/young_darkskinned_female_diffuse.png
+map_D textures/young_darkskinned_female_diffuse.png
+
+newmtl ponytail01
+Kd 1 1 1
+Ks 0.04706 0.04706 0.04706
+d 0
+map_Kd textures/ponytail01_diffuse.png
+map_D textures/ponytail01_diffuse.png
+
+newmtl Eye_brown
+Kd 1 1 1
+Ks 1 1 1
+d 0
+map_Kd textures/brown_eye.png
+map_D textures/brown_eye.png
+
+newmtl eyebrow005
+Kd 1 1 1
+Ks 0 0 0
+d 0
+map_Kd textures/eyebrow005.png
+map_D textures/eyebrow005.png
+
+newmtl bodyMaterial
+Kd 1 1 1
+Ks 0 0 0
+d 0
+map_Kd textures/eyelashes01.png
+map_D textures/eyelashes01.png
+
+newmtl teethMaterial
+Kd 0.64 0.64 0.64
+Ks 0.8549 0.8549 0.8549
+d 0
+map_Kd textures/teeth.png
+map_D textures/teeth.png
+
+newmtl tongue01Material
+Kd 1 1 1
+Ks 0.03137 0.03137 0.03137
+d 0
+map_Kd textures/tongue01_diffuse.png
+map_D textures/tongue01_diffuse.png
+
+newmtl denimjacket
+Kd 1 1 1
+Ks 0.06667 0.06667 0.06667
+d 0
+map_Kd textures/denim_jacket.png
+map_D textures/denim_jacket.png
+
+newmtl halfboots
+Kd 1 1 1
+Ks 0.08627 0.08627 0.08627
+d 0
+map_Kd textures/halfboots.png
+map_D textures/halfboots.png
+
+newmtl mat_fingernailsMaterial
+Kd 1 1 1
+Ks 0.9211 0.9211 0.9211
+d 0
+map_Kd textures/female_fingernails_diffuse.png
+map_D textures/female_fingernails_diffuse.png
+
+newmtl materialMaterial
+Kd 0.6395 0.6395 0.6395
+Ks 0.1726 0.1726 0.1726
+d 0
+map_Kd textures/f_panties_01_diffuse.png
+map_D textures/f_panties_01_diffuse.png
+
+newmtl tightjeans
+Kd 1 1 1
+Ks 0.09412 0.09412 0.09412
+d 0
+map_Kd textures/tightjeans.png
+map_D textures/tightjeans.png
+
+newmtl materialMaterial
+Kd 0.8 0.8 0.8
+Ks 0.1 0.1 0.1
+d 0
+map_Kd textures/CrudeFemaleTshirtDiffuse.png
+map_D textures/CrudeFemaleTshirtDiffuse.png
+
+newmtl materialMaterial
+Kd 0.8 0.8 0.8
+Ks 0.1 0.1 0.1
+d 0
+map_Kd textures/CrudeBraDiffuse.png
+map_D textures/CrudeBraDiffuse.png
