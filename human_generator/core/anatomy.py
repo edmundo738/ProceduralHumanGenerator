@@ -112,7 +112,14 @@ class Anatomy:
         return 0.5 * self.h * self.spec.body.shoulder_head_ratio
 
     def deltoid_half(self) -> float:
-        return self.shoulder_half() + 0.030 * self.stature * (1.0 + 0.45 * self.spec.body.muscle_tone)
+        """Meia-largura da linha do ombro (acrómio + deltoide).
+
+        S3.7 — antes: ``shoulder_half + 0.030·estatura·(1+0.45·tom)`` = 266.9 mm
+        (534 mm de ombro = 1.413× o biacromial), a "aresta de manga" da BUILD 01.
+        Agora: acrómio + 25.5 mm de tecido mole por lado (0.015·estatura) = 217
+        ⇒ 434 mm = 1.13× o biacromial (INFERRED, sem fonte para a margem).
+        """
+        return self.shoulder_half() + 0.015 * self.stature
 
     def chest_half(self) -> float:
         b = self.spec.body
@@ -135,7 +142,18 @@ class Anatomy:
         return max(0.25, self.spec.body.bust_relative)
 
     def neck_half(self) -> float:
-        return 0.052 * self.stature * (1.0 + 0.12 * self.spec.body.fat_level)
+        """Meia-largura do pescoço.
+
+        S3.7 — o valor anterior (``0.052·estatura`` = 91.6 mm ⇒ 183 mm de
+        largura) **não tem fonte no repositório** e media 1.195× a largura da
+        cabeça: a coluna do pescoço engolia o crânio (BUILD 01: "sem pescoço,
+        cabeça em capuz").  Circunferência do pescoço de mulher adulta medida em
+        32.5–36.1 cm (média 33.3 cm; NHANES/Joshipura e Kim et al. 2016) ⇒
+        diâmetro 33.3/π = 106 mm ⇒ meia-largura 53 mm = 0.031·estatura.
+        FACT (circunferência) + INFERRED (conversão para largura) — declarado
+        em ``docs/S3_7_JUNCTIONS.md`` §3.
+        """
+        return 0.031 * self.stature * (1.0 + 0.12 * self.spec.body.fat_level)
 
     def limb_radius(self, upper: bool = True) -> float:
         b = self.spec.body
@@ -222,12 +240,22 @@ class Anatomy:
             lm["clavicle" + tag] = Vector((sx * sh * 0.55, -0.004 * s, zf("jugulum") + 0.028 * s))
             lm["acromion" + tag] = Vector((sx * sh, -0.004 * s, zf("acromion")))
             lm["deltoid" + tag] = Vector((sx * (sh + 0.020 * s), -0.006 * s, zf("deltoid_line")))
-            lm["elbow" + tag] = Vector((sx * (sh * 0.92 + 0.055 * s), -0.010 * s, zf("elbow")))
-            lm["wrist" + tag] = Vector((sx * (sh * 0.80 + 0.075 * s), -0.004 * s, zf("wrist")))
-            lm["hand" + tag] = Vector((sx * (sh * 0.78 + 0.082 * s), -0.012 * s, zf("wrist") - self.hand_length() * 0.72))
+            # S3.7 — braços PENDENTES.  Antes: cotovelo = sh·0.92+0.055·s
+            # (+77.1 mm fora do acrómio) e punho +86.4 mm — a figura lia-se em
+            # A-pose.  Agora: +0.014·s e +0.010·s (≤ 0.02·estatura, critério J4).
+            # S3.7 — braços PENDENTES.  Antes: cotovelo = sh·0.92+0.055·s
+            # (+77.1 mm fora do acrómio) e punho +86.4 mm — a figura lia-se em
+            # A-pose.  Agora: +0.010·s e +0.008·s (≤ 0.02·estatura, critério J4),
+            # e o antebraço/mão ligeiramente À FRENTE (+y), que é a pose de
+            # repouso real (evita enterrar a mão na coxa).
+            lm["elbow" + tag] = Vector((sx * (sh + 0.010 * s), -0.010 * s, zf("elbow")))
+            lm["wrist" + tag] = Vector((sx * (sh + 0.008 * s), 0.008 * s, zf("wrist")))
+            lm["hand" + tag] = Vector((sx * (sh + 0.006 * s), 0.018 * s, zf("wrist") - self.hand_length() * 0.72))
             lm["hip" + tag] = Vector((sx * self.hip_half() * 0.52, -0.004 * s, zf("hip")))
             lm["iliac" + tag] = Vector((sx * self.hip_half() * 0.88, -0.002 * s, zf("iliac")))
-            lm["knee" + tag] = Vector((sx * (self.hip_half() * 0.72 + 0.010 * s), 0.006 * s, zf("knee")))
+            # S3.7 — joelho alinhado com a anca (+17 mm, antes +55.7: as pernas
+            # liam-se arqueadas).  Critério J5: ≤ 0.02·estatura.
+            lm["knee" + tag] = Vector((sx * (self.hip_half() * 0.52 + 0.010 * s), 0.006 * s, zf("knee")))
             lm["ankle" + tag] = Vector((sx * (self.hip_half() * 0.30 + 0.012 * s), -0.006 * s, zf("ankle")))
             lm["heel" + tag] = Vector((sx * 0.020 * s, -0.055 * s * self.spec.body.foot_size, zf("heel") + 0.02 * s))
             lm["toe_end" + tag] = Vector((sx * 0.026 * s, 0.145 * s * self.spec.body.foot_size, zf("toe_end")))
@@ -266,17 +294,32 @@ class Anatomy:
                                      width=max(0.005, w), depth=max(0.005, d),
                                      front_scale=fs, back_scale=bs, superellipse=sup, region=reg))
 
-        # inside the skull (welds the neck into the head)
-        add(zf("chin") + 0.78 * h, neck_w * 0.92, neck_w * 1.06)
-        add(zf("chin") + 0.62 * h, neck_w * 0.96, neck_w * 1.08, y=-0.004 * s)
-        # neck
-        add(zf("spine_head") + 0.008 * s, neck_w * 1.02, neck_w * 1.10, y=-0.006 * s)
-        # C7 / trapezius plate (wide, flat, sloped down to shoulders)
-        add(zf("neck_top") - 0.004 * s, dh * 0.72, 0.055 * s, sup=2.6, bs=1.18, y=-0.010 * s)
+        # S3.7 — as estações de pescoço dentro do crânio são ESTREITADAS: com
+        # ``neck_w = 0.031·estatura`` a coluna visível é 105 mm, mas o crânio só
+        # é mais largo que isso a partir de z ≈ 1505 mm (medido: cabeça 98 mm de
+        # largura a 1500, 115 mm a 1520).  Os factores abaixo mantêm a coluna
+        # interior ≤ 96 mm a partir de 1495 mm (é o "weld" da S3.5, agora
+        # verdadeiramente escondido), em vez de a deixar sair pelo maxilar.
+        add(zf("chin") + 0.78 * h, neck_w * 0.60, neck_w * 0.66)             # 1635 mm
+        add(zf("chin") + 0.62 * h, neck_w * 0.78, neck_w * 0.84, y=-0.004 * s)  # 1599 mm
+        add(zf("spine_head") + 0.008 * s, neck_w * 0.92, neck_w * 1.00, y=-0.006 * s)  # 1450 mm
+        # S3.7 — rampa do trapézio em DUAS estações intermédias.  Medido: com a
+        # placa única (394.5 mm a z = 1414) a largura saltava de 105 mm (estação
+        # do pescoço) para 389 mm em **4 mm de altura** — uma parede, que é a
+        # "gola" que se vê no render 3/4.  A rampa distribui a passagem por 34 mm
+        # (superfície inclinada, como o trapézio real); a terceira cota coincide
+        # com ``deltoid_line`` e é aí que a estação do ombro já entra.
+        add(zf("neck_top") - 0.002 * s, mix(neck_w, sh, 0.30), 0.075 * s,
+            sup=2.4, bs=1.16, y=-0.010 * s)
+        add(zf("neck_top") - 0.010 * s, mix(neck_w, sh, 0.62), 0.100 * s,
+            sup=2.4, bs=1.14, y=-0.010 * s)
         # deltoid line / shoulders
         add(zf("deltoid_line"), dh, chest * 0.62, sup=2.5, fs=1.0, bs=1.02)
-        # upper chest
-        add(zf("jugulum") + 0.020 * s, chest * 1.01, chest * 0.72, sup=2.2, fs=1.02, y=-0.002 * s)
+        # upper chest — S3.7: na cota do jugulum (antes ``+0.020·estatura``,
+        # +34 mm, que a punha 5.7 mm acima da linha do ombro: a rampa do trapézio
+        # acabava num degrau de 75 mm de largura numa passagem de 5.7 mm, medido
+        # como inclinação 13.2 mm/mm).  Assim a rampa fica com 5.7 e 7.2 mm/mm.
+        add(zf("jugulum"), chest * 1.01, chest * 0.72, sup=2.2, fs=1.02, y=-0.002 * s)
         # bust line — silhouette + soft-tissue field do the rest
         add(zf("bust") + 0.004 * s, chest * 1.02, chest * 0.80, sup=2.0,
             fs=1.0 + bust / max(1e-4, chest * 0.8), y=0.004 * s)
@@ -312,17 +355,20 @@ class Anatomy:
                                     width=max(0.004, w), depth=max(0.004, d),
                                     front_scale=fs, back_scale=bs, superellipse=e))
 
-        # S3.2 — raiz INSERIDA no tronco.  Medido antes: a primeira estação ficava
-        # 4.5% da estatura (76 mm) ACIMA do acromion, em z=1.467, onde o tronco só
-        # chega a |x|=0.095 — a raiz do braço estava literalmente no ar (folga
-        # mínima braço↔tronco 7.5 mm; o braço lia-se como uma manga solta), apesar
-        # de generators/body.py documentar "limb roots are *inserted* into the
-        # trunk".  A raiz passa a ficar dentro do tórax na altura do ombro, com
-        # raio menor que a meia-largura do tronco nessa estação (0.268 medido).
+        # S3.2 — raiz INSERIDA no tronco (mantido; ver histórico no doc S3).
+        #
+        # S3.7 — o EIXO do braço passa a ser medial ao acrómio (−0.0147·estatura
+        # = −25 mm), como o úmero real, e a "bolha" do deltoide deixa de estar
+        # centrada no acrómio.  Medido no baseline: o ponto mais largo do ombro
+        # era o PRÓPRIO BRAÇO (502.8 mm = 1.311× o biacromial) porque o cap do
+        # ombro tinha r_up·1.16 = 58 mm centrado em x = acrómio ⇒ superfície
+        # externa a acrómio+58.  Com o eixo medial, a superfície externa do
+        # deltoide fica ≈ acrómio+25 (a linha do ombro real).
         at(sh + Vector((-side * 0.055 * s, -0.004 * s, -0.004 * s)),
-           r_up * 0.92, r_up * 0.92)                                            # root (in chest)
-        at(sh, r_up * 1.16, r_up * 1.12)                                        # deltoid top
-        at(sh.lerp(el, 0.18), r_up * 1.02, r_up * 1.04)                        # deltoid belly
+           r_up * 0.80, r_up * 0.78)                                            # root (in chest)
+        cap = sh + Vector((-side * 0.0147 * s, 0.0, 0.0))
+        at(cap, r_up * 0.96, r_up * 0.94)                                       # shoulder cap
+        at(cap.lerp(el, 0.22), r_up * 1.04, r_up * 1.06)                        # deltoid belly
         at(sh.lerp(el, 0.50), r_up * 0.84, r_up * 0.86, fs=1.04, bs=1.06)      # biceps/triceps
         at(sh.lerp(el, 0.82), r_up * 0.70, r_up * 0.72)
         at(el, r_up * 0.62, r_up * 0.66, e=2.3)                                # elbow
@@ -356,6 +402,14 @@ class Anatomy:
         at(knee.lerp(ankle, 0.72), r_ca * 0.86, r_ca * 0.84)
         at(ankle + Vector((0, 0, 0.02 * s)), r_ca * 0.66, r_ca * 0.62)
         at(ankle, r_ca * 0.60, r_ca * 0.58, e=2.2)
+        # S3.7 — a perna continuava até ao plano do tornozelo e acabava com tampa
+        # de 68 mm SOBRE um bico de 13 mm do pé (salto de silhueta medido: 54.1
+        # mm).  Duas estações abaixo do tornozelo levam o tubo para DENTRO do
+        # volume do pé (largura do pé medida: 67.2 mm a 50 mm de cota, 62.9 a 55)
+        # e a tampa passa a ficar escondida (largura da perna aí: 0.52·r_ca ≈
+        # 59 mm < 67 mm do pé).
+        at(ankle + Vector((0, 0, -0.010 * s)), r_ca * 0.52, r_ca * 0.50, e=2.15)
+        at(ankle + Vector((0, 0, -0.022 * s)), r_ca * 0.44, r_ca * 0.42, e=2.1)
         return out
 
     # -- misc accessors -------------------------------------------------------

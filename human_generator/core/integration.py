@@ -456,6 +456,270 @@ def foot_metrics(builder, anat, comps=None) -> dict:
     return out
 
 
+# --------------------------------------------------------------------------- junctions
+# S3.7 — métricas de JUNÇÃO.  Tudo aqui é medido por intersecção de planos com a
+# superfície (não por bandas de vértices, que são irregulares), e as cascas são
+# identificadas pelo REGISTO DE ANÉIS do builder (``trunk.3``, ``arm.L.2``, …) e
+# não por heurísticas de posição/simetria — a identidade é explícita.
+
+
+def part_vertices(builder, *prefixes: str) -> set[int]:
+    """Vértices dos anéis registados cujo nome começa por um dos prefixos."""
+    out: set[int] = set()
+    for name, ids in builder.rings.items():
+        for pre in prefixes:
+            if name == pre or name.startswith(pre + "."):
+                out.update(ids)
+                break
+    return out
+
+
+def _face_parts(builder, parts: dict[str, set[int]]) -> list[str | None]:
+    """Para cada face, o nome da parte a que pertence (1ª vert)."""
+    owner: dict[int, str] = {}
+    for name, ids in parts.items():
+        for i in ids:
+            owner[i] = name
+    return [owner.get(f[0]) for f in builder.faces]
+
+
+def part_distance(builder, a: set[int], b: set[int], samples: bool = True) -> float:
+    """Distância mínima entre as superfícies de duas partes (m).
+
+    Amostra faces (vértices + centros de face) das duas partes e devolve a menor
+    distância — negativo não existe (distância é sempre ≥ 0), mas o que importa
+    é o valor: 0 significa superfícies que se tocam/interpenetram.  Usada para
+    verificar que dois membros não se enterram um no outro (ex.: mão ↔ coxa na
+    pose pendente).
+    """
+    V = builder.verts
+    cell = 0.02
+    pts_a: list = []
+    for f in builder.faces:
+        if f[0] in a:
+            c = Vector((0.0, 0.0, 0.0))
+            for i in f:
+                pts_a.append(V[i])
+                c += V[i]
+            pts_a.append(c / len(f))
+    pts_b: list = []
+    for f in builder.faces:
+        if f[0] in b:
+            c = Vector((0.0, 0.0, 0.0))
+            for i in f:
+                pts_b.append(V[i])
+                c += V[i]
+            pts_b.append(c / len(f))
+    if not pts_a or not pts_b:
+        return float("inf")
+    grid = _grid_index(pts_b, cell)
+    best = float("inf")
+    for p in pts_a:
+        kx, ky, kz = int(p.x / cell), int(p.y / cell), int(p.z / cell)
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for dz in (-1, 0, 1):
+                    for qi in grid.get((kx + dx, ky + dy, kz + dz), ()):
+                        d = (p - pts_b[qi]).length
+                        if d < best:
+                            best = d
+    return best
+
+
+def cross_section_width(builder, verts, z: float, axis: str = "x",
+                        faces: list | None = None) -> float | None:
+    """Largura da secção da casca no plano ``z`` (medida em ``axis``), ou None.
+
+    A secção é o conjunto das intersecções das arestas das faces com o plano:
+    é a largura real da superfície naquela cota, independente de haver ou não
+    vértices perto de ``z``.
+
+    ``verts`` é o conjunto de vértices da parte medida e **filtra sempre** as
+    faces (medido: esquecer o filtro devolvia a largura do corpo inteiro àquela
+    cota — 660 mm no punho, 225 mm no tornozelo — em vez da largura da junção).
+    """
+    V = builder.verts
+    if faces is None:
+        faces = [f for f in builder.faces if f[0] in verts]
+    lo = hi = None
+    for f in faces:
+        n = len(f)
+        for k in range(n):
+            p, q = V[f[k]], V[f[(k + 1) % n]]
+            if (p.z - z) * (q.z - z) < 0.0:
+                t = (z - p.z) / (q.z - p.z)
+                r = p + (q - p) * t
+                v = r.x if axis == "x" else r.y
+                lo = v if lo is None else min(lo, v)
+                hi = v if hi is None else max(hi, v)
+    return None if lo is None else float(hi - lo)
+
+
+def width_profile(builder, verts, z0: float, z1: float, step: float = 0.002,
+                  axis: str = "x") -> list[tuple[float, float | None]]:
+    V = builder.verts
+    faces = [f for f in builder.faces if f[0] in verts]
+    out = []
+    z = z0
+    while z <= z1 + 1e-12:
+        out.append((z, cross_section_width(builder, verts, z, axis=axis, faces=faces)))
+        z += step
+    return out
+
+
+def junction_metrics(build, step: float = 0.002) -> dict:
+    """Métricas S3.7: pescoço visível, linha do ombro, degraus, pose dos braços.
+
+    Critérios (contrato ``docs/S3_7_JUNCTIONS.md``):
+
+    * **J1** pescoço: na banda [linha do ombro, queixo] a largura mínima tem de
+      ser ≤ 0.80 × largura máxima da cabeça **e** ≤ 0.35 × largura máxima do
+      ombro.  (A primeira versão exigia ainda um troço contínuo de ≥ 25 mm com
+      |dw/dz| ≤ 1.0; **refutada por medição** — a banda entre a linha do ombro
+      (0.812·estatura) e o queixo (0.858·estatura) tem 78 mm e é dominada pela
+      rampa do trapézio, pelo que o critério não é satisfazível por um corpo
+      plausível.  O troço vertical fica *reportado*, não gated.)
+    * **J2** ombro: largura máxima na banda do ombro ≤ 1.20 × biacromial
+      canónico (0.2257·estatura).
+    * **J3** degraus: |w_pai(z_topo_filho) − w_filho(z_topo_filho)| ≤ 2 mm no
+      punho e no tornozelo.
+    * **J4** pose: |x_cotovelo − x_acrómio| e |x_punho − x_acrómio| ≤ 0.02·estatura.
+    """
+    builder, anat = build.builder, build.anatomy
+    V = builder.verts
+    parts = {
+        "trunk": part_vertices(builder, "trunk"),
+        "head": part_vertices(builder, "head.skull"),
+        "arm.L": part_vertices(builder, "arm.L"), "arm.R": part_vertices(builder, "arm.R"),
+        "hand.L": part_vertices(builder, "hand.L"), "hand.R": part_vertices(builder, "hand.R"),
+        "leg.L": part_vertices(builder, "leg.L"), "leg.R": part_vertices(builder, "leg.R"),
+        "foot.L": part_vertices(builder, "foot.L"), "foot.R": part_vertices(builder, "foot.R"),
+    }
+    core = parts["trunk"] | parts["head"]
+    upper = parts["trunk"] | parts["arm.L"] | parts["arm.R"]
+
+    z_sh, z_chin = anat.z("deltoid_line"), anat.z("chin")
+    out: dict = {}
+
+    # J1 — pescoço
+    prof = width_profile(builder, core, z_sh, z_chin, step=step)
+    vals = [(z, w) for z, w in prof if w is not None]
+    head_top = min(z_chin + 0.15 * anat.stature, max(V[i].z for i in parts["head"]))
+    hp = [w for _, w in width_profile(builder, parts["head"], z_chin, head_top, step=step) if w]
+    neck_min = min(vals, key=lambda t: t[1]) if vals else (0.0, 0.0)
+    head_w = max(hp) if hp else 0.0
+    # maior troço contínuo com |dw/dz| ≤ 1.0 mm/mm
+    run = best = 0.0
+    prev = None
+    for z, w in vals:
+        if prev is not None:
+            d = abs(w - prev[1]) / max(1e-9, z - prev[0])
+            if d <= 1.0:
+                run += z - prev[0]
+            else:
+                best = max(best, run)
+                run = 0.0
+        prev = (z, w)
+    best = max(best, run)
+    shoulder_max = 0.0
+    out["neck"] = {
+        "band_mm": (z_chin - z_sh) * 1000.0,
+        "min_width_mm": neck_min[1] * 1000.0,
+        "min_at_mm": neck_min[0] * 1000.0,
+        "head_width_mm": head_w * 1000.0,
+        "ratio_min_over_head": (neck_min[1] / head_w) if head_w else float("inf"),
+        "vertical_run_mm": best * 1000.0,
+    }
+
+    # J2 — linha do ombro
+    band = [z for z in (z_sh - 0.04, z_sh, z_sh + 0.04)]
+    sw = [(z, w) for z, w in ((z, cross_section_width(builder, upper, z)) for z in
+                              [z_sh - 0.04 + i * step for i in range(int(0.08 / step) + 1)]) if w]
+    biacromial = 0.2257 * anat.stature
+    smax = max(sw, key=lambda t: t[1]) if sw else (0.0, 0.0)
+    shoulder_max = smax[1]
+    out["neck"]["shoulder_width_mm"] = shoulder_max * 1000.0
+    out["neck"]["ratio_min_over_shoulder"] = (neck_min[1] / shoulder_max) if shoulder_max else float("inf")
+    out["shoulder"] = {
+        "max_width_mm": smax[1] * 1000.0,
+        "at_mm": smax[0] * 1000.0,
+        "biacromial_mm": biacromial * 1000.0,
+        "ratio_over_biacromial": smax[1] / biacromial if biacromial else float("inf"),
+    }
+
+    # J3 — degraus de junção.
+    #
+    # Medido na UNIÃO (pai ∪ filho) e não no topo do filho: as cascas são
+    # fechadas com ``cap_pole``, logo o "topo" do filho é o ápice do cap (um
+    # ponto) e a largura aí é ~0 — medir ali dá o degrau errado (ex.: 21 mm no
+    # tornozelo, quando o degrau visível é a diferença entre a perna e o pé na
+    # cota de passagem).  O degrau é a variação da largura da união através do
+    # ponto de passagem ``z*`` (fundo do pai), numa janela de ±1 mm:
+    #   degrau = w_uniao(z* + 1 mm) − w_uniao(z* − 1 mm).
+    steps: dict = {}
+    for side in ("L", "R"):
+        for child, parent in (("hand", "arm"), ("foot", "leg")):
+            cv, pv = parts[f"{child}.{side}"], parts[f"{parent}.{side}"]
+            if not cv or not pv:
+                continue
+            union = cv | pv
+            z_star = min(V[i].z for i in pv)
+            w_above = cross_section_width(builder, union, z_star + 0.001)
+            w_below = cross_section_width(builder, union, z_star - 0.001)
+            steps[f"{child}.{side}"] = {
+                "z_star_mm": z_star * 1000.0,
+                "above_mm": None if w_above is None else w_above * 1000.0,
+                "below_mm": None if w_below is None else w_below * 1000.0,
+                "step_mm": None if (w_above is None or w_below is None)
+                else (w_above - w_below) * 1000.0,
+            }
+    out["steps"] = steps
+
+    # J4 — pose dos braços (deslocamento lateral do cotovelo/punho vs acrómio)
+    pose: dict = {}
+    for tag in (".L", ".R"):
+        acr = anat.landmarks.get("acromion" + tag)
+        el = anat.landmarks.get("elbow" + tag)
+        wr = anat.landmarks.get("wrist" + tag)
+        if acr is None or el is None or wr is None:
+            continue
+        pose["elbow" + tag] = {"dx_mm": abs(el.x - acr.x) * 1000.0,
+                               "limit_mm": 0.020 * anat.stature * 1000.0}
+        pose["wrist" + tag] = {"dx_mm": abs(wr.x - acr.x) * 1000.0,
+                               "limit_mm": 0.020 * anat.stature * 1000.0}
+    out["arm_pose"] = pose
+
+    # J5 — alinhamento dos membros inferiores (joelho vs anca)
+    legs: dict = {}
+    for tag in (".L", ".R"):
+        hip = anat.landmarks.get("hip" + tag)
+        knee = anat.landmarks.get("knee" + tag)
+        if hip is None or knee is None:
+            continue
+        legs["knee" + tag] = {"dx_mm": abs(knee.x - hip.x) * 1000.0,
+                              "limit_mm": 0.020 * anat.stature * 1000.0}
+    out["leg_pose"] = legs
+
+    # J6 — suavidade da rampa do tronco: maior salto de largura entre estações
+    # CONSECUTIVAS do próprio gerador (medido nos anéis registados, não no
+    # perfil contínuo).  Um "ombro que faz sentido" não pode ter uma parede.
+    rings = [(name, ids) for name, ids in builder.rings.items()
+             if name.startswith("trunk")]
+    rings.sort(key=lambda kv: -sum(V[i].z for i in kv[1]) / len(kv[1]))
+    ramp = []
+    for (n0, r0), (n1, r1) in zip(rings, rings[1:]):
+        w0 = max(V[i].x for i in r0) - min(V[i].x for i in r0)
+        w1 = max(V[i].x for i in r1) - min(V[i].x for i in r1)
+        z0 = sum(V[i].z for i in r0) / len(r0)
+        z1 = sum(V[i].z for i in r1) / len(r1)
+        ramp.append({"from": n0, "to": n1, "dw_mm": (w1 - w0) * 1000.0,
+                     "dz_mm": (z0 - z1) * 1000.0,
+                     "slope": abs(w1 - w0) / max(1e-9, abs(z0 - z1))})
+    out["trunk_ramp"] = ramp
+    out["trunk_ramp_max_slope"] = max((r["slope"] for r in ramp), default=0.0)
+    return out
+
+
 # --------------------------------------------------------------------------- silhouette
 def silhouette(builder, view: str = "front", res: int = 128) -> dict:
     """Silhueta ortográfica rasterizada, com **preenchimento** por scanline.

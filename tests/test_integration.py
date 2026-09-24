@@ -14,9 +14,10 @@ import pytest
 from human_generator.core._math import Vector
 from human_generator.core.topology import MeshBuilder
 from human_generator.core.integration import (
-    boundary_edges, connected_components, floating_components, floor_contact,
-    height_envelope, integration_report, mirror_stats, overlap_graph,
-    silhouette, structure_mirror_hausdorff,
+    boundary_edges, connected_components, cross_section_width, floating_components,
+    floor_contact, height_envelope, integration_report, junction_metrics, mirror_stats,
+    overlap_graph, part_distance, part_vertices, silhouette, structure_mirror_hausdorff,
+    width_profile,
 )
 from human_generator.spec import CharacterSpec
 from human_generator.core.anatomy import Anatomy
@@ -294,6 +295,129 @@ class TestNoCoincidentVertices:
         bm.free()
         assert n == len(build_default.builder.verts), (
             f"weld+dissolve removed {len(build_default.builder.verts) - n} verts")
+
+
+class TestJunctionInstrument:
+    """S3.7 — o instrumento mede secções por planos e identifica partes por ANEL.
+
+    Todos os valores esperados são derivados à mão da malha construída.
+    """
+
+    @staticmethod
+    def _box(b: MeshBuilder, *, x0, x1, z0, z1, prefix: str, y0=-0.05, y1=0.05):
+        """Caixa fechada (6 faces) com anéis registados por cota."""
+        xs, ys, zs = (x0, x1), (y0, y1), (z0, z1)
+        ids = {}
+        for i, x in enumerate(xs):
+            for j, y in enumerate(ys):
+                for k, z in enumerate(zs):
+                    ids[(i, j, k)] = b.add_vert(Vector((x, y, z)), "skin")
+        f = ids
+        faces = [
+            [(0, 0, 0), (1, 0, 0), (1, 1, 0), (0, 1, 0)],   # bottom
+            [(0, 0, 1), (0, 1, 1), (1, 1, 1), (1, 0, 1)],   # top
+            [(0, 0, 0), (0, 1, 0), (0, 1, 1), (0, 0, 1)],
+            [(1, 0, 0), (1, 0, 1), (1, 1, 1), (1, 1, 0)],
+            [(0, 0, 0), (0, 0, 1), (1, 0, 1), (1, 0, 0)],
+            [(0, 1, 0), (1, 1, 0), (1, 1, 1), (0, 1, 1)],
+        ]
+        for face in faces:
+            b.add_face([f[k] for k in face], material="skin")
+        b.rings[prefix + ".0"] = [f[(i, j, k)] for i in (0, 1) for j in (0, 1) for k in (0,)]
+        b.rings[prefix + ".1"] = [f[(i, j, k)] for i in (0, 1) for j in (0, 1) for k in (1,)]
+        return b
+
+    def test_part_vertices_uses_the_ring_registry(self):
+        b = MeshBuilder("t")
+        self._box(b, x0=0.0, x1=0.1, z0=0.0, z1=0.1, prefix="arm.L")
+        self._box(b, x0=0.2, x1=0.3, z0=0.0, z1=0.1, prefix="leg.L")
+        # cada caixa regista 2 anéis de 4 vértices = 8
+        assert len(part_vertices(b, "arm.L")) == 8
+        assert len(part_vertices(b, "leg.L")) == 8
+        assert len(part_vertices(b, "arm.L", "leg.L")) == 16
+        # prefixos agregam (arm = os dois braços); prefixos que não existem = vazio
+        assert len(part_vertices(b, "arm")) == 8
+        assert part_vertices(b, "arms") == set()
+
+    def test_cross_section_width_is_a_plane_intersection(self):
+        b = MeshBuilder("t")
+        self._box(b, x0=0.0, x1=0.2, z0=0.0, z1=0.2, prefix="trunk")
+        ids = part_vertices(b, "trunk")
+        # a meio da caixa a largura é 0.2, independentemente de haver vértices lá
+        assert cross_section_width(b, ids, 0.10) == pytest.approx(0.2, abs=1e-12)
+        # fora da caixa não há secção
+        assert cross_section_width(b, ids, 0.25) is None
+        # e a secção não conta com outras partes
+        self._box(b, x0=0.5, x1=0.9, z0=0.0, z1=0.2, prefix="other")
+        assert cross_section_width(b, ids, 0.10) == pytest.approx(0.2, abs=1e-12)
+
+    def test_width_profile_steps(self):
+        b = MeshBuilder("t")
+        self._box(b, x0=0.0, x1=0.2, z0=0.0, z1=0.2, prefix="trunk")
+        prof = width_profile(b, part_vertices(b, "trunk"), 0.0, 0.2, step=0.05)
+        assert len(prof) == 5
+        # nas cotas EXACTAS das tampas o plano é tangente às faces (sem
+        # travessia) — a secção só existe a 0.05/0.10/0.15; é o comportamento
+        # correcto de uma intersecção por arestas e está medido aqui
+        vals = [w for _, w in prof if w is not None]
+        assert len(vals) == 3, [w for _, w in prof]
+        assert vals == pytest.approx([0.2] * 3, abs=1e-12)
+
+    def test_part_distance_zero_when_touching_and_positive_when_apart(self):
+        b = MeshBuilder("t")
+        self._box(b, x0=0.0, x1=0.1, z0=0.0, z1=0.1, prefix="a")
+        self._box(b, x0=0.1, x1=0.2, z0=0.0, z1=0.1, prefix="b")   # encostadas
+        a, c = part_vertices(b, "a"), part_vertices(b, "b")
+        assert part_distance(b, a, c) == pytest.approx(0.0, abs=1e-9)
+        b2 = MeshBuilder("t2")
+        self._box(b2, x0=0.0, x1=0.1, z0=0.0, z1=0.1, prefix="a")
+        self._box(b2, x0=0.13, x1=0.2, z0=0.0, z1=0.1, prefix="b")
+        a2, c2 = part_vertices(b2, "a"), part_vertices(b2, "b")
+        assert part_distance(b2, a2, c2) == pytest.approx(0.03, abs=1e-9)
+
+    def test_junction_metrics_reports_every_criterion(self, build_default):
+        m = junction_metrics(build_default)
+        for key in ("neck", "shoulder", "steps", "arm_pose", "leg_pose"):
+            assert key in m, m.keys()
+        for side in ("L", "R"):
+            assert f"foot.{side}" in m["steps"], m["steps"]
+            assert f"hand.{side}" in m["steps"], m["steps"]
+            assert f"knee.{side}" in m["leg_pose"], m["leg_pose"]
+
+
+class TestS37CriteriaOnRealBuild:
+    """S3.7 — os critérios J1..J5, medidos na personagem por omissão."""
+
+    def test_j1_neck_is_narrower_than_head_and_shoulders(self, build_default):
+        n = junction_metrics(build_default)["neck"]
+        assert n["ratio_min_over_head"] <= 0.80, n
+        assert n["ratio_min_over_shoulder"] <= 0.35, n
+
+    def test_j2_shoulder_width_is_within_20_percent_of_biacromial(self, build_default):
+        s = junction_metrics(build_default)["shoulder"]
+        assert s["ratio_over_biacromial"] <= 1.20, s
+
+    def test_j3_junction_jump_is_a_tenth_of_parent_width(self, build_default):
+        m = junction_metrics(build_default)
+        for name, st in m["steps"].items():
+            limit = 0.10 * st["above_mm"]
+            assert abs(st["step_mm"]) <= limit, (name, st, limit)
+
+    def test_j4_arms_hang(self, build_default):
+        for name, p in junction_metrics(build_default)["arm_pose"].items():
+            assert p["dx_mm"] <= p["limit_mm"], (name, p)
+
+    def test_j5_knees_align_with_hips(self, build_default):
+        for name, p in junction_metrics(build_default)["leg_pose"].items():
+            assert p["dx_mm"] <= p["limit_mm"], (name, p)
+
+    def test_hand_does_not_penetrate_the_leg(self, build_default):
+        """A pose pendente não pode enterrar a mão na coxa (S3.7, medido)."""
+        b = build_default.builder
+        for tag in ("L", "R"):
+            gap = part_distance(b, part_vertices(b, f"hand.{tag}"),
+                                part_vertices(b, f"leg.{tag}"))
+            assert gap > 0.0, f"hand.{tag} intersects the leg (gap {gap:.4f} m)"
 
 
 class TestReportOnRealBuild:

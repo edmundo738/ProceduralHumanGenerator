@@ -45,6 +45,12 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
 
     # ---------------------------------------------------------------- trunk
     secs = anat.trunk_sections()
+    # S3.7 — as estações do tronco têm de estar em ordem DESCENDENTE de z antes
+    # do loft.  Medido: não estavam (pré-existente — a linha do deltoide a
+    # 1380.4 mm vinha antes do peito superior a 1385.5 mm), e o loft segue a
+    # ordem de criação, pelo que o tubo se dobrava sobre si mesmo nesse intervalo.
+    # A ordenação é estável e total (z, depois y), pelo que é determinística.
+    secs = sorted(secs, key=lambda s_: (-s_.center.z, s_.center.y))
     rings = [s.points(ring_n) for s in secs]
     b.loft(rings, close=True, region="skin", material="skin",
            uv_rect=(0.22, 0.78, 0.0, 1.0), register="trunk",

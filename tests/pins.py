@@ -19,14 +19,15 @@ CONTRACT_VERSION_PIN = "1.0.0"
 # ("preset", seed) -> pins
 PINS = {
     ("realistic_female", 42): {
-        "fingerprint": "db7fb5c42c0523be",   # spec hash: unchanged by S2
-        "verts": 5891,          # pre-weld (pure build)
-        "faces": 5872,
+        "fingerprint": "ad620a90b8eba085",   # S3.7: shoulder_head_ratio now has a source
+        "verts": 5955,          # pre-weld (pure build)
+        "faces": 5936,
         "strands": 2400,
-        # re-measured in S3.6 (feet: pole-relative length frame, rounded tips,
-        # nails ending at the tip apex, sole labelled by world z)
-        "digest": {"pure-python": "79bbe2aade711af6",
-                   "mathutils": "3192f8da92d56b67"},
+        # re-measured in S3.7 (neck with a sourced circumference, trapezius ramp,
+        # hanging arms, knees aligned, shoulder axis medial to the acromion,
+        # trapezius/upper-chest stations sorted by z)
+        "digest": {"pure-python": "c58b94868bb0f879",
+                   "mathutils": "9843b7280144dfe3"},
     },
 }
 
@@ -36,9 +37,9 @@ PINS = {
 # cyber_angel only (2764 float64 / 2766 float32) and was already so before S2 —
 # measured on both trees, see docs/S2_TOPOLOGY.md §5.
 PRESET_COUNTS = {
-    "cyber_angel": (5891, 5872, 2764),
-    "neon_idol": (5891, 5872, 3200),
-    "realistic_female": (5891, 5872, 2400),
+    "cyber_angel": (5955, 5936, 2764),
+    "neon_idol": (5955, 5936, 3200),
+    "realistic_female": (5955, 5936, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -46,7 +47,7 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 5891, "faces": 5872,
+AUDIT_PINS = {"verts": 5955, "faces": 5936,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
@@ -85,7 +86,7 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 108, "scalp": 148, "skin": 2976,
+                "palm": 76, "scalp": 148, "skin": 3072,
                 "sole": 40
             },
             "groups": {
@@ -116,7 +117,7 @@ SEMANTIC_PINS = {
                 "brow": 2, "cornea": 102, "enamel": 1400,
                 "eye": 264, "eyelid": 240, "gum": 196,
                 "lip": 96, "nail": 192, "oral": 127,
-                "palm": 86, "scalp": 148, "skin": 2998,
+                "palm": 86, "scalp": 148, "skin": 3062,
                 "sole": 40
             },
             "groups": {

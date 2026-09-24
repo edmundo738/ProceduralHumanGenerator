@@ -26,7 +26,12 @@ class BodyParams:
     stature: float = 1.70                    # metres
     head_units: float = 7.65                 # 8-head classical canon
     neck_length: float = 1.0
-    shoulder_head_ratio: float = 1.85        # biacromial / head height
+    # S3.7 — biacromial / altura da cabeça.  Antes 1.85 (411 mm, 24.2 % da
+    # estatura).  Valor com fonte: biacromial feminino = 22.57 % da estatura
+    # (Korean Anthropometric Survey 2015, n=3221; 22.25 % em 1988) ⇒
+    # 0.2257 · head_units (7.65) = 1.7266.  Muda o fingerprint do spec
+    # (revisão declarada em docs/S3_7_JUNCTIONS.md §3).
+    shoulder_head_ratio: float = 1.7266       # biacromial / head height
     chest_breath: float = 1.0
     bust_relative: float = 1.0               # soft-tissue overhang
     waist_hip_ratio: float = 0.755

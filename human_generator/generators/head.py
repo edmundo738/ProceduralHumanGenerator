@@ -75,6 +75,16 @@ def box_sphere(builder: MeshBuilder, *, center, radii, n: int = 7,
         if q.z > c.z + 0.62 * rz:  # crown flattening (vertex squash)
             q.z -= squash_top * rz * smoothstep(c.z + 0.62 * rz, c.z + rz, q.z)
         ids[key] = builder.add_vert(q, "skin", (0.5, 0.5))
+    # S3.7 — o crânio não registava anéis: o instrumento não tinha como
+    # identificar a casca da cabeça sem heurísticas (posição/tamanho).  As
+    # latitudes (mesmo z, arredondado) passam a ser anéis nomeados
+    # ``skull.<k>`` (o merge do corpo prefixa-os para ``head.skull.<k>``), de cima para baixo.
+    bands: dict[float, list[int]] = {}
+    for key, vi in ids.items():
+        bands.setdefault(round(builder.verts[vi].z, 6), []).append(vi)
+    for k, (zq, band) in enumerate(sorted(bands.items(), reverse=True)):
+        builder.rings[f"skull.{k}"] = sorted(band)
+
     # faces: for every grid cell of every axis face
     def face_key(ai, i, j):
         ax, ay, az = axis_dirs[ai]
