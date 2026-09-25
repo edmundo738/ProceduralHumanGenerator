@@ -84,19 +84,20 @@
    "TR1_occipital_overhang": 20.099,
    "TR2_cervicomental_deg": 83.655,
    "TR3_submental_len": 42.483,
-   "TR4_neck_min_w_over_bizyg": 0.937
+   "TR4_neck_min_w_over_bizyg": 1.005
   },
   "W": {
    "W1_head_breadth_max": 145.861,
-   "W2_bizygomatic_proxy": 148.95,
+   "W2_old_ymin20_incl_ears": 148.95,
+   "W2_bizygomatic_proxy": 138.901,
    "W3_min_frontal_proxy": 127.848,
    "W4_face_w_at_stomion": 102.416,
    "W5_face_w_at_0.10H": 107.747,
    "W6_neck_min_w": 139.635,
    "R_cephalic_breadth_over_length": 0.839,
-   "R_bizyg_over_breadth": 1.021,
-   "R_jaw_taper_0.10H_over_bizyg": 0.723,
-   "R_minfrontal_over_bizyg": 0.858
+   "R_bizyg_over_breadth": 0.952,
+   "R_jaw_taper_0.10H_over_bizyg": 0.776,
+   "R_minfrontal_over_bizyg": 0.92
   },
   "PL": {
    "forehead": {
@@ -162,17 +163,18 @@
    "commissure_concavity_peak": 0.011
   },
   "TP": {
-   "head_verts": 3474,
-   "head_faces": 3433,
-   "quad_ratio": 0.836,
-   "tris": 562,
+   "head_islands": 45,
+   "head_verts": 1385,
+   "head_faces": 1205,
+   "quad_ratio": 0.987,
+   "tris": 16,
    "ngons": 0,
-   "face_verts": 2941,
+   "face_verts": 852,
    "cranium_verts": 136,
-   "median_edge_face": 2.582,
+   "median_edge_face": 3.648,
    "median_edge_cranium": 14.926,
-   "poles": 352,
-   "poles_face": 345,
+   "poles": 287,
+   "poles_face": 280,
    "poles_face_pos": [
     [
      41.1,
@@ -1573,331 +1575,6 @@
      -20.6,
      84.3,
      44.3
-    ],
-    [
-     31.7,
-     74.5,
-     97.9
-    ],
-    [
-     31.7,
-     76.7,
-     117.9
-    ],
-    [
-     31.7,
-     81.1,
-     108.9
-    ],
-    [
-     -31.7,
-     71.0,
-     96.7
-    ],
-    [
-     -31.7,
-     72.1,
-     120.4
-    ],
-    [
-     -31.7,
-     82.8,
-     108.9
-    ],
-    [
-     0.0,
-     60.4,
-     33.0
-    ],
-    [
-     1.5,
-     78.1,
-     36.7
-    ],
-    [
-     1.5,
-     81.5,
-     29.3
-    ],
-    [
-     -1.5,
-     78.1,
-     36.7
-    ],
-    [
-     -1.5,
-     81.5,
-     29.3
-    ],
-    [
-     5.5,
-     79.0,
-     37.2
-    ],
-    [
-     5.5,
-     81.9,
-     30.7
-    ],
-    [
-     -5.5,
-     79.0,
-     37.2
-    ],
-    [
-     -5.5,
-     81.9,
-     30.7
-    ],
-    [
-     9.5,
-     77.6,
-     37.3
-    ],
-    [
-     9.7,
-     81.3,
-     27.7
-    ],
-    [
-     -9.5,
-     77.6,
-     37.3
-    ],
-    [
-     -9.7,
-     81.3,
-     27.7
-    ],
-    [
-     13.4,
-     78.2,
-     37.2
-    ],
-    [
-     13.4,
-     80.6,
-     32.5
-    ],
-    [
-     -13.4,
-     78.2,
-     37.2
-    ],
-    [
-     -13.4,
-     80.6,
-     32.5
-    ],
-    [
-     17.4,
-     77.2,
-     37.2
-    ],
-    [
-     17.4,
-     79.4,
-     32.9
-    ],
-    [
-     -17.4,
-     77.2,
-     37.2
-    ],
-    [
-     -17.4,
-     79.4,
-     32.9
-    ],
-    [
-     21.3,
-     75.1,
-     36.6
-    ],
-    [
-     21.3,
-     77.1,
-     34.3
-    ],
-    [
-     -21.3,
-     75.1,
-     36.6
-    ],
-    [
-     -21.3,
-     77.1,
-     34.3
-    ],
-    [
-     25.3,
-     73.7,
-     36.8
-    ],
-    [
-     25.3,
-     75.5,
-     34.8
-    ],
-    [
-     -25.3,
-     73.7,
-     36.8
-    ],
-    [
-     -25.3,
-     75.5,
-     34.8
-    ],
-    [
-     1.5,
-     78.9,
-     26.4
-    ],
-    [
-     1.5,
-     82.3,
-     42.0
-    ],
-    [
-     -1.5,
-     78.9,
-     26.4
-    ],
-    [
-     -1.5,
-     82.3,
-     42.0
-    ],
-    [
-     5.5,
-     79.6,
-     26.8
-    ],
-    [
-     5.5,
-     82.5,
-     39.9
-    ],
-    [
-     -5.5,
-     79.6,
-     26.8
-    ],
-    [
-     -5.5,
-     82.5,
-     39.9
-    ],
-    [
-     9.5,
-     78.5,
-     27.0
-    ],
-    [
-     9.3,
-     82.2,
-     42.7
-    ],
-    [
-     -9.5,
-     78.5,
-     27.0
-    ],
-    [
-     -9.3,
-     82.2,
-     42.7
-    ],
-    [
-     13.4,
-     78.6,
-     26.9
-    ],
-    [
-     13.4,
-     81.0,
-     38.1
-    ],
-    [
-     -13.4,
-     78.6,
-     26.9
-    ],
-    [
-     -13.4,
-     81.0,
-     38.1
-    ],
-    [
-     17.4,
-     77.5,
-     26.9
-    ],
-    [
-     17.4,
-     79.7,
-     37.7
-    ],
-    [
-     -17.4,
-     77.5,
-     26.9
-    ],
-    [
-     -17.4,
-     79.7,
-     37.7
-    ],
-    [
-     21.3,
-     75.3,
-     26.3
-    ],
-    [
-     21.3,
-     77.3,
-     37.3
-    ],
-    [
-     -21.3,
-     75.3,
-     26.3
-    ],
-    [
-     -21.3,
-     77.3,
-     37.3
-    ],
-    [
-     25.3,
-     73.9,
-     26.5
-    ],
-    [
-     25.3,
-     75.7,
-     36.4
-    ],
-    [
-     -25.3,
-     73.9,
-     26.5
-    ],
-    [
-     -25.3,
-     75.7,
-     36.4
-    ],
-    [
-     0.0,
-     72.1,
-     25.2
-    ],
-    [
-     0.0,
-     84.4,
-     31.3
     ]
    ],
    "open_loops": [
@@ -1944,20 +1621,6 @@
      "clean_rings": 5
     },
     {
-     "kind": "eye",
-     "n": 16,
-     "centre": [
-      -31.7,
-      74.7,
-      108.2
-     ],
-     "extent_xz": [
-      21.6,
-      19.8
-     ],
-     "clean_rings": 0
-    },
-    {
      "kind": "mouth",
      "n": 16,
      "centre": [
@@ -1970,20 +1633,6 @@
       17.0
      ],
      "clean_rings": 5
-    },
-    {
-     "kind": "eye",
-     "n": 10,
-     "centre": [
-      -31.7,
-      75.4,
-      108.9
-     ],
-     "extent_xz": [
-      16.1,
-      15.3
-     ],
-     "clean_rings": 4
     },
     {
      "kind": "eye",
@@ -2014,34 +1663,6 @@
      "clean_rings": 1
     },
     {
-     "kind": "mouth",
-     "n": 10,
-     "centre": [
-      0.0,
-      81.9,
-      34.0
-     ],
-     "extent_xz": [
-      49.0,
-      12.4
-     ],
-     "clean_rings": 5
-    },
-    {
-     "kind": "mouth",
-     "n": 38,
-     "centre": [
-      0.0,
-      79.0,
-      35.0
-     ],
-     "extent_xz": [
-      55.5,
-      1.9
-     ],
-     "clean_rings": 1
-    },
-    {
      "kind": "eye",
      "n": 32,
      "centre": [
@@ -2054,20 +1675,6 @@
       13.2
      ],
      "clean_rings": 0
-    },
-    {
-     "kind": "mouth",
-     "n": 38,
-     "centre": [
-      0.0,
-      79.0,
-      32.7
-     ],
-     "extent_xz": [
-      55.5,
-      1.9
-     ],
-     "clean_rings": 1
     },
     {
      "kind": "eye",
@@ -2124,34 +1731,6 @@
       5.2
      ],
      "clean_rings": 0
-    },
-    {
-     "kind": "eye",
-     "n": 16,
-     "centre": [
-      31.7,
-      74.7,
-      108.2
-     ],
-     "extent_xz": [
-      21.6,
-      19.8
-     ],
-     "clean_rings": 0
-    },
-    {
-     "kind": "eye",
-     "n": 10,
-     "centre": [
-      31.7,
-      75.4,
-      108.9
-     ],
-     "extent_xz": [
-      16.1,
-      15.3
-     ],
-     "clean_rings": 4
     }
    ]
   }
@@ -2241,19 +1820,20 @@
    "TR1_occipital_overhang": 135.832,
    "TR2_cervicomental_deg": 127.199,
    "TR3_submental_len": 87.325,
-   "TR4_neck_min_w_over_bizyg": 0.821
+   "TR4_neck_min_w_over_bizyg": 0.869
   },
   "W": {
    "W1_head_breadth_max": 156.183,
-   "W2_bizygomatic_proxy": 145.72,
+   "W2_old_ymin20_incl_ears": 145.72,
+   "W2_bizygomatic_proxy": 137.632,
    "W3_min_frontal_proxy": 140.169,
    "W4_face_w_at_stomion": 103.559,
    "W5_face_w_at_0.10H": 105.317,
    "W6_neck_min_w": 119.656,
    "R_cephalic_breadth_over_length": 0.788,
-   "R_bizyg_over_breadth": 0.933,
-   "R_jaw_taper_0.10H_over_bizyg": 0.723,
-   "R_minfrontal_over_bizyg": 0.962
+   "R_bizyg_over_breadth": 0.881,
+   "R_jaw_taper_0.10H_over_bizyg": 0.765,
+   "R_minfrontal_over_bizyg": 1.018
   },
   "PL": {
    "forehead": {
@@ -2319,6 +1899,7 @@
    "commissure_concavity_peak": -0.027
   },
   "TP": {
+   "head_islands": 5,
    "head_verts": 1667,
    "head_faces": 1640,
    "quad_ratio": 0.97,
@@ -2865,19 +2446,20 @@
    "TR1_occipital_overhang": 38.588,
    "TR2_cervicomental_deg": 126.457,
    "TR3_submental_len": 59.005,
-   "TR4_neck_min_w_over_bizyg": 0.664
+   "TR4_neck_min_w_over_bizyg": 0.69
   },
   "W": {
    "W1_head_breadth_max": 149.699,
-   "W2_bizygomatic_proxy": 145.893,
+   "W2_old_ymin20_incl_ears": 145.893,
+   "W2_bizygomatic_proxy": 140.344,
    "W3_min_frontal_proxy": 141.162,
    "W4_face_w_at_stomion": 118.611,
    "W5_face_w_at_0.10H": 99.466,
    "W6_neck_min_w": 96.871,
    "R_cephalic_breadth_over_length": 0.74,
-   "R_bizyg_over_breadth": 0.975,
-   "R_jaw_taper_0.10H_over_bizyg": 0.682,
-   "R_minfrontal_over_bizyg": 0.968
+   "R_bizyg_over_breadth": 0.938,
+   "R_jaw_taper_0.10H_over_bizyg": 0.709,
+   "R_minfrontal_over_bizyg": 1.006
   },
   "PL": {
    "forehead": {
@@ -2943,6 +2525,7 @@
    "commissure_concavity_peak": 0.126
   },
   "TP": {
+   "head_islands": 1,
    "head_verts": 16814,
    "head_faces": 16762,
    "quad_ratio": 1.0,
@@ -3204,19 +2787,20 @@
    "TR1_occipital_overhang": 34.397,
    "TR2_cervicomental_deg": 105.538,
    "TR3_submental_len": 66.789,
-   "TR4_neck_min_w_over_bizyg": 0.672
+   "TR4_neck_min_w_over_bizyg": 0.686
   },
   "W": {
    "W1_head_breadth_max": 140.959,
-   "W2_bizygomatic_proxy": 130.955,
+   "W2_old_ymin20_incl_ears": 130.955,
+   "W2_bizygomatic_proxy": 128.301,
    "W3_min_frontal_proxy": 136.297,
    "W4_face_w_at_stomion": 106.254,
    "W5_face_w_at_0.10H": 91.735,
    "W6_neck_min_w": 88.007,
    "R_cephalic_breadth_over_length": 0.697,
-   "R_bizyg_over_breadth": 0.929,
-   "R_jaw_taper_0.10H_over_bizyg": 0.701,
-   "R_minfrontal_over_bizyg": 1.041
+   "R_bizyg_over_breadth": 0.91,
+   "R_jaw_taper_0.10H_over_bizyg": 0.715,
+   "R_minfrontal_over_bizyg": 1.062
   },
   "PL": {
    "forehead": {
@@ -3282,6 +2866,7 @@
    "commissure_concavity_peak": 0.191
   },
   "TP": {
+   "head_islands": 1,
    "head_verts": 1214,
    "head_faces": 1164,
    "quad_ratio": 1.0,
@@ -3634,19 +3219,20 @@
    "TR1_occipital_overhang": 23.202,
    "TR2_cervicomental_deg": 89.792,
    "TR3_submental_len": 76.933,
-   "TR4_neck_min_w_over_bizyg": 0.834
+   "TR4_neck_min_w_over_bizyg": 0.849
   },
   "W": {
    "W1_head_breadth_max": 144.355,
-   "W2_bizygomatic_proxy": 134.773,
+   "W2_old_ymin20_incl_ears": 134.773,
+   "W2_bizygomatic_proxy": 132.316,
    "W3_min_frontal_proxy": 134.253,
    "W4_face_w_at_stomion": 87.371,
    "W5_face_w_at_0.10H": 81.763,
    "W6_neck_min_w": 112.381,
    "R_cephalic_breadth_over_length": 0.737,
-   "R_bizyg_over_breadth": 0.934,
-   "R_jaw_taper_0.10H_over_bizyg": 0.607,
-   "R_minfrontal_over_bizyg": 0.996
+   "R_bizyg_over_breadth": 0.917,
+   "R_jaw_taper_0.10H_over_bizyg": 0.618,
+   "R_minfrontal_over_bizyg": 1.015
   },
   "PL": {
    "forehead": {
@@ -3712,6 +3298,7 @@
    "commissure_concavity_peak": 0.034
   },
   "TP": {
+   "head_islands": 2,
    "head_verts": 1684,
    "head_faces": 1644,
    "quad_ratio": 1.0,
@@ -4096,19 +3683,20 @@
    "TR1_occipital_overhang": 36.666,
    "TR2_cervicomental_deg": 113.991,
    "TR3_submental_len": 97.375,
-   "TR4_neck_min_w_over_bizyg": 0.672
+   "TR4_neck_min_w_over_bizyg": 0.697
   },
   "W": {
    "W1_head_breadth_max": 155.89,
-   "W2_bizygomatic_proxy": 149.663,
+   "W2_old_ymin20_incl_ears": 149.663,
+   "W2_bizygomatic_proxy": 144.224,
    "W3_min_frontal_proxy": 144.223,
    "W4_face_w_at_stomion": 127.623,
    "W5_face_w_at_0.10H": 110.235,
    "W6_neck_min_w": 100.559,
    "R_cephalic_breadth_over_length": 0.743,
-   "R_bizyg_over_breadth": 0.96,
-   "R_jaw_taper_0.10H_over_bizyg": 0.737,
-   "R_minfrontal_over_bizyg": 0.964
+   "R_bizyg_over_breadth": 0.925,
+   "R_jaw_taper_0.10H_over_bizyg": 0.764,
+   "R_minfrontal_over_bizyg": 1.0
   },
   "PL": {
    "forehead": {
@@ -4174,6 +3762,7 @@
    "commissure_concavity_peak": 0.083
   },
   "TP": {
+   "head_islands": 1,
    "head_verts": 3390,
    "head_faces": 3364,
    "quad_ratio": 0.981,

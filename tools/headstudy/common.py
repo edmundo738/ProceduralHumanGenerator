@@ -75,6 +75,11 @@ def load_raw(name, tag="smooth"):
         lab, drop = ours_skin_components(d["V"], T)
         keep = ~np.isin(lab, list(drop))
         T = T[keep[T[:, 0]]]
+        fs, fi = d["fs"], d["fi"]
+        starts = np.concatenate([[0], np.cumsum(fs)[:-1]])
+        kp = keep[fi[starts]]                                    # polígonos também (medido: TP contava dentes)
+        fi = np.concatenate([fi[a:a + n] for a, n, k in zip(starts, fs, kp) if k])
+        return V, T, fs[kp], fi
     return V, T, d["fs"], d["fi"]
 
 

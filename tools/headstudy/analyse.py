@@ -169,6 +169,12 @@ def topology(name, Vn_cage_scale):
         vs = set(vs); L_ = [np.linalg.norm(P[a] - P[b]) for (a, b) in edge_count if a in vs and b in vs]
         return float(np.median(L_)) if L_ else np.nan
     poles = [v for v in verts if v not in bverts and val[v] != 4]
+    # ilhas (componentes conexas) na cabeça, na malha COMPLETA da fonte (antes do filtro de pele)
+    d_ = np.load(os.path.join(C.WORK, f"{name}_cage.npz"))
+    lab_ = C.geom.components(d_["V"], d_["T"])
+    Vall = d_["V"] @ np.array(C.ORIENT[name], float).T
+    zall = (Vall[:, 2] - zme) * s
+    head_islands = len(set(lab_[zall > 0.0]))
     poles_face = [v for v in poles if v in set(face_v)]
     fs_h = np.array([len(f) for f in faces_h])
     # laços de fronteira (aberturas) e anéis concêntricos limpos
@@ -229,7 +235,7 @@ def topology(name, Vn_cage_scale):
         ext = P[comp].max(0) - P[comp].min(0)
         res_loops.append(dict(kind=kind, n=len(comp), centre=[round(float(x), 1) for x in c],
                               extent_xz=[round(float(ext[0]), 1), round(float(ext[2]), 1)], clean_rings=clean))
-    return dict(head_verts=len(verts), head_faces=len(faces_h), quad_ratio=float((fs_h == 4).mean()),
+    return dict(head_islands=head_islands, head_verts=len(verts), head_faces=len(faces_h), quad_ratio=float((fs_h == 4).mean()),
                 tris=int((fs_h == 3).sum()), ngons=int((fs_h > 4).sum()),
                 face_verts=len(face_v), cranium_verts=len(cran_v),
                 median_edge_face=med_edge(face_v), median_edge_cranium=med_edge(cran_v),
@@ -274,7 +280,10 @@ def analyse(name):
     # --- W
     W = {}
     W["W1_head_breadth_max"] = max(width_at(Vn, T, z) for z in np.arange(0.62 * H, 0.90 * H, 2.0))
-    W["W2_bizygomatic_proxy"] = max(width_at(Vn, T, z, ymin=20.0) for z in np.arange(sn[1], n[1], 2.0))
+    # medido: com y > 20 mm os retalhos de orelha da NOSSA malha (até y ≈ 39) entravam
+    # no "bizigomático".  W2 passa a largura da face ANTERIOR (y > 40 mm), igual para todos.
+    W["W2_old_ymin20_incl_ears"] = max(width_at(Vn, T, z, ymin=20.0) for z in np.arange(sn[1], n[1], 2.0))
+    W["W2_bizygomatic_proxy"] = max(width_at(Vn, T, z, ymin=40.0) for z in np.arange(sn[1], n[1], 2.0))
     W["W3_min_frontal_proxy"] = min(width_at(Vn, T, z, ymin=20.0) for z in np.arange(g[1], g[1] + 0.15 * H, 2.0))
     W["W4_face_w_at_stomion"] = width_at(Vn, T, L["stomion"][1], ymin=0.0)
     W["W5_face_w_at_0.10H"] = width_at(Vn, T, 0.10 * H, ymin=0.0)
@@ -340,7 +349,7 @@ if __name__ == "__main__":
         vals = [J[n]["PL"][tag].get("PL") for n in GEOM]
         refs = [v for v in vals[1:] if v is not None]
         rows.append(f"{'PL':14s} {tag:42s} " + " ".join(f"{(v if v is not None else float('nan')):9.2f}" for v in vals) + f"   refs {min(refs):8.2f} … {max(refs):8.2f}")
-    for k in ("head_verts", "quad_ratio", "median_edge_face", "median_edge_cranium", "poles", "poles_face"):
+    for k in ("head_islands", "head_verts", "quad_ratio", "median_edge_face", "median_edge_cranium", "poles", "poles_face"):
         vals = [J[n]["TP"][k] for n in GEOM]
         rows.append(f"{'TP':14s} {k:42s} " + " ".join(f"{float(v):9.2f}" for v in vals))
     head = f"{'':14s} {'métrica':42s} " + " ".join(f"{n[:9]:>9s}" for n in GEOM)
