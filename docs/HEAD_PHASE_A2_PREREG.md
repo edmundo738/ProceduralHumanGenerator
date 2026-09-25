@@ -37,3 +37,29 @@ Vistas, seed 42, normalização, instrumento: os mesmos.
 **Leitura.** Hipótese SUPORTADA se P1–P3 se cumprirem e C1/C2c melhorarem sem regressões; PARCIAL se
 só parte; REFUTADA se P1 não se mover.  A Fase A só fecha com C3 aprovado pelo utilizador —
 números a passar não bastam.
+
+---
+## Resultado A2 tal como registada + emenda A2b (escrita ANTES de medir A2b)
+
+**A2 (plano por baixo, smin) — MEASURED:** altura pela regra do mentón 213.1 → **213.1 mm** (P1 falha).
+**REFUTADA tal como implementada.**  Origem (MEASURED, perfil analítico do modelo no seu próprio
+referencial, z = 0 = mentón do alvo): a face inferior do modelo já está a z −1.9…0, *acima* do plano
+(−3.5) — o plano não corta nada.  O "submento a descer 14°" vinha de ter medido a Fase A no
+referencial normalizado, que já está deslocado ~9 mm pelo próprio mentón mal colocado (erro meu de
+referencial, declarado).  Mesmo referencial, x = 0:
+| z | 17 | 7 | 1 |
+|---|---|---|---|
+| modelo A, y | 90 | 80 | 67 |
+| 3 refs (média), y | ~85 | 83.5 | 80.6 |
+⇒ o canto está **subpreenchido** (~13 mm para dentro em z ≈ 1), não em excesso.  A hipótese (o
+arredondamento mentoniano é a causa comum) mantém-se; o mecanismo tinha o sinal errado.
+
+**Emenda A2b — mudança única (substitui A2; A2 sai):** união local com o **envelope mentoniano médio
+das 3 refs**: bloco = { sub_z(x) ≤ z ≤ 15 mm, 0 ≤ y ≤ Yf(x, z) }, Yf = tabela média medida da frente
+do queixo (`out/headfit/chin_front.npz`, z −1…15 de 2 em 2, |x| 0…40 de 4 em 4, interpolação bilinear;
+fora da tabela o bloco não existe), sub_z(x) = plano submental da A2 (face inferior do bloco).
+r_A2b(u) = smax(r_A(u), r_bloco(u), k_c = 4 mm), smax polinomial (local: só acrescenta onde o envelope
+das refs sai para fora da casca A).  Tabela (y, colunas x = 0, 8, 16, 24, 32):
+z −1: 78.8 77.4 54.8 33.8 13.1 · z 1: 80.6 79.5 73.7 36.5 15.8 · z 5: 82.8 81.8 77.6 52.0 30.9 ·
+z 9: 84.0 83.0 79.4 72.2 44.6 · z 15: 84.9 83.9 80.9 75.3 65.6 (sd entre refs em x=0 ≈ 11 mm).
+Critérios C1–C4, previsões P1–P3 e regra de leitura: **inalterados**.  Flag `HCG_HEAD=massA2`.
