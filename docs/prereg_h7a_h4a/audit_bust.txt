@@ -1,0 +1,10 @@
+raw units: z range 0.0 1.682437539100647
+lobe L centre (0.1785, 0.079, 1.397) amp 0.0242 sigma (0.0175, 0.0144, 0.0189)
+lobe R centre (0.1785, 0.079, 1.397) amp 0.0242 sigma (0.0175, 0.0144, 0.0189)
+vértices com deslocamento > 0.5 mm: 5 de 24986; máx 9.6 mm
+  z (m): 1.365–1.394  (= 0.803–0.820·S)
+  |x| (m): 0.144–0.168; y: 0.043–0.083
+  ponto de máx: [0.168 0.058 1.381] 9.6 mm
+estação busto z=1.2954 d=0.1423 fs=1.404 → Δcy analítico = 24.4 mm para a frente
+estação inframamária z=1.2240 fs=1 → Δcy 0; estação jugulum fs=1.02 → Δcy 1.1 mm
+salto de centroide entre inframamária e busto: 24.4 mm em 71 mm de altura → 18.9° p/ a frente (local)

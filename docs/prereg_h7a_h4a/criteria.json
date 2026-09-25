@@ -1,0 +1,249 @@
+{
+ "control_commit": "e6e809c",
+ "tolerances": {
+  "D1_chest_breadth": 2.939,
+  "D1_chest_z": 7.348,
+  "D2_chest_depth": 2.0,
+  "D3_waist_depth_min": 2.0,
+  "D3_buttock_depth_max": 2.939,
+  "D4_hip_breadth_max": 2.939,
+  "D5_chest_over_hip": 0.01,
+  "D6_chestdepth_over_waistdepth": 0.01,
+  "D6_buttockdepth_over_waistdepth": 0.013,
+  "D7_bideltoid": 4.8,
+  "D7_chest_over_bideltoid": 0.01,
+  "P4_thoracic_apex_z": 12.0,
+  "P4_gluteal_apex_z": 9.487,
+  "P5_lumbar_z": 7.348,
+  "P5_lumbar_concavity_vs_chord": 2.0,
+  "P1_pelvic_chord_angle": 1.0,
+  "P2_thoracic_chord_angle": 1.0,
+  "P3_lumbar_bend_angle": 1.0,
+  "P6_glute_minus_thoracic_apex_y": 2.0,
+  "P7_back_turning_total_deg": 8.454,
+  "C1_axis_thorax": 1.0,
+  "C2_axis_pelvis": 1.0,
+  "C3_axis_lumbar": 1.0,
+  "C4_axis_rel_thorax_minus_pelvis": 1.405,
+  "F1_mid_back_at_thoracic_apex_y": 2.276,
+  "F2_cy_at_chest_y": 2.163
+ },
+ "control": {
+  "D1_chest_breadth": 352.0,
+  "D1_chest_z": 1308.0,
+  "D2_chest_depth": 314.0,
+  "D3_waist_depth_min": 224.0,
+  "D3_buttock_depth_max": 262.0,
+  "D4_hip_breadth_max": 392.0,
+  "D5_chest_over_hip": 0.8979591836734694,
+  "D6_chestdepth_over_waistdepth": 1.4017857142857142,
+  "D6_buttockdepth_over_waistdepth": 1.1696428571428572,
+  "D7_bideltoid": 456.0,
+  "D7_chest_over_bideltoid": 0.7719298245614035,
+  "P4_thoracic_apex_z": 1313.0,
+  "P4_gluteal_apex_z": 943.0,
+  "P5_lumbar_z": 1103.0,
+  "P5_lumbar_concavity_vs_chord": 19.355706129830907,
+  "P1_pelvic_chord_angle": 8.356758027409947,
+  "P2_thoracic_chord_angle": 3.7901426165453347,
+  "P3_lumbar_bend_angle": 12.146900643955282,
+  "P6_glute_minus_thoracic_apex_y": -9.591474216675238,
+  "P7_back_turning_total_deg": 44.11135398564823,
+  "C1_axis_thorax": -9.498669872707191,
+  "C2_axis_pelvis": 3.1589689645698864,
+  "C3_axis_lumbar": -1.362391112703067,
+  "C4_axis_rel_thorax_minus_pelvis": -12.657638837277078,
+  "F1_mid_back_at_thoracic_apex_y": -150.98898925349016,
+  "F2_cy_at_chest_y": -0.3612779103870228
+ },
+ "refs": {
+  "D1_chest_breadth": [
+   272.0,
+   264.0,
+   284.0
+  ],
+  "D1_chest_z": [
+   1278.0,
+   1233.0,
+   1303.0
+  ],
+  "D2_chest_depth": [
+   220.0,
+   236.0,
+   224.0
+  ],
+  "D3_waist_depth_min": [
+   154.0,
+   176.0,
+   168.0
+  ],
+  "D3_buttock_depth_max": [
+   204.0,
+   232.0,
+   208.0
+  ],
+  "D4_hip_breadth_max": [
+   336.0,
+   336.0,
+   482.0
+  ],
+  "D5_chest_over_hip": [
+   0.8095238095238095,
+   0.7857142857142857,
+   0.5892116182572614
+  ],
+  "D6_chestdepth_over_waistdepth": [
+   1.4285714285714286,
+   1.3409090909090908,
+   1.3333333333333333
+  ],
+  "D6_buttockdepth_over_waistdepth": [
+   1.3246753246753247,
+   1.3181818181818181,
+   1.2380952380952381
+  ],
+  "D7_bideltoid": [
+   null,
+   null,
+   null
+  ],
+  "D7_chest_over_bideltoid": [
+   null,
+   null,
+   null
+  ],
+  "P4_thoracic_apex_z": [
+   1348.0,
+   1313.0,
+   1343.0
+  ],
+  "P4_gluteal_apex_z": [
+   923.0,
+   853.0,
+   893.0
+  ],
+  "P5_lumbar_z": [
+   1098.0,
+   1048.0,
+   1093.0
+  ],
+  "P5_lumbar_concavity_vs_chord": [
+   54.527244399194004,
+   52.022660309026385,
+   67.80932440973879
+  ],
+  "P1_pelvic_chord_angle": [
+   16.243026816373536,
+   12.538347559336584,
+   16.971183359475823
+  ],
+  "P2_thoracic_chord_angle": [
+   13.406411045330483,
+   13.533533309001804,
+   16.967110696322443
+  ],
+  "P3_lumbar_bend_angle": [
+   29.64943786170402,
+   26.07188086833839,
+   33.938294055798266
+  ],
+  "P6_glute_minus_thoracic_apex_y": [
+   8.603221499664642,
+   20.417523468594283,
+   15.239615518373256
+  ],
+  "P7_back_turning_total_deg": [
+   102.45254528242626,
+   96.09506839675554,
+   120.74303600490342
+  ],
+  "C1_axis_thorax": [
+   12.166744603754688,
+   29.44425130009659,
+   11.91575525735531
+  ],
+  "C2_axis_pelvis": [
+   -6.128079295393681,
+   -11.576821057768386,
+   -10.684076585328796
+  ],
+  "C3_axis_lumbar": [
+   -3.3992730982440027,
+   3.440967510536206,
+   6.718026806947705
+  ],
+  "C4_axis_rel_thorax_minus_pelvis": [
+   18.29482389914837,
+   41.02107235786497,
+   22.599831842684104
+  ],
+  "F1_mid_back_at_thoracic_apex_y": [
+   -146.90007395268356,
+   -116.99798693875968,
+   -120.05588400410835
+  ],
+  "F2_cy_at_chest_y": [
+   -38.47020640704832,
+   7.772738722030997,
+   -17.622491895716237
+  ]
+ },
+ "rigid_sensitivity": {
+  "translate_y+25mm": {
+   "D1_chest_breadth": 0.0,
+   "D1_chest_z": 0.0,
+   "D2_chest_depth": 0.0,
+   "D3_waist_depth_min": 0.0,
+   "D3_buttock_depth_max": 2.0,
+   "D4_hip_breadth_max": 0.0,
+   "D5_chest_over_hip": 0.0,
+   "D6_chestdepth_over_waistdepth": 0.0,
+   "D6_buttockdepth_over_waistdepth": 0.008928571428571397,
+   "D7_bideltoid": 0.0,
+   "D7_chest_over_bideltoid": 0.0,
+   "P4_thoracic_apex_z": -5.0,
+   "P4_gluteal_apex_z": 0.0,
+   "P5_lumbar_z": 5.0,
+   "P5_lumbar_concavity_vs_chord": 0.37559356644484865,
+   "P1_pelvic_chord_angle": 0.043342572082359254,
+   "P2_thoracic_chord_angle": 0.24659601199989334,
+   "P3_lumbar_bend_angle": 0.28993858408225215,
+   "P6_glute_minus_thoracic_apex_y": -0.6596647231577606,
+   "P7_back_turning_total_deg": 1.6041690667292414,
+   "C1_axis_thorax": 0.009838771257074441,
+   "C2_axis_pelvis": 0.006242506357856836,
+   "C3_axis_lumbar": -0.004446291256387402,
+   "C4_axis_rel_thorax_minus_pelvis": 0.003596264899217161,
+   "F1_mid_back_at_thoracic_apex_y": 25.59030762291897,
+   "F2_cy_at_chest_y": 25.012680128314255
+  },
+  "rotate_x+3deg": {
+   "D1_chest_breadth": 0.0,
+   "D1_chest_z": 5.0,
+   "D2_chest_depth": 0.0,
+   "D3_waist_depth_min": 0.0,
+   "D3_buttock_depth_max": 0.0,
+   "D4_hip_breadth_max": 0.0,
+   "D5_chest_over_hip": 0.0,
+   "D6_chestdepth_over_waistdepth": 0.0,
+   "D6_buttockdepth_over_waistdepth": 0.0,
+   "D7_bideltoid": 0.0,
+   "D7_chest_over_bideltoid": 0.0,
+   "P4_thoracic_apex_z": 0.0,
+   "P4_gluteal_apex_z": 5.0,
+   "P5_lumbar_z": -10.0,
+   "P5_lumbar_concavity_vs_chord": -0.0632366769604289,
+   "P1_pelvic_chord_angle": -2.329020422795704,
+   "P2_thoracic_chord_angle": 2.7785830881644835,
+   "P3_lumbar_bend_angle": 0.449562665368779,
+   "P6_glute_minus_thoracic_apex_y": 19.61356858432515,
+   "P7_back_turning_total_deg": 1.5665876898866458,
+   "C1_axis_thorax": 2.4654605517628045,
+   "C2_axis_pelvis": 0.44657091934861226,
+   "C3_axis_lumbar": 4.137658307988528,
+   "C4_axis_rel_thorax_minus_pelvis": 2.018889632414192,
+   "F1_mid_back_at_thoracic_apex_y": -22.004565758924343,
+   "F2_cy_at_chest_y": -22.85948092773404
+  }
+ }
+}
