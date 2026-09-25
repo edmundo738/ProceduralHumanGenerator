@@ -65,3 +65,41 @@ Corrigido nesta fase: a casca nova não registava anéis `skull.<k>` (contrato S
 OBSERVED queixo arredondado → HYPOTHESIS: o canto mento–submental não é representável com união suave global k=8.7
 e sem termo de marco; → TEST: raio de união local no mento **ou** termo de mentón/plano submental no ajuste R1 →
 MEASURE com os mesmos C1–C4 congelados.
+
+---
+# Intervenção A2 / A2b (pré-registo `HEAD_PHASE_A2_PREREG.md`)
+
+**A2 (corte por plano submental) — REFUTADA tal como implementada**: altura medida 213.1 → 213.1 mm.
+Erro de referencial meu (medi a Fase A no referencial já deslocado pelo mentón); o canto estava
+*subpreenchido*.  Emenda A2b escrita e enviada (3bf498f) **antes** de medir.
+
+**A2b — união local com o envelope mentoniano médio de 3 refs** (frente do queixo + plano submental).
+Flag `HCG_HEAD=massA2`; digest df0eb519fecb4bc3; massA continua e198b40a2831becf.
+
+| critério (mm@H226) | antes | A | **A2b** | alvo | |
+|---|---|---|---|---|---|
+| C1 RMS radial | 7.71 | 4.59 | **2.16** | ≤ 2.5 | ✓ |
+| C1 máx | 17.8 | 11.2 | 6.8 | — | |
+| C2a L/C | 0.84 | 0.77 | 0.77 | 0.70–0.79 | ✓ |
+| C2b g–op | 173.9 | 209.8 | 203.4 | 196–210 | ✓ |
+| C2c W1 | 145.9 | 160.7 | **156.21** | 141–156 | **✗ (por 0.21)** |
+| C2d W3/W2 | 0.92 | 1.00 | 1.00 | ≥ 0.95 | ✓ |
+| C2e W0.10H/W2 | 0.78 | 0.76 | 0.76 | 0.62–0.77 | ✓ |
+| C2f S5 | 86.4 | 104.9 | 101.7 | 95–107 | ✓ |
+| C2g TR3 | 42.5 | 46.2 | **41.4** | ≥ 55 | **✗** |
+| C4a–d | | ✓ | ✓ (omissão = pin; corpo 2898/2898; casca fechada 100 % quads 8 polos-3, área mín. 23.6 mm²; determinista) | | |
+
+Previsões: P1 altura 213.1 → **219.8** (222 ± 3) ✓ · P2 recuo a −6 mm 9.9 → **40.0** (≥ 30) ✓ ·
+P3 inclinação submental x=0 +13.7° → **+3.2°** ✓ (x=20: +12.1°, ainda acima das refs).
+Testes com a flag: as mesmas 6 falhas esperadas da Fase A (pins ×3, F3/F4 boca inexistente, F2 constante histórica); nenhuma nova.
+
+**Leitura pela regra registada: hipótese SUPORTADA (P1–P3 cumpridas; C1 passa; C2c melhora sem passar;
+sem regressões C2a,b,d,e,f).  C2g piorou, como previsto: o ponto cervical é a frente do pescoço congelado
+(y 40.5, z −11.7 vs refs y 5–25, z −37…−67) — causa registada: relação cabeça↔pescoço, não o queixo.**
+C2c falha por 0.21 mm — não se arredonda; resíduo de escala (altura 219.8 vs 222.2 ⇒ ~1 % de ampliação).
+**Fase A NÃO fecha** (C2c, C2g ✗; C3 não aprovado).
+
+Visual (OBSERVED, `renders_A2b.png`, `views_A2b.png`, `profiles_A2b.png`): o queixo passa a ter canto
+inferior e face submental plana (lado, ¾); a frente mostra a base do queixo mais definida.  Continua:
+massa facial mole sem plano nem ângulo da mandíbula (gónio), faces laterais da face sem planos, e o
+pescoço entra logo atrás do queixo — o submento visível é curto porque o pescoço ocupa esse espaço.

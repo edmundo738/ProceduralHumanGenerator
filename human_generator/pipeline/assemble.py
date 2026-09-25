@@ -280,10 +280,12 @@ def build_character(spec: CharacterSpec | str | None = None, *,
     timings["body"] = time.perf_counter() - t
 
     t = time.perf_counter()
-    if _os.environ.get("HCG_HEAD", "") == "massA":
-        # HEAD FASE A (docs/HEAD_PHASE_A_PREREG.md): casca por massas, sem traços
+    _hflag = _os.environ.get("HCG_HEAD", "")
+    if _hflag in ("massA", "massA2"):
+        # HEAD FASE A (docs/HEAD_PHASE_A_PREREG.md): casca por massas, sem traços;
+        # massA2 = + plano submental (docs/HEAD_PHASE_A2_PREREG.md)
         from ..generators.head_mass import build_head_mass   # noqa: PLC0415
-        head = build_head_mass(spec, anat)
+        head = build_head_mass(spec, anat, submental=(_hflag == "massA2"))
         eye_info = {}
     else:
         head = build_head(spec, anat)

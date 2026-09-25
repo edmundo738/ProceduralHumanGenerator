@@ -59,7 +59,7 @@ def main():
     tgt = TG.sh_eval(d[f"mean{L}"], TH, PH, L)
     dom = np.logical_and.reduce([d[f"{n}_valid"] for n in TG.TARGET_SOURCES])
     out, lines = {}, []
-    names = ["ours", "oursA"] + TG.TARGET_SOURCES
+    names = ["ours", "oursA", "oursA2"] + TG.TARGET_SOURCES
     for nm in names:
         rms, mx, info = radial_rms(nm, TH, PH, tgt, dom)
         try:
@@ -76,16 +76,16 @@ def main():
         row = f"{k:16s}"
         for n in names:
             v = out[n].get(k, np.nan)
-            ok = "" if n not in ("ours", "oursA") else (" ✓" if lo <= v <= hi else " ✗")
+            ok = "" if n not in ("ours", "oursA", "oursA2") else (" ✓" if lo <= v <= hi else " ✗")
             row += f"{v:10.2f}{ok:2s}"
         lines.append(row + f"   [{lo}, {hi if hi < 900 else '∞'}]")
     txt = "\n".join(lines)
     print(txt)
-    open(os.path.join(DOC, "eval.txt"), "w").write(txt + "\n")
-    json.dump(out, open(os.path.join(DOC, "eval.json"), "w"), indent=1, default=float)
+    open(os.path.join(DOC, "eval_A2b.txt"), "w").write(txt + "\n")
+    json.dump(out, open(os.path.join(DOC, "eval_A2b.json"), "w"), indent=1, default=float)
 
     # vistas neutras (mesmo rasterizador do estudo): frente, lado, ¾, costas
-    show = ["ours", "oursA", "makehuman", "femalebase", "femalechar"]
+    show = ["ours", "oursA", "oursA2", "makehuman", "femalebase", "femalechar"]
     kinds = ("front", "side", "q", "back")
     fig, ax = plt.subplots(len(show), 4, figsize=(12.4, 3.4 * len(show)))
     for r, nm in enumerate(show):
@@ -99,22 +99,22 @@ def main():
             ax[r, c].imshow(img, cmap="gray", vmin=0, vmax=1, extent=F.BOX[k2])
             ax[r, c].set_xticks([]); ax[r, c].set_yticks([])
             if c == 0:
-                ax[r, c].set_ylabel({"ours": "ANTES (atual)", "oursA": "FASE A (massas)"}.get(nm, nm), fontsize=10)
+                ax[r, c].set_ylabel({"ours": "ANTES (atual)", "oursA": "FASE A (massas)", "oursA2": "A2b (canto mentoniano)"}.get(nm, nm), fontsize=10)
             if r == 0:
                 ax[r, c].set_title({"front": "frente", "side": "lado", "q": "¾", "back": "costas"}[kind])
     fig.suptitle("HEAD FASE A — cinza neutro, sem cabelo/materiais, mm@H226, mesmo rasterizador para todos", fontsize=10)
     fig.tight_layout(rect=(0, 0, 1, 0.985))
-    fig.savefig(os.path.join(DOC, "views.png"), dpi=100)
+    fig.savefig(os.path.join(DOC, "views_A2b.png"), dpi=100)
     plt.close(fig)
 
     # perfis: sagital + larguras
     fig, ax = plt.subplots(1, 2, figsize=(12, 6.2))
-    col = {"ours": "#d62728", "oursA": "#111111", "makehuman": "#1f77b4", "femalebase": "#ff7f0e",
+    col = {"ours": "#d62728", "oursA": "#888888", "oursA2": "#111111", "makehuman": "#1f77b4", "femalebase": "#ff7f0e",
            "bodytopo": "#2ca02c", "femalechar": "#9467bd"}
-    for nm in ["makehuman", "femalebase", "bodytopo", "femalechar", "ours", "oursA"]:
+    for nm in ["makehuman", "femalebase", "bodytopo", "femalechar", "ours", "oursA", "oursA2"]:
         Vn, T, fs, fi, info = C.normalise(nm)
         L_, (zs, yf, yb, pts) = C.sagittal_landmarks(Vn, T)
-        lw = 2.4 if nm in ("ours", "oursA") else 1.0
+        lw = 2.4 if nm in ("ours", "oursA", "oursA2") else 1.0
         ls = "--" if nm == "ours" else "-"
         ax[0].plot(yf, zs, color=col[nm], lw=lw, ls=ls, label=nm)
         ax[0].plot(yb, zs, color=col[nm], lw=lw * 0.6, ls=":")
@@ -125,7 +125,7 @@ def main():
     ax[0].set_title("perfil sagital (frente contínua, costas pontilhado)")
     ax[1].set_title("largura máxima por altura")
     fig.tight_layout()
-    fig.savefig(os.path.join(DOC, "profiles.png"), dpi=100)
+    fig.savefig(os.path.join(DOC, "profiles_A2b.png"), dpi=100)
     plt.close(fig)
 
 

@@ -25,6 +25,7 @@ os.makedirs(OUT, exist_ok=True)
 SOURCES = {
     "ours": ("gen", None, None),
     "oursA": ("gen", "massA", None),          # HEAD FASE A (HCG_HEAD=massA)
+    "oursA2": ("gen", "massA2", None),        # HEAD FASE A2 (+ plano submental)
     "whitewalker": ("blend", "whitewalker-2016-06-06.blend", ["Cube"]),
     "makehuman": ("fbx", "Lucia_Prototype_v01.fbx", ["female_generic.objMesh"]),
     "femalechar": ("blend", "FemaleCharacter.blend", ["Plane.003"]),

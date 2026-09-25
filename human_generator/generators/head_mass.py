@@ -109,6 +109,105 @@ def radial(u: tuple) -> float:
     return mx + K_UNION * math.log(sum(math.exp((r - mx) / K_UNION) for r in rs))
 
 
+# --------------------------------------------------------------------------- A2b
+# Canto mento–submental (``docs/HEAD_PHASE_A2_PREREG.md``, emenda A2b).  A2 (corte
+# por um plano) foi REFUTADA: o canto da casca A está SUBPREENCHIDO, não em
+# excesso.  A2b une a casca A, localmente, com o envelope mentoniano MÉDIO de
+# femalebase/bodytopo/femalechar (``tools/headfit/chin_study.py`` e
+# ``out/headfit/chin_front.npz``; referencial mm@H226, z = 0 no mentón 45°,
+# y = 0 no centro glabela–opistocrânio).  Só números médios — nenhum vértice das
+# refs.  Bloco = { sub_z(x) ≤ z ≤ 15, 0 ≤ y ≤ Yf(x, z) }, |x| ≤ 40.
+# Face inferior = plano submental medido: −3.5 mm em x = 0, sobe até +1.4 em
+# |x| = 20 (não se extrapola além).  União polinomial local k_c = 4 mm.
+SUB_A0 = -3.5
+SUB_C = 0.01225
+SUB_XMAX = 20.0
+SUB_KC = 4.0
+CHIN_ZS = (-1.0, 1.0, 3.0, 5.0, 7.0, 9.0, 11.0, 13.0, 15.0)
+CHIN_XS = (0.0, 4.0, 8.0, 12.0, 16.0, 20.0, 24.0, 28.0, 32.0, 36.0, 40.0)
+CHIN_YF = (
+    (78.83, 78.42, 77.41, 74.24, 54.78, 38.50, 33.79, 19.13, 13.07, 7.99, 12.38),
+    (80.65, 80.27, 79.51, 77.26, 73.69, 52.81, 36.48, 31.98, 15.84, 9.27, 13.46),
+    (81.88, 81.67, 80.84, 79.19, 76.10, 70.90, 49.88, 34.01, 28.77, 11.81, 15.28),
+    (82.79, 82.51, 81.75, 80.27, 77.58, 73.67, 52.00, 45.91, 30.86, 24.68, 10.37),
+    (83.45, 83.25, 82.48, 80.98, 78.81, 75.36, 70.38, 48.87, 33.06, 27.10, 29.61),
+    (83.99, 83.75, 83.02, 81.58, 79.44, 76.51, 72.15, 65.31, 44.60, 29.47, 34.61),
+    (84.32, 84.08, 83.36, 81.99, 80.09, 77.21, 73.40, 67.90, 47.18, 38.62, 38.11),
+    (84.67, 84.38, 83.68, 82.30, 80.51, 77.95, 74.54, 69.80, 62.76, 42.69, 40.55),
+    (84.91, 84.64, 83.93, 82.56, 80.88, 78.44, 75.33, 71.07, 65.57, 44.83, 36.56),
+)
+CHIN_ZTOP = 15.0
+
+
+def _sub_z(x: float) -> float:
+    xa = min(abs(x), SUB_XMAX)
+    return SUB_A0 + SUB_C * xa * xa
+
+
+def _yf(x: float, z: float) -> float:
+    """Frente média do queixo (bilinear); z abaixo de −1 usa a linha −1 (até ao plano)."""
+    xa = abs(x)
+    zc = min(max(z, CHIN_ZS[0]), CHIN_ZS[-1])
+    i = min(int((zc - CHIN_ZS[0]) / 2.0), len(CHIN_ZS) - 2)
+    j = min(int(xa / 4.0), len(CHIN_XS) - 2)
+    tz = (zc - CHIN_ZS[i]) / 2.0
+    tx = (xa - CHIN_XS[j]) / 4.0
+    a = CHIN_YF[i][j] * (1 - tx) + CHIN_YF[i][j + 1] * tx
+    b = CHIN_YF[i + 1][j] * (1 - tx) + CHIN_YF[i + 1][j + 1] * tx
+    return a * (1 - tz) + b * tz
+
+
+# continuidade (ENGINEERING JUDGMENT, declarado): atrás de y = 45 a face inferior
+# do bloco sobe linearmente até +10 mm em y = 25 — o bloco volta a ficar dentro da
+# casca A sem degrau.  Essa faixa fica dentro do pescoço do corpo (frente a y ≈ 42),
+# que está congelado; é aí que o submento das refs continuaria (cervical y 5–25).
+CHIN_Y1, CHIN_Y0 = 45.0, 25.0
+
+
+def _in_chin(x: float, y: float, z: float) -> bool:
+    if abs(x) > CHIN_XS[-1] or z > CHIN_ZTOP or y < CHIN_Y0:
+        return False
+    zb = _sub_z(x) + max(0.0, (CHIN_Y1 - y) / (CHIN_Y1 - CHIN_Y0)) * (10.0 - SUB_A0)
+    if z < zb:
+        return False
+    return y <= _yf(x, z)
+
+
+def _chin_exit(u: tuple, smax: float = 240.0, nsteps: int = 480, nbis: int = 16):
+    cx, cy, cz = CENTRE
+    ux, uy, uz = u
+    if uz > -0.05 or uy < 0.0:            # o bloco está à frente e muito abaixo do centro
+        return None
+    step = smax / nsteps
+    last = -1
+    for i in range(nsteps, -1, -1):
+        s = i * step
+        if _in_chin(cx + s * ux, cy + s * uy, cz + s * uz):
+            last = i
+            break
+    if last < 0 or last == nsteps:
+        return None
+    lo, hi = last * step, (last + 1) * step
+    for _ in range(nbis):
+        mid = 0.5 * (lo + hi)
+        if _in_chin(cx + mid * ux, cy + mid * uy, cz + mid * uz):
+            lo = mid
+        else:
+            hi = mid
+    return 0.5 * (lo + hi)
+
+
+def _smax(a: float, b: float, k: float) -> float:
+    h = max(k - abs(a - b), 0.0) / k
+    return max(a, b) + h * h * k * 0.25
+
+
+def radial_a2(u: tuple) -> float:
+    r = radial(u)
+    rc = _chin_exit(u)
+    return r if rc is None else _smax(r, rc, SUB_KC)
+
+
 def _cube_grid(n: int):
     """Cube-sphere equiangular: direções únicas + quads (índices em ``dirs``)."""
     keys: dict[tuple, int] = {}
@@ -140,7 +239,9 @@ def _cube_grid(n: int):
     return dirs, quads
 
 
-def build_head_mass(spec, anat) -> HeadResult:
+def build_head_mass(spec, anat, submental: bool = False) -> HeadResult:
+    """``submental=True`` ⇒ variante A2b (canto mentoniano); False ⇒ Fase A tal como medida."""
+    rfun = radial_a2 if submental else radial
     b = MeshBuilder("head")
     h = anat.h
     s = h / H_NORM                                   # m por unidade normalizada (mm@H226)
@@ -150,7 +251,7 @@ def build_head_mass(spec, anat) -> HeadResult:
     ids = []
     cx, cy, cz = CENTRE
     for d in dirs:
-        r = radial(d)
+        r = rfun(d)
         # referencial normalizado → mundo; x do spec é o mesmo eixo lateral
         xn, yn, zn = cx + r * d[0], cy + r * d[1], cz + r * d[2]
         ids.append(b.add_vert(Vector((xn * s, y0 + yn * s, z_men + zn * s)), "skin", (0.5, 0.5)))

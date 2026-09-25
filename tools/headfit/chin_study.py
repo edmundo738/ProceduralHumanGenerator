@@ -54,7 +54,7 @@ def study(name):
 
 
 def main():
-    res = {n: study(n) for n in TG.TARGET_SOURCES + ["oursA", "ours"]}
+    res = {n: study(n) for n in TG.TARGET_SOURCES + ["oursA", "oursA2", "ours"]}
     for n, r in res.items():
         s = f"{n:11s} y_me {r['y_me']:5.1f} cerv ({r['cervical'][0]:5.1f},{r['cervical'][1]:6.1f}) drop3 {r['drop3']:5.1f} drop6 {r['drop6']:5.1f} |"
         for x0 in XS:
