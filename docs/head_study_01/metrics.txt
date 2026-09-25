@@ -1,0 +1,56 @@
+               métrica                                         ours whitewalk makehuman femalecha  bodytopo femalebas
+S              S1_nasal_projection                             6.84     14.28     10.66     17.77     23.50     16.39   refs    10.66 …    23.50
+S              S2_nasion_depth                                 7.00     -0.94      1.86      6.36      2.33      1.62   refs    -0.94 …     6.36
+S              S3_facial_convexity_g_sn_pg                   148.81    157.75    163.77    165.38    167.75    165.83   refs   157.75 …   167.75
+S              S4_chin_vs_sn                                 -11.33     -9.84     -6.36    -14.41    -11.42     -8.44   refs   -14.41 …    -6.36
+S              S5_glabella_ahead_of_centre                    86.37     98.16    101.14    101.17     97.90    104.89   refs    97.90 …   104.89
+S              S6_pronasale_ahead_of_centre                  104.42    118.52    121.37    109.39    111.31    124.39   refs   109.39 …   124.39
+S              S7_head_length_g_op                           173.88    198.21    202.20    202.31    195.77    209.89   refs   195.77 …   209.89
+S              S8_forehead_incl_deg                           15.31     23.34     16.62     14.10     14.88     14.41   refs    14.10 …    23.34
+S              S9_nasion_z                                   108.25    135.25    112.25    100.25    107.25    115.25   refs   100.25 …   135.25
+S              S9_subnasale_z                                 45.26     41.26     60.26     49.26     46.26     53.26   refs    41.26 …    60.26
+S              S9_stomion_z                                   34.26     20.25     42.26     34.26     26.25     39.26   refs    20.25 …    42.26
+S              S10_lower_face_ratio_sn_sto_over_sto_me         0.32      1.04      0.43      0.44      0.76      0.36   refs     0.36 …     1.04
+S              S11_mid_face_n_sn_over_sn_me                    1.39      2.28      0.86      1.03      1.32      1.16   refs     0.86 …     2.28
+W              W1_head_breadth_max                           145.86    156.18    149.70    140.96    144.35    155.89   refs   140.96 …   156.18
+W              W2_bizygomatic_proxy                          148.95    145.72    145.89    130.96    134.77    149.66   refs   130.96 …   149.66
+W              W3_min_frontal_proxy                          127.85    140.17    141.16    136.30    134.25    144.22   refs   134.25 …   144.22
+W              W4_face_w_at_stomion                          102.42    103.56    118.61    106.25     87.37    127.62   refs    87.37 …   127.62
+W              W5_face_w_at_0.10H                            107.75    105.32     99.47     91.73     81.76    110.23   refs    81.76 …   110.23
+W              W6_neck_min_w                                 139.63    119.66     96.87     88.01    112.38    100.56   refs    88.01 …   119.66
+W              R_cephalic_breadth_over_length                  0.84      0.79      0.74      0.70      0.74      0.74   refs     0.70 …     0.79
+W              R_bizyg_over_breadth                            1.02      0.93      0.97      0.93      0.93      0.96   refs     0.93 …     0.97
+W              R_jaw_taper_0.10H_over_bizyg                    0.72      0.72      0.68      0.70      0.61      0.74   refs     0.61 …     0.74
+W              R_minfrontal_over_bizyg                         0.86      0.96      0.97      1.04      1.00      0.96   refs     0.96 …     1.04
+TR             TR1_occipital_overhang                         20.10    135.83     38.59     34.40     23.20     36.67   refs    23.20 …   135.83
+TR             TR2_cervicomental_deg                          83.66    127.20    126.46    105.54     89.79    113.99   refs    89.79 …   127.20
+TR             TR3_submental_len                              42.48     87.33     59.01     66.79     76.93     97.38   refs    59.01 …    97.38
+TR             TR4_neck_min_w_over_bizyg                       0.94      0.82      0.66      0.67      0.83      0.67   refs     0.66 …     0.83
+CV_orbit       orbit_z                                       107.25    104.25    106.25    102.25     98.25    104.25   refs    98.25 …   106.25
+CV_orbit       orbit_x                                        34.00     20.00     34.00     22.00     19.00     19.00   refs    19.00 …    34.00
+CV_orbit       orbit_recess                                    6.61     13.73     41.18      6.48      8.73     10.26   refs     6.48 …    41.18
+CV_orbit       brow_over_eye                                   6.61     18.14     42.39     21.03     17.08     13.72   refs    13.72 …    42.39
+CV_orbit       malar_below_eye                                 7.38     13.73     41.18      6.48      8.73     10.26   refs     6.48 …    41.18
+CV_orbit       medial_wall                                     5.63     20.81     46.34     19.25     21.10     17.76   refs    17.76 …    46.34
+CV_orbit       lateral_rim_offset                            -18.65      2.60     23.75     -4.92     -1.49     -1.19   refs    -4.92 …    23.75
+CV_orbit       nasion_minus_orbit_y                            3.00     20.13     43.58     19.19     19.84     15.07   refs    15.07 …    43.58
+CV_nose_mouth  alar_width                                     34.00     41.00     25.00     31.00     22.00     32.00   refs    22.00 …    41.00
+CV_nose_mouth  nose_standoff_at_ala                           13.24     11.95      6.41     12.30      7.49     11.06   refs     6.41 …    12.30
+CV_nose_mouth  alar_concavity_peak                             0.48      0.08      0.39      0.08      0.38      0.05   refs     0.05 …     0.39
+CV_nose_mouth  upper_lip_vs_sn_pg                              0.46      2.38      6.53      3.61      4.05      1.76   refs     1.76 …     6.53
+CV_nose_mouth  lower_lip_vs_sn_pg                             -3.62     -2.32      5.60      3.09      2.49      0.43   refs    -2.32 …     5.60
+CV_nose_mouth  mentolabial_depth                               1.45      0.08      0.81      0.00      0.00      0.75   refs     0.00 …     0.81
+CV_nose_mouth  stomion_recess                                  3.24     -0.19      3.29      2.92     -1.41      0.47   refs    -1.41 …     3.29
+CV_nose_mouth  mouth_width_proxy                              35.00     36.00     57.00     37.00     47.00     53.00   refs    36.00 …    57.00
+CV_nose_mouth  commissure_concavity_peak                       0.01     -0.03      0.13      0.19      0.03      0.08   refs    -0.03 …     0.19
+PL             forehead                                        0.97      1.05      0.91      0.99      1.39      0.97   refs     0.91 …     1.39
+PL             cheek                                           0.33      0.13      0.23      0.19      0.12      0.11   refs     0.11 …     0.23
+PL             mouth                                           0.15      0.62      0.44      0.36      0.69      0.89   refs     0.36 …     0.89
+PL             chin                                            0.60      0.94      1.17      1.26      1.03      1.30   refs     0.94 …     1.30
+PL             cranium                                         0.89      0.94      0.95      0.89      1.14      1.00   refs     0.89 …     1.14
+TP             head_verts                                   3474.00   1667.00  16814.00   1214.00   1684.00   3390.00
+TP             quad_ratio                                      0.84      0.97      1.00      1.00      1.00      0.98
+TP             median_edge_face                                2.58      4.64      1.67      5.27      4.84      4.04
+TP             median_edge_cranium                            14.93     16.49      7.19     28.53     17.84     17.25
+TP             poles                                         352.00    180.00     76.00    114.00    126.00    108.00
+TP             poles_face                                    345.00     86.00     32.00     36.00     48.00     36.00
