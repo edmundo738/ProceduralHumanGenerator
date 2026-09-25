@@ -54,6 +54,8 @@ from ..core.rng import Rng
 from ..generators.body import build_body
 from ..generators.eyes import build_eyes
 from ..generators.hair import build_hair
+import os as _os
+
 from ..generators.head import build_head
 from ..generators.mouth import build_mouth
 from ..spec import (BodyParams, CharacterSpec, ExtrasParams, FaceParams, HairParams,
@@ -278,9 +280,15 @@ def build_character(spec: CharacterSpec | str | None = None, *,
     timings["body"] = time.perf_counter() - t
 
     t = time.perf_counter()
-    head = build_head(spec, anat)
-    eye_info = build_eyes(spec, anat, head.builder)
-    build_mouth(head.builder, spec, anat)
+    if _os.environ.get("HCG_HEAD", "") == "massA":
+        # HEAD FASE A (docs/HEAD_PHASE_A_PREREG.md): casca por massas, sem traços
+        from ..generators.head_mass import build_head_mass   # noqa: PLC0415
+        head = build_head_mass(spec, anat)
+        eye_info = {}
+    else:
+        head = build_head(spec, anat)
+        eye_info = build_eyes(spec, anat, head.builder)
+        build_mouth(head.builder, spec, anat)
     timings["head+eyes+mouth"] = time.perf_counter() - t
 
     t = time.perf_counter()

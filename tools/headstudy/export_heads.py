@@ -24,6 +24,7 @@ os.makedirs(OUT, exist_ok=True)
 # fonte → (tipo, ficheiro, objetos de PELE com cabeça)
 SOURCES = {
     "ours": ("gen", None, None),
+    "oursA": ("gen", "massA", None),          # HEAD FASE A (HCG_HEAD=massA)
     "whitewalker": ("blend", "whitewalker-2016-06-06.blend", ["Cube"]),
     "makehuman": ("fbx", "Lucia_Prototype_v01.fbx", ["female_generic.objMesh"]),
     "femalechar": ("blend", "FemaleCharacter.blend", ["Plane.003"]),
@@ -80,8 +81,14 @@ def load(name):
     meta = {"name": name}
     if kind == "gen":
         import human_generator as hcg
+        if f:
+            os.environ["HCG_HEAD"] = f
+        else:
+            os.environ.pop("HCG_HEAD", None)
         d0 = src_digest()
-        r = hcg.generate_character("realistic_female", seed=42, out_dir=os.path.join(OUT, "ours_build"), name="headstudy_ours")
+        r = hcg.generate_character("realistic_female", seed=42, out_dir=os.path.join(OUT, f"{name}_build"),
+                                   name=f"headstudy_{name}")
+        os.environ.pop("HCG_HEAD", None)
         meta.update(digest=r.digest, src_before=d0, src_after=src_digest())
         body = [bpy.data.objects[r.objects["body"]]]
         meta["result_objects"] = dict(r.objects)
