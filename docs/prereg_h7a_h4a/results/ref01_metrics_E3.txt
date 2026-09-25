@@ -1,0 +1,52 @@
+@1700mm                        ANSUR      p5-p95       ours femalebase femalechar   bodytopo   ours/ANSUR
+crotchheight                     816   776-859          840        840        765        815    1.03
+chestdepth                       258   216-307          314        218        236        224    1.22  <-- fora p5-p95
+chestbreadth                     281   252-314          352        268        268        280    1.25  <-- fora p5-p95
+chestcircumference               989   862-1145        1051        843        905        859    1.06
+waistbreadth                     313   264-372          328        272        228        458    1.05
+waistdepth                       223   177-284          248        176        176        184    1.11
+waistcircumference               899   750-1082         909        728        666       1133    1.01
+hipbreadth                       370   328-413          392        336        336        482    1.06
+buttockdepth                     243   206-291          262        204        232        208    1.08
+buttockcircumference            1067   953-1196        1010        897        926       1161    0.95
+neckcircumference                345   315-382          429        296        324        394    1.25  <-- fora p5-p95
+thighcircumference               643   554-737          578        528        545        531    0.90
+calfcircumference                390   346-441          390        320        343        308    1.00
+anklecircumference               225   202-252          207        199        196        170    0.92
+headbreadth                      154   143-168          142        166        166        166    0.92  <-- fora p5-p95
+headlength                       198   184-213          178        194        216        194    0.90  <-- fora p5-p95
+
+chestdepth/chestbreadth                  ANSUR 0.918 [0.798,1.045] ours=0.892 femalebase=0.813 femalechar=0.881 bodytopo=0.800
+waistdepth/waistbreadth                  ANSUR 0.709 [0.623,0.809] ours=0.756 femalebase=0.647 femalechar=0.772 bodytopo=0.402
+buttockdepth/hipbreadth                  ANSUR 0.658 [0.590,0.740] ours=0.668 femalebase=0.607 femalechar=0.690 bodytopo=0.432
+waistbreadth/hipbreadth                  ANSUR 0.847 [0.760,0.949] ours=0.837 femalebase=0.810 femalechar=0.679 bodytopo=0.950
+waistcircumference/buttockcircumference  ANSUR 0.842 [0.749,0.946] ours=0.900 femalebase=0.811 femalechar=0.719 bodytopo=0.976
+
+chest_z                            ours= 1305.0 femalebase= 1270.0 femalechar= 1250.0 bodytopo= 1295.0
+waist_nat_z                        ours= 1100.0 femalebase= 1115.0 femalechar= 1040.0 bodytopo= 1060.0
+waist_nat_breadth                  ours=  288.0 femalebase=  212.0 femalechar=  220.0 bodytopo=  442.0
+hip_z                              ours=  850.0 femalebase=  850.0 femalechar=  775.0 bodytopo=  935.0
+buttock_z                          ours=  940.0 femalebase=  930.0 femalechar=  845.0 bodytopo=  910.0
+neck_z                             ours= 1485.0 femalebase= 1475.0 femalechar= 1440.0 bodytopo= 1480.0
+neck_breadth                       ours=  124.0 femalebase=   92.0 femalechar=   96.0 bodytopo=  100.0
+neck_depth                         ours=  154.0 femalebase=   98.0 femalechar=  108.0 bodytopo=  152.0
+calf_z                             ours=  380.0 femalebase=  390.0 femalechar=  440.0 bodytopo=  425.0
+knee_min_circ                      ours=  377.0 femalebase=  311.1 femalechar=  330.8 bodytopo=  304.9
+leg_cx_thigh                       ours=  106.2 femalebase=   93.0 femalechar=   87.0 bodytopo=   92.7
+leg_cx_knee                        ours=  116.2 femalebase=   91.8 femalechar=   92.1 bodytopo=   94.8
+leg_cx_ankle                       ours=   81.8 femalebase=   84.7 femalechar=  119.2 bodytopo=   82.1
+leg_gap_knee                       ours=  116.4 femalebase=   85.6 femalechar=   82.2 bodytopo=   97.7
+thoracic_apex_z                    ours= 1300.0 femalebase= 1330.0 femalechar= 1280.0 bodytopo= 1335.0
+buttock_apex_z                     ours=  930.0 femalebase=  910.0 femalechar=  845.0 bodytopo=  880.0
+lumbar_z                           ours= 1105.0 femalebase= 1105.0 femalechar= 1055.0 bodytopo= 1100.0
+lumbar_concavity                   ours=   39.7 femalebase=   55.7 femalechar=   53.7 bodytopo=   69.7
+buttock_behind_thoracic            ours=  -12.0 femalebase=   -8.0 femalechar=  -20.0 bodytopo=  -16.0
+abdomen_front_minus_waist_front    ours=    8.0 femalebase=    2.0 femalechar=   -2.0 bodytopo=   -2.0
+belly_front_fixed                  ours=    6.0 femalebase=    4.0 femalechar=   -8.0 bodytopo=    4.0
+occiput_z                          ours= 1580.0 femalebase= 1600.0 femalechar= 1585.0 bodytopo= 1605.0
+nape_z                             ours= 1520.0 femalebase= 1485.0 femalechar= 1470.0 bodytopo= 1495.0
+nape_recess                        ours=   20.0 femalebase=   32.0 femalechar=   36.0 bodytopo=   24.0
+upper_back_z                       ours= 1330.0 femalebase= 1330.0 femalechar= 1330.0 bodytopo= 1335.0
+upper_back_vs_occiput              ours=  -70.0 femalebase=   -2.0 femalechar=  -22.0 bodytopo=  -10.0
+neckbase_depth_max                 ours=  244.0 femalebase=  294.0 femalechar=  158.0 bodytopo=  146.0
+neckbase_depth_excess              ours=  -58.0 femalebase=  102.0 femalechar=  -44.0 bodytopo=  -62.0

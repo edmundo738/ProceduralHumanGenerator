@@ -1,0 +1,791 @@
+{
+ "metrics": {
+  "E0": {
+   "ref01_frame": {
+    "D1_chest_breadth": 352.0,
+    "D1_chest_z": 1308.0,
+    "D2_chest_depth": 314.0,
+    "D3_waist_depth_min": 224.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.8979591836734694,
+    "D6_chestdepth_over_waistdepth": 1.4017857142857142,
+    "D6_buttockdepth_over_waistdepth": 1.1696428571428572,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.7719298245614035,
+    "P4_thoracic_apex_z": 1313.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1103.0,
+    "P5_lumbar_concavity_vs_chord": 19.355706129830907,
+    "P1_pelvic_chord_angle": 8.356758027409947,
+    "P2_thoracic_chord_angle": 3.7901426165453347,
+    "P3_lumbar_bend_angle": 12.146900643955282,
+    "P6_glute_minus_thoracic_apex_y": -9.591474216675238,
+    "P7_back_turning_total_deg": 44.11135398564823,
+    "C1_axis_thorax": -9.498669872707191,
+    "C2_axis_pelvis": 3.1589689645698864,
+    "C3_axis_lumbar": -1.362391112703067,
+    "C4_axis_rel_thorax_minus_pelvis": -12.657638837277078,
+    "F1_mid_back_at_thoracic_apex_y": -150.98898925349016,
+    "F2_cy_at_chest_y": -0.3612779103870228
+   },
+   "raw_frame": {
+    "D1_chest_breadth": 352.0,
+    "D1_chest_z": 1303.0,
+    "D2_chest_depth": 312.0,
+    "D3_waist_depth_min": 224.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.8979591836734694,
+    "D6_chestdepth_over_waistdepth": 1.3928571428571428,
+    "D6_buttockdepth_over_waistdepth": 1.1696428571428572,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.7719298245614035,
+    "P4_thoracic_apex_z": 1308.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1103.0,
+    "P5_lumbar_concavity_vs_chord": 19.543914933460144,
+    "P1_pelvic_chord_angle": 8.544055047769215,
+    "P2_thoracic_chord_angle": 3.847260770554959,
+    "P3_lumbar_bend_angle": 12.391315818324173,
+    "P6_glute_minus_thoracic_apex_y": -10.252011637874006,
+    "P7_back_turning_total_deg": 46.47796795448151,
+    "C1_axis_thorax": -9.50116883088941,
+    "C2_axis_pelvis": 3.163825321100294,
+    "C3_axis_lumbar": -1.3601849482042505,
+    "C4_axis_rel_thorax_minus_pelvis": -12.664994151989704,
+    "F1_mid_back_at_thoracic_apex_y": -144.9988596368007,
+    "F2_cy_at_chest_y": 4.9507491064388995
+   },
+   "raw_zmin": 0.0,
+   "raw_zmax": 1.682437539100647,
+   "raw_shank_y": -4.906521130702491
+  },
+  "E1": {
+   "ref01_frame": {
+    "D1_chest_breadth": 348.0,
+    "D1_chest_z": 1298.0,
+    "D2_chest_depth": 276.0,
+    "D3_waist_depth_min": 224.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.8877551020408163,
+    "D6_chestdepth_over_waistdepth": 1.2321428571428572,
+    "D6_buttockdepth_over_waistdepth": 1.1696428571428572,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.7631578947368421,
+    "P4_thoracic_apex_z": 1313.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1103.0,
+    "P5_lumbar_concavity_vs_chord": 19.355706129830878,
+    "P1_pelvic_chord_angle": 8.356758027409938,
+    "P2_thoracic_chord_angle": 3.7901426165453347,
+    "P3_lumbar_bend_angle": 12.146900643955274,
+    "P6_glute_minus_thoracic_apex_y": -9.59147421667521,
+    "P7_back_turning_total_deg": 44.30402247507067,
+    "C1_axis_thorax": -3.080572062093966,
+    "C2_axis_pelvis": 3.14959636569733,
+    "C3_axis_lumbar": -1.2031180871386136,
+    "C4_axis_rel_thorax_minus_pelvis": -6.2301684277912965,
+    "F1_mid_back_at_thoracic_apex_y": -146.98898925349016,
+    "F2_cy_at_chest_y": -11.464942365449936
+   },
+   "raw_frame": {
+    "D1_chest_breadth": 352.0,
+    "D1_chest_z": 1303.0,
+    "D2_chest_depth": 276.0,
+    "D3_waist_depth_min": 224.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.8979591836734694,
+    "D6_chestdepth_over_waistdepth": 1.2321428571428572,
+    "D6_buttockdepth_over_waistdepth": 1.1696428571428572,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.7719298245614035,
+    "P4_thoracic_apex_z": 1308.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1103.0,
+    "P5_lumbar_concavity_vs_chord": 19.543914933460144,
+    "P1_pelvic_chord_angle": 8.544055047769215,
+    "P2_thoracic_chord_angle": 3.847260770554959,
+    "P3_lumbar_bend_angle": 12.391315818324173,
+    "P6_glute_minus_thoracic_apex_y": -10.252011637874006,
+    "P7_back_turning_total_deg": 46.47796795448151,
+    "C1_axis_thorax": -3.090584946620795,
+    "C2_axis_pelvis": 3.163825321100294,
+    "C3_axis_lumbar": -1.1944305936913249,
+    "C4_axis_rel_thorax_minus_pelvis": -6.254410267721089,
+    "F1_mid_back_at_thoracic_apex_y": -144.9988596368007,
+    "F2_cy_at_chest_y": -9.976745103029959
+   },
+   "raw_zmin": 0.0,
+   "raw_zmax": 1.682437539100647,
+   "raw_shank_y": -4.906521130702491
+  },
+  "E2": {
+   "ref01_frame": {
+    "D1_chest_breadth": 296.0,
+    "D1_chest_z": 1303.0,
+    "D2_chest_depth": 272.0,
+    "D3_waist_depth_min": 216.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.7551020408163265,
+    "D6_chestdepth_over_waistdepth": 1.2592592592592593,
+    "D6_buttockdepth_over_waistdepth": 1.212962962962963,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.6491228070175439,
+    "P4_thoracic_apex_z": 1308.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1098.0,
+    "P5_lumbar_concavity_vs_chord": 19.303707228907825,
+    "P1_pelvic_chord_angle": 8.575218981943399,
+    "P2_thoracic_chord_angle": 3.7571650632882587,
+    "P3_lumbar_bend_angle": 12.332384045231658,
+    "P6_glute_minus_thoracic_apex_y": -9.582476531405689,
+    "P7_back_turning_total_deg": 42.25771930023437,
+    "C1_axis_thorax": -6.157611695058526,
+    "C2_axis_pelvis": 3.14959636569733,
+    "C3_axis_lumbar": 2.4810121709225803,
+    "C4_axis_rel_thorax_minus_pelvis": -9.307208060755855,
+    "F1_mid_back_at_thoracic_apex_y": -146.99798693875968,
+    "F2_cy_at_chest_y": -16.986772819426918
+   },
+   "raw_frame": {
+    "D1_chest_breadth": 296.0,
+    "D1_chest_z": 1303.0,
+    "D2_chest_depth": 274.0,
+    "D3_waist_depth_min": 216.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.7551020408163265,
+    "D6_chestdepth_over_waistdepth": 1.2685185185185186,
+    "D6_buttockdepth_over_waistdepth": 1.212962962962963,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.6491228070175439,
+    "P4_thoracic_apex_z": 1308.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1103.0,
+    "P5_lumbar_concavity_vs_chord": 20.02784480932189,
+    "P1_pelvic_chord_angle": 8.544055047769215,
+    "P2_thoracic_chord_angle": 4.154307009277222,
+    "P3_lumbar_bend_angle": 12.698362057046436,
+    "P6_glute_minus_thoracic_apex_y": -9.148046608564329,
+    "P7_back_turning_total_deg": 46.07173137903971,
+    "C1_axis_thorax": -6.167867848249825,
+    "C2_axis_pelvis": 3.163825321100294,
+    "C3_axis_lumbar": 2.4917652617465125,
+    "C4_axis_rel_thorax_minus_pelvis": -9.33169316935012,
+    "F1_mid_back_at_thoracic_apex_y": -146.10282466611037,
+    "F2_cy_at_chest_y": -15.552898741456053
+   },
+   "raw_zmin": 0.0,
+   "raw_zmax": 1.682437539100647,
+   "raw_shank_y": -4.906521130702491
+  },
+  "E3": {
+   "ref01_frame": {
+    "D1_chest_breadth": 348.0,
+    "D1_chest_z": 1303.0,
+    "D2_chest_depth": 314.0,
+    "D3_waist_depth_min": 222.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.8877551020408163,
+    "D6_chestdepth_over_waistdepth": 1.4144144144144144,
+    "D6_buttockdepth_over_waistdepth": 1.1801801801801801,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.7631578947368421,
+    "P4_thoracic_apex_z": 1303.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1098.0,
+    "P5_lumbar_concavity_vs_chord": 37.46545485310634,
+    "P1_pelvic_chord_angle": 11.923636190063865,
+    "P2_thoracic_chord_angle": 12.041131428993266,
+    "P3_lumbar_bend_angle": 23.96476761905713,
+    "P6_glute_minus_thoracic_apex_y": 10.99752220384724,
+    "P7_back_turning_total_deg": 67.16866829036819,
+    "C1_axis_thorax": -2.557856325947071,
+    "C2_axis_pelvis": 2.314739708194781,
+    "C3_axis_lumbar": 1.1151917376950802,
+    "C4_axis_rel_thorax_minus_pelvis": -4.872596034141852,
+    "F1_mid_back_at_thoracic_apex_y": -161.70293978829775,
+    "F2_cy_at_chest_y": -11.840736191979385
+   },
+   "raw_frame": {
+    "D1_chest_breadth": 348.0,
+    "D1_chest_z": 1303.0,
+    "D2_chest_depth": 314.0,
+    "D3_waist_depth_min": 222.0,
+    "D3_buttock_depth_max": 262.0,
+    "D4_hip_breadth_max": 392.0,
+    "D5_chest_over_hip": 0.8877551020408163,
+    "D6_chestdepth_over_waistdepth": 1.4144144144144144,
+    "D6_buttockdepth_over_waistdepth": 1.1801801801801801,
+    "D7_bideltoid": 456.0,
+    "D7_chest_over_bideltoid": 0.7631578947368421,
+    "P4_thoracic_apex_z": 1303.0,
+    "P4_gluteal_apex_z": 943.0,
+    "P5_lumbar_z": 1098.0,
+    "P5_lumbar_concavity_vs_chord": 37.61704120103494,
+    "P1_pelvic_chord_angle": 11.923636190063876,
+    "P2_thoracic_chord_angle": 12.135217025268963,
+    "P3_lumbar_bend_angle": 24.05885321533284,
+    "P6_glute_minus_thoracic_apex_y": 11.349593721616827,
+    "P7_back_turning_total_deg": 67.70519768379536,
+    "C1_axis_thorax": -2.5519718810566423,
+    "C2_axis_pelvis": 2.3171086691325224,
+    "C3_axis_lumbar": 1.1120965633469457,
+    "C4_axis_rel_thorax_minus_pelvis": -4.869080550189165,
+    "F1_mid_back_at_thoracic_apex_y": -166.05501130606734,
+    "F2_cy_at_chest_y": -15.871110743042397
+   },
+   "raw_zmin": 0.0,
+   "raw_zmax": 1.682437539100647,
+   "raw_shank_y": -4.906521130702491
+  }
+ },
+ "ref01": {
+  "E0": {
+   "crotchheight": 840.0,
+   "chest_z": 1305.0,
+   "chestdepth": 314.0,
+   "chestbreadth": 352.0,
+   "chestcircumference": 1052.8507467588074,
+   "waist_nat_z": 1100.0,
+   "waist_nat_breadth": 288.0,
+   "waistbreadth": 328.0,
+   "waistdepth": 248.0,
+   "waistcircumference": 910.9680081327629,
+   "hip_z": 850.0,
+   "hipbreadth": 392.0,
+   "buttock_z": 940.0,
+   "buttockdepth": 262.0,
+   "buttockcircumference": 1010.1225573303751,
+   "neck_z": 1485.0,
+   "neck_breadth": 124.0,
+   "neck_depth": 156.0,
+   "neckcircumference": 429.2022329684838,
+   "thighcircumference": 578.0701222597202,
+   "knee_min_circ": 377.01729882409944,
+   "calfcircumference": 393.0070181698551,
+   "calf_z": 365.0,
+   "anklecircumference": 207.39271775810218,
+   "leg_cx_thigh": 106.18624289881775,
+   "leg_cx_knee": 116.22140608604407,
+   "leg_cx_ankle": 81.76350093109869,
+   "leg_gap_knee": 116.44281217208814,
+   "headbreadth": 142.0,
+   "headlength": 176.0,
+   "thoracic_apex_z": 1290.0,
+   "buttock_apex_z": 930.0,
+   "lumbar_concavity": 19.694444444444457,
+   "lumbar_z": 1085.0,
+   "buttock_behind_thoracic": 10.0,
+   "abdomen_front_minus_waist_front": 12.0,
+   "belly_front_fixed": -6.0,
+   "occiput_z": 1590.0,
+   "nape_z": 1520.0,
+   "nape_recess": 20.0,
+   "upper_back_z": 1330.0,
+   "upper_back_vs_occiput": -52.0,
+   "neckbase_depth_max": 244.0,
+   "neckbase_depth_excess": -58.0
+  },
+  "E1": {
+   "crotchheight": 840.0,
+   "chest_z": 1300.0,
+   "chestdepth": 276.0,
+   "chestbreadth": 348.0,
+   "chestcircumference": 990.7823974919024,
+   "waist_nat_z": 1100.0,
+   "waist_nat_breadth": 288.0,
+   "waistbreadth": 328.0,
+   "waistdepth": 248.0,
+   "waistcircumference": 910.8619463973153,
+   "hip_z": 850.0,
+   "hipbreadth": 392.0,
+   "buttock_z": 940.0,
+   "buttockdepth": 262.0,
+   "buttockcircumference": 1010.1992477525998,
+   "neck_z": 1485.0,
+   "neck_breadth": 124.0,
+   "neck_depth": 156.0,
+   "neckcircumference": 428.64256705612587,
+   "thighcircumference": 578.0701222597202,
+   "knee_min_circ": 374.0145436051544,
+   "calfcircumference": 389.96296140347965,
+   "calf_z": 370.0,
+   "anklecircumference": 207.39271775810218,
+   "leg_cx_thigh": 106.16873944418855,
+   "leg_cx_knee": 116.22840153899965,
+   "leg_cx_ankle": 81.76865671641791,
+   "leg_gap_knee": 116.4568030779993,
+   "headbreadth": 142.0,
+   "headlength": 176.0,
+   "thoracic_apex_z": 1285.0,
+   "buttock_apex_z": 930.0,
+   "lumbar_concavity": 19.49295774647888,
+   "lumbar_z": 1090.0,
+   "buttock_behind_thoracic": 10.0,
+   "abdomen_front_minus_waist_front": 12.0,
+   "belly_front_fixed": -2.0,
+   "occiput_z": 1590.0,
+   "nape_z": 1520.0,
+   "nape_recess": 20.0,
+   "upper_back_z": 1330.0,
+   "upper_back_vs_occiput": -52.0,
+   "neckbase_depth_max": 244.0,
+   "neckbase_depth_excess": -28.0
+  },
+  "E2": {
+   "crotchheight": 840.0,
+   "chest_z": 1305.0,
+   "chestdepth": 272.0,
+   "chestbreadth": 296.0,
+   "chestcircumference": 905.0044811003045,
+   "waist_nat_z": 1125.0,
+   "waist_nat_breadth": 276.0,
+   "waistbreadth": 328.0,
+   "waistdepth": 248.0,
+   "waistcircumference": 910.8619463973153,
+   "hip_z": 850.0,
+   "hipbreadth": 392.0,
+   "buttock_z": 940.0,
+   "buttockdepth": 262.0,
+   "buttockcircumference": 1010.1992477525998,
+   "neck_z": 1485.0,
+   "neck_breadth": 124.0,
+   "neck_depth": 156.0,
+   "neckcircumference": 428.64256705612587,
+   "thighcircumference": 578.0701222597202,
+   "knee_min_circ": 374.0145436051544,
+   "calfcircumference": 389.96296140347965,
+   "calf_z": 370.0,
+   "anklecircumference": 207.39271775810218,
+   "leg_cx_thigh": 106.16873944418855,
+   "leg_cx_knee": 116.22840153899965,
+   "leg_cx_ankle": 81.76865671641791,
+   "leg_gap_knee": 116.4568030779993,
+   "headbreadth": 142.0,
+   "headlength": 176.0,
+   "thoracic_apex_z": 1280.0,
+   "buttock_apex_z": 930.0,
+   "lumbar_concavity": 19.428571428571416,
+   "lumbar_z": 1090.0,
+   "buttock_behind_thoracic": 10.0,
+   "abdomen_front_minus_waist_front": 20.0,
+   "belly_front_fixed": 18.0,
+   "occiput_z": 1590.0,
+   "nape_z": 1520.0,
+   "nape_recess": 20.0,
+   "upper_back_z": 1330.0,
+   "upper_back_vs_occiput": -52.0,
+   "neckbase_depth_max": 226.0,
+   "neckbase_depth_excess": -36.0
+  },
+  "E3": {
+   "crotchheight": 840.0,
+   "chest_z": 1305.0,
+   "chestdepth": 314.0,
+   "chestbreadth": 352.0,
+   "chestcircumference": 1051.48507738703,
+   "waist_nat_z": 1100.0,
+   "waist_nat_breadth": 288.0,
+   "waistbreadth": 328.0,
+   "waistdepth": 248.0,
+   "waistcircumference": 909.2974192032797,
+   "hip_z": 850.0,
+   "hipbreadth": 392.0,
+   "buttock_z": 940.0,
+   "buttockdepth": 262.0,
+   "buttockcircumference": 1010.270818287034,
+   "neck_z": 1485.0,
+   "neck_breadth": 124.0,
+   "neck_depth": 154.0,
+   "neckcircumference": 429.1025559261373,
+   "thighcircumference": 578.0701222597202,
+   "knee_min_circ": 377.01729882409944,
+   "calfcircumference": 389.96296140347965,
+   "calf_z": 380.0,
+   "anklecircumference": 207.39271775810218,
+   "leg_cx_thigh": 106.16924965474912,
+   "leg_cx_knee": 116.21413575927222,
+   "leg_cx_ankle": 81.82894736842105,
+   "leg_gap_knee": 116.42827151854445,
+   "headbreadth": 142.0,
+   "headlength": 178.0,
+   "thoracic_apex_z": 1300.0,
+   "buttock_apex_z": 930.0,
+   "lumbar_concavity": 39.67567567567568,
+   "lumbar_z": 1105.0,
+   "buttock_behind_thoracic": -12.0,
+   "abdomen_front_minus_waist_front": 8.0,
+   "belly_front_fixed": 6.0,
+   "occiput_z": 1580.0,
+   "nape_z": 1520.0,
+   "nape_recess": 20.0,
+   "upper_back_z": 1330.0,
+   "upper_back_vs_occiput": -70.0,
+   "neckbase_depth_max": 244.0,
+   "neckbase_depth_excess": -58.0
+  }
+ },
+ "invariance": {
+  "E1": {
+   "same_component_labels": true,
+   "trunk_component": 23,
+   "components_changed_mm": {
+    "23": 37.575
+   },
+   "n_components": 85,
+   "cage_changed_by_station_mm": {
+    "bust": 57.703
+   },
+   "cage_max_change_outside_trunk_box_mm": 0.0,
+   "raw_max_change_non_trunk_mm": 0.0
+  },
+  "E2": {
+   "same_component_labels": true,
+   "trunk_component": 23,
+   "components_changed_mm": {
+    "23": 40.668,
+    "24": 0.071,
+    "30": 0.071
+   },
+   "n_components": 85,
+   "cage_changed_by_station_mm": {
+    "deltoid_line": 2.694,
+    "jugulum": 39.479,
+    "bust": 42.627,
+    "inframammary": 37.614,
+    "waist": 0.073,
+    "navel": 0.004,
+    "hip_flare": 0.0
+   },
+   "cage_max_change_outside_trunk_box_mm": 1.8672,
+   "raw_max_change_non_trunk_mm": 0.0709
+  },
+  "E3": {
+   "same_component_labels": true,
+   "trunk_component": 23,
+   "components_changed_mm": {
+    "23": 23.816
+   },
+   "n_components": 85,
+   "cage_changed_by_station_mm": {
+    "jugulum": 10.107,
+    "bust": 29.985,
+    "inframammary": 14.952,
+    "waist": 16.484,
+    "navel": 8.751
+   },
+   "cage_max_change_outside_trunk_box_mm": 0.0,
+   "raw_max_change_non_trunk_mm": 0.0
+  }
+ },
+ "contracts": {
+  "E1": {
+   "junctions.trunk_ramp[6].dz_mm": [
+    57.7373206615448,
+    58.12749266624451
+   ],
+   "junctions.trunk_ramp[6].slope": [
+    0.040085312719533917,
+    0.039816246119455403
+   ],
+   "junctions.trunk_ramp[7].dz_mm": [
+    72.25262373685837,
+    71.86245173215866
+   ],
+   "junctions.trunk_ramp[7].slope": [
+    0.4966693247173033,
+    0.49936595503573533
+   ],
+   "silhouette.side.a_extent": [
+    0.3607548475265503,
+    0.32198984920978546
+   ],
+   "silhouette.side.area_cells": [
+    8242,
+    9104
+   ],
+   "silhouette.side.area_m2": [
+    0.3054625589311795,
+    0.3011533022248446
+   ],
+   "silhouette.side.max_row_width": [
+    124,
+    116
+   ]
+  },
+  "E2": {
+   "junctions.neck.min_width_mm": [
+    112.26686090230942,
+    112.27542161941528
+   ],
+   "junctions.neck.ratio_min_over_head": [
+    0.7795097742111139,
+    0.7795692143932358
+   ],
+   "junctions.neck.ratio_min_over_shoulder": [
+    0.2478854837136759,
+    0.24790438579647817
+   ],
+   "junctions.trunk_ramp[0].dz_mm": [
+    35.54816544055939,
+    35.5474054813385
+   ],
+   "junctions.trunk_ramp[0].slope": [
+    0.5527056749316838,
+    0.55271749109009
+   ],
+   "junctions.trunk_ramp[10].dz_mm": [
+    61.126478016376495,
+    61.125870794057846
+   ],
+   "junctions.trunk_ramp[10].slope": [
+    0.820840692825688,
+    0.8208488470291744
+   ],
+   "junctions.trunk_ramp[11].dz_mm": [
+    60.88140606880188,
+    60.88140234351158
+   ],
+   "junctions.trunk_ramp[11].slope": [
+    0.18866666568763796,
+    0.18866667723201885
+   ],
+   "junctions.trunk_ramp[1].dw_mm": [
+    17.17342436313629,
+    17.175525426864624
+   ],
+   "junctions.trunk_ramp[1].dz_mm": [
+    137.54500448703766,
+    137.47885823249817
+   ],
+   "junctions.trunk_ramp[1].slope": [
+    0.12485676544330425,
+    0.12493212154714098
+   ],
+   "junctions.trunk_ramp[2].dw_mm": [
+    92.91519969701767,
+    92.913918197155
+   ],
+   "junctions.trunk_ramp[2].dz_mm": [
+    36.131687462329865,
+    36.10999137163162
+   ],
+   "junctions.trunk_ramp[2].slope": [
+    2.5715710010469093,
+    2.5730805981346516
+   ],
+   "junctions.trunk_ramp[3].dw_mm": [
+    88.47032487392426,
+    88.4695053100586
+   ],
+   "junctions.trunk_ramp[3].dz_mm": [
+    16.967467963695526,
+    16.877643764019012
+   ],
+   "junctions.trunk_ramp[3].slope": [
+    5.214114743768484,
+    5.241816129492217
+   ],
+   "junctions.trunk_ramp[4].dz_mm": [
+    23.789793252944946,
+    23.82437139749527
+   ],
+   "junctions.trunk_ramp[4].slope": [
+    6.480088393028275,
+    6.470683341813511
+   ],
+   "junctions.trunk_ramp[5].dw_mm": [
+    -76.67189836502075,
+    -131.2832236289978
+   ],
+   "junctions.trunk_ramp[5].dz_mm": [
+    29.686622321605682,
+    29.29048240184784
+   ],
+   "junctions.trunk_ramp[5].slope": [
+    2.5827087209318376,
+    4.482112033112694
+   ],
+   "junctions.trunk_ramp[6].dw_mm": [
+    2.3144185543060303,
+    1.7576217651367188
+   ],
+   "junctions.trunk_ramp[6].dz_mm": [
+    57.7373206615448,
+    58.28630179166794
+   ],
+   "junctions.trunk_ramp[6].slope": [
+    0.040085312719533917,
+    0.030154971427402723
+   ],
+   "junctions.trunk_ramp[7].dw_mm": [
+    -35.88566184043884,
+    -30.216246843338013
+   ],
+   "junctions.trunk_ramp[7].dz_mm": [
+    72.25262373685837,
+    72.3598375916481
+   ],
+   "junctions.trunk_ramp[7].slope": [
+    0.4966693247173033,
+    0.41758312136988024
+   ],
+   "junctions.trunk_ramp[8].dw_mm": [
+    -52.43179202079773,
+    -2.9330849647521973
+   ],
+   "junctions.trunk_ramp[8].dz_mm": [
+    145.35719901323318,
+    145.25171369314194
+   ],
+   "junctions.trunk_ramp[8].slope": [
+    0.360709977742653,
+    0.020193117796521273
+   ],
+   "junctions.trunk_ramp[9].dz_mm": [
+    56.31052702665329,
+    56.300558149814606
+   ],
+   "junctions.trunk_ramp[9].slope": [
+    0.8981688097084484,
+    0.8983278442640296
+   ],
+   "junctions.trunk_ramp_max_slope": [
+    6.480088393028275,
+    6.470683341813511
+   ],
+   "mirror.misses": [
+    158,
+    154
+   ],
+   "mirror.misses_by_region.skin": [
+    113,
+    109
+   ],
+   "mirror.ratio": [
+    0.025051530045980656,
+    0.0244173140954495
+   ],
+   "silhouette.front.area_cells": [
+    9960,
+    9888
+   ],
+   "silhouette.front.area_m2": [
+    0.5304597333834518,
+    0.5266250847083906
+   ],
+   "silhouette.side.a_extent": [
+    0.3607548475265503,
+    0.32198984920978546
+   ],
+   "silhouette.side.area_cells": [
+    8242,
+    8964
+   ],
+   "silhouette.side.area_m2": [
+    0.3054625589311795,
+    0.2965222101431796
+   ],
+   "silhouette.side.max_row_width": [
+    124,
+    123
+   ]
+  },
+  "E3": {
+   "junctions.trunk_ramp[10].dw_mm": [
+    50.175100564956665,
+    50.17527937889099
+   ],
+   "junctions.trunk_ramp[10].dz_mm": [
+    61.126478016376495,
+    61.20884418487549
+   ],
+   "junctions.trunk_ramp[10].slope": [
+    0.820840692825688,
+    0.8197390433863011
+   ],
+   "junctions.trunk_ramp[5].dw_mm": [
+    -76.67189836502075,
+    -76.90438628196716
+   ],
+   "junctions.trunk_ramp[5].dz_mm": [
+    29.686622321605682,
+    29.78096902370453
+   ],
+   "junctions.trunk_ramp[5].slope": [
+    2.5827087209318376,
+    2.5823332417677265
+   ],
+   "junctions.trunk_ramp[6].dw_mm": [
+    2.3144185543060303,
+    1.8682479858398438
+   ],
+   "junctions.trunk_ramp[6].dz_mm": [
+    57.7373206615448,
+    57.81130492687225
+   ],
+   "junctions.trunk_ramp[6].slope": [
+    0.040085312719533917,
+    0.0323163088638643
+   ],
+   "junctions.trunk_ramp[7].dw_mm": [
+    -35.88566184043884,
+    -35.44127941131592
+   ],
+   "junctions.trunk_ramp[7].dz_mm": [
+    72.25262373685837,
+    72.03138619661331
+   ],
+   "junctions.trunk_ramp[7].slope": [
+    0.4966693247173033,
+    0.4920255083607187
+   ],
+   "junctions.trunk_ramp[8].dw_mm": [
+    -52.43179202079773,
+    -52.18824744224548
+   ],
+   "junctions.trunk_ramp[8].dz_mm": [
+    145.35719901323318,
+    145.25925368070602
+   ],
+   "junctions.trunk_ramp[8].slope": [
+    0.360709977742653,
+    0.359276577015605
+   ],
+   "junctions.trunk_ramp[9].dw_mm": [
+    50.576359033584595,
+    50.566911697387695
+   ],
+   "junctions.trunk_ramp[9].dz_mm": [
+    56.31052702665329,
+    56.379012763500214
+   ],
+   "junctions.trunk_ramp[9].slope": [
+    0.8981688097084484,
+    0.8969102014876842
+   ],
+   "silhouette.side.a_extent": [
+    0.3607548475265503,
+    0.34920577704906464
+   ],
+   "silhouette.side.area_cells": [
+    8242,
+    8498
+   ],
+   "silhouette.side.area_m2": [
+    0.3054625589311795,
+    0.3048676523654437
+   ],
+   "silhouette.side.max_row_width": [
+    124,
+    128
+   ]
+  }
+ }
+}

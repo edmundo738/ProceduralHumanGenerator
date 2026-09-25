@@ -1,0 +1,160 @@
+{
+ "variant": "E2",
+ "stations": [
+  {
+   "i": 0,
+   "name": "sec0",
+   "z": 1.631933331489563,
+   "changed": {}
+  },
+  {
+   "i": 1,
+   "name": "sec1",
+   "z": 1.5963777303695679,
+   "changed": {}
+  },
+  {
+   "i": 2,
+   "name": "sec2",
+   "z": 1.4500999450683594,
+   "changed": {}
+  },
+  {
+   "i": 3,
+   "name": "sec3",
+   "z": 1.4143999814987183,
+   "changed": {}
+  },
+  {
+   "i": 4,
+   "name": "sec4",
+   "z": 1.4007999897003174,
+   "changed": {}
+  },
+  {
+   "i": 5,
+   "name": "deltoid_line",
+   "z": 1.3803999423980713,
+   "changed": {}
+  },
+  {
+   "i": 6,
+   "name": "jugulum",
+   "z": 1.3515000343322754,
+   "changed": {
+    "y": [
+     -0.01360000018030405,
+     -0.032806698232889175
+    ],
+    "width": [
+     0.179618198,
+     0.1526754683
+    ],
+    "depth": [
+     0.12804465599999998,
+     0.10883795759999998
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "name": "bust",
+   "z": 1.2954000234603882,
+   "changed": {
+    "y": [
+     -0.0034000000450760126,
+     -0.024740776047110558
+    ],
+    "width": [
+     0.181396596,
+     0.15418710659999998
+    ],
+    "depth": [
+     0.14227184,
+     0.120931064
+    ],
+    "fs": [
+     1.4043120706263603,
+     1.475661259560424
+    ]
+   }
+  },
+  {
+   "i": 8,
+   "name": "inframammary",
+   "z": 1.2239999771118164,
+   "changed": {
+    "y": [
+     -0.010200000368058681,
+     -0.028873179107904434
+    ],
+    "width": [
+     0.163612616,
+     0.13907072359999997
+    ],
+    "depth": [
+     0.12448785999999999,
+     0.105814681
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "name": "waist",
+   "z": 1.0794999599456787,
+   "changed": {}
+  },
+  {
+   "i": 10,
+   "name": "navel",
+   "z": 1.0233999490737915,
+   "changed": {}
+  },
+  {
+   "i": 11,
+   "name": "hip_flare",
+   "z": 0.9621999859809875,
+   "changed": {}
+  },
+  {
+   "i": 12,
+   "name": "hip",
+   "z": 0.9010000228881836,
+   "changed": {}
+  },
+  {
+   "i": 13,
+   "name": "crotch",
+   "z": 0.8330000042915344,
+   "changed": {}
+  }
+ ],
+ "sternum_plate_dy_mm": -41.15,
+ "digest": "da66d8c87c36cd64",
+ "fingerprint": "ad620a90b8eba085",
+ "audit": {
+  "verts": 6307,
+  "faces": 6213,
+  "edges": 12466,
+  "quads": 5331,
+  "tris": 882,
+  "ngons": 0,
+  "boundary_edges": 962,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0,
+  "loose_edges": 0,
+  "irregular_valence_verts": 127,
+  "quad_ratio": 0.8580395943988411,
+  "watertight": false
+ },
+ "numerics": {
+  "backend": "mathutils",
+  "float_precision": 32
+ },
+ "warnings": [
+  "numerics: mathutils (float32) backend \u2014 digests are regime-specific and differ from the pure-python (float64) digest for the same spec; see README"
+ ],
+ "src_sha256_before": "071723a1b66fd90f68683a7ba2b4fbc1486b9b8f230eaab566f2f973ef1a072e",
+ "src_sha256_after": "071723a1b66fd90f68683a7ba2b4fbc1486b9b8f230eaab566f2f973ef1a072e",
+ "src_unchanged": true
+}
