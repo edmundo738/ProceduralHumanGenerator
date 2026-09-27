@@ -7,6 +7,8 @@ python3 tools/preview/build_site.py                                             
 python3 -m http.server 8080 --bind 0.0.0.0 --directory out/preview                   # abrir http://localhost:8080
 ```
 
+`HCG_PREVIEW_OUT=<pasta>` nos dois primeiros passos muda o destino (ex.: uma pasta fora de `out/`).
+
 - Versões: `antes` (cabeça original), `faseA`, `a2b`, `n1` — geradas com as mesmas flags de ambiente dos estudos
   (digests iguais aos registados em docs/head_phaseA/).
 - Cinza neutro, sem cabelo, sem materiais. "Suave" = malha com subdivisão (a que vai a render);

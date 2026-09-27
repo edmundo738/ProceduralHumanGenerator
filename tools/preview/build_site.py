@@ -7,6 +7,8 @@
     # 3) servir
     python -m http.server 8080 --bind 0.0.0.0 --directory out/preview
 
+HCG_PREVIEW_OUT=<pasta> muda o destino (modelos: <pasta>/models).
+
 Os números vêm dos ficheiros de avaliação já no repositório (docs/head_phaseA/eval_N1.json,
 neck_eval_N1.json) — o site não mede nada; mostra o que foi medido.
 """
@@ -18,7 +20,9 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 SITE = os.path.join(ROOT, "tools", "preview", "site")
-OUT = os.path.join(ROOT, "out", "preview")
+OUT = os.path.abspath(os.environ.get("HCG_PREVIEW_OUT", os.path.join(ROOT, "out", "preview")))
+ADDONS = ("loaders/GLTFLoader.js", "controls/OrbitControls.js", "utils/BufferGeometryUtils.js",
+          "utils/SkeletonUtils.js")  # só o que o site importa (e as dependências diretas)
 DOCS = os.path.join(ROOT, "docs", "head_phaseA")
 THREE_VERSION = "0.186.1"
 
@@ -79,7 +83,9 @@ def vendor_three(dst):
         src = os.path.join(mod, "build", f)
         if os.path.exists(src):
             shutil.copy2(src, os.path.join(dst, f))
-    shutil.copytree(os.path.join(mod, "examples", "jsm"), os.path.join(dst, "addons"), dirs_exist_ok=True)
+    for a in ADDONS:
+        os.makedirs(os.path.dirname(os.path.join(dst, "addons", a)), exist_ok=True)
+        shutil.copy2(os.path.join(mod, "examples", "jsm", a), os.path.join(dst, "addons", a))
 
 
 def main():
