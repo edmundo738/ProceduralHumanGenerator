@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProceduralHumanGenerator — Preview da cabeça</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": {
+        "three": "./vendor/three/three.module.js",
+        "three/addons/": "./vendor/three/addons/"
+    } }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>ProceduralHumanGenerator <span>· preview da cabeça</span></h1>
+      <p id="buildline">realistic_female · seed 42 · cinza neutro, sem cabelo</p>
+    </div>
+    <nav class="tabs">
+      <button data-tab="viewer" class="active">Modelo 3D</button>
+      <button data-tab="metrics">Métricas</button>
+      <button data-tab="renders">Renders</button>
+      <button data-tab="history">Histórico</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ================================================================ 3D -->
+    <section id="tab-viewer" class="tab active">
+      <div class="toolbar">
+        <div class="group">
+          <label>Modo</label>
+          <div class="seg" id="mode">
+            <button data-v="compare" class="on">Comparar</button>
+            <button data-v="single">Único</button>
+          </div>
+        </div>
+        <div class="group">
+          <label>Vista</label>
+          <div class="seg" id="views">
+            <button data-v="front" class="on">Frente</button>
+            <button data-v="q">¾</button>
+            <button data-v="side">Lado</button>
+            <button data-v="back">Costas</button>
+            <button data-v="below">Baixo</button>
+          </div>
+        </div>
+        <div class="group">
+          <label>Enquadramento</label>
+          <div class="seg" id="frame">
+            <button data-v="head" class="on">Cabeça</button>
+            <button data-v="bust">Busto</button>
+            <button data-v="body">Corpo</button>
+          </div>
+        </div>
+        <div class="group">
+          <label>Malha</label>
+          <div class="seg" id="meshmode">
+            <button data-v="smooth" class="on">Suave (render)</button>
+            <button data-v="cage">Cage (gerador)</button>
+          </div>
+        </div>
+        <div class="group checks">
+          <label><input type="checkbox" id="wire"> Wireframe (arestas reais)</label>
+          <label><input type="checkbox" id="flat"> Facetado</label>
+          <label><input type="checkbox" id="spin"> Rodar</label>
+        </div>
+      </div>
+
+      <div class="viewports" id="viewports">
+        <div class="vp" id="vpL">
+          <select class="variant" id="selL"></select>
+          <div class="stats" id="statsL"></div>
+          <div class="loading" id="loadL">a carregar…</div>
+        </div>
+        <div class="vp" id="vpR">
+          <select class="variant" id="selR"></select>
+          <div class="stats" id="statsR"></div>
+          <div class="loading" id="loadR">a carregar…</div>
+        </div>
+      </div>
+      <p class="hint">Arrastar = rodar · roda do rato = zoom · botão direito = deslocar.
+        As duas vistas partilham a mesma câmara. A cabeça antiga inclui olhos/boca; as versões novas são só massas (Fase A, sem traços por desenho).</p>
+      <div id="note" class="note"></div>
+    </section>
+
+    <!-- =========================================================== MÉTRICAS -->
+    <section id="tab-metrics" class="tab">
+      <h2>Critérios pré-registados (mm @ altura da cabeça 226)</h2>
+      <p class="sub">Mesmo instrumento, normalização e seed para todas as fontes. ✓/✗ só para as nossas versões; as refs dão contexto.</p>
+      <div class="tablewrap"><table id="mtable"></table></div>
+      <h2>Pescoço superior (NECK N1)</h2>
+      <div class="tablewrap"><table id="ntable"></table></div>
+    </section>
+
+    <!-- ============================================================ RENDERS -->
+    <section id="tab-renders" class="tab">
+      <h2>Renders e figuras de medição</h2>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <!-- =========================================================== HISTÓRICO -->
+    <section id="tab-history" class="tab">
+      <h2>O que mudou em cada passo</h2>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+  </main>
+
+  <div id="lightbox" class="lightbox"><img alt=""><p></p></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
