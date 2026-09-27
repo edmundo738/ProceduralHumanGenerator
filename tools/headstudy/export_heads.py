@@ -25,7 +25,8 @@ os.makedirs(OUT, exist_ok=True)
 SOURCES = {
     "ours": ("gen", None, None),
     "oursA": ("gen", "massA", None),          # HEAD FASE A (HCG_HEAD=massA)
-    "oursA2": ("gen", "massA2", None),        # HEAD FASE A2 (+ plano submental)
+    "oursA2": ("gen", "massA2", None),        # HEAD FASE A2b (canto mentoniano)
+    "oursN1": ("gen", "massA2+N1", None),     # A2b + NECK N1 (pescoço superior)
     "whitewalker": ("blend", "whitewalker-2016-06-06.blend", ["Cube"]),
     "makehuman": ("fbx", "Lucia_Prototype_v01.fbx", ["female_generic.objMesh"]),
     "femalechar": ("blend", "FemaleCharacter.blend", ["Plane.003"]),
@@ -82,14 +83,16 @@ def load(name):
     meta = {"name": name}
     if kind == "gen":
         import human_generator as hcg
-        if f:
-            os.environ["HCG_HEAD"] = f
-        else:
-            os.environ.pop("HCG_HEAD", None)
+        head_f, _, neck_f = (f or "").partition("+")
+        for key, val in (("HCG_HEAD", head_f), ("HCG_NECK", neck_f)):
+            if val:
+                os.environ[key] = val
+            else:
+                os.environ.pop(key, None)
         d0 = src_digest()
         r = hcg.generate_character("realistic_female", seed=42, out_dir=os.path.join(OUT, f"{name}_build"),
                                    name=f"headstudy_{name}")
-        os.environ.pop("HCG_HEAD", None)
+        os.environ.pop("HCG_HEAD", None); os.environ.pop("HCG_NECK", None)
         meta.update(digest=r.digest, src_before=d0, src_after=src_digest())
         body = [bpy.data.objects[r.objects["body"]]]
         meta["result_objects"] = dict(r.objects)

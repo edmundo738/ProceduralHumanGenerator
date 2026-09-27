@@ -14,11 +14,29 @@ Key facts (validated against ISO-7250-ish female distributions):
 from __future__ import annotations
 
 import math
+import os as _os
 
 from ._math import Vector, clamp, mix, smoothstep
 from .field import smooth_max
 from .topology import Section, make_section
 from ..spec import CharacterSpec
+
+# NECK N1 (docs/NECK_N1_PREREG.md) — só com HCG_NECK=N1; omissão inalterada.
+# Parâmetros das DUAS estações do pescoço superior (trunk.2, trunk.3) no
+# referencial da cabeça (mm@H226.1: escala h/226.1, y relativo ao centro
+# glabela–opistocrânio a −0.0398·h, como generators/head_mass.py).
+# (meia-largura, frente, trás) da ESTAÇÃO; o alvo é o ANEL FINAL (depois dos
+# campos do corpo) = perfil médio de femalebase/bodytopo/femalechar à cota final
+# do anel (tools/headfit/neck_study.py): trunk.2 (z +1.0) 48.0/29.8/−71.2
+# (extrapolado de z −10…−25), trunk.3 (z −35.8) 75.7/16.8/−85.3.  Os valores
+# abaixo = alvo − desvio medido estação→anel (calibração automática,
+# tools/headfit/neck_calib.py).  Cotas, nº de estações, sup, fs/bs: inalterados.
+NECK_N1 = {
+    "st2": (47.1, 32.91, -66.96),     # anel final medido 48.0 / 29.85 / −71.21 (z +1.4)
+    "st3": (74.18, 21.43, -80.34),    # anel final medido 75.73 / 16.95 / −85.34 (z −34.0)
+}
+_N1_H = 226.1
+_N1_Y0 = -0.0398
 
 # fractions of stature for body stations
 _Z: dict[str, float] = {
@@ -338,7 +356,21 @@ class Anatomy:
         # verdadeiramente escondido), em vez de a deixar sair pelo maxilar.
         add(zf("chin") + 0.78 * h, neck_w * 0.60, neck_w * 0.66)             # 1635 mm
         add(zf("chin") + 0.62 * h, neck_w * 0.78, neck_w * 0.84, y=-0.004 * s)  # 1599 mm
-        add(zf("spine_head") + 0.008 * s, neck_w * 0.92, neck_w * 1.00, y=-0.006 * s)  # 1450 mm
+        n1 = _os.environ.get("HCG_NECK", "") == "N1"
+
+        def n1_station(key, fs_, bs_):
+            """(w, d, y_param) da estação N1 a partir de (w, frente, trás) em mm@H226."""
+            w_, fr, bk = NECK_N1[key]
+            k_ = h / _N1_H
+            d_ = (fr - bk) / (fs_ + bs_)
+            cy = fr - d_ * fs_
+            return w_ * k_, d_ * k_, (_N1_Y0 * h + cy * k_) - front_off
+
+        if n1:
+            w2, d2, y2 = n1_station("st2", 1.0, 1.0)
+            add(zf("spine_head") + 0.008 * s, w2, d2, y=y2)
+        else:
+            add(zf("spine_head") + 0.008 * s, neck_w * 0.92, neck_w * 1.00, y=-0.006 * s)  # 1450 mm
         # S3.7 — rampa do trapézio em DUAS estações intermédias.  Medido: com a
         # placa única (394.5 mm a z = 1414) a largura saltava de 105 mm (estação
         # do pescoço) para 389 mm em **4 mm de altura** — uma parede, que é a
@@ -351,8 +383,12 @@ class Anatomy:
         # 104 mm atrás do occipital, REF STUDY 01 §4.3).  Hipótese testada: os
         # números foram escritos como profundidade TOTAL ⇒ meia-profundidade =
         # metade.  Só estes dois valores mudam (larguras, bs, y e cotas intactos).
-        add(zf("neck_top") - 0.002 * s, mix(neck_w, sh, 0.30), 0.075 * s * 0.5,
-            sup=2.4, bs=1.16, y=-0.010 * s)
+        if n1:
+            w3, d3, y3 = n1_station("st3", 1.0, 1.16)
+            add(zf("neck_top") - 0.002 * s, w3, d3, sup=2.4, bs=1.16, y=y3)
+        else:
+            add(zf("neck_top") - 0.002 * s, mix(neck_w, sh, 0.30), 0.075 * s * 0.5,
+                sup=2.4, bs=1.16, y=-0.010 * s)
         add(zf("neck_top") - 0.010 * s, mix(neck_w, sh, 0.62), 0.100 * s * 0.5,
             sup=2.4, bs=1.14, y=-0.010 * s)
         # deltoid line / shoulders

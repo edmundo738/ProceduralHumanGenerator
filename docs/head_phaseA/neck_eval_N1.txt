@@ -1,0 +1,16 @@
+oursA2: N-C1 2/18 dentro (tol 2.0 mm) · declive máx. da frente z −30…−65: 1.66 mm/mm
+  z -10: w   72.4✗ frente   40.4✓ trás   -81.1✓   refs w[44,56] f[13,40] t[-80,-71]
+  z -15: w   76.2✗ frente   40.8✗ trás   -83.2✗   refs w[45,59] f[10,36] t[-81,-72]
+  z -20: w   81.6✗ frente   41.3✗ trás   -85.3✗   refs w[47,64] f[9,32] t[-82,-73]
+  z -25: w   87.4✗ frente   42.1✗ trás   -88.1✗   refs w[50,71] f[7,30] t[-84,-74]
+  z -30: w   95.0✗ frente   43.1✗ trás   -91.1✗   refs w[54,82] f[6,29] t[-87,-76]
+  z -35: w  103.8✗ frente   44.8✗ trás   -94.8✗   refs w[57,97] f[5,27] t[-90,-78]
+  frente z −30…−65: 43 45 48 52 57 64 72 80
+oursN1: N-C1 15/18 dentro (tol 2.0 mm) · declive máx. da frente z −30…−65: 2.03 mm/mm
+  z -10: w   60.4✗ frente   23.6✓ trás   -76.6✓   refs w[44,56] f[13,40] t[-80,-71]
+  z -15: w   63.1✗ frente   22.9✓ trás   -78.0✓   refs w[45,59] f[10,36] t[-81,-72]
+  z -20: w   67.4✗ frente   22.8✓ trás   -79.5✓   refs w[47,64] f[9,32] t[-82,-73]
+  z -25: w   72.4✓ frente   22.7✓ trás   -81.7✓   refs w[50,71] f[7,30] t[-84,-74]
+  z -30: w   79.5✓ frente   24.4✓ trás   -84.0✓   refs w[54,82] f[6,29] t[-87,-76]
+  z -35: w   89.2✓ frente   27.4✓ trás   -87.6✓   refs w[57,97] f[5,27] t[-90,-78]
+  frente z −30…−65: 24 27 32 40 49 60 70 79
