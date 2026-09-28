@@ -1,0 +1,507 @@
+{
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes c7ab2932f5d66ede · faseA 76c5875d00a6db12 · a2b db7871c83c9cf800 · n1 179c676c86b5f012 · f1 e21378e3624e5765",
+ "variants": [
+  {
+   "id": "antes",
+   "label": "ANTES (cabeça antiga)",
+   "env": {},
+   "commit": "8716b88…de08023",
+   "digest": "c7ab2932f5d66ede",
+   "smooth": {
+    "verts": 97858,
+    "faces": 95880,
+    "quads": 95880,
+    "bytes": 4650604
+   },
+   "cage": {
+    "verts": 6307,
+    "faces": 6213,
+    "quads": 5331,
+    "bytes": 221512,
+    "edges": 12466
+   },
+   "desc": "cabeça original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g–op 174 vs 196–210, relação globo–órbita invertida."
+  },
+  {
+   "id": "faseA",
+   "label": "FASE A (massas R1)",
+   "env": {
+    "HCG_HEAD": "massA"
+   },
+   "commit": "642cb7f",
+   "digest": "76c5875d00a6db12",
+   "smooth": {
+    "verts": 100208,
+    "faces": 99456,
+    "quads": 99456,
+    "bytes": 4792832
+   },
+   "cage": {
+    "verts": 6356,
+    "faces": 6300,
+    "quads": 5964,
+    "bytes": 227008,
+    "edges": 12608
+   },
+   "desc": "nova representação: casca fechada cubo-esfera 3456 quads cujo raio é o modelo de 6 massas R1 ajustado ao alvo médio das refs. Sem traços (por desenho da fase)."
+  },
+  {
+   "id": "a2b",
+   "label": "A2b (canto mentoniano)",
+   "env": {
+    "HCG_HEAD": "massA2"
+   },
+   "commit": "5eb8c32",
+   "digest": "db7871c83c9cf800",
+   "smooth": {
+    "verts": 100208,
+    "faces": 99456,
+    "quads": 99456,
+    "bytes": 4792828
+   },
+   "cage": {
+    "verts": 6356,
+    "faces": 6300,
+    "quads": 5964,
+    "bytes": 227004,
+    "edges": 12608
+   },
+   "desc": "Fase A + canto mentoniano: união local com o envelope médio do queixo de 3 refs (frente do queixo + plano submental)."
+  },
+  {
+   "id": "n1",
+   "label": "A2b + N1 (pescoço superior)",
+   "env": {
+    "HCG_HEAD": "massA2",
+    "HCG_NECK": "N1"
+   },
+   "commit": "3ad83da",
+   "digest": "179c676c86b5f012",
+   "smooth": {
+    "verts": 100208,
+    "faces": 99456,
+    "quads": 99456,
+    "bytes": 4792828
+   },
+   "cage": {
+    "verts": 6356,
+    "faces": 6300,
+    "quads": 5964,
+    "bytes": 227004,
+    "edges": 12608
+   },
+   "desc": "A2b + pescoço superior (anéis trunk.2/3) calibrado para o perfil médio das refs. Só 32 vértices do corpo mudam."
+  },
+  {
+   "id": "f1",
+   "label": "F1 (face: campos + corretiva)",
+   "env": {
+    "HCG_HEAD": "faceB",
+    "HCG_NECK": "N1"
+   },
+   "commit": "2d6039f",
+   "digest": "e21378e3624e5765",
+   "smooth": {
+    "verts": 554484,
+    "faces": 553728,
+    "quads": 553728,
+    "bytes": 26597984
+   },
+   "cage": {
+    "verts": 34728,
+    "faces": 34716,
+    "quads": 34284,
+    "bytes": 1248356,
+    "edges": 69392
+   },
+   "desc": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓)."
+  }
+ ],
+ "metrics": {
+  "rows": [
+   {
+    "key": "C1_rms",
+    "label": "C1 erro radial RMS vs alvo",
+    "lo": -1000000000.0,
+    "hi": 2.5,
+    "target": "≤ 2.5",
+    "dp": 2
+   },
+   {
+    "key": "R_cephalic",
+    "label": "C2a largura / comprimento",
+    "lo": 0.7,
+    "hi": 0.79,
+    "target": "0.70–0.79",
+    "dp": 2
+   },
+   {
+    "key": "S7_g_op",
+    "label": "C2b comprimento glabela–occipital",
+    "lo": 196,
+    "hi": 210,
+    "target": "196–210",
+    "dp": 1
+   },
+   {
+    "key": "W1_breadth",
+    "label": "C2c largura máxima",
+    "lo": 141,
+    "hi": 156,
+    "target": "141–156",
+    "dp": 1
+   },
+   {
+    "key": "W3/W2",
+    "label": "C2d têmporas W3/W2",
+    "lo": 0.95,
+    "hi": 99,
+    "target": "≥ 0.95",
+    "dp": 2
+   },
+   {
+    "key": "W0.10H/W2",
+    "label": "C2e afunilamento da mandíbula",
+    "lo": 0.62,
+    "hi": 0.77,
+    "target": "0.62–0.77",
+    "dp": 2
+   },
+   {
+    "key": "S5_glabella",
+    "label": "C2f glabela à frente do centro",
+    "lo": 95,
+    "hi": 107,
+    "target": "95–107",
+    "dp": 1
+   },
+   {
+    "key": "TR3_submental",
+    "label": "C2g plano submental (TR3)",
+    "lo": 55,
+    "hi": 999,
+    "target": "≥ 55",
+    "dp": 1
+   },
+   {
+    "key": "C1_max",
+    "label": "C1 erro radial máximo",
+    "lo": null,
+    "hi": null,
+    "target": "—",
+    "dp": 1
+   }
+  ],
+  "columns": [
+   {
+    "label": "antes",
+    "key": "ours",
+    "ours": true
+   },
+   {
+    "label": "Fase A",
+    "key": "oursA",
+    "ours": true
+   },
+   {
+    "label": "A2b",
+    "key": "oursA2",
+    "ours": true
+   },
+   {
+    "label": "A2b + N1",
+    "key": "oursN1",
+    "ours": true
+   },
+   {
+    "label": "F1",
+    "key": "oursF1",
+    "ours": true
+   },
+   {
+    "label": "makehuman",
+    "key": "makehuman",
+    "ours": false
+   },
+   {
+    "label": "femalebase",
+    "key": "femalebase",
+    "ours": false
+   },
+   {
+    "label": "bodytopo",
+    "key": "bodytopo",
+    "ours": false
+   },
+   {
+    "label": "femalechar",
+    "key": "femalechar",
+    "ours": false
+   }
+  ],
+  "values": {
+   "ours": {
+    "C1_rms": 7.714907906726343,
+    "C1_max": 17.78586550513387,
+    "H_src": 0.2175250000000144,
+    "R_cephalic": 0.8388374304698706,
+    "S7_g_op": 173.8843058431945,
+    "W1_breadth": 145.86066431254238,
+    "W3/W2": 0.9204259829989002,
+    "W0.10H/W2": 0.7757098022204088,
+    "S5_glabella": 86.36789193547395,
+    "TR3_submental": 42.48347450760913
+   },
+   "oursA": {
+    "C1_rms": 4.5863564266856285,
+    "C1_max": 11.242721436883215,
+    "H_src": 0.21311999999998377,
+    "R_cephalic": 0.766033018711445,
+    "S7_g_op": 209.8004326130564,
+    "W1_breadth": 160.71405872154668,
+    "W3/W2": 1.001675973654181,
+    "W0.10H/W2": 0.7600970576987589,
+    "S5_glabella": 104.88806906841438,
+    "TR3_submental": 46.21162560170809
+   },
+   "oursA2": {
+    "C1_rms": 2.162877142721208,
+    "C1_max": 6.808388474609018,
+    "H_src": 0.21977999999998477,
+    "R_cephalic": 0.7678283956685857,
+    "S7_g_op": 203.44272364327122,
+    "W1_breadth": 156.2091001054604,
+    "W3/W2": 0.9966417252926483,
+    "W0.10H/W2": 0.755264764682004,
+    "S5_glabella": 101.70506158657611,
+    "TR3_submental": 41.41064811711742
+   },
+   "oursN1": {
+    "C1_rms": 2.1448482826484816,
+    "C1_max": 6.602062620375065,
+    "H_src": 0.21977999999998477,
+    "R_cephalic": 0.7678283956685857,
+    "S7_g_op": 203.44272364327122,
+    "W1_breadth": 156.2091001054604,
+    "W3/W2": 0.9966417252926483,
+    "W0.10H/W2": 0.7141641372916224,
+    "S5_glabella": 101.70506158657611,
+    "TR3_submental": 61.52849695930965
+   },
+   "oursF1": {
+    "C1_rms": 2.122109274032293,
+    "C1_max": 5.651161490192237,
+    "H_src": 0.22033499999998485,
+    "R_cephalic": 0.7509560566198258,
+    "S7_g_op": 203.97985991245037,
+    "W1_breadth": 153.17991122971821,
+    "W3/W2": 1.0281348833288424,
+    "W0.10H/W2": 0.7148694272217732,
+    "S5_glabella": 101.99743148394097,
+    "TR3_submental": 63.58484248852508
+   },
+   "makehuman": {
+    "C1_rms": 4.797094217255439,
+    "C1_max": 15.789099850135742,
+    "H_src": 1.9549999999998047,
+    "R_cephalic": 0.7403502394747205,
+    "S7_g_op": 202.20031338420134,
+    "W1_breadth": 149.69905043585698,
+    "W3/W2": 1.005829404304937,
+    "W0.10H/W2": 0.7087330471570921,
+    "S5_glabella": 101.14526486854959,
+    "TR3_submental": 59.00520699717805
+   },
+   "femalebase": {
+    "C1_rms": 4.017620646146532,
+    "C1_max": 10.154134972644755,
+    "H_src": 0.245049999999992,
+    "R_cephalic": 0.7427111984654644,
+    "S7_g_op": 209.89369838581578,
+    "W1_breadth": 155.89040027847795,
+    "W3/W2": 0.9999968638971755,
+    "W0.10H/W2": 0.7643331781173184,
+    "S5_glabella": 104.88473592990127,
+    "TR3_submental": 97.37464654983182
+   },
+   "bodytopo": {
+    "C1_rms": 3.910504255004347,
+    "C1_max": 11.16827677671455,
+    "H_src": 0.21944999999999082,
+    "R_cephalic": 0.7373748837323921,
+    "S7_g_op": 195.76874828000155,
+    "W1_breadth": 144.35495800140208,
+    "W3/W2": 1.0146410904483059,
+    "W0.10H/W2": 0.6179370518229482,
+    "S5_glabella": 97.90126802525799,
+    "TR3_submental": 76.93318791313992
+   },
+   "femalechar": {
+    "C1_rms": 3.134155669970921,
+    "C1_max": 11.902352629740932,
+    "H_src": 7.931250000000028,
+    "R_cephalic": 0.6967541592061021,
+    "S7_g_op": 202.3083337339233,
+    "W1_breadth": 140.95917297116722,
+    "W3/W2": 1.0623226935996375,
+    "W0.10H/W2": 0.7150007814153017,
+    "S5_glabella": 101.16977453053667,
+    "TR3_submental": 66.78866904310554
+   }
+  }
+ },
+ "neck": [
+  {
+   "label": "N-C1 perfil do pescoço dentro das refs (18 medições)",
+   "a": "2/18",
+   "b": "15/18",
+   "okA": false,
+   "okB": true,
+   "target": "≥ 15/18"
+  },
+  {
+   "label": "C2g plano submental (TR3)",
+   "a": "41.4",
+   "b": "61.5",
+   "okA": false,
+   "okB": true,
+   "target": "≥ 55"
+  },
+  {
+   "label": "declive máx. da frente z −30…−65 (risco: tórax congelado)",
+   "a": "1.66",
+   "b": "2.03",
+   "okA": true,
+   "okB": false,
+   "target": "registo (mais baixo = mais suave)"
+  }
+ ],
+ "renders": [
+  {
+   "src": "renders_F1.png",
+   "title": "F1 — ANTES/DEPOIS da face",
+   "caption": "A2b+N1 vs F1 (faceB+N1); frente, ¾, lado; Cycles cinza neutro, sem cabelo, mesma câmara. A forma de massa desaparece: nariz, lábios, órbitas e orelhas."
+  },
+  {
+   "src": "views_F1.png",
+   "title": "Vistas neutras F1 (rasterizador do estudo)",
+   "caption": "F1 vs refs, mesmo rasterizador; mm@H226."
+  },
+  {
+   "src": "profiles_F1.png",
+   "title": "Perfis sagital e de largura — F1",
+   "caption": "Nossas versões vs refs (mm@H226)."
+  },
+  {
+   "src": "renders_N1.png",
+   "title": "NECK N1 — antes/depois (tronco)",
+   "caption": "A2b vs A2b + N1; frente, ¾, lado, costas; Cycles cinza neutro, sem cabelo."
+  },
+  {
+   "src": "renders_N1_face.png",
+   "title": "A2b + N1 — enquadramento da cabeça",
+   "caption": "Bordo inferior da mandíbula e submento visíveis no lado e ¾."
+  },
+  {
+   "src": "renders_A2b.png",
+   "title": "ANTES → FASE A → A2b",
+   "caption": "Mesmas vistas e câmara; Cycles cinza neutro."
+  },
+  {
+   "src": "views_N1.png",
+   "title": "Vistas no rasterizador do estudo",
+   "caption": "Mesmo rasterizador para as nossas versões e as refs."
+  },
+  {
+   "src": "profiles_N1.png",
+   "title": "Perfis sagital e de largura",
+   "caption": "Nossas versões vs refs (mm@H226)."
+  },
+  {
+   "src": "jaw_coronal.png",
+   "title": "Cortes coronais do terço inferior",
+   "caption": "Cabeça (preto) vs corpo/pescoço (vermelho) vs refs."
+  },
+  {
+   "src": "err_A2b.png",
+   "title": "Mapa de erro radial A2b vs alvo",
+   "caption": "Contornos = desvio-padrão entre refs (3/5 mm)."
+  },
+  {
+   "src": "renders_phaseA.png",
+   "title": "FASE A — renders e wireframe da cage",
+   "caption": "3456 quads, 8 polos de valência 3."
+  },
+  {
+   "src": "jaw_study.png",
+   "title": "Estudo da mandíbula",
+   "caption": "Mapas laterais |x| e cortes horizontais."
+  }
+ ],
+ "history": [
+  {
+   "title": "HEAD STUDY 01 — diagnóstico",
+   "commit": "de08023",
+   "status": "info",
+   "verdict": "medição",
+   "text": "Instrumento comum para a nossa cabeça e as refs. Cabeça curta (g–op 174 vs 196–210), glabela recuada, relação globo–órbita invertida, 280 polos e 45 ilhas na face.",
+   "variant": "antes"
+  },
+  {
+   "title": "Capacidade R0 vs R1",
+   "commit": "caf5d00",
+   "status": "info",
+   "verdict": "R0 inadequada · R1 capaz",
+   "text": "A representação antiga, com todos os parâmetros livres, não chega ao alvo (RMS 3.75, largura 162). O modelo de 6 massas R1 chega a RMS 1.35.",
+   "variant": null
+  },
+  {
+   "title": "FASE A — casca de massas",
+   "commit": "642cb7f",
+   "status": "fail",
+   "verdict": "5/8 critérios; C1, C2c, C2g ✗",
+   "text": "Nova casca fechada 100% quads. Falhas com origem única: o canto mento–submental arredondado desloca o mentón medido 9 mm.",
+   "variant": "faseA"
+  },
+  {
+   "title": "A2 — plano submental (corte)",
+   "commit": "3bf498f",
+   "status": "fail",
+   "verdict": "REFUTADA tal como implementada",
+   "text": "Erro de referencial: o canto estava subpreenchido, não em excesso. Registado e emendado antes de medir a A2b.",
+   "variant": null
+  },
+  {
+   "title": "A2b — canto mentoniano",
+   "commit": "5eb8c32",
+   "status": "pass",
+   "verdict": "hipótese suportada; C1 2.16 ✓; C2c 156.21 ✗; C2g ✗",
+   "text": "Envelope médio do queixo de 3 refs. Altura medida 213.1 → 219.8 mm; recuo do canto 9.9 → 40.0.",
+   "variant": "a2b"
+  },
+  {
+   "title": "A3 — estudo da mandíbula",
+   "commit": "500a694",
+   "status": "info",
+   "verdict": "A3 não suportada",
+   "text": "A mandíbula visível já coincide com as refs; a parte que não coincide está escondida dentro do pescoço (mais grosso que as refs).",
+   "variant": null
+  },
+  {
+   "title": "NECK N1 — pescoço superior",
+   "commit": "3ad83da",
+   "status": "pass",
+   "verdict": "N-C1 15/18 ✓; TR3 61.5 ✓",
+   "text": "Só os anéis trunk.2/3 mudam, calibrados para o perfil médio das refs. O submento e o bordo da mandíbula passam a ver-se.",
+   "variant": "n1"
+  },
+  {
+   "title": "FACE F1 — massas faciais e traços",
+   "commit": "2d6039f",
+   "status": "pass",
+   "verdict": "8/8 critérios ✓; C1 2.12; W1 153.2 ✓",
+   "text": "Campos anatómicos (limites de sinal) + camada corretiva estatística das refs, sobre a casca A2b/N1. Estatística declarada (43% campos, K das 3 refs). Digest oursF1 e21378e3624e5765.",
+   "variant": "f1"
+  }
+ ]
+}

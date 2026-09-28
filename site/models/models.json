@@ -1,0 +1,112 @@
+[
+ {
+  "id": "antes",
+  "label": "ANTES (cabe\u00e7a antiga)",
+  "env": {},
+  "commit": "8716b88\u2026de08023",
+  "digest": "c7ab2932f5d66ede",
+  "smooth": {
+   "verts": 97858,
+   "faces": 95880,
+   "quads": 95880,
+   "bytes": 4650604
+  },
+  "cage": {
+   "verts": 6307,
+   "faces": 6213,
+   "quads": 5331,
+   "bytes": 221512,
+   "edges": 12466
+  }
+ },
+ {
+  "id": "faseA",
+  "label": "FASE A (massas R1)",
+  "env": {
+   "HCG_HEAD": "massA"
+  },
+  "commit": "642cb7f",
+  "digest": "76c5875d00a6db12",
+  "smooth": {
+   "verts": 100208,
+   "faces": 99456,
+   "quads": 99456,
+   "bytes": 4792832
+  },
+  "cage": {
+   "verts": 6356,
+   "faces": 6300,
+   "quads": 5964,
+   "bytes": 227008,
+   "edges": 12608
+  }
+ },
+ {
+  "id": "a2b",
+  "label": "A2b (canto mentoniano)",
+  "env": {
+   "HCG_HEAD": "massA2"
+  },
+  "commit": "5eb8c32",
+  "digest": "db7871c83c9cf800",
+  "smooth": {
+   "verts": 100208,
+   "faces": 99456,
+   "quads": 99456,
+   "bytes": 4792828
+  },
+  "cage": {
+   "verts": 6356,
+   "faces": 6300,
+   "quads": 5964,
+   "bytes": 227004,
+   "edges": 12608
+  }
+ },
+ {
+  "id": "n1",
+  "label": "A2b + N1 (pesco\u00e7o superior)",
+  "env": {
+   "HCG_HEAD": "massA2",
+   "HCG_NECK": "N1"
+  },
+  "commit": "3ad83da",
+  "digest": "179c676c86b5f012",
+  "smooth": {
+   "verts": 100208,
+   "faces": 99456,
+   "quads": 99456,
+   "bytes": 4792828
+  },
+  "cage": {
+   "verts": 6356,
+   "faces": 6300,
+   "quads": 5964,
+   "bytes": 227004,
+   "edges": 12608
+  }
+ },
+ {
+  "id": "f1",
+  "label": "F1 (face: campos + corretiva)",
+  "env": {
+   "HCG_HEAD": "faceB",
+   "HCG_NECK": "N1"
+  },
+  "commit": "2d6039f",
+  "digest": "e21378e3624e5765",
+  "smooth": {
+   "verts": 554484,
+   "faces": 553728,
+   "quads": 553728,
+   "bytes": 26597984
+  },
+  "cage": {
+   "verts": 34728,
+   "faces": 34716,
+   "quads": 34284,
+   "bytes": 1248356,
+   "edges": 69392
+  }
+ }
+]
