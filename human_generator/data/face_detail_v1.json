@@ -1,0 +1,11 @@
+{
+ "az0": -115.0,
+ "el0": -70.0,
+ "step": 0.5,
+ "n_az": 461,
+ "n_el": 271,
+ "unit_mm": 0.01,
+ "frame": "mm@H226, centro head_mass.CENTRE; az = atan2(ux, uy), el = asin(uz) (graus)",
+ "source": "média alinhada por marcos (TPS) de femalebase, bodytopo, femalechar − casca radial_cont_a2 − passa-baixo 20 mm − campos face_fields_v1",
+ "note": "camada corretiva estatística (prioridade 2 do utilizador); simetrizada; atenuada fora do domínio medido"
+}

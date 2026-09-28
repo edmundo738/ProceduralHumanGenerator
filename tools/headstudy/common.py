@@ -28,6 +28,7 @@ ORIENT = {
     "oursA": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "oursA2": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "oursN1": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+    "oursF1": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "whitewalker": [[-1, 0, 0], [0, -1, 0], [0, 0, 1]],
     "makehuman": [[-1, 0, 0], [0, 0, -1], [0, -1, 0]],
     "femalechar": [[-1, 0, 0], [0, -1, 0], [0, 0, 1]],
@@ -37,7 +38,7 @@ ORIENT = {
 }
 # altura aproximada da cabeça em unidades da fonte (só para janelas de procura;
 # a H usada é a MEDIDA vértex−mentón)
-H0 = {"ours": 0.226, "oursA": 0.222, "oursA2": 0.222, "oursN1": 0.222, "whitewalker": 0.21, "makehuman": 2.3, "femalechar": 7.5, "bodytopo": 0.22,
+H0 = {"ours": 0.226, "oursA": 0.222, "oursA2": 0.222, "oursN1": 0.222, "oursF1": 0.222, "whitewalker": 0.21, "makehuman": 2.3, "femalechar": 7.5, "bodytopo": 0.22,
       "femalebase": 0.26, "ff11": 1.1}
 
 
@@ -83,6 +84,12 @@ def load_raw(name, tag="smooth"):
         kp = keep[fi[starts]]                                    # polígonos também (medido: TP contava dentes)
         fi = np.concatenate([fi[a:a + n] for a, n, k in zip(starts, fs, kp) if k])
         return V, T, fs[kp], fi
+    if name.startswith("oursF") and not os.environ.get("HCG_KEEP_EYES"):
+        # HEAD FACE: os globos oculares são ilhas próprias (as refs não os exportam)
+        lab = geom.components(d["V"], T)
+        drop = [c for c in range(lab.max() + 1) if np.ptp(d["V"][lab == c], axis=0).max() < 0.03]
+        keep = ~np.isin(lab, drop)
+        T = T[keep[T[:, 0]]]
     return V, T, d["fs"], d["fi"]
 
 

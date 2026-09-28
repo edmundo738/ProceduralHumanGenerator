@@ -59,7 +59,7 @@ def main():
     tgt = TG.sh_eval(d[f"mean{L}"], TH, PH, L)
     dom = np.logical_and.reduce([d[f"{n}_valid"] for n in TG.TARGET_SOURCES])
     out, lines = {}, []
-    names = ["ours", "oursA", "oursA2", "oursN1"] + TG.TARGET_SOURCES
+    names = ["ours", "oursA", "oursA2", "oursN1", "oursF1"] + TG.TARGET_SOURCES
     for nm in names:
         rms, mx, info = radial_rms(nm, TH, PH, tgt, dom)
         try:
@@ -76,16 +76,16 @@ def main():
         row = f"{k:16s}"
         for n in names:
             v = out[n].get(k, np.nan)
-            ok = "" if n not in ("ours", "oursA", "oursA2", "oursN1") else (" ✓" if lo <= v <= hi else " ✗")
+            ok = "" if n not in ("ours", "oursA", "oursA2", "oursN1", "oursF1") else (" ✓" if lo <= v <= hi else " ✗")
             row += f"{v:10.2f}{ok:2s}"
         lines.append(row + f"   [{lo}, {hi if hi < 900 else '∞'}]")
     txt = "\n".join(lines)
     print(txt)
-    open(os.path.join(DOC, "eval_N1.txt"), "w").write(txt + "\n")
-    json.dump(out, open(os.path.join(DOC, "eval_N1.json"), "w"), indent=1, default=float)
+    open(os.path.join(DOC, "eval_F1.txt"), "w").write(txt + "\n")
+    json.dump(out, open(os.path.join(DOC, "eval_F1.json"), "w"), indent=1, default=float)
 
     # vistas neutras (mesmo rasterizador do estudo): frente, lado, ¾, costas
-    show = ["oursA2", "oursN1", "makehuman", "femalebase", "femalechar"]
+    show = ["oursA2", "oursN1", "oursF1", "makehuman", "femalebase", "femalechar"]
     kinds = ("front", "side", "q", "back")
     fig, ax = plt.subplots(len(show), 4, figsize=(12.4, 3.4 * len(show)))
     for r, nm in enumerate(show):
@@ -99,23 +99,23 @@ def main():
             ax[r, c].imshow(img, cmap="gray", vmin=0, vmax=1, extent=F.BOX[k2])
             ax[r, c].set_xticks([]); ax[r, c].set_yticks([])
             if c == 0:
-                ax[r, c].set_ylabel({"ours": "ANTES (atual)", "oursA": "FASE A (massas)", "oursA2": "A2b", "oursN1": "A2b + N1 pescoço"}.get(nm, nm), fontsize=10)
+                ax[r, c].set_ylabel({"ours": "ANTES (atual)", "oursA": "FASE A (massas)", "oursA2": "A2b", "oursN1": "A2b + N1 pescoço", "oursF1": "F1 (faceB: face)"}   .get(nm, nm), fontsize=10)
             if r == 0:
                 ax[r, c].set_title({"front": "frente", "side": "lado", "q": "¾", "back": "costas"}[kind])
     fig.suptitle("HEAD FASE A — cinza neutro, sem cabelo/materiais, mm@H226, mesmo rasterizador para todos", fontsize=10)
     fig.tight_layout(rect=(0, 0, 1, 0.985))
-    fig.savefig(os.path.join(DOC, "views_N1.png"), dpi=100)
+    fig.savefig(os.path.join(DOC, "views_F1.png"), dpi=100)
     plt.close(fig)
 
     # perfis: sagital + larguras
     fig, ax = plt.subplots(1, 2, figsize=(12, 6.2))
-    col = {"ours": "#d62728", "oursA": "#bbbbbb", "oursA2": "#777777", "oursN1": "#111111", "makehuman": "#1f77b4", "femalebase": "#ff7f0e",
+    col = {"ours": "#d62728", "oursA": "#bbbbbb", "oursA2": "#777777", "oursN1": "#111111", "oursF1": "#d62728", "makehuman": "#1f77b4", "femalebase": "#ff7f0e",
            "bodytopo": "#2ca02c", "femalechar": "#9467bd"}
-    for nm in ["makehuman", "femalebase", "bodytopo", "femalechar", "ours", "oursA2", "oursN1"]:
+    for nm in ["makehuman", "femalebase", "bodytopo", "femalechar", "ours", "oursA2", "oursN1", "oursF1"]:
         Vn, T, fs, fi, info = C.normalise(nm)
         L_, (zs, yf, yb, pts) = C.sagittal_landmarks(Vn, T)
-        lw = 2.4 if nm in ("ours", "oursA2", "oursN1") else 1.0
-        ls = "--" if nm == "ours" else "-"
+        lw = 2.4 if nm in ("ours", "oursA2", "oursN1", "oursF1") else 1.0
+        ls = "--" if nm == "ours" else ("-" if nm != "oursF1" else "-")
         ax[0].plot(yf, zs, color=col[nm], lw=lw, ls=ls, label=nm)
         ax[0].plot(yb, zs, color=col[nm], lw=lw * 0.6, ls=":")
         zz = np.arange(-0.2 * H, H, 2.0)
@@ -125,7 +125,7 @@ def main():
     ax[0].set_title("perfil sagital (frente contínua, costas pontilhado)")
     ax[1].set_title("largura máxima por altura")
     fig.tight_layout()
-    fig.savefig(os.path.join(DOC, "profiles_N1.png"), dpi=100)
+    fig.savefig(os.path.join(DOC, "profiles_F1.png"), dpi=100)
     plt.close(fig)
 
 

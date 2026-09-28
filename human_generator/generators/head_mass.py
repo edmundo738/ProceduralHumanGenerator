@@ -293,3 +293,96 @@ def _orient_outward(b: MeshBuilder, centre: Vector) -> None:
     mid = (a + bb + cc) / 3.0
     if n.dot(mid - centre) < 0:
         b.faces = [tuple(reversed(f)) for f in b.faces]
+
+
+# --------------------------------------------------------------------------- FACE (Fase B/C/D)
+# Correção estrutural (OBSERVED nos renders de ajuste facial, out/face/fit_v1.png):
+# no ``radial`` acima, quando um raio deixa de intersetar uma massa (silhueta vista
+# do centro), o termo dessa massa DESAPARECE da união suave — salto de até
+# k·log 2 ≈ 6 mm ⇒ vincos ovais/horizontais na face.  Aqui o termo continua para lá
+# da silhueta: raio do ponto de maior aproximação s* reduzido com o excesso g_min
+# (contínuo em g_min = 0, onde s* = raio de tangência = saída).  massA/massA2 não
+# mudam (reprodutibilidade dos estudos).
+CONT_K = 0.6
+# Segunda correção estrutural: vault/midface/mandible trocam de semi-eixo em dy = 0
+# e dz = 0 (frente/trás, cima/baixo) — contínuo mas SEM continuidade de derivada ⇒
+# vinco de sombreamento (linha horizontal a z = cz da massa).  Aqui a troca é suave
+# (sigmóide, largura TAU mm); a interpolação ax(t) da mandíbula usa smoothstep.
+TAU = 6.0
+
+
+def _sg(t: float) -> float:
+    t = max(-40.0, min(40.0, t))
+    return 1.0 / (1.0 + math.exp(-t))
+
+
+def _g_s(m: str, q: dict, x: float, y: float, z: float) -> float:
+    dy = y - q["cy"]
+    dz = z - q["cz"]
+    if m in ("vault", "midface", "mandible"):
+        wy = _sg(dy / TAU)
+        wz = _sg(dz / TAU)
+        by = q["byb"] + (q["byf"] - q["byb"]) * wy
+        cz = q["czb"] + (q["czt"] - q["czb"]) * wz
+        if m == "mandible":
+            t = min(1.0, max(0.0, (dz + q["czb"]) / (q["czt"] + q["czb"])))
+            t = t * t * (3.0 - 2.0 * t)
+            ax = q["axb"] + (q["axt"] - q["axb"]) * t
+        else:
+            ax = q["ax"]
+        e, n = q["e"], q["n"]
+    else:
+        by, cz, ax = q["by"], q["cz_"], q["ax"]
+        e = n = q["e"]
+    hx = (abs(x) / ax) ** e + (abs(dy) / by) ** e
+    return hx ** (n / e) + (abs(dz) / cz) ** n - 1.0
+
+
+def _ray_exit_cont(m: str, u: tuple, smax: float = 240.0, nsteps: int = 96, nbis: int = 16) -> float:
+    q = R1[m]
+    cx, cy, cz = CENTRE
+    ux, uy, uz = u
+    step = smax / (nsteps - 1)
+    gmin, smin = 1e30, 0.0
+    for i in range(nsteps - 1, -1, -1):
+        s = i * step
+        g = _g_s(m, q, cx + s * ux, cy + s * uy, cz + s * uz)
+        if g < 0.0:
+            if i == nsteps - 1:
+                return s
+            lo, hi = s, s + step
+            for _ in range(nbis):
+                mid = 0.5 * (lo + hi)
+                if _g_s(m, q, cx + mid * ux, cy + mid * uy, cz + mid * uz) < 0.0:
+                    lo = mid
+                else:
+                    hi = mid
+            return 0.5 * (lo + hi)
+        if g < gmin:
+            gmin, smin = g, s
+    # refinamento do mínimo (secção dourada curta) e continuação
+    lo, hi = max(0.0, smin - step), smin + step
+    for _ in range(20):
+        a = hi - 0.618 * (hi - lo)
+        b = lo + 0.618 * (hi - lo)
+        ga = _g_s(m, q, cx + a * ux, cy + a * uy, cz + a * uz)
+        gb = _g_s(m, q, cx + b * ux, cy + b * uy, cz + b * uz)
+        if ga < gb:
+            hi = b
+        else:
+            lo = a
+    s = 0.5 * (lo + hi)
+    g = max(0.0, _g_s(m, q, cx + s * ux, cy + s * uy, cz + s * uz))
+    return s * (1.0 - CONT_K * math.sqrt(g))
+
+
+def radial_cont(u: tuple) -> float:
+    rs = [_ray_exit_cont(m, u) for m in MASSES]
+    mx = max(rs)
+    return mx + K_UNION * math.log(sum(math.exp((r - mx) / K_UNION) for r in rs))
+
+
+def radial_cont_a2(u: tuple) -> float:
+    r = radial_cont(u)
+    rc = _chin_exit(u)
+    return r if rc is None else _smax(r, rc, SUB_KC)
