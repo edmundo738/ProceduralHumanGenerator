@@ -23,6 +23,7 @@ VARIANTS = [
     {"id": "faseA", "label": "FASE A (massas R1)", "env": {"HCG_HEAD": "massA"}, "commit": "642cb7f"},
     {"id": "a2b", "label": "A2b (canto mentoniano)", "env": {"HCG_HEAD": "massA2"}, "commit": "5eb8c32"},
     {"id": "n1", "label": "A2b + N1 (pescoço superior)", "env": {"HCG_HEAD": "massA2", "HCG_NECK": "N1"}, "commit": "3ad83da"},
+    {"id": "f1", "label": "F1 (face: campos + corretiva)", "env": {"HCG_HEAD": "faceB", "HCG_NECK": "N1"}, "commit": "2d6039f"},
 ]
 
 

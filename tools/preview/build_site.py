@@ -31,6 +31,7 @@ DESC = {
     "faseA": "nova representação: casca fechada cubo-esfera 3456 quads cujo raio é o modelo de 6 massas R1 ajustado ao alvo médio das refs. Sem traços (por desenho da fase).",
     "a2b": "Fase A + canto mentoniano: união local com o envelope médio do queixo de 3 refs (frente do queixo + plano submental).",
     "n1": "A2b + pescoço superior (anéis trunk.2/3) calibrado para o perfil médio das refs. Só 32 vértices do corpo mudam.",
+    "f1": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓).",
 }
 
 METRIC_ROWS = [
@@ -45,10 +46,14 @@ METRIC_ROWS = [
     ("C1_max", "C1 erro radial máximo", None, None, "—", 1),
 ]
 COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2", True), ("A2b + N1", "oursN1", True),
+           ("F1", "oursF1", True),
            ("makehuman", "makehuman", False), ("femalebase", "femalebase", False), ("bodytopo", "bodytopo", False),
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
+    ("renders_F1.png", "F1 — ANTES/DEPOIS da face", "A2b+N1 vs F1 (faceB+N1); frente, ¾, lado; Cycles cinza neutro, sem cabelo, mesma câmara. A forma de massa desaparece: nariz, lábios, órbitas e orelhas."),
+    ("views_F1.png", "Vistas neutras F1 (rasterizador do estudo)", "F1 vs refs, mesmo rasterizador; mm@H226."),
+    ("profiles_F1.png", "Perfis sagital e de largura — F1", "Nossas versões vs refs (mm@H226)."),
     ("renders_N1.png", "NECK N1 — antes/depois (tronco)", "A2b vs A2b + N1; frente, ¾, lado, costas; Cycles cinza neutro, sem cabelo."),
     ("renders_N1_face.png", "A2b + N1 — enquadramento da cabeça", "Bordo inferior da mandíbula e submento visíveis no lado e ¾."),
     ("renders_A2b.png", "ANTES → FASE A → A2b", "Mesmas vistas e câmara; Cycles cinza neutro."),
@@ -68,6 +73,7 @@ HISTORY = [
     ("A2b — canto mentoniano", "5eb8c32", "pass", "hipótese suportada; C1 2.16 ✓; C2c 156.21 ✗; C2g ✗", "Envelope médio do queixo de 3 refs. Altura medida 213.1 → 219.8 mm; recuo do canto 9.9 → 40.0.", "a2b"),
     ("A3 — estudo da mandíbula", "500a694", "info", "A3 não suportada", "A mandíbula visível já coincide com as refs; a parte que não coincide está escondida dentro do pescoço (mais grosso que as refs).", None),
     ("NECK N1 — pescoço superior", "3ad83da", "pass", "N-C1 15/18 ✓; TR3 61.5 ✓", "Só os anéis trunk.2/3 mudam, calibrados para o perfil médio das refs. O submento e o bordo da mandíbula passam a ver-se.", "n1"),
+    ("FACE F1 — massas faciais e traços", "2d6039f", "pass", "8/8 critérios ✓; C1 2.12; W1 153.2 ✓", "Campos anatómicos (limites de sinal) + camada corretiva estatística das refs, sobre a casca A2b/N1. Estatística declarada (43% campos, K das 3 refs). Digest oursF1 e21378e3624e5765.", "f1"),
 ]
 
 
@@ -102,7 +108,7 @@ def main():
     variants = json.load(open(models))
     for v in variants:
         v["desc"] = DESC[v["id"]]
-    ev = json.load(open(os.path.join(DOCS, "eval_N1.json")))
+    ev = json.load(open(os.path.join(DOCS, "eval_F1.json")))
     ne = json.load(open(os.path.join(DOCS, "neck_eval_N1.json")))
     rows = [{"key": k, "label": lab, "lo": (-1e9 if lo is None and hi is not None else lo), "hi": hi,
              "target": tgt, "dp": dp} for k, lab, lo, hi, tgt, dp in METRIC_ROWS]
