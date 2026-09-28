@@ -419,6 +419,11 @@
  ],
  "renders": [
   {
+   "src": "renders_T1_vs_refs.png",
+   "title": "TORSO STUDY 01 — tronco: nós vs refs (mesma câmara)",
+   "caption": "Frente, ¾, lado e costas do tronco: ours (braços caídos) e as 3 refs (T/A-pose). IoU frontal do tronco: ours 0.88–0.92 vs 0.95 entre refs; costas sem curva S, cintura tubular, peito-barril (docs/TORSO_STUDY_01.md)."
+  },
+  {
    "src": "renders_F2_vs_refs.png",
    "title": "F2 vs REFS — painel comparativo (mesma câmara)",
    "caption": "Cinco fontes × seis vistas (frente, ¾, lado, costas, orelha, orelha-¾), Cycles cinza neutro: oursF1, oursF2 e as 3 refs. IoU de silhueta: frente 0.91–0.94 vs baseline ref↔ref 0.90."

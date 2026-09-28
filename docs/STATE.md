@@ -12,7 +12,7 @@ Processo: ver `METHOD.md` (ciclo 16+1) e `DEVELOPMENT_AGREEMENT.md` (formato).
 | a2b | HCG_HEAD=massA2 | `db7871c83c9cf800` | + canto mentoniano |
 | n1 | + HCG_NECK=N1 | `179c676c86b5f012` | + pescoço superior |
 | f1 | HCG_HEAD=faceB+N1 | `e21378e3624e5765` | + face (campos+K+olhos) 8/8 |
-| **f2** | **HCG_HEAD=faceB2+N1** | **`b713d9489ecd8bb9`** | **+ CONT1 orelha integrada — AGUARDA VALIDAÇÃO VISUAL (painel `docs/head_phaseA/F2_validacao_visual.png`)** |
+| **f2** | **HCG_HEAD=faceB2+N1** | **`b713d9489ecd8bb9`** | **+ CONT1 orelha integrada — validação do dono: ACEITÁVEL com dívida visual na orelha (resolver depois)** |
 
 Build default NÃO muda com nenhuma flag (pins `cb4e855996c2f1fd` intactos;
 testes: 133 passed / 1 skip / 1 xfail). Site: `site/` commitado —
@@ -33,22 +33,28 @@ testes: 133 passed / 1 skip / 1 xfail). Site: `site/` commitado —
 | órbita canto | conc 0.34 | 0.55–0.73 | ✗ difusa; falta rebordo definido |
 | mento/garganta | ✓ | — | sem ação |
 
-## Próximos passos (pré-registados)
+## Próximos passos — programa PESCOÇO+TRONCO (TORSO STUDY 01, docs/TORSO_STUDY_01.md)
 
-1. **CONT2 — nuca/cransio-pescoço** (pré-registo completo em `HEAD_CONT1.md` §5):
-   κ ≤ 1.2× média refs (≤0.075), turn ≤ 1.25× (≤115°), N-C1 ≥ 15/18 mantido,
-   tudo fora da zona nucal inalterado. Intervenção conjunta casco+pescoço.
-2. **CONT3 — órbita**: concentrar a curvatura num rebordo definido (conc →
-   banda das refs) em vez de depressão difusa.
-3. Depois de CONT2+CONT3: decidir se a janela C¹ vira mecanismo geral de
-   transição anatómica (regra 16 do METHOD).
+Prioridade do dono (2026-09-28): pescoço + torso (peito, abdômen, costas, cinturas).
+Estudo MEDIDO feito; plano T1–T5 (uma mudança estrutural por fase, pré-registo antes):
+1. **T1 COSTAS** — curva sagital em S (bs(z)): lombar 19.5→[40,75]; nádega-vs-torácica +10→[−25,−2].
+2. **T2 CINTURA** — largura natural 288→[230,270]; cintura/nádegas 0.904→[0.75,0.85].
+3. **T3 PEITO** — derreter o barril: largura 352→[268,314], profundidade 314→[216,307] (fora do p95 ANSUR).
+4. **T4 BUSTO** — UNKNOWN nas refs atuais (uma sem mamas, uma com barriga dominante, uma mama pequena): decidir com o dono (refs novas ou literatura).
+5. **T5 PESCOÇO-BASE + CONT2** — circ 417→≤382; nuca (CONT2 pré-registado em HEAD_CONT1.md §5).
+Aguarda: validação do painel `renders_T1_vs_refs.png` + decisão do busto.
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 
 | achado | classificação |
 |---|---|
 | orelha: turn/envelope dentro das refs (CONT1) | melhoria confirmada (quantitativa) |
-| orelha: integração visual de perto | **UNKNOWN — aguarda inspeção do dono** |
+| orelha: integração visual de perto | dono: ACEITÁVEL — dívida visual notável (resolver depois) |
+| tronco: costas sem curva S (lombar 19.5 vs refs 54–70) | não corrigido (T1) |
+| tronco: cintura tubular (WHpR 0.904 vs refs 0.72–0.81) | não corrigido (T2) |
+| tronco: peito-barril (largura/profundidade > p95 ANSUR) | não corrigido (T3) |
+| busto: alvo UNKNOWN nas refs | decisão do dono pendente (T4) |
+| pescoço: circ 417 > p95 382 | não corrigido (T5; caveat 244 UNKNOWN) |
 | pés: 758 verts assimétricos (max 17 mm) | pré-existente · não corrigido · fora de escopo |
 | nuca: κ 1.8× refs | não corrigido (CONT2 pré-registado) |
 | órbita: conc 0.34 vs 0.55–0.73 refs | não corrigido (CONT3) |

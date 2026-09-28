@@ -52,6 +52,7 @@ COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2",
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
+    ("renders_T1_vs_refs.png", "TORSO STUDY 01 — tronco: nós vs refs (mesma câmara)", "Frente, ¾, lado e costas do tronco: ours (braços caídos) e as 3 refs (T/A-pose). IoU frontal do tronco: ours 0.88–0.92 vs 0.95 entre refs; costas sem curva S, cintura tubular, peito-barril (docs/TORSO_STUDY_01.md)."),
     ("renders_F2_vs_refs.png", "F2 vs REFS — painel comparativo (mesma câmara)", "Cinco fontes × seis vistas (frente, ¾, lado, costas, orelha, orelha-¾), Cycles cinza neutro: oursF1, oursF2 e as 3 refs. IoU de silhueta: frente 0.91–0.94 vs baseline ref↔ref 0.90."),
     ("renders_F2_ear.png", "F2 — CONT1: close-up da orelha (PROXIMIDADE)", "F1 vs F2, lado e ¾ posterior; Cycles cinza neutro, sem cabelo, mesma câmara. A janela C¹ funde a orelha na casca (sem degrau no bordo) e o relevo entra na gama das refs (turn 462→619°)."),
     ("cont1_ear_h.png", "CONT1 — curvatura da orelha vs refs", "Secção horizontal z=92.5 (esq.) e |κ| ao longo do arco (dir.): F2 dentro da banda das refs."),

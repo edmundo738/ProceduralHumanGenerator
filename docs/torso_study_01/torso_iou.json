@@ -1,0 +1,18 @@
+{
+ "front": {
+  "ours": {
+   "femalebase": 0.8052779457267845,
+   "femalechar": 0.7634481323483508,
+   "bodytopo": 0.8145589514997602
+  },
+  "ref_ref_baseline": 0.9286073744979887
+ },
+ "side": {
+  "ours": {
+   "femalebase": 0.6761819000450248,
+   "femalechar": 0.7581682232114283,
+   "bodytopo": 0.7269807923169268
+  },
+  "ref_ref_baseline": 0.6587043522690128
+ }
+}
