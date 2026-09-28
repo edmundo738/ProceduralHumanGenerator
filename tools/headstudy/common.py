@@ -29,6 +29,7 @@ ORIENT = {
     "oursA2": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "oursN1": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "oursF1": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
+    "oursF2": [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     "whitewalker": [[-1, 0, 0], [0, -1, 0], [0, 0, 1]],
     "makehuman": [[-1, 0, 0], [0, 0, -1], [0, -1, 0]],
     "femalechar": [[-1, 0, 0], [0, -1, 0], [0, 0, 1]],
@@ -38,7 +39,7 @@ ORIENT = {
 }
 # altura aproximada da cabeça em unidades da fonte (só para janelas de procura;
 # a H usada é a MEDIDA vértex−mentón)
-H0 = {"ours": 0.226, "oursA": 0.222, "oursA2": 0.222, "oursN1": 0.222, "oursF1": 0.222, "whitewalker": 0.21, "makehuman": 2.3, "femalechar": 7.5, "bodytopo": 0.22,
+H0 = {"ours": 0.226, "oursA": 0.222, "oursA2": 0.222, "oursN1": 0.222, "oursF1": 0.222, "oursF2": 0.222, "whitewalker": 0.21, "makehuman": 2.3, "femalechar": 7.5, "bodytopo": 0.22,
       "femalebase": 0.26, "ff11": 1.1}
 
 

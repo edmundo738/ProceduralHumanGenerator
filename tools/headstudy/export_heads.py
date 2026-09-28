@@ -28,6 +28,7 @@ SOURCES = {
     "oursA2": ("gen", "massA2", None),        # HEAD FASE A2b (canto mentoniano)
     "oursN1": ("gen", "massA2+N1", None),     # A2b + NECK N1 (pescoço superior)
     "oursF1": ("gen", "faceB+N1", None),      # HEAD FACE v1 + NECK N1
+    "oursF2": ("gen", "faceB2+N1", None),     # CONT1: orelha integrada + N1
     "whitewalker": ("blend", "whitewalker-2016-06-06.blend", ["Cube"]),
     "makehuman": ("fbx", "Lucia_Prototype_v01.fbx", ["female_generic.objMesh"]),
     "femalechar": ("blend", "FemaleCharacter.blend", ["Plane.003"]),

@@ -287,11 +287,12 @@ def build_character(spec: CharacterSpec | str | None = None, *,
         from ..generators.head_mass import build_head_mass   # noqa: PLC0415
         head = build_head_mass(spec, anat, submental=(_hflag == "massA2"))
         eye_info = {}
-    elif _hflag == "faceB":
+    elif _hflag in ("faceB", "faceB2"):
         # HEAD FACE v1 (docs/HEAD_FACE_B.md): massas + campos anatómicos + camada
         # estatística + olhos; só ativo com a flag (build por omissão inalterada)
+        # faceB2 = CONT1: orelha integrada (docs/HEAD_CONT1.md)
         from ..generators.head_face import build_head_face   # noqa: PLC0415
-        head = build_head_face(spec, anat)
+        head = build_head_face(spec, anat, ear_v2=(_hflag == "faceB2"))
         eye_info = {}
     else:
         head = build_head(spec, anat)

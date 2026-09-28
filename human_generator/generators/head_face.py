@@ -81,9 +81,22 @@ def detail(u: tuple) -> float:
     return v * m["unit_mm"]
 
 
-def radial_face(u: tuple) -> float:
+# campos de orelha do ajuste v1 (substituídos pela construção integrada em ear_v2)
+EAR_V1_NAMES = {"orelha_placa", "helix", "antihelix", "concha", "tragus", "lobulo"}
+
+
+def radial_face(u: tuple, ear_v2: bool = False) -> float:
     c = _load()
-    r = HM.radial_cont_a2(u) + FF.field(FF.PYXP, c["fields"], *u) + detail(u)
+    if not ear_v2:
+        r = HM.radial_cont_a2(u) + FF.field(FF.PYXP, c["fields"], *u) + detail(u)
+    else:
+        # CONT1 (docs/HEAD_CONT1.md): orelha integrada — fora do ajuste v1,
+        # janela C¹ + relevo procedural.  O K MANTÉM-SE: medido, suprimi-lo na
+        # zona da orelha custa mais relevo (turn 449°) do que o blur que tira
+        # (F1: 462°; refs 571–993°) — o K está alinhado pelos marcos da orelha.
+        prims = [p for p in c["fields"] if p[0] not in EAR_V1_NAMES]
+        r = (HM.radial_cont_a2(u) + FF.field(FF.PYXP, prims, *u)
+             + FF.ear_v2_field(FF.PYXP, *u) + detail(u))
     rr, _d = FF.eye_blend(FF.PYXP, r, u[0], u[1], u[2], HM.CENTRE, c["eye"])
     return rr
 
@@ -188,7 +201,7 @@ def _add_eyeball(b: MeshBuilder, to_world, G: tuple, side: int, nlat: int = 16, 
         b.add_face((back, rows[-1][j], rows[-1][j2]), material="eye")
 
 
-def build_head_face(spec, anat) -> HeadResult:
+def build_head_face(spec, anat, ear_v2: bool = False) -> HeadResult:
     c = _load()
     b = MeshBuilder("head")
     h = anat.h
@@ -209,7 +222,7 @@ def build_head_face(spec, anat) -> HeadResult:
         key = (round(dd[0], 9), round(dd[1], 9), round(dd[2], 9))
         r = rcache.get(key)
         if r is None:
-            r = rcache[key] = radial_face(dd)
+            r = rcache[key] = radial_face(dd, ear_v2)
         xn = math.copysign(r * dd[0], d[0]) if d[0] != 0 else 0.0
         ids.append(b.add_vert(to_world(cx + xn, cy + r * d[1], cz + r * d[2]), "skin", (0.5, 0.5)))
     for q in quads:

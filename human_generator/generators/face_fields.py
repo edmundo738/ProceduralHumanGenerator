@@ -197,3 +197,57 @@ def eye_blend(xp, r_face, ux, uy, uz, centre, E):
     r_in = rg - E["GAP"]
     inside = d < 0
     return xp.where(inside, r_in, r_out), d
+
+
+# ---------------------------------------------------------------- orelha v2 (CONT1)
+# Construção INTEGRADA (docs/HEAD_CONT1.md): a orelha v1 era um planalto
+# (blob p=5, bordo nítido = "placa colocada") + 5 campos + K estatístico
+# (borrado: orelhas das refs mal alinhadas no interior).
+# Medido (tools/headface/continuity.py, secção horizontal z=92.5, mm@H226):
+#   turn das refs 571–993° vs nosso 462°  → relevo em falta;
+#   protrusão média das refs: pico ~9–10 mm em y≈−25; nosso pico 13 mm em y−33.
+# A v2 = JANELA C¹ (smoothstep elíptico: valor e declive nulos no bordo — a
+# orelha funde-se na casca sem degrau) × (colina-base recentrada + relevo
+# interno com concha mais funda e helix mais definida).  K cala-se na zona
+# (ear_zone_weight) — o relevo passa a ser procedural, não estatístico.
+EAR_V2 = {
+    # janela C¹ em (Y, V): Y=100·uy (frente+), V=100·el[rad]
+    "win": {"Yc": -25.0, "Vc": -18.0, "Ya": 24.0, "Va": 38.0},
+    # zona onde a camada K se cala (ligeiramente para dentro da janela)
+    "kz": {"Yc": -25.0, "Vc": -18.0, "Ya": 20.0, "Va": 33.0},
+    "prims": [
+        # nome, tipo, frame, sym, params — S: (h, v) = (Y, V)
+        ("orelha_base", "blob", "S", 1, (-25.0, -20.0, 16.0, 30.0, 0.0, 6.2, 2.0)),
+        ("helix", "ridge", "S", 1, (-33.0, -20.0, 1.6, 24.0, -0.0, 7.0, 3.8, 4.2)),
+        ("antihelix", "ridge", "S", 1, (-21.6, -15.9, 1.4, 12.2, 0.0, 5.0, -2.6, -8.0)),
+        ("concha", "blob", "S", 1, (-17.1, -26.3, 7.0, 10.5, -0.1, -16.0, 1.5)),
+        ("tragus", "blob", "S", 1, (-11.8, -27.4, 3.3, 4.6, 0.1, 6.1, 1.5)),
+        ("lobulo", "blob", "S", 1, (-18.0, -52.3, 6.0, 8.7, 0.5, 7.3, 3.0)),
+    ],
+}
+
+
+def _ear_t(xp, ux, uy, uz, W):
+    _H, Y, V, _X = coords(xp, ux, uy, uz)
+    dy = (Y - W["Yc"]) / W["Ya"]
+    dv = (V - W["Vc"]) / W["Va"]
+    return xp.sqrt(dy * dy + dv * dv)
+
+
+def ear_window(xp, ux, uy, uz):
+    """1 dentro da orelha, 0 fora; smoothstep ⇒ C¹ no bordo (declive nulo)."""
+    t = _ear_t(xp, ux, uy, uz, EAR_V2["win"])
+    s = xp.clip((t - 0.7) / 0.3, 0.0, 1.0)
+    return 1.0 - s * s * (3.0 - 2.0 * s)
+
+
+def ear_zone_weight(xp, ux, uy, uz):
+    """Peso da zona da orelha para onde a camada K se cala."""
+    t = _ear_t(xp, ux, uy, uz, EAR_V2["kz"])
+    s = xp.clip((t - 0.6) / 0.3, 0.0, 1.0)
+    return 1.0 - s * s * (3.0 - 2.0 * s)
+
+
+def ear_v2_field(xp, ux, uy, uz):
+    """Orelha v2: janela C¹ × (base + relevo).  0 EXATO fora da janela."""
+    return ear_window(xp, ux, uy, uz) * field(xp, EAR_V2["prims"], ux, uy, uz)
