@@ -1,0 +1,32 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "origin": "fornecida pelo dono (pasta 'treino para o arena', commit 408517a); migrada para a Reference Library a 2026-09-28 como primeira entrada — NÃO é ground truth; adequação por análise a determinar pelo estudo (suitability desconhecida)",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "id": "REF-F-REAL-004",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "high (MakeHuman procedural)",
+ "scope": "full_body",
+ "ref_type": "procedural",
+ "pose": "unknown",
+ "pose_basis": "UNKNOWN (inspetor dá pose_hint)",
+ "limitations": [
+  "gerada por MakeHuman (procedural, não scan/artística)",
+  "cabeça EXCLUÍDA do alvo facial nos nossos estudos (fenda estilizada)",
+  "unidades do fbx ~2.3× maiores que m (H0=2.3 no estudo)"
+ ],
+ "regions_available": [
+  "full_body"
+ ],
+ "observations": {
+  "tool": "MakeHuman (Lucia_Prototype_v01)",
+  "textures": "incluídas (diffuse/nails/eyelashes…)"
+ },
+ "unknowns": [
+  "pose exata",
+  "versão do MakeHuman"
+ ],
+ "file": "Lucia_Prototype_v01.fbx"
+}

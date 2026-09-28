@@ -33,11 +33,15 @@ testes: 133 passed / 1 skip / 1 xfail). Site: `site/` commitado —
 | órbita canto | conc 0.34 | 0.55–0.73 | ✗ difusa; falta rebordo definido |
 | mento/garganta | ✓ | — | sem ação |
 
+## Reference Library (docs/REFERENCE_LIBRARY.md) — FEITA a infraestrutura
+
+`references/` (commitada; 6 primeiras entradas migradas de 408517a com proveniência — NÃO ground truth, suitability UNKNOWN por design): estrutura female/male × 6 estilos × 11 componentes; `meta.json` por modelo (schema.py validado em tests/test_reflib.py); `extraction.json` (inspect_model.py: contagens/ilhas/contorno/densidade/pose_hint); `INDEX.json` (index.py; guarda da política híbrida ≤300 MB — atual 13.5 MB). Snapshot mínimo reproduzível em `tools/snapshot/` (round-trip verificado 7/7 numa ref + gerador). Regra: a biblioteca é observação externa — nunca altera o gerador sem hipótese validada. Dono povoa; agente estuda.
+
 ## Próximos passos — programa PESCOÇO+TRONCO (TORSO STUDY 01, docs/TORSO_STUDY_01.md)
 
 Prioridade do dono (2026-09-28): pescoço + torso (peito, abdômen, costas, cinturas).
 Estudo MEDIDO feito; plano T1–T5 (uma mudança estrutural por fase, pré-registo antes):
-1. **T1 COSTAS** — curva sagital em S (bs(z)): lombar 19.5→[40,75]; nádega-vs-torácica +10→[−25,−2].
+1. **T1 COSTAS** (próximo passo, dono autorizou: retoma após a infraestrutura da Reference Library) — curva sagital em S (bs(z)): lombar 19.5→[40,75]; nádega-vs-torácica +10→[−25,−2].
 2. **T2 CINTURA** — largura natural 288→[230,270]; cintura/nádegas 0.904→[0.75,0.85].
 3. **T3 PEITO** — derreter o barril: largura 352→[268,314], profundidade 314→[216,307] (fora do p95 ANSUR).
 4. **T4 BUSTO** — UNKNOWN nas refs atuais (uma sem mamas, uma com barriga dominante, uma mama pequena): decidir com o dono (refs novas ou literatura).

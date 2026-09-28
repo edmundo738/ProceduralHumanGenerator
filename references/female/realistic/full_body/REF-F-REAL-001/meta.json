@@ -1,0 +1,33 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "origin": "fornecida pelo dono (pasta 'treino para o arena', commit 408517a); migrada para a Reference Library a 2026-09-28 como primeira entrada — NÃO é ground truth; adequação por análise a determinar pelo estudo (suitability desconhecida)",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "id": "REF-F-REAL-001",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "provisional_agent",
+ "scope": "full_body",
+ "ref_type": "base_mesh",
+ "pose": "t_pose",
+ "pose_basis": "MEASURED (REF STUDY: T-pose)",
+ "limitations": [
+  "mamas pequenas (projeção ~17 mm, MEASURED bust_band)",
+  "costura do espelho exatamente em x=0 (MEASURED: parte cadeias de secção)",
+  "fenda palpebral ~19 mm — outlier vs norma de Farkas ~10.4 (MEASURED; inclui rebordo do sulco)"
+ ],
+ "regions_available": [
+  "full_body"
+ ],
+ "observations": {
+  "bust_projection_mm": 16.9,
+  "nota": "base mesh feminina genérica"
+ },
+ "unknowns": [
+  "unidades/escala originais",
+  "autoria",
+  "topologia exata (ver extraction.json)"
+ ],
+ "file": "Female base.obj"
+}

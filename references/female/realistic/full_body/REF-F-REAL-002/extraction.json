@@ -1,0 +1,197 @@
+{
+ "id": "REF-F-REAL-002",
+ "file": "Body Topo.blend",
+ "objects": [
+  {
+   "object": "Geo body",
+   "verts": 5163,
+   "edges": 10291,
+   "faces": 5126,
+   "quads": 5126,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 2,
+   "boundary_edges": 78,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.001322882796870519,
+    "p50": 0.007507981991113439,
+    "p95": 0.042598830162648274
+   },
+   "bbox_world": [
+    [
+     -0.6182077527046204,
+     -0.12368561327457428,
+     0.17604286968708038
+    ],
+    [
+     0.6182077527046204,
+     0.12182320654392242,
+     1.6711077690124512
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 2,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "col1",
+    "col2",
+    "Material.003",
+    "Material.004"
+   ],
+   "armature": false
+  },
+  {
+   "object": "geo cornia",
+   "verts": 290,
+   "edges": 584,
+   "faces": 296,
+   "quads": 280,
+   "tris": 16,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0009419890099050208,
+    "p50": 0.003322003372512496,
+    "p95": 0.0064849647285193995
+   },
+   "bbox_world": [
+    [
+     0.01200218876746928,
+     -0.06323214745076546,
+     1.5310596678323583
+    ],
+    [
+     0.045772377547521434,
+     -0.0278427257028902,
+     1.5649479213904345
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [
+    "eyes"
+   ],
+   "armature": false
+  },
+  {
+   "object": "geo eyeball",
+   "verts": 354,
+   "edges": 704,
+   "faces": 352,
+   "quads": 352,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.00035216337885535535,
+    "p50": 0.0032822997342674526,
+    "p95": 0.006407462288223948
+   },
+   "bbox_world": [
+    [
+     0.012203982287308592,
+     -0.060723539123709785,
+     1.5312621686220842
+    ],
+    [
+     0.045570585881515475,
+     -0.028044505833304346,
+     1.56474542060109
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "temp eyelashes",
+   "verts": 96,
+   "edges": 152,
+   "faces": 60,
+   "quads": 60,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 4,
+   "boundary_edges": 64,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0008496409952153125,
+    "p50": 0.0038584058478810987,
+    "p95": 0.008728649852126104
+   },
+   "bbox_world": [
+    [
+     -0.05083904787898064,
+     -0.0703846737742424,
+     1.540833830833435
+    ],
+    [
+     0.04929781332612038,
+     -0.05663921684026718,
+     1.5574941635131836
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material.004"
+   ],
+   "armature": false
+  }
+ ],
+ "totals": {
+  "verts": 5903,
+  "edges": 11731,
+  "faces": 5834,
+  "quads": 5818,
+  "tris": 16,
+  "ngons": 0,
+  "islands": 8,
+  "boundary_edges": 142,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  0.827
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

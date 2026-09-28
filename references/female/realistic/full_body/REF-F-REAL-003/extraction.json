@@ -1,0 +1,321 @@
+{
+ "id": "REF-F-REAL-003",
+ "file": "FemaleCharacter.blend",
+ "objects": [
+  {
+   "object": "Plane.000",
+   "verts": 14,
+   "edges": 19,
+   "faces": 6,
+   "quads": 6,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 14,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.018571843501597483,
+    "p50": 0.03111175941684774,
+    "p95": 0.3712246991904987
+   },
+   "bbox_world": [
+    [
+     2.384185791015625e-07,
+     -2.854653248062591,
+     -11.231921935001997
+    ],
+    [
+     0.36705487966537476,
+     -2.7948187639390367,
+     -11.05442693576664
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SOLIDIFY",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material.001"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Plane.001",
+   "verts": 52,
+   "edges": 100,
+   "faces": 50,
+   "quads": 50,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.02133830735595758,
+    "p50": 0.07897096652730558,
+    "p95": 0.3244356045911372
+   },
+   "bbox_world": [
+    [
+     0.4277946650981903,
+     -2.308932065963745,
+     -0.056805625557899475
+    ],
+    [
+     1.5951671600341797,
+     -1.8338556289672852,
+     0.3981468975543976
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "Plane.002",
+   "verts": 18,
+   "edges": 32,
+   "faces": 16,
+   "quads": 16,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.030127604494074638,
+    "p50": 0.19109878040258585,
+    "p95": 0.4020650012850193
+   },
+   "bbox_world": [
+    [
+     0.4575420320034027,
+     -2.2040257453918457,
+     -0.018914535641670227
+    ],
+    [
+     0.843542754650116,
+     -1.8425921201705933,
+     0.3058089017868042
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "Plane.003",
+   "verts": 2160,
+   "edges": 4251,
+   "faces": 2089,
+   "quads": 2080,
+   "tris": 9,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 155,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.08765069290162061,
+    "p50": 0.3962770812761587,
+    "p95": 1.645930039533336
+   },
+   "bbox_world": [
+    [
+     0.0,
+     -3.3272299766540527,
+     -50.56171417236328
+    ],
+    [
+     28.17460823059082,
+     5.322381496429443,
+     4.466213226318359
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 3,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Plane.004",
+   "verts": 209,
+   "edges": 382,
+   "faces": 174,
+   "quads": 174,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 68,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.04536195633997373,
+    "p50": 0.5615803919407645,
+    "p95": 1.21944709706873
+   },
+   "bbox_world": [
+    [
+     2.384185791015625e-07,
+     -3.2648252420597954,
+     -12.909337807961272
+    ],
+    [
+     4.329530954360962,
+     4.047454656166114,
+     -4.087540877016077
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SOLIDIFY",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material.001"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Plane.005",
+   "verts": 91,
+   "edges": 162,
+   "faces": 71,
+   "quads": 71,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 40,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.19335430160406483,
+    "p50": 0.7826434015029416,
+    "p95": 1.9161612851240943
+   },
+   "bbox_world": [
+    [
+     2.384185791015625e-07,
+     -2.6606445440801645,
+     -26.15790658118847
+    ],
+    [
+     4.961766004562378,
+     5.178159063262864,
+     -20.945149717953708
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SOLIDIFY",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material.001"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Sphere",
+   "verts": 114,
+   "edges": 240,
+   "faces": 128,
+   "quads": 96,
+   "tris": 32,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.09133657730566122,
+    "p50": 0.23867380699799207,
+    "p95": 0.2386741763786062
+   },
+   "bbox_world": [
+    [
+     0.37942262757354683,
+     -2.2467075540215546,
+     -0.4166704177003737
+    ],
+    [
+     1.5889756342676264,
+     -1.0358534273555904,
+     0.8067320095317427
+    ]
+   ],
+   "scale_factor_object": 0.611701250076294,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [],
+   "armature": false
+  }
+ ],
+ "totals": {
+  "verts": 2658,
+  "edges": 5186,
+  "faces": 2534,
+  "quads": 2493,
+  "tris": 41,
+  "ngons": 0,
+  "islands": 7,
+  "boundary_edges": 277,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  0.512
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

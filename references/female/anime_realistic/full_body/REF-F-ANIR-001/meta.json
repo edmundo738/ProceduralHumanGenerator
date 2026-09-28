@@ -1,0 +1,29 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "origin": "fornecida pelo dono (pasta 'treino para o arena', commit 408517a); migrada para a Reference Library a 2026-09-28 como primeira entrada — NÃO é ground truth; adequação por análise a determinar pelo estudo (suitability desconhecida)",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "id": "REF-F-ANIR-001",
+ "sex": "female",
+ "style": "anime_realistic",
+ "style_confidence": "provisional_agent (nome do ficheiro sugere FF-style; dono confirma)",
+ "scope": "full_body",
+ "ref_type": "artistic_mesh",
+ "pose": "unknown",
+ "pose_basis": "UNKNOWN",
+ "limitations": [
+  "estilo possivelmente anime_realistic — classificação por confirmar",
+  "objetos 'body'+'head' separados"
+ ],
+ "regions_available": [
+  "full_body"
+ ],
+ "observations": {},
+ "unknowns": [
+  "estilo exato",
+  "pose",
+  "autoria"
+ ],
+ "file": "fffemale 11.obj"
+}

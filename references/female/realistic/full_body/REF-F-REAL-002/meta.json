@@ -1,0 +1,31 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "origin": "fornecida pelo dono (pasta 'treino para o arena', commit 408517a); migrada para a Reference Library a 2026-09-28 como primeira entrada — NÃO é ground truth; adequação por análise a determinar pelo estudo (suitability desconhecida)",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "id": "REF-F-REAL-002",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "provisional_agent",
+ "scope": "full_body",
+ "ref_type": "base_mesh",
+ "pose": "a_pose",
+ "pose_basis": "MEASURED (REF STUDY: A-pose)",
+ "limitations": [
+  "SEM PÉS (estatura inferida por crotchheight/0.5198 — INFERRED)",
+  "SEM MAMAS (MEASURED: projeção ~46 é o próprio tórax)",
+  "A-pose limita comparação frontal de ombros/braços"
+ ],
+ "regions_available": [
+  "full_body_sem_pés"
+ ],
+ "observations": {
+  "stature_method": "INFERRED (vertex-crotch)/0.5198"
+ },
+ "unknowns": [
+  "estatura real",
+  "autoria"
+ ],
+ "file": "Body Topo.blend"
+}

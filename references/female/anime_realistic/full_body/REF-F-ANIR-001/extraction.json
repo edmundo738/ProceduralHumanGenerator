@@ -1,0 +1,303 @@
+{
+ "id": "REF-F-ANIR-001",
+ "file": "fffemale 11.obj",
+ "objects": [
+  {
+   "object": "accs",
+   "verts": 318,
+   "edges": 637,
+   "faces": 338,
+   "quads": 0,
+   "tris": 338,
+   "ngons": 0,
+   "islands": 19,
+   "boundary_edges": 260,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.01753351240156946,
+    "p50": 0.0698653329421817,
+    "p95": 0.17752672774029532
+   },
+   "bbox_world": [
+    [
+     -0.4667679965496063,
+     -0.04877639283332872,
+     7.333522791513989
+    ],
+    [
+     0.5336930155754089,
+     0.2027055573089384,
+     8.373585686371243
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "Tex_1144_0.dds"
+   ],
+   "armature": false
+  },
+  {
+   "object": "body",
+   "verts": 598,
+   "edges": 1532,
+   "faces": 942,
+   "quads": 0,
+   "tris": 942,
+   "ngons": 0,
+   "islands": 8,
+   "boundary_edges": 238,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.07748545486570457,
+    "p50": 0.18040881922723614,
+    "p95": 0.3938694155425259
+   },
+   "bbox_world": [
+    [
+     -0.9716410040855408,
+     -0.541796977280132,
+     0.039654028177758684
+    ],
+    [
+     0.9729639887809753,
+     0.5904123714079748,
+     4.860815037061449
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "Tex_1064_0.dds"
+   ],
+   "armature": false
+  },
+  {
+   "object": "bottom",
+   "verts": 136,
+   "edges": 309,
+   "faces": 176,
+   "quads": 0,
+   "tris": 176,
+   "ngons": 0,
+   "islands": 3,
+   "boundary_edges": 90,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.08455703644142724,
+    "p50": 0.17202709169646077,
+    "p95": 0.48147468446107244
+   },
+   "bbox_world": [
+    [
+     -0.6923009753227234,
+     -0.463220639102893,
+     4.156233790714479
+    ],
+    [
+     0.6933609843254089,
+     0.5904123714079748,
+     5.106893986851585
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "Tex_1112_0.dds"
+   ],
+   "armature": false
+  },
+  {
+   "object": "hair",
+   "verts": 1476,
+   "edges": 2944,
+   "faces": 1545,
+   "quads": 0,
+   "tris": 1545,
+   "ngons": 0,
+   "islands": 77,
+   "boundary_edges": 1253,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.02383680276486685,
+    "p50": 0.09709829698637967,
+    "p95": 0.2645802295740492
+   },
+   "bbox_world": [
+    [
+     -0.5242050290107727,
+     -0.4337694170816972,
+     6.261797849005894
+    ],
+    [
+     0.5014029741287231,
+     0.8726794842364473,
+     8.122390728998154
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "Tex_1272_0.dds"
+   ],
+   "armature": false
+  },
+  {
+   "object": "head",
+   "verts": 2347,
+   "edges": 6166,
+   "faces": 3832,
+   "quads": 0,
+   "tris": 3832,
+   "ngons": 0,
+   "islands": 13,
+   "boundary_edges": 836,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.016519586542241654,
+    "p50": 0.055719779319887586,
+    "p95": 0.17806231731734218
+   },
+   "bbox_world": [
+    [
+     -2.2414729595184326,
+     -0.5526265654794112,
+     4.012415901010152
+    ],
+    [
+     2.242532968521118,
+     0.5221724537278954,
+     8.009493825148935
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "bodyhead"
+   ],
+   "armature": false
+  },
+  {
+   "object": "shoes",
+   "verts": 1484,
+   "edges": 3248,
+   "faces": 1806,
+   "quads": 0,
+   "tris": 1806,
+   "ngons": 0,
+   "islands": 46,
+   "boundary_edges": 1078,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.011141751144388909,
+    "p50": 0.06505528818604792,
+    "p95": 0.18044554223629397
+   },
+   "bbox_world": [
+    [
+     -0.9960280060768127,
+     -0.5923849904031551,
+     -0.012993020389840728
+    ],
+    [
+     0.997098982334137,
+     0.3441830233294232,
+     1.1598859827331092
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "Tex_1096_0.dds"
+   ],
+   "armature": false
+  },
+  {
+   "object": "top",
+   "verts": 941,
+   "edges": 2406,
+   "faces": 1474,
+   "quads": 0,
+   "tris": 1474,
+   "ngons": 0,
+   "islands": 9,
+   "boundary_edges": 390,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.011550257951252856,
+    "p50": 0.12760763070864936,
+    "p95": 0.2959831977551485
+   },
+   "bbox_world": [
+    [
+     -0.8848990201950073,
+     -0.6432065571420338,
+     3.8441930164078597
+    ],
+    [
+     0.8815969824790955,
+     0.6614283169933939,
+     6.764048084309601
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [
+    "Tex_1128_0.dds"
+   ],
+   "armature": false
+  }
+ ],
+ "totals": {
+  "verts": 7300,
+  "edges": 17242,
+  "faces": 10113,
+  "quads": 0,
+  "tris": 10113,
+  "ngons": 0,
+  "islands": 175,
+  "boundary_edges": 4145,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  1.122
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

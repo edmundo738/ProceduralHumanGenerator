@@ -1,0 +1,67 @@
+{
+ "id": "REF-F-REAL-001",
+ "file": "Female base.obj",
+ "objects": [
+  {
+   "object": "Female base",
+   "verts": 18577,
+   "edges": 37173,
+   "faces": 18595,
+   "quads": 18429,
+   "tris": 140,
+   "ngons": 26,
+   "islands": 1,
+   "boundary_edges": 83,
+   "non_manifold_edges": 15,
+   "degenerate_faces": 1,
+   "edge_len": {
+    "p05": 0.0013702519254521922,
+    "p50": 0.007132718000471992,
+    "p95": 0.02369351239267535
+   },
+   "bbox_world": [
+    [
+     -0.8908140063285828,
+     -0.18051091802522037,
+     -0.006940007587111882
+    ],
+    [
+     0.8908140063285828,
+     0.1877979940065878,
+     1.9999990510641583
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  }
+ ],
+ "totals": {
+  "verts": 18577,
+  "edges": 37173,
+  "faces": 18595,
+  "quads": 18429,
+  "tris": 140,
+  "ngons": 26,
+  "islands": 1,
+  "boundary_edges": 83,
+  "non_manifold_edges": 15,
+  "degenerate_faces": 1
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  0.888
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

@@ -1,0 +1,179 @@
+{
+ "models": [
+  {
+   "id": "REF-F-ANIR-001",
+   "sex": "female",
+   "style": "anime_realistic",
+   "style_confidence": "provisional_agent (nome do ficheiro sugere FF-style; dono confirma)",
+   "scope": "full_body",
+   "ref_type": "artistic_mesh",
+   "pose": "unknown",
+   "path": "references/female/anime_realistic/full_body/REF-F-ANIR-001",
+   "files": [
+    {
+     "file": "extraction.json",
+     "bytes": 5842,
+     "sha256": null
+    },
+    {
+     "file": "fffemale 11.obj",
+     "bytes": 974590,
+     "sha256": "d55595ac659d25a783da510077be34958e9d7357d4e44eb88c6bc07550293ac1"
+    },
+    {
+     "file": "meta.json",
+     "bytes": 906,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-001",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "provisional_agent",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "t_pose",
+   "path": "references/female/realistic/full_body/REF-F-REAL-001",
+   "files": [
+    {
+     "file": "Female base.obj",
+     "bytes": 1948448,
+     "sha256": "9e2d53a7af3aef7c87f32dfd62a1290a8777f7d3b0835ebfcda1eb3322e430a0"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 1515,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 1113,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-002",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "provisional_agent",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "a_pose",
+   "path": "references/female/realistic/full_body/REF-F-REAL-002",
+   "files": [
+    {
+     "file": "Body Topo.blend",
+     "bytes": 1622880,
+     "sha256": "2408945ff1575d08e38bc17847ce05586bdf7ccb6c39e060fd62546c4362ba15"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 3849,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 1001,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-003",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "provisional_agent",
+   "scope": "full_body",
+   "ref_type": "artistic_mesh",
+   "pose": "t_pose",
+   "path": "references/female/realistic/full_body/REF-F-REAL-003",
+   "files": [
+    {
+     "file": "FemaleCharacter.blend",
+     "bytes": 877952,
+     "sha256": "a670f17ff5d981b4ef6839deb41e6938b2924f7b5b38cc27897f52c6f3fe98b9"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 5975,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 935,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-004",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "high (MakeHuman procedural)",
+   "scope": "full_body",
+   "ref_type": "procedural",
+   "pose": "unknown",
+   "path": "references/female/realistic/full_body/REF-F-REAL-004",
+   "files": [
+    {
+     "file": "Lucia_Prototype_v01.fbx",
+     "bytes": 7414540,
+     "sha256": "221b714c56d00c22806011afc7641f47da91bf2c2e53eee0bd00004bf165081b"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 11621,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 1079,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-M-REAL-001",
+   "sex": "unknown",
+   "style": "realistic",
+   "style_confidence": "provisional_agent",
+   "scope": "full_body",
+   "ref_type": "artistic_mesh",
+   "pose": "unknown",
+   "path": "references/male/realistic/full_body/REF-M-REAL-001",
+   "files": [
+    {
+     "file": "extraction.json",
+     "bytes": 2293,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 1034,
+     "sha256": null
+    },
+    {
+     "file": "whitewalker-2016-06-06.blend",
+     "bytes": 597636,
+     "sha256": "3a169445b83bb6a9c9aaac64abd7eb5180d8988e80540f6ca4c5113758bcfc51"
+    }
+   ],
+   "has_extraction": true
+  }
+ ],
+ "total_bytes": 13473209,
+ "policy": {
+  "total_cap_bytes": 314572800,
+  "file_warn_bytes": 52428800
+ },
+ "warnings": [],
+ "note": "primeiras entradas migradas de 408517a — NÃO ground truth; suitability por análise desconhecida até estudo"
+}

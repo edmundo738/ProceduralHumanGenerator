@@ -1,0 +1,30 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "origin": "fornecida pelo dono (pasta 'treino para o arena', commit 408517a); migrada para a Reference Library a 2026-09-28 como primeira entrada — NÃO é ground truth; adequação por análise a determinar pelo estudo (suitability desconhecida)",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "id": "REF-M-REAL-001",
+ "sex": "unknown",
+ "style": "realistic",
+ "style_confidence": "provisional_agent",
+ "scope": "full_body",
+ "ref_type": "artistic_mesh",
+ "pose": "unknown",
+ "pose_basis": "UNKNOWN",
+ "limitations": [
+  "CRIATURA (Game of Thrones whitewalker) — NÃO usar em datasets femininos nem masculinos sem decisão",
+  "sexo UNKNOWN (apresentação masculina?); colocada em male/ por exclusão, a dono reclassifica",
+  "colocada fora de references/female para não misturar datasets (regra do dono)"
+ ],
+ "regions_available": [
+  "full_body"
+ ],
+ "observations": {},
+ "unknowns": [
+  "sexo",
+  "estilo",
+  "pose"
+ ],
+ "file": "whitewalker-2016-06-06.blend"
+}
