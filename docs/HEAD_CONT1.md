@@ -73,7 +73,21 @@ casco uma continuação do plano nucal com tangente casada com os anéis do pesc
 ≤ 1.2× média refs (≤ 0.075); turn ≤ 1.25× (≤ 115°); N-C1 ≥ 15/18 mantido; tudo
 fora da zona nucal inalterado.
 
-## 6. Avaliação
+## 6. Auditoria pós-integração (METHOD §17; MEASURED)
+
+- **Envelope da orelha:** pico F2 13.3 mm @ y−28.7 vs média refs 13.1 @ −28.9
+  (F1 estava 13.0 @ −33.2, recuado) ✓.
+- **Simetria:** cabeça exata (médio 0.0097 mm, 0 outliers >0.1 mm na cabeça).
+  Registado PRÉ-EXISTENTE no corpo: 758 verts assimétricos nos PÉS (max 17 mm,
+  z≈0.01–0.03 m; idêntico em oursN1/F1/F2 — não é regressão da cabeça; dívida).
+- **Testes:** 133 passed / 1 skipped / 1 xfailed (default + pins intactos) ✓.
+- **IoU de silhueta (render_cmp.py, caixa da cabeça):** frente 0.913–0.940
+  (ACIMA do baseline ref↔ref 0.897); lado 0.950–0.978 (baseline 0.953).
+  F1≈F2 (a orelha não muda silhueta frontal/lateral — esperado).
+- **Painel comparativo nós×refs (mesma câmara/luz/material):**
+  `docs/head_phaseA/renders_F2_vs_refs.png` + `render_iou.json`.
+
+## 7. Avaliação
 
 - **Minha avaliação:** a orelha passou de planalto com bordo a uma estrutura
   janelada C¹ com relevo na gama das refs (medido); a integração visual julga-se
@@ -86,6 +100,7 @@ fora da zona nucal inalterado.
   entre refs (UNKNOWN — a "orelha média" não é uma orelha); o K mantém o caráter
   estatístico na orelha (declarado); não vejo os renders (sem visão) — a leitura
   de proximidade é do utilizador.
-- **Próximo passo que recomendo:** CONT2 (nuca) com o pré-registo acima.
+- **Próximo passo que recomendo:** validação visual do dono (painéis
+  renders_F2_vs_refs.png / renders_F2_ear.png); depois CONT2 (nuca).
 - **Por quê:** é o pior excedente medido e fecha a transição crânio→pescoço que
   o utilizador identificou como "cabeça encaixada".

@@ -10,6 +10,22 @@ Validated headlessly against the `bpy` 5.0.1 wheel (target: Blender 4.2 → 5.2)
 
 ---
 
+## Engineering method & project state
+
+Development follows an evidence-first cycle (context → baseline → measurement →
+hypothesis → minimal intervention → render → comparison vs references → metrics →
+regression → review → integration → checkpoint → post-integration audit), with
+explicit DISTANCE vs CLOSE-UP visual criteria and three evidence layers
+(visual / geometric / metric). The repository — not any chat or session — carries
+the project's scientific memory:
+
+- [`docs/METHOD.md`](docs/METHOD.md) — the process contract (roles, rules, cycle)
+- [`docs/STATE.md`](docs/STATE.md) — current state, variants/digests, open problems,
+  preregistered next steps, instruments index, reproduction recipe
+- [`docs/HEAD_*.md`](docs/) — per-checkpoint studies (prereg + results)
+
+---
+
 ## Quick start (public API — contract `hcg-charapi/1.0.0`)
 
 ```python

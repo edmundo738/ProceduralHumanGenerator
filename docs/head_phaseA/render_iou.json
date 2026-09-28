@@ -1,0 +1,28 @@
+{
+ "front": {
+  "oursF1": {
+   "bodytopo": 0.9320910973084886,
+   "femalebase": 0.9381968220524975,
+   "femalechar": 0.9137635550163039
+  },
+  "oursF2": {
+   "bodytopo": 0.9325829401411054,
+   "femalebase": 0.9400187441424555,
+   "femalechar": 0.9135972826663836
+  },
+  "ref_ref_baseline": 0.896889916261176
+ },
+ "side": {
+  "oursF1": {
+   "bodytopo": 0.9513428041386008,
+   "femalebase": 0.9701214961275404,
+   "femalechar": 0.9796835490574068
+  },
+  "oursF2": {
+   "bodytopo": 0.9495748098161036,
+   "femalebase": 0.9683840892684539,
+   "femalechar": 0.9779060160729038
+  },
+  "ref_ref_baseline": 0.9531515335983761
+ }
+}
