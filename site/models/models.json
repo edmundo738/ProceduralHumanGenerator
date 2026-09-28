@@ -108,5 +108,28 @@
    "bytes": 1248356,
    "edges": 69392
   }
+ },
+ {
+  "id": "f2",
+  "label": "F2 (CONT1: orelha integrada)",
+  "env": {
+   "HCG_HEAD": "faceB2",
+   "HCG_NECK": "N1"
+  },
+  "commit": "029063e",
+  "digest": "b713d9489ecd8bb9",
+  "smooth": {
+   "verts": 554484,
+   "faces": 553728,
+   "quads": 553728,
+   "bytes": 26597984
+  },
+  "cage": {
+   "verts": 34728,
+   "faces": 34716,
+   "quads": 34284,
+   "bytes": 1248356,
+   "edges": 69392
+  }
  }
 ]

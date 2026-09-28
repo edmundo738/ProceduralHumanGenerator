@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes c7ab2932f5d66ede · faseA 76c5875d00a6db12 · a2b db7871c83c9cf800 · n1 179c676c86b5f012 · f1 e21378e3624e5765",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes c7ab2932f5d66ede · faseA 76c5875d00a6db12 · a2b db7871c83c9cf800 · n1 179c676c86b5f012 · f1 e21378e3624e5765 · f2 b713d9489ecd8bb9",
  "variants": [
   {
    "id": "antes",
@@ -115,6 +115,30 @@
     "edges": 69392
    },
    "desc": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓)."
+  },
+  {
+   "id": "f2",
+   "label": "F2 (CONT1: orelha integrada)",
+   "env": {
+    "HCG_HEAD": "faceB2",
+    "HCG_NECK": "N1"
+   },
+   "commit": "029063e",
+   "digest": "b713d9489ecd8bb9",
+   "smooth": {
+    "verts": 554484,
+    "faces": 553728,
+    "quads": 553728,
+    "bytes": 26597984
+   },
+   "cage": {
+    "verts": 34728,
+    "faces": 34716,
+    "quads": 34284,
+    "bytes": 1248356,
+    "edges": 69392
+   },
+   "desc": "F2 = CONT1 + N1: orelha INTEGRADA — janela C¹ (smoothstep, valor e declive nulos no bordo) × colina recentrada no envelope medido das refs + relevo reforçado; K mantido (suprimi-lo custou relevo: turn 449° vs 462°). Turn da secção 462→619° (refs 571–993). Fora da orelha: máx 0.035 mm. 8/8 critérios intactos."
   }
  ],
  "metrics": {
@@ -219,6 +243,11 @@
     "ours": true
    },
    {
+    "label": "F2",
+    "key": "oursF2",
+    "ours": true
+   },
+   {
     "label": "makehuman",
     "key": "makehuman",
     "ours": false
@@ -295,6 +324,18 @@
     "R_cephalic": 0.7509560566198258,
     "S7_g_op": 203.97985991245037,
     "W1_breadth": 153.17991122971821,
+    "W3/W2": 1.0281348833288424,
+    "W0.10H/W2": 0.7148694272217732,
+    "S5_glabella": 101.99743148394097,
+    "TR3_submental": 63.58484248852508
+   },
+   "oursF2": {
+    "C1_rms": 2.123243072462755,
+    "C1_max": 5.661085291836045,
+    "H_src": 0.22033499999998485,
+    "R_cephalic": 0.7509565972527922,
+    "S7_g_op": 203.97985991245037,
+    "W1_breadth": 153.18002150795496,
     "W3/W2": 1.0281348833288424,
     "W0.10H/W2": 0.7148694272217732,
     "S5_glabella": 101.99743148394097,
@@ -377,6 +418,21 @@
   }
  ],
  "renders": [
+  {
+   "src": "renders_F2_ear.png",
+   "title": "F2 — CONT1: close-up da orelha (PROXIMIDADE)",
+   "caption": "F1 vs F2, lado e ¾ posterior; Cycles cinza neutro, sem cabelo, mesma câmara. A janela C¹ funde a orelha na casca (sem degrau no bordo) e o relevo entra na gama das refs (turn 462→619°)."
+  },
+  {
+   "src": "cont1_ear_h.png",
+   "title": "CONT1 — curvatura da orelha vs refs",
+   "caption": "Secção horizontal z=92.5 (esq.) e |κ| ao longo do arco (dir.): F2 dentro da banda das refs."
+  },
+  {
+   "src": "cont1_nape_p.png",
+   "title": "CONT1 — nuca: pior excedente medido",
+   "caption": "Silhueta occipital→nuca→pescoço: ours κ 1.8× as refs — pré-registo CONT2."
+  },
   {
    "src": "renders_F1.png",
    "title": "F1 — ANTES/DEPOIS da face",
@@ -502,6 +558,14 @@
    "verdict": "8/8 critérios ✓; C1 2.12; W1 153.2 ✓",
    "text": "Campos anatómicos (limites de sinal) + camada corretiva estatística das refs, sobre a casca A2b/N1. Estatística declarada (43% campos, K das 3 refs). Digest oursF1 e21378e3624e5765.",
    "variant": "f1"
+  },
+  {
+   "title": "CONT1 — continuidade anatómica",
+   "commit": "029063e",
+   "status": "pass",
+   "verdict": "PR1–PR5 ✓; orelha turn 619° (refs 571–993)",
+   "text": "Estudo medido por secções/silhueta (nuca 1.8× refs = pior; orelha 0.64× relevo). Orelha integrada: janela C¹ + envelope medido + relevo; K mantido (medido). Confinamento exato: 0.035 mm fora da zona.",
+   "variant": "f2"
   }
  ]
 }
