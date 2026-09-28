@@ -69,6 +69,31 @@ close-up da região, silhueta, secções quando necessário.
 9. O repositório é a memória científica: outro agente/desenvolvedor deve
    reconstruir estado→decisões→experimentos a partir de `STATE.md` + `docs/`.
 
+## Contabilidade técnica (registo obrigatório de toda a falha)
+
+Nenhuma falha é apagada por estar fora do escopo do checkpoint. Cada achado
+entra num destes estados (ver tabela em `STATE.md`):
+
+    introduzido pelo estudo · pré-existente · corrigido · não corrigido ·
+    UNKNOWN · fora de escopo · regressão · melhoria confirmada
+
+Exemplo (CONT1): 758 verts assimétricos nos pés — **pré-existente + não
+corrigido + fora de escopo** (idêntico em N1/F1/F2; não é regressão da orelha).
+
+## Linguagem científica (medida ≠ interpretação)
+
+Cada medida é chamada pelo que É; a interpretação vem à parte e em conjunto:
+
+- IoU de silhueta = **similaridade de silhueta global medida por IoU** sob uma
+  normalização/câmara/caixa definidas — não é "parece com as refs".
+- κ = **curvatura** (1/mm) ao longo do arco — não é "qualidade anatômica".
+- turn = **distribuição de mudança angular** (graus) na janela — não é "humanidade".
+- conc = **concentração da viragem** perto do pico — não é "integração".
+
+"Nós interpretamos essas medidas em conjunto" + a camada visual do dono.
+IoU alto + envelope correto ≠ estrutura resolvida (CONT1: orelha segue UNKNOWN
+até validação visual).
+
 ## Papéis
 
 - **DONO** — direção, percepção visual, objetivos, visão do produto.
