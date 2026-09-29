@@ -1,7 +1,23 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
 Última atualização: 2026-09-29 · branch `arena/01a0d51d-proceduralhumangenerator`
-Processo: ver `METHOD.md` (ciclo 16+1) e `DEVELOPMENT_AGREEMENT.md` (formato).
+Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
+— leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
+
+## MODO DE OPERAÇÃO NOVO (2026-09-29, decisão do dono)
+
+**`docs/OPERATING_MODE.md`** em vigor SEMPRE: mudança ≠ melhoria;
+FALSE IMPROVEMENT como classificação obrigatória de resultados; pedido literal
+vs problema real; referências como modelo externo de compreensão (não cópia,
+não números); o corpo atual NÃO é autoridade anatómica; sistemas antes de
+regiões; commit+push no mesmo passo. **`docs/CHECKPOINT_2026-09-29.md`**:
+diagnóstico do método (T1 costas = FALSE IMPROVEMENT classificada; orelha =
+melhoria local com dívida), auditoria de métricas (cegas a transições) e de
+geometria (tronco estruturalmente inadequado), hipóteses H-T1..H-T6, plano
+**T-TORSO SISTEMA** e método de validação (multi-vista por região + poses +
+gates do dono). Próximo ciclo: estudo do torso como sistema — NÃO mexer na
+geometria antes do estudo (perguntas em aberto no fim do checkpoint).
+
 
 ## Variantes ativas (realistic_female, seed 42, mm@H226)
 

@@ -4,6 +4,15 @@ Este documento é o **contrato de processo** do HCG. Complementa (não substitui
 `DEVELOPMENT_AGREEMENT.md` (formato de build, classificação FACT/MEASURED/…).
 Foi consolidado a partir da direção do dono do projeto em 2026-09 (CONT1).
 
+> **2026-09-29 — leitura obrigatória ANTES deste ciclo:** `OPERATING_MODE.md`
+> (modo de operação Arena↔dono↔projeto: pedido literal vs problema real,
+> FALSE IMPROVEMENT, estudo de referências como modelo externo de
+> compreensão, sistemas antes de regiões) e `CHECKPOINT_2026-09-29.md`
+> (auditoria do método, métricas e geometria; hipóteses do torso; plano
+> T-TORSO SISTEMA). O ciclo abaixo continua a ser o detalhamento técnico; o
+> OPERATING_MODE acrescenta o que vem antes (contexto, problema real,
+> evidência, estudo) e a classificação de resultados no passo de REVIEW.
+
 ## O ciclo (16 + 1 passos)
 
     01 CONTEXT      ler STATE.md + docs do checkpoint anterior
