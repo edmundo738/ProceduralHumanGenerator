@@ -42,22 +42,42 @@ geometria existente**:
   mensurável (3/3 bandas) sem progresso proporcional na solução (o tronco
   como sistema anatómico continua errado).
 
-### Porquê aconteceu (causa-raiz, INFERRED)
-1. **A matemática substituiu o estudo.** As refs tornaram-se números (bandas,
-   valores-alvo) em vez de modelos de compreensão. O mecanismo T1 (janelas
-   suaves aditivas) não foi derivado de como as costas são ESTRUTURADAS
-   (coluna + escápulas + caixa torácica + pelve) — foi um patch paramétrico
-   calibrado para passar nas métricas.
-2. **O espaço de calibração passou a ser o nosso próprio corpo** (A/B amp0 vs
-   amp1 sobre a nossa malha) em vez de as refs externas serem o espaço de
-   aprendizagem. Medir o nosso output com o nosso instrumento ≠ aprender com
-   fora.
-3. **As métricas de silhueta/corte são cegas ao que o olho vê** (transições,
-   quebras de plano, sulcos, qualidade de volume) — por isso 3/3 bandas
-   coexiste com "não gostei". Ver auditoria E.
-4. **Lapidação sem modelo estrutural**: na fase de estrutura havia um alvo
-   aprendido (massas R1); na fase de lapidação o alvo desapareceu e sobrou
-   "aproximar números".
+### Porquê aconteceu — HYPOTHESES (correcção do dono, 2026-09-29)
+
+> **Correcção registada:** a versão anterior classificava "a matemática
+> substituiu o estudo e a calibração passou a ser feita no próprio corpo"
+> como causa-raiz. **Forte demais e não demonstrado** — as refs externas
+> FORAM usadas para estudar e corrigir o modelo (pré-registos, bandas das
+> refs, alvos médios). Não há evidência suficiente para afirmar que a
+> calibração passou a ser feita no próprio corpo. Reclassificado:
+
+**HYPOTHESIS (H-M1):** o processo de refinamento pode ter dado peso excessivo
+às métricas e transformações locais em relação à compreensão estrutural
+obtida das referências.
+
+**UNKNOWN:** ainda não está demonstrado que "a matemática substituiu o estudo"
+foi a CAUSA da falsa melhoria.
+
+**O que a T-TORSO investiga (perguntas precisas, do dono):**
+1. O estudo das referências realmente foi convertido em **compreensão
+   estrutural suficiente** para orientar a lapidação?
+2. As métricas atuais **representam adequadamente** os padrões encontrados nas
+   referências?
+3. Ou algumas transformações foram **corretas do ponto de vista matemático,
+   mas aplicadas sobre uma representação estrutural ainda inadequada**?
+
+Notas factuais mantidas (estas são MEASURED/OBSERVED, não hipóteses):
+- O mecanismo T1 (janelas suaves aditivas sobre o tubo) não deriva de uma
+  decomposição estrutural das costas (coluna + escápulas + caixa torácica +
+  pelve) — é um facto da implementação, independentemente de ser ou não a
+  causa do resultado ruim.
+- As métricas de silhueta/corte não medem transições, quebras de plano, sulcos
+  nem qualidade de volume (auditoria E) — é por isso que 3/3 bandas coexiste
+  com "não gostei" (a discrepância é FACT; a atribuição de causa é a hipótese
+  H-M1).
+- A comparação A/B amp0 vs amp1 mede o EFEITO da intervenção (uso legítimo do
+  instrumento); não é, por si, "calibração no próprio corpo" — os ALVOS das
+  bandas vieram das refs.
 
 ---
 
