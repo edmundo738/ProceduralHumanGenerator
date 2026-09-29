@@ -94,6 +94,23 @@ para a T1). Hipóteses H-D1..H-D4 + gaps G1–G5 + perguntas de decisão §7.
 estrutural vs manter; ordem barril→cintura→volumes). Painéis:
 docs/head_phaseA/torso_system_{sagittal,coronal,gluteal,curvature}.png (+site).
 
+## TORSO DECISION 01 — checkpoint de DECISÃO formulado (2026-09-29, docs/TORSO_DECISION_01.md)
+
+**NENHUMA geometria mudada; gate = dono.** Alternativas comparadas por PODER
+EXPLICATIVO (pergunta-guia do dono): A recalibrar-T1 = 4 padrões directos/6
+intocados (polidura numa parede errada); **B tórax-estrutural = 5 directos
+(P3/P9/P10/P13/P14) + 5 habilitados (P1/P2/P4/P5/P7)**; C = B com T1 como
+andaime (ALTA off durante B; T1 re-decidida DEPOIS por medição); D cintura
+primeiro = 2 directos + re-trabalho. **RECOMENDAÇÃO (proposta): C**, ordem
+B → T2-razão (P7/P18) → T4-volumes (mama alvo real005 + lóbulos/sulco P16) →
+T5. Validação anti-falsa-melhoria: regra das bandas (emendada no
+OPERATING_MODE — bandas = banda das refs, nunca mais largas), matriz
+antes/depois dos 18 padrões, guardas P8/P12, gates visuais do dono por
+região. P18 novo: anca 392 vs refs 324–336 (ANSUR ✓) — razões das refs,
+absolutos limitados por ANSUR. Painel composto para o gate visual:
+docs/head_phaseA/torso_system_panels.png (+site). **Aguarda gate do dono
+(perguntas §6 do doc).**
+
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 
 | achado | classificação |

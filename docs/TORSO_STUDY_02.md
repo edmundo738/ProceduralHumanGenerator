@@ -120,6 +120,15 @@ O torso sculpt parcial da biblioteca não tem lóbulos — qualidade duvidosa
 para glúteos; suitability mantém UNKNOWN. Registo de que "estar na
 biblioteca" ≠ "ser padrão".
 
+### P18 — Anca LARGA vs refs (tensão declarada com ANSUR): refs 324–336 [n=4: fb 336, fc 336, r005 328, lucia 324] · MEASURED
+**Nós: 392 (+56…+68 vs todas as refs).** Cintura absoluta idem: refs 212–220
+vs nós 274. **Tensão:** a anca das refs está NO LIMITE/abaixo do p5 ANSUR
+(328–413) — as refs são slim (tensão já declarada em TORSO_STUDY_01 §2.1).
+**Decisão de sistema:** proporções (razões) vêm das refs; tamanhos absolutos
+são limitados por ANSUR (ambas as restrições declaradas). P18 alimenta a
+decisão T2 (a cintura persegue-se como RAZÃO 0.63–0.66 com bornes ANSUR, não
+como largura absoluta das refs).
+
 ## 3. Comparação com o nosso modelo — síntese
 
 | padrão | refs | nós T1 | nós T1-off | veredicto |
@@ -212,4 +221,9 @@ reconstruir (por região, CHECKPOINT §F actualizado por estes dados):
 
 Painéis para a leitura visual do dono: `torso_system_sagittal.png`,
 `torso_system_coronal.png`, `torso_system_gluteal.png`,
-`torso_system_curvature.png` (docs/head_phaseA/; também no site).
+`torso_system_curvature.png` e o composto `torso_system_panels.png`
+(docs/head_phaseA/; também no site).
+
+**A decisão foi formulada em `docs/TORSO_DECISION_01.md`** (checkpoint de
+decisão: alternativas comparadas por poder explicativo; NENHUMA geometria
+mudada; gate = dono).

@@ -51,6 +51,13 @@ Frases-armadilha e as suas correções:
 - "O código ficou mais modular" ≠ "a arquitetura ficou melhor".
 - "O objeto foi gerado" ≠ "a representação é adequada".
 
+**Regra das bandas (emenda 2026-09-29, lição P1 do TORSO_STUDY_02):** as
+bandas de validação derivam da banda medida DAS REFS VÁLIDAS (n declarado) —
+**nunca mais largas nem mais suaves que a banda real das refs**. Passar numa
+banda amolecida ≠ proximidade anatómica (medido: a banda T1 [40,75] era mais
+larga que a banda das refs [53.7,69.7] — "3/3 bandas" coexistiu com veredicto
+visual negativo).
+
 Pergunta obrigatória no passo RESULTADO de todo o ciclo:
 > **"Houve alteração mensurável — mas houve progresso proporcional na solução
 > do problema? O que o dono pediu foi resolvido, ou só foi alterado?"**

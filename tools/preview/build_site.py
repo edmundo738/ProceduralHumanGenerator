@@ -53,6 +53,7 @@ COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2",
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
+    ("torso_system_panels.png", "T-TORSO — painel COMPOSTO (4 painéis, gate visual do dono)", "Os 4 painéis do estudo do torso como sistema (TORSO_STUDY_02) numa imagem: sagital (refs vs nós), larguras normalizadas, contorno glúteo, curvatura. É o material de leitura visual para o checkpoint de decisão (TORSO_DECISION_01) — os números orientam, o gate visual do dono decide."),
     ("torso_system_sagittal.png", "T-TORSO — perfis sagitais: refs vs nós", "Estudo do torso como SISTEMA (TORSO_STUDY_02): perfil posterior e anterior da linha média, refs (cinza) vs nós T1-off (tracejado) e T1-on (sólido). 17 padrões medidos com proveniência; painel 1 de 4."),
     ("torso_system_coronal.png", "T-TORSO — larguras normalizadas pela anca", "Largura do tronco / largura da anca (invariante à orientação): a cintura das refs (0.63–0.66 da anca) vs a nossa (0.70 — tubular). Padrão P7; painel 2."),
     ("torso_system_gluteal.png", "T-TORSO — contorno glúteo", "Contorno posterior no ápice da nádega: todas as refs válidas têm lóbulos laterais + sulco central (7–26 mm); nosso T1-on tem um esboço (4.4), T1-off é bloco. Padrão P16; painel 3."),

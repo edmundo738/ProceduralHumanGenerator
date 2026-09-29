@@ -443,6 +443,11 @@
  ],
  "renders": [
   {
+   "src": "torso_system_panels.png",
+   "title": "T-TORSO — painel COMPOSTO (4 painéis, gate visual do dono)",
+   "caption": "Os 4 painéis do estudo do torso como sistema (TORSO_STUDY_02) numa imagem: sagital (refs vs nós), larguras normalizadas, contorno glúteo, curvatura. É o material de leitura visual para o checkpoint de decisão (TORSO_DECISION_01) — os números orientam, o gate visual do dono decide."
+  },
+  {
    "src": "torso_system_sagittal.png",
    "title": "T-TORSO — perfis sagitais: refs vs nós",
    "caption": "Estudo do torso como SISTEMA (TORSO_STUDY_02): perfil posterior e anterior da linha média, refs (cinza) vs nós T1-off (tracejado) e T1-on (sólido). 17 padrões medidos com proveniência; painel 1 de 4."
