@@ -16,7 +16,12 @@ melhoria local com dívida), auditoria de métricas (cegas a transições) e de
 geometria (tronco estruturalmente inadequado), hipóteses H-T1..H-T6, plano
 **T-TORSO SISTEMA** e método de validação (multi-vista por região + poses +
 gates do dono). Próximo ciclo: estudo do torso como sistema — NÃO mexer na
-geometria antes do estudo (perguntas em aberto no fim do checkpoint).
+geometria antes do estudo. **Decisões do dono (2026-09-29):** T1 fica ACTIVO
+como estado experimental do checkpoint (não anatomia validada; decisão
+definitiva suspensa até ao estudo); estudo T-TORSO por MISTURA (biblioteca
+005/003/001/002/007 + anatomia → gaps → refs externas específicas → padrões;
+refs novas do dono entram sem bloquear; proveniência obrigatória em cada
+conclusão — n refs / quais, n=1 vs n≥3).
 
 
 ## Variantes ativas (realistic_female, seed 42, mm@H226)

@@ -152,6 +152,12 @@ estilização; outra sobre topologia. Não procuramos "A referência perfeita" �
 construímos uma **biblioteca de evidências e padrões**. Assets parciais
 (torso, rig de dança, cabeças) são cidadãos de primeira classe.
 
+**Proveniência obrigatória (regra do dono, 2026-09-29):** cada conclusão
+importante regista QUEM a sustenta — `n refs / quais` — separando "apareceu
+numa referência" (OBSERVED, n=1) de "padrão encontrado em várias referências"
+(n≥3). Nenhuma referência isolada é verdade; o que conta é o padrão recorrente
+entre fontes independentes.
+
 Fluxo: **REFERÊNCIAS → ESTUDO → PADRÕES → PROPORÇÕES → HIPÓTESES → MÉTRICAS →
 CONSTRUÇÃO → COMPARAÇÃO → MEDIÇÃO/OBSERVAÇÃO → VALIDAÇÃO → AJUSTE**.
 

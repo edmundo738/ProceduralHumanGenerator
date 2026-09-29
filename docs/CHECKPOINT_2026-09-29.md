@@ -238,15 +238,26 @@ e leitura em pose — antes de voltar a mexer na geometria.
 
 ---
 
-## Perguntas em aberto para o dono (feitas nesta sessão)
+## Respostas do dono (2026-09-29, mesmo dia)
 
-1. **T1 no build default:** mantém-se o campo da curva S ACTIVO (estado
-   atual, checkpoint visível no site) ou passa a OFF por omissão (perfil
-   recto até o estudo do torso concluir)?
-2. **Fontes prioritárias do estudo T-TORSO:** (a) o dono envia novas refs
-   (ZIP — corpos/torsos/parciais de qualidade), (b) estudo profundo das 14
-   refs já na biblioteca + literatura anatómica, (c) procura externa do Arena
-   (modelos/assets/breakdowns de outros artistas e projetos), ou mistura?
+1. **T1 no build default: PERMANECE ACTIVO** — como estado
+   **experimental/visível do checkpoint**, explicitamente **NÃO tratado como
+   anatomia validada**. A decisão definitiva (preservar vs modificar vs
+   reconstruir) fica suspensa até o estudo T-TORSO apresentar evidência
+   suficiente para a comparação.
+2. **Fontes do estudo T-TORSO: MISTURA**, na ordem:
+   `biblioteca atual + anatomia (base: 005/003/001/002/007) → identificar
+   gaps → Arena procura refs externas ESPECÍFICAS para os gaps → comparar →
+   extrair padrões → só então propor alterações`. O ciclo NÃO bloqueia à
+   espera de ZIP novo do dono (entram quando disponíveis). Refs externas
+   servem para preencher lacunas E para TESTAR se os padrões se repetem.
+   **Nenhuma referência isolada é verdade — padrões recorrentes entre fontes.**
+
+**Regra nova para o T-TORSO (e em geral, OPERATING_MODE §7):** cada conclusão
+importante regista **QUEM a sustenta** — `n refs / quais` — separando
+"apareceu numa referência" (OBSERVED, n=1) de "padrão encontrado em várias
+referências" (n≥3). (Já praticávamos isto de forma implícita com as
+previews/painéis — a regra formaliza; a lapidação seguinte optimiza.)
 
 **Registo final:** este checkpoint + `OPERATING_MODE.md` passam a ser leitura
 obrigatória no passo 01 CONTEXTO de todos os ciclos (METHOD.md atualizado com
