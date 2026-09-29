@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-09-28 · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-09-29 · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e `DEVELOPMENT_AGREEMENT.md` (formato).
 
 ## Variantes ativas (realistic_female, seed 42, mm@H226)
@@ -12,11 +12,17 @@ Processo: ver `METHOD.md` (ciclo 16+1) e `DEVELOPMENT_AGREEMENT.md` (formato).
 | a2b | HCG_HEAD=massA2 | `db7871c83c9cf800` | + canto mentoniano |
 | n1 | + HCG_NECK=N1 | `179c676c86b5f012` | + pescoço superior |
 | f1 | HCG_HEAD=faceB+N1 | `e21378e3624e5765` | + face (campos+K+olhos) 8/8 |
-| **f2** | **HCG_HEAD=faceB2+N1** | **`b713d9489ecd8bb9`** | **+ CONT1 orelha integrada — validação do dono: ACEITÁVEL com dívida visual na orelha (resolver depois)** |
+| **f2** | HCG_HEAD=faceB2+N1 | `b713d9489ecd8bb9` | + CONT1 orelha integrada — validação do dono: ACEITÁVEL com dívida visual na orelha (resolver depois) |
+| **t1** | **HCG_HEAD=faceB2+N1 (T1 on)** | **`dd0a715deed6dfc3`** | **+ T1 COSTAS curva S — CHECKPOINT: dono NÃO GOSTOU do visual (2026-09-29, provisório); NÃO fechada, re-ajustar antes de T2** |
 
-Build default NÃO muda com nenhuma flag (pins `cb4e855996c2f1fd` intactos;
-testes: 133 passed / 1 skip / 1 xfail). Site: `site/` commitado —
-`tools/preview/serve.sh 8080`.
+**T1 COSTAS (2026-09-29) muda o BUILD DEFAULT**: pins agora 6467 verts/6373
+faces (curva S é o default; `49fcc725984aec75` pure / `e9692d34c0dde938`
+mathutils; testes 136 passed). `HCG_T1_AMP=0` reverte o campo (variantes
+históricas do site exportam assim; digests preservados). **O dono não validou
+o resultado visual das costas** — o checkpoint fica de pé (medições 3/3 em
+§7 TORSO_STUDY_01), mas a T1 não está fechada: re-ajustar janelas/amplitudes
+a partir do feedback específico do dono antes de avançar para T2.
+Site: `site/` commitado — `tools/preview/serve.sh 8080`.
 
 ## Onde estamos (leitura honesta)
 
@@ -41,7 +47,7 @@ testes: 133 passed / 1 skip / 1 xfail). Site: `site/` commitado —
 
 Prioridade do dono (2026-09-28): pescoço + torso (peito, abdômen, costas, cinturas).
 Estudo MEDIDO feito; plano T1–T5 (uma mudança estrutural por fase, pré-registo antes):
-1. **T1 COSTAS** (próximo passo, dono autorizou: retoma após a infraestrutura da Reference Library) — curva sagital em S (bs(z)): lombar 19.5→[40,75]; nádega-vs-torácica +10→[−25,−2].
+1. **T1 COSTAS — CHECKPOINT (2026-09-29, reconstruída 2×; §7 TORSO_STUDY_01)** — curva sagital em S: lombar 26.9→45.3 ✓[40,75]; nádega-vs-torácica +12→−6.0 ✓[−25,−2]; costas altas −38→−26.0 ✓[−30,−8]; larguras Δ0.0. **Dono NÃO validou o visual** — re-ajustar (queixa específica pendente) antes de T2; não fechar.
 2. **T2 CINTURA** — largura natural 288→[230,270]; cintura/nádegas 0.904→[0.75,0.85].
 3. **T3 PEITO** — derreter o barril: largura 352→[268,314], profundidade 314→[216,307] (fora do p95 ANSUR).
 4. **T4 BUSTO** — UNKNOWN nas refs atuais (uma sem mamas, uma com barriga dominante, uma mama pequena): decidir com o dono (refs novas ou literatura).
@@ -54,7 +60,7 @@ Aguarda: validação do painel `renders_T1_vs_refs.png` + decisão do busto.
 |---|---|
 | orelha: turn/envelope dentro das refs (CONT1) | melhoria confirmada (quantitativa) |
 | orelha: integração visual de perto | dono: ACEITÁVEL — dívida visual notável (resolver depois) |
-| tronco: costas sem curva S (lombar 19.5 vs refs 54–70) | não corrigido (T1) |
+| tronco: costas sem curva S (lombar 19.5 vs refs 54–70) | T1 checkpoint: bandas 3/3 ✓ mas dono NÃO validou o visual — re-ajuste pendente |
 | tronco: cintura tubular (WHpR 0.904 vs refs 0.72–0.81) | não corrigido (T2) |
 | tronco: peito-barril (largura/profundidade > p95 ANSUR) | não corrigido (T3) |
 | busto: alvo UNKNOWN nas refs | decisão do dono pendente (T4) |

@@ -23,7 +23,8 @@ from mathutils import Vector  # noqa: E402
 
 ROOT = os.path.join(HERE, "..", "..")
 DOCS = os.path.join(ROOT, "docs", "head_phaseA")
-SOURCES = [("ours", False), ("femalebase", False), ("femalechar", True), ("bodytopo", True)]
+SOURCES = [("ours", False), ("femalebase", False), ("femalechar", True), ("bodytopo", True),
+           ("real005", True)]
 VIEWS = [("front", 0.0, (0.0, 0.0, 1020.0), 1.06),
          ("q", 0.6, (0.0, 0.0, 1020.0), 1.06),
          ("side", 1.5708, (0.0, 0.0, 1020.0), 1.06),

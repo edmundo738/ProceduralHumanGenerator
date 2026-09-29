@@ -281,7 +281,7 @@
     },
     {
      "file": "meta.json",
-     "bytes": 778,
+     "bytes": 1404,
      "sha256": null
     },
     {
@@ -309,7 +309,7 @@
     },
     {
      "file": "meta.json",
-     "bytes": 787,
+     "bytes": 1049,
      "sha256": null
     },
     {
@@ -443,7 +443,7 @@
    "has_extraction": true
   }
  ],
- "total_bytes": 61420737,
+ "total_bytes": 61421625,
  "policy": {
   "total_cap_bytes": 314572800,
   "file_warn_bytes": 52428800

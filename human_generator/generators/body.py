@@ -19,6 +19,7 @@ from ..core.topology import MeshBuilder
 from ..core.rng import Rng
 from .hands import build_hand
 from .feet import build_foot
+from .back_curve import apply_sagittal_back, subdivide_rings
 
 
 @dataclass
@@ -52,6 +53,11 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
     # A ordenação é estável e total (z, depois y), pelo que é determinística.
     secs = sorted(secs, key=lambda s_: (-s_.center.z, s_.center.y))
     rings = [s.points(ring_n) for s in secs]
+    # T1 COSTAS (docs/TORSO_STUDY_01.md §4/§7) — densidade para amostrar a curva
+    # sagital em S: +10 anéis interpolados linearmente nas zonas da curva.
+    # Sempre activa (topologia idêntica com/sem o campo — instrumento A/B
+    # HCG_T1_AMP).  A subdivisão é ANTES do loft para o tubo apanhar os anéis.
+    rings = subdivide_rings(rings, anat.stature)
     b.loft(rings, close=True, region="skin", material="skin",
            uv_rect=(0.22, 0.78, 0.0, 1.0), register="trunk",
            cap_start="pole", cap_end="pole")
@@ -153,6 +159,12 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
                    sigma=(0.06 * h, 0.05 * h, 0.06 * h), direction=Vector((0, 1, 0)))
 
     b.verts = stack.apply(b.verts)
+
+    # T1 COSTAS — campo sagital em S sobre os anéis do tronco, DEPOIS do stack
+    # (a curva é do tronco, não do tecido mole: busto/glúteos/trapézio já
+    # aplicados; o campo só desloca a face posterior, frente/larguras intactas).
+    # HCG_T1_AMP=0 desliga o campo (controlo A/B, mesma topologia).
+    apply_sagittal_back(b, anat.stature)
 
     # S3.3 — plano do chão.  Medido antes: min(z) = −7.70 mm (3 vértices do
     # calcanhar).  O clamp que existe em feet.py usa ``Deformer("flatten")`` com

@@ -9,7 +9,9 @@ o cabelo, e exporta o corpo SEM materiais (avaliação neutra) em dois GLB:
   <id>_cage.glb   — a malha do gerador sem subdivisão (topologia real)
   <id>_edges.bin  — arestas reais da cage (float32 x,y,z Y-up, pares) para o wireframe
 Escreve também OUT_DIR/models.json com estatísticas e digests.
-Não altera o gerador; as flags são as mesmas dos estudos (HCG_HEAD / HCG_NECK).
+Não altera o gerador; as flags são as mesmas dos estudos (HCG_HEAD / HCG_NECK /
+HCG_T1_AMP — as variantes HISTÓRICAS exportam com T1_AMP=0 para manter o corpo
+pré-T1; a t1 usa o default = curva S activa).
 """
 import json
 import os
@@ -19,17 +21,19 @@ sys.path.insert(0, ".")
 import bpy  # noqa: E402
 
 VARIANTS = [
-    {"id": "antes", "label": "ANTES (cabeça antiga)", "env": {}, "commit": "8716b88…de08023"},
-    {"id": "faseA", "label": "FASE A (massas R1)", "env": {"HCG_HEAD": "massA"}, "commit": "642cb7f"},
-    {"id": "a2b", "label": "A2b (canto mentoniano)", "env": {"HCG_HEAD": "massA2"}, "commit": "5eb8c32"},
-    {"id": "n1", "label": "A2b + N1 (pescoço superior)", "env": {"HCG_HEAD": "massA2", "HCG_NECK": "N1"}, "commit": "3ad83da"},
-    {"id": "f1", "label": "F1 (face: campos + corretiva)", "env": {"HCG_HEAD": "faceB", "HCG_NECK": "N1"}, "commit": "2d6039f"},
-    {"id": "f2", "label": "F2 (CONT1: orelha integrada)", "env": {"HCG_HEAD": "faceB2", "HCG_NECK": "N1"}, "commit": "029063e"},
+    {"id": "antes", "label": "ANTES (cabeça antiga)", "env": {"HCG_T1_AMP": "0"}, "commit": "8716b88…de08023"},
+    {"id": "faseA", "label": "FASE A (massas R1)", "env": {"HCG_HEAD": "massA", "HCG_T1_AMP": "0"}, "commit": "642cb7f"},
+    {"id": "a2b", "label": "A2b (canto mentoniano)", "env": {"HCG_HEAD": "massA2", "HCG_T1_AMP": "0"}, "commit": "5eb8c32"},
+    {"id": "n1", "label": "A2b + N1 (pescoço superior)", "env": {"HCG_HEAD": "massA2", "HCG_NECK": "N1", "HCG_T1_AMP": "0"}, "commit": "3ad83da"},
+    {"id": "f1", "label": "F1 (face: campos + corretiva)", "env": {"HCG_HEAD": "faceB", "HCG_NECK": "N1", "HCG_T1_AMP": "0"}, "commit": "2d6039f"},
+    {"id": "f2", "label": "F2 (CONT1: orelha integrada)", "env": {"HCG_HEAD": "faceB2", "HCG_NECK": "N1", "HCG_T1_AMP": "0"}, "commit": "029063e"},
+    # T1 COSTAS: a curva S é o DEFAULT do gerador — sem HCG_T1_AMP (campo on).
+    {"id": "t1", "label": "T1 (costas: curva S)", "env": {"HCG_HEAD": "faceB2", "HCG_NECK": "N1"}, "commit": "T1RECON"},
 ]
 
 
 def set_env(env):
-    for k in ("HCG_HEAD", "HCG_NECK"):
+    for k in ("HCG_HEAD", "HCG_NECK", "HCG_T1_AMP"):
         os.environ.pop(k, None)
     os.environ.update(env)
 
@@ -60,10 +64,18 @@ def export_obj(src, path, evaluated):
 def main():
     args = sys.argv[1:]
     out = args[0] if args else "out/preview/models"
+    only = None
+    if "--only" in args:                      # exportar um subconjunto (p.ex. --only t1)
+        i = args.index("--only")
+        only = set(args[i + 1].split(","))
+        args = args[:i] + args[i + 2:]
+        out = args[0] if args else out
     os.makedirs(out, exist_ok=True)
     import human_generator as hcg
     manifest = []
     for v in VARIANTS:
+        if only and v["id"] not in only:
+            continue
         bpy.ops.wm.read_factory_settings(use_empty=True)
         set_env(v["env"])
         r = hcg.generate_character("realistic_female", seed=42, name=f"prev_{v['id']}",

@@ -1,7 +1,9 @@
 {
  "provided_by_owner": true,
  "license": "UNKNOWN",
- "suitability": {},
+ "suitability": {
+  "torso_sagittal": "ADMITIDA como supervisão (TORSO STUDY 01 T1, 2026-09-29): lombar 56.2 ✓ banda refs [53.7–69.7]; nádega-vs-torácica −8 ✓ [−20,−8]; hipbreadth 328 (ANSUR 328–413). Medida no instrumento comum @1700."
+ },
  "extraction": "extraction.json",
  "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
  "id": "REF-F-REAL-005",
@@ -19,7 +21,9 @@
  "regions_available": [
   "full_body"
  ],
- "observations": {},
+ "observations": {
+  "t1_2026_09_29": "Pele nua = objectos com material Std_Skin_* (14474 v: Arm 4738 + Leg 2590 + Head 5086 + Body 2060; exclui cabelo/olhos/cílios/unhas/roupa). Escala 1.80 m. Orientação: frente = −Y no ficheiro — VALIDADO por medição sagital (frente errada ⇒ lombar ~4 com a barriga atrás; certa ⇒ 56.2); a heurística 'pés' engana porque a banda z<16% inclui a canela."
+ },
  "unknowns": [
   "autoria",
   "escala/unidades",

@@ -117,3 +117,96 @@ literatura já estudada); o pescoço fecha integrando com a nuca (CONT2).
   depois pré-registo T1 (costas) e execução.
 - **Por quê:** T1 é a fundação da silhueta e tem os critérios mais claros; o
   método exige uma mudança de cada vez com validação visual intercalada.
+
+## 7. T1 COSTAS — execução (MEASURED 2026-09-29)
+
+**Proveniência (registo honesto):** a T1 foi executada e fechada a 2026-09-29
+(commit `c8ee4ce`), mas o push falhou (token GitHub inválido) e o sandbox foi
+recriado antes do reenvio — o commit perdeu-se. A 1.ª reconstrução
+(`837b69b`+site) perdeu-se da mesma forma (2.º reset do sandbox). Esta é a
+**2.ª reconstrução**: `back_curve.py` re-escrito da especificação pré-registada
+(§4) e das constantes calibradas registadas, depois verificado
+**digest-a-digest** contra os pins medidos na 1.ª passagem (idênticos —
+`49fcc725984aec75` pure / `e9692d34c0dde938` mathutils) e com as medições
+A/B reproduzidas à casa decimal onde registadas.
+
+**Mecanismo (uma mudança estrutural, como pré-registado):**
+`generators/back_curve.py` — três janelas C¹ do perfil sagital posterior
+(sacro `z∈[.4982,.6000]·S` pico `.55`, lombar `[.6035,.6928]` pico `.6434`,
+costas altas `[.7663,.8263]` platô `.7972`; cotas em fração da estatura
+NOMINAL × `_K=0.98965`), amplitudes `.024/.0235/.0282·S` para +y (anterior),
+com cauda lateral por janela (sacro: planalto |x|≤`.0233·S` até zero em
+`.0466·S` — gaussiana estreita morre no Catmull-Clark; lombar/altas:
+gaussiana σx `.0524/.0233·S`) e peso angular y (só a face posterior do anel;
+frente e larguras intocadas por construção). `subdivide_rings` insere **+10
+anéis** interpolados LINEARMENTE EM PONTOS nas zonas da curva (+160 verts/
+faces; interpolar parâmetros incha os cantos +18 mm — medido); `apply_sagittal_back`
+aplica o campo aos anéis `trunk.k` DEPOIS do DeformStack. Instrumento A/B:
+`HCG_T1_AMP=0` desliga só o campo (topologia idêntica).
+
+**Resultado A/B (amp0→amp1, mesma topologia, subsurf nível 1, @1700 mm):**
+
+| métrica (banda §4) | amp0 | amp1 | original `c8ee4ce` | veredicto |
+|---|---|---|---|---|
+| concavidade lombar ∈ [40,75] | 26.9 | **45.3** ✓ | 45.3 ✓ | idêntico ao original |
+| nádega−vs−torácica ∈ [−25,−2] | +12.0 | **−6.0** ✓ | −6.0 ✓ | idêntico ao original |
+| costas altas−vs−occipital ∈ [−30,−8] | −38.0 | **−26.0** ✓ | −32 ✗ (2 mm) | **reconstrução DENTRO** |
+| larguras peito/cintura/quadril (Δ±2) | — | **Δ0.0** ✓ | Δ0.0 ✓ | exacto |
+| circ cintura (±2) | 920.1 | −0.9 ✓ | −1.9 ✓ | |
+| circ peito (±2) | 1051.7 | −1.4 ✓ | −6.0 ✗ declarado | reconstrução dentro |
+| circ nádegas | 1025.4 | −6.4 | −5.1 declarado | efeito declarado (abaixo) |
+| circ pescoço | 417.2 | +0.3 | +0.7 | |
+| crotchheight | 840 | Δ0.0 | Δ0.0 | |
+
+Perfil sagital posterior (linha média, controlo): lombar **−107**@1100
+(amp0 −131), sacro **−149**@920 (−163), altas **−133**@1360 (−147); ápices:
+nádega 920→915, lombar 1085→1110, torácico 1305→1265. IoU do painel
+(`renders_T1_vs_refs.png`, com **real005**): lado 0.67–0.75 (ref↔ref 0.69);
+frente 0.63–0.66 com o artefacto de centrado-y por caixa declarado no
+original (a frente não é tocada pelo campo).
+
+## 7.1 Validação do dono e decisão
+
+**VALIDAÇÃO DO DONO (2026-09-29): NEGATIVA, provisória — "acho que não
+gostei do resultado das costas no momento".** A T1 fica em **CHECKPOINT**
+(código + medições + variante do site), **NÃO fechada**:
+
+- As três bandas §4 estão cumpridas (medição objectiva), mas a leitura
+  visual do dono manda — a métrica não captura tudo (ex.: leitura de
+  "gibosidade" no sacro/ilíaca, transições, quão harmónica a curva parece).
+- **Próximo passo:** o dono diz O QUE lê mal (sacro saliente? lombar
+  exagerada? costas altas recuada a mais? transições duras?) e re-ajustam-se
+  as janelas/amplitudes DENTRO do mesmo mecanismo; `HCG_T1_AMP=0` reverte o
+  default se preferir voltar ao perfil recto enquanto isso.
+- **T2 não parte daqui sem re-decisão** (método: uma mudança de cada vez,
+  validação intercalada).
+
+Efeitos estruturais conhecidos (mantêm-se declarados): o campo achata o
+BLOCO central glúteo (contorno posterior 910–950 = −163..−165 em |x|≤60 com
+mínimo NO CENTRO; refs têm lóbulos laterais + sulco) ⇒ circ nádegas −6.4 —
+lóbulos continuam **pré-requisito T4**; confundidor occipital nosso −99 vs
+refs −139/−145 (liga a T5/CONT2).
+
+## 7.2 Notas de instrumento (reconstrução)
+
+- A comparação correcta é **amp0 vs amp1** (mesma topologia). amp0 vs baseline
+  mistura artefactos de amostragem dos novos anéis.
+- A medição avalia o **subsurf nível 1**: o pad sacral realiza ~0.5 da
+  amplitude (Catmull-Clark) — daí o planalto lateral; a lombar (σx largo)
+  realiza ~0.85.
+- O instrumento **re-centra Y pela caixa** (mín/máx da malha mantida): quando
+  o mínimo posterior (nádega) avança, o frame inteiro desloca ~Δ/2 — as zonas
+  não tocadas "recuam" na leitura. Artefacto declarado; as métricas relativas
+  (t−b) compensam-no.
+- Constantes lidas dinamicamente (`_amp()`) para variantes coexistirem no
+  mesmo processo (export do site); janelas em fração ×_K (a malha realiza
+  1.6824 m para 1.7 nominal — sem o ×_K as janelas deslocam 1%).
+- **Refs novas (REF-F-REAL-005/006):** real005 (T-pose, pele nua
+  `Std_Skin_*` = 14474 v) ADMITIDA como supervisão — lombar **56.2** ✓ banda
+  refs, nádega-vs-torácica −8 ✓, hipbreadth 328 ✓. real006 (MOLLY, 26435 v)
+  **EXCLUÍDA**: estilizada (lombar 1.4; hipbreadth 640 > p95+230).
+- Orientação de refs: a heurística "pés" engana (a banda z<16% inclui a
+  canela); a decisão de flip foi VALIDADA pela medição sagital (frente errada
+  ⇒ lombar ~4 com a barriga atrás; certa ⇒ 56.2 na banda).
+- **Lições de processo (2 perdas):** commitar E fazer push no mesmo passo;
+  nunca terminar um turno com commits não sincronizados.

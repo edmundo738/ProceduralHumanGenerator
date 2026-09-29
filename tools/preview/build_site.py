@@ -33,6 +33,7 @@ DESC = {
     "n1": "A2b + pescoço superior (anéis trunk.2/3) calibrado para o perfil médio das refs. Só 32 vértices do corpo mudam.",
     "f1": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓).",
     "f2": "F2 = CONT1 + N1: orelha INTEGRADA — janela C¹ (smoothstep, valor e declive nulos no bordo) × colina recentrada no envelope medido das refs + relevo reforçado; K mantido (suprimi-lo custou relevo: turn 449° vs 462°). Turn da secção 462→619° (refs 571–993). Fora da orelha: máx 0.035 mm. 8/8 critérios intactos.",
+    "t1": "T1 = F2 + COSTAS (CHECKPOINT, não fechada): curva sagital em S do tronco — três janelas C¹ (sacro/lombar/costas altas) só na face posterior, +10 anéis interpolados. A/B medido: lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação visual do dono: NEGATIVA por agora (2026-09-29) — re-ajustar (docs/TORSO_STUDY_01.md §7).",
 }
 
 METRIC_ROWS = [
@@ -52,7 +53,7 @@ COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2",
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
-    ("renders_T1_vs_refs.png", "TORSO STUDY 01 — tronco: nós vs refs (mesma câmara)", "Frente, ¾, lado e costas do tronco: ours (braços caídos) e as 3 refs (T/A-pose). IoU frontal do tronco: ours 0.88–0.92 vs 0.95 entre refs; costas sem curva S, cintura tubular, peito-barril (docs/TORSO_STUDY_01.md)."),
+    ("renders_T1_vs_refs.png", "TORSO T1 — costas em S: nós vs refs (mesma câmara)", "Frente, ¾, lado e costas do tronco: ours T1 (curva S, braços caídos) e as refs (femalebase/femalechar/bodytopo/real005; T/A-pose). IoU lado 0.67–0.75 vs ref↔ref 0.69. A/B medido (amp0→amp1): lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação do dono: NEGATIVA por agora (docs/TORSO_STUDY_01.md §7)."),
     ("renders_F2_vs_refs.png", "F2 vs REFS — painel comparativo (mesma câmara)", "Cinco fontes × seis vistas (frente, ¾, lado, costas, orelha, orelha-¾), Cycles cinza neutro: oursF1, oursF2 e as 3 refs. IoU de silhueta: frente 0.91–0.94 vs baseline ref↔ref 0.90."),
     ("renders_F2_ear.png", "F2 — CONT1: close-up da orelha (PROXIMIDADE)", "F1 vs F2, lado e ¾ posterior; Cycles cinza neutro, sem cabelo, mesma câmara. A janela C¹ funde a orelha na casca (sem degrau no bordo) e o relevo entra na gama das refs (turn 462→619°)."),
     ("cont1_ear_h.png", "CONT1 — curvatura da orelha vs refs", "Secção horizontal z=92.5 (esq.) e |κ| ao longo do arco (dir.): F2 dentro da banda das refs."),
@@ -81,6 +82,7 @@ HISTORY = [
     ("NECK N1 — pescoço superior", "3ad83da", "pass", "N-C1 15/18 ✓; TR3 61.5 ✓", "Só os anéis trunk.2/3 mudam, calibrados para o perfil médio das refs. O submento e o bordo da mandíbula passam a ver-se.", "n1"),
     ("FACE F1 — massas faciais e traços", "2d6039f", "pass", "8/8 critérios ✓; C1 2.12; W1 153.2 ✓", "Campos anatómicos (limites de sinal) + camada corretiva estatística das refs, sobre a casca A2b/N1. Estatística declarada (43% campos, K das 3 refs). Digest oursF1 e21378e3624e5765.", "f1"),
     ("CONT1 — continuidade anatómica", "029063e", "pass", "PR1–PR5 ✓; orelha turn 619° (refs 571–993)", "Estudo medido por secções/silhueta (nuca 1.8× refs = pior; orelha 0.64× relevo). Orelha integrada: janela C¹ + envelope medido + relevo; K mantido (medido). Confinamento exato: 0.035 mm fora da zona.", "f2"),
+    ("T1 COSTAS — curva sagital em S", "T1RECON", "info", "bandas 3/3 ✓ (lombar 45.3; nádega −6.0; altas −26.0); validação do dono: NEGATIVA por agora", "CHECKPOINT (não fechada). RECONSTRUÇÃO 2× — o commit original (c8ee4ce) e a 1.ª reconstrução (837b69b) perderam-se em resets do sandbox antes do push. Três janelas C¹ (sacro/lombar/altas) só na face posterior + 10 anéis interpolados; larguras Δ0.0. O dono não gostou do resultado visual (2026-09-29): re-ajustar janelas/amplitudes antes de seguir para T2. Ref nova real005 admitida (lombar 56.2 ✓).", "t1"),
 ]
 
 

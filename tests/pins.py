@@ -20,8 +20,8 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "ad620a90b8eba085",   # S3.7: shoulder_head_ratio now has a source
-        "verts": 6307,          # pre-weld (pure build)
-        "faces": 6213,
+        "verts": 6467,          # T1: +160 (10 anéis da curva S; era 6307)
+        "faces": 6373,
         "strands": 2400,
         # re-measured in S4.2 (a casca do crânio deixou de ser fechada: orbita,
         # boca e narinas cortadas; refinamento local em 2 passagens cobrindo
@@ -39,8 +39,19 @@ PINS = {
         # waist/navel/hip_flare/hip; see docs/H3H2_TRUNK.md.  Only the digest
         # moved; leg/neck/head vertices bitwise identical.
         # previous: pure-python c0a50b8a261633ad, mathutils 1dfe85655ada5de0)
-        "digest": {"pure-python": "cb4e855996c2f1fd",
-                   "mathutils": "c7ab2932f5d66ede"},
+        # (T1 COSTAS — docs/TORSO_STUDY_01.md §7: curva sagital em S do tronco.
+        # +10 anéis interpolados nas zonas da curva (subdivide_rings) = +160
+        # verts/+160 faces/skin 3585; campo sagital HCG_T1_AMP (omissão: on).
+        # Bandas §4: lombar 45.3 ✓ [40,75]; nádega −6.0 ✓ [−25,−2]; costas
+        # altas −26.0 ✓ [−30,−8]; larguras Δ0.0.  CHECKPOINT com validação
+        # visual do dono NEGATIVA (2026-09-29) — re-ajustar antes de fechar.
+        # RECONSTRUÇÃO 2×: o commit T1 original (c8ee4ce) e a 1.ª reconstrução
+        # (837b69b) perderam-se em resets do sandbox antes do push; re-escrito
+        # da especificação pré-registada, re-calibrado até reproduzir as
+        # medições A/B registadas (lombar/nádega idênticos à casa decimal).
+        # previous: pure-python cb4e855996c2f1fd, mathutils c7ab2932f5d66ede)
+        "digest": {"pure-python": "49fcc725984aec75",
+                   "mathutils": "e9692d34c0dde938"},
     },
 }
 
@@ -54,9 +65,9 @@ PINS = {
 # (6307 vs 6309): o corte é dirigido pela anatomia e 2 faces do `neon_idol`
 # caem do lado oposto da janela da boca (medido, doc S4_FACE §10).
 PRESET_COUNTS = {
-    "cyber_angel": (6307, 6213, 2800),
-    "neon_idol": (6309, 6215, 3200),
-    "realistic_female": (6307, 6213, 2400),
+    "cyber_angel": (6467, 6373, 2800),
+    "neon_idol": (6469, 6375, 3200),
+    "realistic_female": (6467, 6373, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -64,7 +75,7 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 6307, "faces": 6213,
+AUDIT_PINS = {"verts": 6467, "faces": 6373,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
@@ -106,7 +117,7 @@ SEMANTIC_PINS = {
                 "cornea": 102, "enamel": 1400, "eye": 264,
                 "eyelid": 240, "gum": 196, "lip": 126,
                 "nail": 192, "nostril": 1, "oral": 127,
-                "palm": 62, "scalp": 132, "skin": 3425,
+                "palm": 62, "scalp": 132, "skin": 3585,
                 "sole": 40
             },
             "groups": {
@@ -137,7 +148,7 @@ SEMANTIC_PINS = {
                 "cornea": 102, "enamel": 1400, "eye": 264,
                 "eyelid": 240, "gum": 196, "lip": 126,
                 "nail": 192, "nostril": 1, "oral": 127,
-                "palm": 62, "scalp": 132, "skin": 3425,
+                "palm": 62, "scalp": 132, "skin": 3585,
                 "sole": 40
             },
             "groups": {
