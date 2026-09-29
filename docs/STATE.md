@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-09-29 (TORSO B reconstruído e verificado) · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-09-30 (gate TORSO B NEGATIVO; TORSO TRANSITIONS 01 estudado) · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
@@ -135,6 +135,33 @@ pure `8b74b578adb1755b` / math `ad377832122c78c3`, instrumento ours
 `25cafb179b04ed34` / ours0 `cdc1996498342cdd`. **Gate visual do dono: PENDENTE**
 (renders_T1_vs_refs.png 4 vistas + 4 painéis torso_system_* + site). Fila:
 feedback → T2 (P14/P16/sulco) → T4 → T5 → só depois lapidação de regiões.
+
+## GATE VISUAL TORSO B: NÃO APROVADO (2026-09-30) + TORSO TRANSITIONS 01 ESTUDADO
+
+**Veredicto do dono:** "reconhecível como humanoide, mas a forma ainda denuncia a
+construção procedural". Directriz completa em docs/TORSO_TRANSITIONS_01.md §0
+(preservada verbatim): prioridades = mamas (volumes aplicados, não amp) e costas
+("lombas de estrada"); tórax superfície suavizada, ombros parabólicos, abdómen em
+ondas, cintura cortada, glúteos geométricos (mas NÃO destruir o volume);
+métricas = guardrails não prova de humanidade; não polir detalhes antes das
+massas; não criar variáveis por descoberta; corpo = camadas contínuas ("a anatomia
+de algo só se tem com o outro"). Critério de sucesso: silhueta/volumes parecem
+pertencer ao mesmo corpo humano, visível ANTES das métricas.
+
+**Estudo dirigido FEITO (docs/TORSO_TRANSITIONS_01.md; SEM alteração de
+geometria).** Instrumento novo torso_transitions.py (extremos locais + energia de
+curvatura por junção R1–R10): **"lombas" confirmadas — R9 lombar: 3 extremos
+nossos vs 1 [1–1] das refs, 2 deles a ≤2 mm das estações navel/hip_flare; 6/9
+extremos nossos a ≤18 mm de uma estação**; R5: recessão submamária existe em
+todas as refs e em nós NÃO (mama "aplicada"); R3: tórax é tubo (wiggle 0.73 vs
+4.24 das refs); R2: ombro parabólico (0 extremos, wiggle 0.75 vs 12.2).
+**Mecanismo (código):** o loft é LINEAR (topology.py mix(v0,v1,k/(K-1)) +
+subdivide_rings linear + CC 1×) → C0 por troços, curvatura concentrada nas
+estações. Resposta à pergunta §3: estações/superelipses/bumps PODEM ficar; o
+INTERPOLADOR é o que tem de mudar. Hipóteses H-TT1..H-TT6 + plano ordenado
+(H-TT1 spline C² primeiro, zero parâmetros novos). Mama-assimetria e dobra
+glútea: linha média não discrimina (registado; cortes laterais na implementação).
+Painel: docs/head_phaseA/torso_transitions.png.
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 
