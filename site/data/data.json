@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes c7ab2932f5d66ede · faseA 76c5875d00a6db12 · a2b db7871c83c9cf800 · n1 179c676c86b5f012 · f1 e21378e3624e5765 · f2 b713d9489ecd8bb9",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes c7ab2932f5d66ede · faseA 76c5875d00a6db12 · a2b db7871c83c9cf800 · n1 179c676c86b5f012 · f1 e21378e3624e5765 · f2 b713d9489ecd8bb9 · t1 dd0a715deed6dfc3",
  "variants": [
   {
    "id": "antes",
@@ -139,6 +139,30 @@
     "edges": 69392
    },
    "desc": "F2 = CONT1 + N1: orelha INTEGRADA — janela C¹ (smoothstep, valor e declive nulos no bordo) × colina recentrada no envelope medido das refs + relevo reforçado; K mantido (suprimi-lo custou relevo: turn 449° vs 462°). Turn da secção 462→619° (refs 571–993). Fora da orelha: máx 0.035 mm. 8/8 critérios intactos."
+  },
+  {
+   "id": "t1",
+   "label": "T1 (costas: curva S)",
+   "env": {
+    "HCG_HEAD": "faceB2",
+    "HCG_NECK": "N1"
+   },
+   "commit": "4258f24",
+   "digest": "dd0a715deed6dfc3",
+   "smooth": {
+    "verts": 557044,
+    "faces": 556288,
+    "quads": 556288,
+    "bytes": 26720864
+   },
+   "cage": {
+    "verts": 34888,
+    "faces": 34876,
+    "quads": 34444,
+    "bytes": 1254116,
+    "edges": 69712
+   },
+   "desc": "T1 = F2 + COSTAS (CHECKPOINT, não fechada): curva sagital em S do tronco — três janelas C¹ (sacro/lombar/costas altas) só na face posterior, +10 anéis interpolados. A/B medido: lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação visual do dono: NEGATIVA por agora (2026-09-29) — re-ajustar (docs/TORSO_STUDY_01.md §7)."
   }
  ],
  "metrics": {
@@ -420,8 +444,8 @@
  "renders": [
   {
    "src": "renders_T1_vs_refs.png",
-   "title": "TORSO STUDY 01 — tronco: nós vs refs (mesma câmara)",
-   "caption": "Frente, ¾, lado e costas do tronco: ours (braços caídos) e as 3 refs (T/A-pose). IoU frontal do tronco: ours 0.88–0.92 vs 0.95 entre refs; costas sem curva S, cintura tubular, peito-barril (docs/TORSO_STUDY_01.md)."
+   "title": "TORSO T1 — costas em S: nós vs refs (mesma câmara)",
+   "caption": "Frente, ¾, lado e costas do tronco: ours T1 (curva S, braços caídos) e as refs (femalebase/femalechar/bodytopo/real005; T/A-pose). IoU lado 0.67–0.75 vs ref↔ref 0.69. A/B medido (amp0→amp1): lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação do dono: NEGATIVA por agora (docs/TORSO_STUDY_01.md §7)."
   },
   {
    "src": "renders_F2_vs_refs.png",
@@ -576,6 +600,14 @@
    "verdict": "PR1–PR5 ✓; orelha turn 619° (refs 571–993)",
    "text": "Estudo medido por secções/silhueta (nuca 1.8× refs = pior; orelha 0.64× relevo). Orelha integrada: janela C¹ + envelope medido + relevo; K mantido (medido). Confinamento exato: 0.035 mm fora da zona.",
    "variant": "f2"
+  },
+  {
+   "title": "T1 COSTAS — curva sagital em S",
+   "commit": "4258f24",
+   "status": "info",
+   "verdict": "bandas 3/3 ✓ (lombar 45.3; nádega −6.0; altas −26.0); validação do dono: NEGATIVA por agora",
+   "text": "CHECKPOINT (não fechada). RECONSTRUÇÃO 2× — o commit original (c8ee4ce) e a 1.ª reconstrução (837b69b) perderam-se em resets do sandbox antes do push. Três janelas C¹ (sacro/lombar/altas) só na face posterior + 10 anéis interpolados; larguras Δ0.0. O dono não gostou do resultado visual (2026-09-29): re-ajustar janelas/amplitudes antes de seguir para T2. Ref nova real005 admitida (lombar 56.2 ✓).",
+   "variant": "t1"
   }
  ]
 }

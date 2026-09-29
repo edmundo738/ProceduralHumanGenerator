@@ -28,7 +28,7 @@ VARIANTS = [
     {"id": "f1", "label": "F1 (face: campos + corretiva)", "env": {"HCG_HEAD": "faceB", "HCG_NECK": "N1", "HCG_T1_AMP": "0"}, "commit": "2d6039f"},
     {"id": "f2", "label": "F2 (CONT1: orelha integrada)", "env": {"HCG_HEAD": "faceB2", "HCG_NECK": "N1", "HCG_T1_AMP": "0"}, "commit": "029063e"},
     # T1 COSTAS: a curva S é o DEFAULT do gerador — sem HCG_T1_AMP (campo on).
-    {"id": "t1", "label": "T1 (costas: curva S)", "env": {"HCG_HEAD": "faceB2", "HCG_NECK": "N1"}, "commit": "T1RECON"},
+    {"id": "t1", "label": "T1 (costas: curva S)", "env": {"HCG_HEAD": "faceB2", "HCG_NECK": "N1"}, "commit": "4258f24"},
 ]
 
 

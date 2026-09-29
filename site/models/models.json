@@ -131,5 +131,28 @@
    "bytes": 1248356,
    "edges": 69392
   }
+ },
+ {
+  "id": "t1",
+  "label": "T1 (costas: curva S)",
+  "env": {
+   "HCG_HEAD": "faceB2",
+   "HCG_NECK": "N1"
+  },
+  "commit": "4258f24",
+  "digest": "dd0a715deed6dfc3",
+  "smooth": {
+   "verts": 557044,
+   "faces": 556288,
+   "quads": 556288,
+   "bytes": 26720864
+  },
+  "cage": {
+   "verts": 34888,
+   "faces": 34876,
+   "quads": 34444,
+   "bytes": 1254116,
+   "edges": 69712
+  }
  }
 ]
