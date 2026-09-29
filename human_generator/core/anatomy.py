@@ -57,7 +57,9 @@ _Z: dict[str, float] = {
     # tinha 0.97×anca à cota da crista passa a ``hip_flare`` (ponto médio
     # umbigo–anca; as referências só chegam a 0.90×anca em 0.53–0.57·S).
     "navel": 0.602, "hip_flare": 0.566,
-    "waist": 0.635, "inframammary": 0.720, "nipple": 0.768, "bust": 0.758,
+    "waist": 0.635, "inframammary": 0.720,
+    # TORSO B (TORSO_STUDY_02 P4: mama das refs 0.70–0.741·S) — a mama desce
+    "nipple": 0.742, "bust": 0.730,
     "jugulum": 0.795, "acromion": 0.818, "deltoid_line": 0.812,
     "elbow": 0.645, "wrist": 0.508, "fingertip": 0.380,
     "chest_top": 0.800, "neck_top": 0.834, "spine_head": 0.845,
@@ -314,10 +316,13 @@ class Anatomy:
             lm["heel" + tag] = Vector((sx * 0.020 * s, -0.055 * s * self.spec.body.foot_size, zf("heel") + 0.02 * s))
             lm["toe_end" + tag] = Vector((sx * 0.026 * s, 0.145 * s * self.spec.body.foot_size, zf("toe_end")))
             lm["ball" + tag] = Vector((sx * 0.030 * s, 0.105 * s, zf("ball")))
-            lm["nipple" + tag] = self.face_front(0.100 * s, zf("nipple") + h * 0.5,
-                                                 self.bust_protrusion() * 0.55)
-            lm["bust" + tag] = self.face_front(0.105 * s, zf("bust") + h * 0.5,
-                                               self.bust_protrusion())
+            # TORSO B — landmarks da mama na PAREDE TORÁCICA (não na cara):
+            # âncora ±0.058·S, y = parede + 0.012·S (parede = chest_half·0.38),
+            # z = nível real.  O bug do `+ h*0.5` (herdado dos landmarks
+            # faciais) centrava os bumps a ~1400 mm (base do pescoço).
+            wall = self.chest_half() * 0.38
+            lm["nipple" + tag] = Vector((sx * 0.058 * s, wall + 0.012 * s, zf("nipple")))
+            lm["bust" + tag] = Vector((sx * 0.058 * s, wall + 0.012 * s, zf("bust")))
         lm["crotch"] = Vector((0, -0.010 * s, zf("crotch")))
 
         # asymmetry: nudge one eyebrow down slightly (driven by spec)
@@ -392,17 +397,23 @@ class Anatomy:
         add(zf("neck_top") - 0.010 * s, mix(neck_w, sh, 0.62), 0.100 * s * 0.5,
             sup=2.4, bs=1.14, y=-0.010 * s)
         # deltoid line / shoulders
-        add(zf("deltoid_line"), dh, chest * 0.62, sup=2.5, fs=1.0, bs=1.02)
-        # upper chest — S3.7: na cota do jugulum (antes ``+0.020·estatura``,
-        # +34 mm, que a punha 5.7 mm acima da linha do ombro: a rampa do trapézio
-        # acabava num degrau de 75 mm de largura numa passagem de 5.7 mm, medido
-        # como inclinação 13.2 mm/mm).  Assim a rampa fica com 5.7 e 7.2 mm/mm.
-        add(zf("jugulum"), chest * 1.01, chest * 0.72, sup=2.2, fs=1.02, y=-0.002 * s)
-        # bust line — silhouette + soft-tissue field do the rest
-        add(zf("bust") + 0.004 * s, chest * 1.02, chest * 0.80, sup=2.0,
-            fs=1.0 + bust / max(1e-4, chest * 0.8), y=0.004 * s)
-        # inframammary / ribs
-        add(zf("inframammary"), chest * 0.92, chest * 0.70, sup=2.05, fs=1.0, bs=1.0)
+        # TORSO B (TORSO_STUDY_02; decisão C em TORSO_DECISION_01) — as
+        # estações torácicas representam a CAIXA TORÁCICA (parede), NÃO a mama:
+        # secção BOXY (P13: refs n≈3.8 vs 2.2), dominada pelas COSTAS (P14),
+        # largura ANSUR (P9).  A mama é um bump LOCALIZADO (body.py) sobre
+        # esta parede — nunca a inflação fs do anel (o "barril" do T1).
+        add(zf("deltoid_line"), dh, chest * 0.62, sup=2.5, fs=0.85, bs=0.88)
+        add(zf("jugulum"), chest * 0.880, chest * 0.315, sup=3.2, fs=0.70, bs=0.98,
+            y=-0.002 * s)
+        add(zf("bust") + 0.004 * s, chest * 0.860, chest * 0.670, sup=3.6,
+            fs=0.68, bs=0.78, y=0.004 * s)
+        # TORSO B — ápice posterior da caixa torácica (cifose T7–T8; P3: refs
+        # 1280–1335).  Interpolação linear entre estações NÃO cria máximos
+        # interiores — o ápice precisa da SUA estação.
+        add(zf("bust") + 0.034 * s, chest * 0.870, chest * 0.740, sup=3.4,
+            fs=0.62, bs=1.00, y=0.002 * s)
+        # inframammary / ribs — a frente recresce (costelas + epigástrio)
+        add(zf("inframammary"), chest * 0.845, chest * 0.550, sup=3.2, fs=0.82)
         # H2 (docs/H3H2_TRUNK.md) — a profundidade destas quatro estações deixa
         # de ser uma fração quase circular da meia-largura (0.82–0.86: prof./larg.
         # total 0.81–0.89) e passa a vir da razão ANSUR prof./larg. TOTAL:
@@ -412,15 +423,19 @@ class Anatomy:
         def depth_for(ratio, half_w, fs, bs):
             return ratio * 2.0 * half_w / (fs + bs)
 
-        # natural waist (narrowest)
-        add(zf("waist"), waist, depth_for(0.709, waist, 0.98, 1.0), sup=2.0, fs=0.98, bs=1.0)
+        # TORSO B — cintura por RAZÃO (P7: refs waist/hip 0.63–0.66): wf≈0.905
+        # sobre waist_half mantém a razão sem magrear os absolutos ANSUR (P18).
+        # Barriga > lombar (P15: front_share refs 1.06–1.52).
+        wf = 0.905
+        add(zf("waist"), waist * wf, depth_for(0.709, waist * wf, 1.12, 0.92),
+            sup=2.0, fs=1.12, bs=0.92)
         # navel
-        navel_w = mix(waist, hip, 0.45)
+        navel_w = mix(waist * wf, hip, 0.35)
         add(zf("navel"), navel_w, depth_for(0.709, navel_w, 1.02, 1.0), sup=2.05, fs=1.02)
         # iliac flare
-        add(zf("hip_flare"), hip * 0.97, depth_for(0.658, hip * 0.97, 1.0, 1.04), sup=2.1, bs=1.04)
+        add(zf("hip_flare"), hip * 0.93, depth_for(0.52, hip * 0.93, 1.0, 0.98), sup=2.1, bs=0.98)
         # hip widest (trochanteric level)
-        add(zf("hip"), hip, depth_for(0.658, hip, 1.0, 1.06), sup=2.05, y=-0.004 * s, bs=1.06)
+        add(zf("hip"), hip, depth_for(0.52, hip, 1.0, 0.98), sup=2.05, y=-0.004 * s, bs=0.98)
         # perineum cap
         add(zf("crotch"), hip * 0.52, hip * 0.40, sup=2.2, y=-0.010 * s)
         return secs

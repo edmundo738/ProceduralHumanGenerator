@@ -105,16 +105,19 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
     mus = spec.body.muscle_tone
     stack = DeformStack()
 
-    # bust: two anisotropic forward lobes with slight downward hang
+    # TORSO B — mama = VOLUME LOCALIZADO sobre a parede torácica (a parede é
+    # das estações; o bump é a mama).  Amp 1.20·bust_protrusion, σ em estatura.
     for tag in ("L", "R"):
         c = Vector(lm[f"bust.{tag}"])
-        stack.bump(c + Vector((0, -0.010 * h, -0.012 * h)),
-                   anat.bust_protrusion() * 0.42, sigma=(0.075 * h * 1.05, 0.065 * h, 0.085 * h),
-                   direction=Vector((0, 1, -0.10)))
-    # gluteus maximus
+        stack.bump(c + Vector((0, 0.008 * s, -0.010 * s)),
+                   anat.bust_protrusion() * 1.20, sigma=(0.048 * s, 0.040 * s, 0.055 * s),
+                   direction=Vector((0, 1, -0.18)))
+    # TORSO B — glúteos = LÓBULOS LATERAIS (P16: refs 7–26 mm de sulco);
+    # âncoras próprias em ±0.60·hip_half (não o landmark iliac).
     for tag in ("L", "R"):
-        c = Vector(lm[f"iliac.{tag}"]) + Vector((0, -0.085 * s, -0.030 * s))
-        stack.bump(c, 0.016 * s * (0.7 + 1.0 * fat), sigma=(0.075 * s, 0.055 * s, 0.075 * s),
+        side = 1 if tag == "L" else -1
+        c = Vector((side * 0.60 * anat.hip_half(), -0.100 * s, 0.512 * s))
+        stack.bump(c, 0.013 * s * (0.7 + 1.0 * fat), sigma=(0.055 * s, 0.050 * s, 0.075 * s),
                    direction=Vector((0, -1, -0.12)))
     # trapezius slope plates
     for tag in ("L", "R"):
@@ -131,15 +134,15 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
         c = Vector(lm[f"acromion.{tag}"]) + Vector((-0.030 * s * (1 if tag == "L" else -1), -0.048 * s, -0.045 * s))
         stack.bump(c, 0.006 * s * (0.5 + mus), sigma=(0.045 * s, 0.028 * s, 0.055 * s),
                    direction=Vector((-0.15 * (1 if tag == "L" else -1), -1, 0.12)))
-    # sternum plate
-    stack.bump(Vector((0, anat.chest_half() * 0.66 + 0.010 * s, anat.z("inframammary") + 0.055 * s)),
+    # sternum plate (TORSO B: y acompanha a parede nova, mais fina)
+    stack.bump(Vector((0, anat.chest_half() * 0.45 + 0.008 * s, anat.z("inframammary") + 0.055 * s)),
                0.0035 * s, sigma=(0.028 * s, 0.020 * s, 0.050 * s))
     # abdominal panel tone (linea alba groove via mild centre damp handled by muscle)
     if mus > 0.55 and fat < 0.42:
         z0 = anat.z("waist") - 0.010 * s
         for row in range(3):
             for col in (-1, 1):
-                c = Vector((col * 0.032 * s, anat.waist_half() * 0.80, z0 - row * 0.030 * s))
+                c = Vector((col * 0.032 * s, anat.waist_half() * 0.72, z0 - row * 0.030 * s))
                 stack.bump(c, 0.0022 * s * (mus - 0.55) * 3.0, sigma=(0.022 * s, 0.014 * s, 0.014 * s))
     # thenar eminence (palms) — S3.8, desvio de âmbito declarado
     # (docs/S3_8_HANDS.md §7.1): medido, a amplitude antiga de 0.0060·estatura
@@ -156,7 +159,7 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
     a = spec.face.asymmetry * 0.04
     if a > 0:
         stack.bump(Vector(lm["bust.L"]), anat.bust_protrusion() * 0.05 * a / 0.04 if a else 0.0,
-                   sigma=(0.06 * h, 0.05 * h, 0.06 * h), direction=Vector((0, 1, 0)))
+                   sigma=(0.048 * s, 0.040 * s, 0.055 * s), direction=Vector((0, 1, 0)))
 
     b.verts = stack.apply(b.verts)
 

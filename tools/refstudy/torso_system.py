@@ -462,13 +462,13 @@ def main():
     fig, ax = plt.subplots(figsize=(9, 6))
     for n in SAGITTAL + ["mppled"]:
         g = res["gluteal"].get(n)
-        if not g or "contour" not in g:
+        if not g or "contour_x" not in g:   # fix: chave é contour_x (painel estava VAZIO)
             continue
         ax.plot(g["contour_x"], g["contour_y"], color=COLORS.get(n, "#999"), lw=1,
                 label=f"{n} ({REF_STYLE.get(n, 'torso-sculpt')})")
     for n, c, lsty in ((OURS0, "#1f77b4", "--"), (OURS, "#d62728", "-")):
         g = res["gluteal"].get(n)
-        if g and "contour" in g:
+        if g and "contour_x" in g:          # fix: idem
             ax.plot(g["contour_x"], g["contour_y"], color=c, lw=2.2, ls=lsty, label=OURS_LABEL[n])
     ax.set_title("contorno glúteo no ápice (y posterior vs x; sulco = centro recuado)")
     ax.set_xlabel("x (mm)"); ax.set_ylabel("y (mm)"); ax.grid(alpha=.3)

@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-09-29 · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-09-29 (TORSO B reconstruído e verificado) · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
@@ -110,6 +110,31 @@ região. P18 novo: anca 392 vs refs 324–336 (ANSUR ✓) — razões das refs,
 absolutos limitados por ANSUR. Painel composto para o gate visual:
 docs/head_phaseA/torso_system_panels.png (+site). **Aguarda gate do dono
 (perguntas §6 do doc).**
+
+## TORSO B — reconstrução estrutural do tórax IMPLEMENTADA (2026-09-29, docs/CHECKPOINT_TORSO_B.md)
+
+Gate do dono APROVADO (decisão C) → B implementada em 7 its de calibração.
+**12 padrões na banda das refs (era ~2):** P1 54.4 ✓, P2 −8 ✓, P3 1310 ✓ (estação
+própria de cifose T7–T8), P4 1230 ✓ (bug +h·0.5 dos landmarks encontrado — a
+"mama" do T1 era a inflação fs da estação), P5 64 ✓, P7 0.63 ✓, P8 0.80 ✓,
+P9 312 ✓, P11 198 ✓, P13 3.8 ✓ (boxy), P15 1.19 ✓, P18 392 ✓ (ANSUR). Fora:
+**P10 242 = APROXIMAÇÃO** (+2.5% sobre 236; P2/P10/P11 acoplados — parar),
+**P14 1.10 = SEM MUDANÇA** (H-T2), **P16 sulco 0.2 = REGRESSÃO** vs T1 4.4
+(amp lóbulos 0.020→0.013 por P11/P2; declarada, fila T2/T4). IoU perfil ours
+0.667–0.787 (3/4 ≥ baseline ref↔ref 0.689); frente 0.639–0.679 vs 0.938 (gap =
+anca ANSUR). T1-ALTA OFF durante B (HCG_T1_ALTA=1 reactiva); lombar amp 0.0215.
+Pins: 6483/6389, skin 3601/3577, palm knife-edge float32 (62/86, registado).
+136 tests passed. Fix de instrumento: painel glúteo do torso_system estava VAZIO
+desde b0eda34 (chave "contour" vs contour_x) — números sempre certos, PNG agora
+renderiza. **PERDA+RECONSTRUÇÃO:** o commit B original perdeu-se na 8.ª recriação
+do sandbox (nunca chegou a ser pushed — token GitHub expirado a meio); foi
+re-implementado dos parâmetros registados e verificado: GEN T1 reproduz os
+digests históricos byte-a-byte; counts/semântica/fingerprint idênticos; 10/11
+métricas P ao dígito (P11 198 vs 202, ambos na banda); digests novos: default
+pure `8b74b578adb1755b` / math `ad377832122c78c3`, instrumento ours
+`25cafb179b04ed34` / ours0 `cdc1996498342cdd`. **Gate visual do dono: PENDENTE**
+(renders_T1_vs_refs.png 4 vistas + 4 painéis torso_system_* + site). Fila:
+feedback → T2 (P14/P16/sulco) → T4 → T5 → só depois lapidação de regiões.
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 

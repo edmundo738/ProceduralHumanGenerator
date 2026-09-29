@@ -20,8 +20,8 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "ad620a90b8eba085",   # S3.7: shoulder_head_ratio now has a source
-        "verts": 6467,          # T1: +160 (10 anéis da curva S; era 6307)
-        "faces": 6373,
+        "verts": 6483,          # TORSO B: +16 (1 estação de cifose; T1 era 6467)
+        "faces": 6389,
         "strands": 2400,
         # re-measured in S4.2 (a casca do crânio deixou de ser fechada: orbita,
         # boca e narinas cortadas; refinamento local em 2 passagens cobrindo
@@ -50,8 +50,23 @@ PINS = {
         # da especificação pré-registada, re-calibrado até reproduzir as
         # medições A/B registadas (lombar/nádega idênticos à casa decimal).
         # previous: pure-python cb4e855996c2f1fd, mathutils c7ab2932f5d66ede)
-        "digest": {"pure-python": "49fcc725984aec75",
-                   "mathutils": "e9692d34c0dde938"},
+        # (TORSO B — docs/TORSO_STUDY_02.md + TORSO_DECISION_01.md (decisão C):
+        # reconstrução estrutural do tórax.  +1 estação (cifose T7-T8 em
+        # zf("bust")+0.034·s) = +16 verts/+16 faces; níveis nipple/bust
+        # 0.742/0.730; landmarks bust/nipple reescritos (bug +h·0.5); mama =
+        # bump localizado sobre parede torácica boxy; lóbulos glúteos laterais;
+        # esterno/abdómen; back_curve: janela ALTA OFF durante B
+        # (HCG_T1_ALTA=1 reactiva), lombar amp 0.0240->0.0215.  Métricas P1-P12:
+        # 10/11 na banda das refs (P10 242 vs 218-236 = aproximação declarada).
+        # RECONSTRUÇÃO: o commit B original perdeu-se num reset do sandbox
+        # antes do push; re-implementado a partir dos parâmetros registados —
+        # contagens/semântica/fingerprint IDÊNTICOS, 10/11 métricas P ao dígito
+        # (P11 198 vs 202, na banda); digests portanto NOVOS (diferenças
+        # sub-4 mm confinadas à zona anca/nádega).  Knife-edge SEMÂNTICO em
+        # float32: palm 62 (pure) / 86 (math), skin 3601/3577 (§S3.6).
+        # previous: pure-python 49fcc725984aec75, mathutils e9692d34c0dde938)
+        "digest": {"pure-python": "8b74b578adb1755b",
+                   "mathutils": "ad377832122c78c3"},
     },
 }
 
@@ -65,9 +80,9 @@ PINS = {
 # (6307 vs 6309): o corte é dirigido pela anatomia e 2 faces do `neon_idol`
 # caem do lado oposto da janela da boca (medido, doc S4_FACE §10).
 PRESET_COUNTS = {
-    "cyber_angel": (6467, 6373, 2800),
-    "neon_idol": (6469, 6375, 3200),
-    "realistic_female": (6467, 6373, 2400),
+    "cyber_angel": (6483, 6389, 2800),     # TORSO B: +16/+16 (neon: +16/+16)
+    "neon_idol": (6485, 6391, 3200),
+    "realistic_female": (6483, 6389, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -75,7 +90,7 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 6467, "faces": 6373,
+AUDIT_PINS = {"verts": 6483, "faces": 6389,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
@@ -117,7 +132,9 @@ SEMANTIC_PINS = {
                 "cornea": 102, "enamel": 1400, "eye": 264,
                 "eyelid": 240, "gum": 196, "lip": 126,
                 "nail": 192, "nostril": 1, "oral": 127,
-                "palm": 62, "scalp": 132, "skin": 3585,
+                # TORSO B: skin +16 (a estação de cifose); knife-edge do
+                # ``palm`` em float32 (62 pure / 86 math, §S3.6).
+                "palm": 62, "scalp": 132, "skin": 3601,
                 "sole": 40
             },
             "groups": {
@@ -148,7 +165,9 @@ SEMANTIC_PINS = {
                 "cornea": 102, "enamel": 1400, "eye": 264,
                 "eyelid": 240, "gum": 196, "lip": 126,
                 "nail": 192, "nostril": 1, "oral": 127,
-                "palm": 62, "scalp": 132, "skin": 3585,
+                # TORSO B float32: 24 verts do palm/skin caem do outro lado do
+                # threshold (palm 86 / skin 3577) — knife-edge S3.6 reaberto.
+                "palm": 86, "scalp": 132, "skin": 3577,
                 "sole": 40
             },
             "groups": {

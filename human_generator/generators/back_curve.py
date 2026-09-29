@@ -42,7 +42,7 @@ _K = 0.98965
 _SACRAL = {"z0": 0.4982, "zp": 0.5500, "z1": 0.6000, "amp": 0.0240,
            "xfull": 0.0233, "xzero": 0.0466}
 # lombar: pico em zp, cauda lateral gaussiana larga (σx).
-_LOMBAR = {"z0": 0.6035, "zp": 0.6434, "z1": 0.6928, "amp": 0.0235,
+_LOMBAR = {"z0": 0.6035, "zp": 0.6434, "z1": 0.6928, "amp": 0.0215,
            "sigmax": 0.0524}
 # costas altas: rampa z0→plat (ápice aplanado), cauda lateral estreita.
 _ALTA = {"z0": 0.7663, "plat": 0.7972, "z1": 0.8263, "amp": 0.0282,
@@ -58,6 +58,13 @@ _ZONES = ((0.5010, 0.6970, 0.0147), (0.7740, 0.8460, 0.0172))
 def _amp() -> float:
     """1.0 com o campo activo (omissão), 0.0 com HCG_T1_AMP=0 (controlo A/B)."""
     return 0.0 if os.environ.get("HCG_T1_AMP", "1").strip() == "0" else 1.0
+
+
+def _alta() -> float:
+    """TORSO B (TORSO_DECISION_01, decisão C): janela ALTA OFF por omissão
+    durante a reconstrução do tórax — a T1 é o andaime, decide-se DEPOIS de B
+    por medição.  HCG_T1_ALTA=1 reactiva a janela alta (estado T1 histórico)."""
+    return 1.0 if os.environ.get("HCG_T1_ALTA", "0").strip() == "1" else 0.0
 
 
 def _ss(t: float) -> float:
@@ -94,7 +101,7 @@ def _field(zf: float, x: float, s: float) -> float:
         d += w["amp"] * s * b * math.exp(-((x / sx) ** 2))
     w = _ALTA
     b = _bump(zf, w["z0"], w["plat"], w["z1"])
-    if b > 0.0:
+    if b > 0.0 and _alta() > 0.0:
         sx = w["sigmax"] * s
         d += w["amp"] * s * b * math.exp(-((x / sx) ** 2))
     return d

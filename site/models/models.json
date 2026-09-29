@@ -2,65 +2,69 @@
  {
   "id": "antes",
   "label": "ANTES (cabe\u00e7a antiga)",
-  "env": {},
+  "env": {
+   "HCG_T1_AMP": "0"
+  },
   "commit": "8716b88\u2026de08023",
-  "digest": "c7ab2932f5d66ede",
+  "digest": "9526c6cb06bc9635",
   "smooth": {
-   "verts": 97858,
-   "faces": 95880,
-   "quads": 95880,
-   "bytes": 4650604
+   "verts": 100674,
+   "faces": 98696,
+   "quads": 98696,
+   "bytes": 4785776
   },
   "cage": {
-   "verts": 6307,
-   "faces": 6213,
-   "quads": 5331,
-   "bytes": 221512,
-   "edges": 12466
+   "verts": 6483,
+   "faces": 6389,
+   "quads": 5507,
+   "bytes": 227848,
+   "edges": 12818
   }
  },
  {
   "id": "faseA",
   "label": "FASE A (massas R1)",
   "env": {
-   "HCG_HEAD": "massA"
+   "HCG_HEAD": "massA",
+   "HCG_T1_AMP": "0"
   },
   "commit": "642cb7f",
-  "digest": "76c5875d00a6db12",
+  "digest": "8649f5e671276b92",
   "smooth": {
-   "verts": 100208,
-   "faces": 99456,
-   "quads": 99456,
-   "bytes": 4792832
+   "verts": 103024,
+   "faces": 102272,
+   "quads": 102272,
+   "bytes": 4928000
   },
   "cage": {
-   "verts": 6356,
-   "faces": 6300,
-   "quads": 5964,
-   "bytes": 227008,
-   "edges": 12608
+   "verts": 6532,
+   "faces": 6476,
+   "quads": 6140,
+   "bytes": 233344,
+   "edges": 12960
   }
  },
  {
   "id": "a2b",
   "label": "A2b (canto mentoniano)",
   "env": {
-   "HCG_HEAD": "massA2"
+   "HCG_HEAD": "massA2",
+   "HCG_T1_AMP": "0"
   },
   "commit": "5eb8c32",
-  "digest": "db7871c83c9cf800",
+  "digest": "c57e9cbd19cebef0",
   "smooth": {
-   "verts": 100208,
-   "faces": 99456,
-   "quads": 99456,
-   "bytes": 4792828
+   "verts": 103024,
+   "faces": 102272,
+   "quads": 102272,
+   "bytes": 4927996
   },
   "cage": {
-   "verts": 6356,
-   "faces": 6300,
-   "quads": 5964,
-   "bytes": 227004,
-   "edges": 12608
+   "verts": 6532,
+   "faces": 6476,
+   "quads": 6140,
+   "bytes": 233340,
+   "edges": 12960
   }
  },
  {
@@ -68,22 +72,23 @@
   "label": "A2b + N1 (pesco\u00e7o superior)",
   "env": {
    "HCG_HEAD": "massA2",
-   "HCG_NECK": "N1"
+   "HCG_NECK": "N1",
+   "HCG_T1_AMP": "0"
   },
   "commit": "3ad83da",
-  "digest": "179c676c86b5f012",
+  "digest": "041a538e215b1a7f",
   "smooth": {
-   "verts": 100208,
-   "faces": 99456,
-   "quads": 99456,
-   "bytes": 4792828
+   "verts": 103024,
+   "faces": 102272,
+   "quads": 102272,
+   "bytes": 4927992
   },
   "cage": {
-   "verts": 6356,
-   "faces": 6300,
-   "quads": 5964,
-   "bytes": 227004,
-   "edges": 12608
+   "verts": 6532,
+   "faces": 6476,
+   "quads": 6140,
+   "bytes": 233340,
+   "edges": 12960
   }
  },
  {
@@ -91,22 +96,23 @@
   "label": "F1 (face: campos + corretiva)",
   "env": {
    "HCG_HEAD": "faceB",
-   "HCG_NECK": "N1"
+   "HCG_NECK": "N1",
+   "HCG_T1_AMP": "0"
   },
   "commit": "2d6039f",
-  "digest": "e21378e3624e5765",
+  "digest": "df25d7b6db48c370",
   "smooth": {
-   "verts": 554484,
-   "faces": 553728,
-   "quads": 553728,
-   "bytes": 26597984
+   "verts": 557300,
+   "faces": 556544,
+   "quads": 556544,
+   "bytes": 26733148
   },
   "cage": {
-   "verts": 34728,
-   "faces": 34716,
-   "quads": 34284,
-   "bytes": 1248356,
-   "edges": 69392
+   "verts": 34904,
+   "faces": 34892,
+   "quads": 34460,
+   "bytes": 1254692,
+   "edges": 69744
   }
  },
  {
@@ -114,22 +120,23 @@
   "label": "F2 (CONT1: orelha integrada)",
   "env": {
    "HCG_HEAD": "faceB2",
-   "HCG_NECK": "N1"
+   "HCG_NECK": "N1",
+   "HCG_T1_AMP": "0"
   },
   "commit": "029063e",
-  "digest": "b713d9489ecd8bb9",
+  "digest": "cdc1996498342cdd",
   "smooth": {
-   "verts": 554484,
-   "faces": 553728,
-   "quads": 553728,
-   "bytes": 26597984
+   "verts": 557300,
+   "faces": 556544,
+   "quads": 556544,
+   "bytes": 26733148
   },
   "cage": {
-   "verts": 34728,
-   "faces": 34716,
-   "quads": 34284,
-   "bytes": 1248356,
-   "edges": 69392
+   "verts": 34904,
+   "faces": 34892,
+   "quads": 34460,
+   "bytes": 1254692,
+   "edges": 69744
   }
  },
  {
@@ -140,19 +147,19 @@
    "HCG_NECK": "N1"
   },
   "commit": "4258f24",
-  "digest": "dd0a715deed6dfc3",
+  "digest": "25cafb179b04ed34",
   "smooth": {
-   "verts": 557044,
-   "faces": 556288,
-   "quads": 556288,
-   "bytes": 26720864
+   "verts": 557300,
+   "faces": 556544,
+   "quads": 556544,
+   "bytes": 26733152
   },
   "cage": {
-   "verts": 34888,
-   "faces": 34876,
-   "quads": 34444,
-   "bytes": 1254116,
-   "edges": 69712
+   "verts": 34904,
+   "faces": 34892,
+   "quads": 34460,
+   "bytes": 1254692,
+   "edges": 69744
   }
  }
 ]

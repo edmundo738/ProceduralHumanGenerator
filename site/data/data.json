@@ -1,24 +1,26 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes c7ab2932f5d66ede · faseA 76c5875d00a6db12 · a2b db7871c83c9cf800 · n1 179c676c86b5f012 · f1 e21378e3624e5765 · f2 b713d9489ecd8bb9 · t1 dd0a715deed6dfc3",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 9526c6cb06bc9635 · faseA 8649f5e671276b92 · a2b c57e9cbd19cebef0 · n1 041a538e215b1a7f · f1 df25d7b6db48c370 · f2 cdc1996498342cdd · t1 25cafb179b04ed34",
  "variants": [
   {
    "id": "antes",
    "label": "ANTES (cabeça antiga)",
-   "env": {},
+   "env": {
+    "HCG_T1_AMP": "0"
+   },
    "commit": "8716b88…de08023",
-   "digest": "c7ab2932f5d66ede",
+   "digest": "9526c6cb06bc9635",
    "smooth": {
-    "verts": 97858,
-    "faces": 95880,
-    "quads": 95880,
-    "bytes": 4650604
+    "verts": 100674,
+    "faces": 98696,
+    "quads": 98696,
+    "bytes": 4785776
    },
    "cage": {
-    "verts": 6307,
-    "faces": 6213,
-    "quads": 5331,
-    "bytes": 221512,
-    "edges": 12466
+    "verts": 6483,
+    "faces": 6389,
+    "quads": 5507,
+    "bytes": 227848,
+    "edges": 12818
    },
    "desc": "cabeça original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g–op 174 vs 196–210, relação globo–órbita invertida."
   },
@@ -26,22 +28,23 @@
    "id": "faseA",
    "label": "FASE A (massas R1)",
    "env": {
-    "HCG_HEAD": "massA"
+    "HCG_HEAD": "massA",
+    "HCG_T1_AMP": "0"
    },
    "commit": "642cb7f",
-   "digest": "76c5875d00a6db12",
+   "digest": "8649f5e671276b92",
    "smooth": {
-    "verts": 100208,
-    "faces": 99456,
-    "quads": 99456,
-    "bytes": 4792832
+    "verts": 103024,
+    "faces": 102272,
+    "quads": 102272,
+    "bytes": 4928000
    },
    "cage": {
-    "verts": 6356,
-    "faces": 6300,
-    "quads": 5964,
-    "bytes": 227008,
-    "edges": 12608
+    "verts": 6532,
+    "faces": 6476,
+    "quads": 6140,
+    "bytes": 233344,
+    "edges": 12960
    },
    "desc": "nova representação: casca fechada cubo-esfera 3456 quads cujo raio é o modelo de 6 massas R1 ajustado ao alvo médio das refs. Sem traços (por desenho da fase)."
   },
@@ -49,22 +52,23 @@
    "id": "a2b",
    "label": "A2b (canto mentoniano)",
    "env": {
-    "HCG_HEAD": "massA2"
+    "HCG_HEAD": "massA2",
+    "HCG_T1_AMP": "0"
    },
    "commit": "5eb8c32",
-   "digest": "db7871c83c9cf800",
+   "digest": "c57e9cbd19cebef0",
    "smooth": {
-    "verts": 100208,
-    "faces": 99456,
-    "quads": 99456,
-    "bytes": 4792828
+    "verts": 103024,
+    "faces": 102272,
+    "quads": 102272,
+    "bytes": 4927996
    },
    "cage": {
-    "verts": 6356,
-    "faces": 6300,
-    "quads": 5964,
-    "bytes": 227004,
-    "edges": 12608
+    "verts": 6532,
+    "faces": 6476,
+    "quads": 6140,
+    "bytes": 233340,
+    "edges": 12960
    },
    "desc": "Fase A + canto mentoniano: união local com o envelope médio do queixo de 3 refs (frente do queixo + plano submental)."
   },
@@ -73,22 +77,23 @@
    "label": "A2b + N1 (pescoço superior)",
    "env": {
     "HCG_HEAD": "massA2",
-    "HCG_NECK": "N1"
+    "HCG_NECK": "N1",
+    "HCG_T1_AMP": "0"
    },
    "commit": "3ad83da",
-   "digest": "179c676c86b5f012",
+   "digest": "041a538e215b1a7f",
    "smooth": {
-    "verts": 100208,
-    "faces": 99456,
-    "quads": 99456,
-    "bytes": 4792828
+    "verts": 103024,
+    "faces": 102272,
+    "quads": 102272,
+    "bytes": 4927992
    },
    "cage": {
-    "verts": 6356,
-    "faces": 6300,
-    "quads": 5964,
-    "bytes": 227004,
-    "edges": 12608
+    "verts": 6532,
+    "faces": 6476,
+    "quads": 6140,
+    "bytes": 233340,
+    "edges": 12960
    },
    "desc": "A2b + pescoço superior (anéis trunk.2/3) calibrado para o perfil médio das refs. Só 32 vértices do corpo mudam."
   },
@@ -97,22 +102,23 @@
    "label": "F1 (face: campos + corretiva)",
    "env": {
     "HCG_HEAD": "faceB",
-    "HCG_NECK": "N1"
+    "HCG_NECK": "N1",
+    "HCG_T1_AMP": "0"
    },
    "commit": "2d6039f",
-   "digest": "e21378e3624e5765",
+   "digest": "df25d7b6db48c370",
    "smooth": {
-    "verts": 554484,
-    "faces": 553728,
-    "quads": 553728,
-    "bytes": 26597984
+    "verts": 557300,
+    "faces": 556544,
+    "quads": 556544,
+    "bytes": 26733148
    },
    "cage": {
-    "verts": 34728,
-    "faces": 34716,
-    "quads": 34284,
-    "bytes": 1248356,
-    "edges": 69392
+    "verts": 34904,
+    "faces": 34892,
+    "quads": 34460,
+    "bytes": 1254692,
+    "edges": 69744
    },
    "desc": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓)."
   },
@@ -121,22 +127,23 @@
    "label": "F2 (CONT1: orelha integrada)",
    "env": {
     "HCG_HEAD": "faceB2",
-    "HCG_NECK": "N1"
+    "HCG_NECK": "N1",
+    "HCG_T1_AMP": "0"
    },
    "commit": "029063e",
-   "digest": "b713d9489ecd8bb9",
+   "digest": "cdc1996498342cdd",
    "smooth": {
-    "verts": 554484,
-    "faces": 553728,
-    "quads": 553728,
-    "bytes": 26597984
+    "verts": 557300,
+    "faces": 556544,
+    "quads": 556544,
+    "bytes": 26733148
    },
    "cage": {
-    "verts": 34728,
-    "faces": 34716,
-    "quads": 34284,
-    "bytes": 1248356,
-    "edges": 69392
+    "verts": 34904,
+    "faces": 34892,
+    "quads": 34460,
+    "bytes": 1254692,
+    "edges": 69744
    },
    "desc": "F2 = CONT1 + N1: orelha INTEGRADA — janela C¹ (smoothstep, valor e declive nulos no bordo) × colina recentrada no envelope medido das refs + relevo reforçado; K mantido (suprimi-lo custou relevo: turn 449° vs 462°). Turn da secção 462→619° (refs 571–993). Fora da orelha: máx 0.035 mm. 8/8 critérios intactos."
   },
@@ -148,21 +155,21 @@
     "HCG_NECK": "N1"
    },
    "commit": "4258f24",
-   "digest": "dd0a715deed6dfc3",
+   "digest": "25cafb179b04ed34",
    "smooth": {
-    "verts": 557044,
-    "faces": 556288,
-    "quads": 556288,
-    "bytes": 26720864
+    "verts": 557300,
+    "faces": 556544,
+    "quads": 556544,
+    "bytes": 26733152
    },
    "cage": {
-    "verts": 34888,
-    "faces": 34876,
-    "quads": 34444,
-    "bytes": 1254116,
-    "edges": 69712
+    "verts": 34904,
+    "faces": 34892,
+    "quads": 34460,
+    "bytes": 1254692,
+    "edges": 69744
    },
-   "desc": "T1 = F2 + COSTAS (CHECKPOINT, não fechada): curva sagital em S do tronco — três janelas C¹ (sacro/lombar/costas altas) só na face posterior, +10 anéis interpolados. A/B medido: lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação visual do dono: NEGATIVA por agora (2026-09-29) — re-ajustar (docs/TORSO_STUDY_01.md §7)."
+   "desc": "TORSO B = F2 + tronco reconstruído (decisão C de TORSO_DECISION_01): tórax como sistema — estações estruturais (cifose T7–T8 NOVA, busto boxy costas-dominante, níveis mama 0.742/0.730 com bug +h·0.5 corrigido), mama = volume localizado sobre a parede, lóbulos glúteos, T1-lombar como andaime (janela ALTA off). 12/18 padrões na banda das refs (era ~2): P1 54.4 ✓ P2 −8 ✓ P3 1310 ✓ P4 1230 ✓ P5 64 ✓ P7 0.63 ✓ P8 0.80 ✓ P9 312 ✓ P11 198 ✓ P13 3.8 ✓ P15 1.19 ✓ P18 392 ✓(ANSUR). Fora: P10 242 (aproximação +2.5%), P14 1.10 (H-T2), P16 sulco (regressão declarada, fila T2/T4). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_B.md)."
   }
  ],
  "metrics": {
@@ -632,6 +639,14 @@
    "status": "info",
    "verdict": "bandas 3/3 ✓ (lombar 45.3; nádega −6.0; altas −26.0); validação do dono: NEGATIVA por agora",
    "text": "CHECKPOINT (não fechada). RECONSTRUÇÃO 2× — o commit original (c8ee4ce) e a 1.ª reconstrução (837b69b) perderam-se em resets do sandbox antes do push. Três janelas C¹ (sacro/lombar/altas) só na face posterior + 10 anéis interpolados; larguras Δ0.0. O dono não gostou do resultado visual (2026-09-29): re-ajustar janelas/amplitudes antes de seguir para T2. Ref nova real005 admitida (lombar 56.2 ✓).",
+   "variant": "t1"
+  },
+  {
+   "title": "TORSO B — tórax como sistema (decisão C)",
+   "commit": "25cafb1",
+   "status": "info",
+   "verdict": "12/18 padrões ✓ na banda das refs (era ~2); P10 aproximação; P16 regressão declarada; gate visual do dono: PENDENTE",
+   "text": "Reconstrução estrutural (TORSO_STUDY_02 + TORSO_DECISION_01): estação de cifose T7–T8 nova, parede torácica boxy/costas-dominante, níveis da mama corrigidos (bug +h·0.5), mama = bump localizado, lóbulos glúteos laterais, cintura por razão wf 0.905, T1-ALTA off durante B. Calibração 7 its; P2/P10/P11 acoplados (P10 242 vs ≤236 = aproximação declarada). Pins 6483/6389; 136 tests ✓. RECONSTRUÇÃO: o commit B original perdeu-se num reset do sandbox antes do push; re-implementado dos parâmetros registados (10/11 métricas ao dígito, P11 198 vs 202 na banda). Regressões NÃO escondidas: sulco glúteo (amp lóbulos ↓; fila T2/T4), P14 1.10 (H-T2). docs/CHECKPOINT_TORSO_B.md.",
    "variant": "t1"
   }
  ]
