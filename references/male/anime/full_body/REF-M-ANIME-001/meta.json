@@ -1,0 +1,32 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
+ "id": "REF-M-ANIME-001",
+ "sex": "male",
+ "style": "anime",
+ "style_confidence": "owner (pasta anime/)",
+ "scope": "full_body",
+ "ref_type": "base_mesh",
+ "pose": "unknown",
+ "file": "Anime_Male_A.blend",
+ "limitations": [
+  "MASCULINO (movido de female/ para male/ — regra: não misturar datasets)",
+  "pack anime SimpleRig; estilo anime: não usar como alvo anatômico realista"
+ ],
+ "regions_available": [
+  "full_body",
+  "hands",
+  "feet"
+ ],
+ "observations": {
+  "pack": "SimpleRig"
+ },
+ "unknowns": [
+  "autoria",
+  "escala/unidades",
+  "pose exata"
+ ]
+}

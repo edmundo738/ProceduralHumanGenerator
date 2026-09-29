@@ -1,0 +1,156 @@
+{
+ "id": "REF-F-REAL-006",
+ "file": "realistic female.blend",
+ "objects": [
+  {
+   "object": "MOLLY",
+   "verts": 3382,
+   "edges": 6674,
+   "faces": 3287,
+   "quads": 3268,
+   "tris": 16,
+   "ngons": 3,
+   "islands": 1,
+   "boundary_edges": 213,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.2460575493209344,
+    "p50": 0.9199455166229656,
+    "p95": 3.5524903053535573
+   },
+   "bbox_world": [
+    [
+     -0.00127927016853846,
+     -16.969643156333643,
+     -138.86156143565688
+    ],
+    [
+     42.580956475917105,
+     10.264398940220822,
+     39.38000109432186
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material"
+   ],
+   "armature": false
+  },
+  {
+   "object": "OLHOS",
+   "verts": 317,
+   "edges": 624,
+   "faces": 312,
+   "quads": 288,
+   "tris": 24,
+   "ngons": 0,
+   "islands": 4,
+   "boundary_edges": 24,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.06853050723910191,
+    "p50": 0.18195003271377608,
+    "p95": 1.2563342633366599
+   },
+   "bbox_world": [
+    [
+     -4.8975315056515365,
+     -12.102050074858857,
+     26.754228099451282
+    ],
+    [
+     -1.277008606241743,
+     -10.151226563958502,
+     30.16886069655675
+    ]
+   ],
+   "scale_factor_object": 500.6349182128906,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material"
+   ],
+   "armature": false
+  },
+  {
+   "object": "unhas ",
+   "verts": 220,
+   "edges": 420,
+   "faces": 210,
+   "quads": 210,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 5,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.1037461269082995,
+    "p50": 0.45814467458286146,
+    "p95": 0.9954370573094542
+   },
+   "bbox_world": [
+    [
+     34.19816329641782,
+     -9.664085048615783,
+     -47.14570359840543
+    ],
+    [
+     43.321658768964326,
+     3.990322884917182,
+     -36.89728354709934
+    ]
+   ],
+   "scale_factor_object": 30.007680892944336,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "SUBSURF"
+   ],
+   "materials": [
+    "Material"
+   ],
+   "armature": false
+  }
+ ],
+ "totals": {
+  "verts": 3919,
+  "edges": 7718,
+  "faces": 3809,
+  "quads": 3766,
+  "tris": 40,
+  "ngons": 3,
+  "islands": 10,
+  "boundary_edges": 237,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0
+ },
+ "pose_hint": [
+  "braços caídos/outra",
+  0.239
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

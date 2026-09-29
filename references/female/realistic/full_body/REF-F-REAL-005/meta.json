@@ -1,0 +1,28 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
+ "id": "REF-F-REAL-005",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "owner (nome do ficheiro)",
+ "scope": "full_body",
+ "ref_type": "base_mesh",
+ "pose": "t_pose",
+ "pose_basis": "declarado no nome do ficheiro (t-pose); confirmar por inspeção",
+ "file": "realistic_female_base_mesh__t-pose.glb",
+ "limitations": [
+  "GLB: triangulado na exportação (quads originais perdidos)"
+ ],
+ "regions_available": [
+  "full_body"
+ ],
+ "observations": {},
+ "unknowns": [
+  "autoria",
+  "escala/unidades",
+  "topologia original (quads)"
+ ]
+}

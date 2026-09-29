@@ -90,8 +90,20 @@ desenhada** — primeiro representação confiável dos dados (este documento), 
 o dono estuda as refs (métricas, padrões, suavização, profundidade, transições,
 proporções, estilos) e só então projetamos a análise.
 
-## 8. Estado atual (2026-09-28)
+## 8. Estado atual (2026-09-28, após 1.º povoamento do dono)
 
-6 primeiras entradas migradas de `408517a` (proveniência registada), todas
-inspecionadas (extraction.json) e indexadas (INDEX.json, 13.5 MB, sem avisos).
-Adequação por análise: tudo UNKNOWN por design.
+**14 entradas** inspecionadas e indexadas (INDEX.json, 61.4 MB, sem avisos;
+política híbrida ≤300 MB confortável):
+- 6 iniciais migradas de `408517a` (REAL-001..004, ANIR-001, M-REAL-001);
+- pack anime SimpleRig do dono: REF-F-ANIME-001..003 + REF-M-ANIME-001
+  (masculino movido para `male/` — não misturar datasets; `SimpleRigUI.py`
+  fica ao nível do pack, é utilitário de rig, não modelo);
+- realisticas do dono: REF-F-REAL-005 (base mesh T-pose, GLB), REF-F-REAL-006
+  ("realistic female.blend" do zip extraído; zip removido por duplicação),
+  REF-F-REAL-007 (MPPled.fbx, tronco), REF-F-REAL-008 (rig+animação de dança —
+  `other/`, não é alvo anatômico).
+
+Notas técnicas: os FBX com luzes rebentam o importador do bpy 5.0
+(`CyclesLightSettings.cast_shadow` removido — patch defensivo no inspetor;
+afeta só settings de sombra, não a geometria). Adequação por análise: tudo
+UNKNOWN por design. O dono continuará a povoar (foco realistic + T-pose).

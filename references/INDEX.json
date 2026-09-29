@@ -1,6 +1,120 @@
 {
  "models": [
   {
+   "id": "REF-F-ANIME-001",
+   "sex": "female",
+   "style": "anime",
+   "style_confidence": "owner (pasta anime/)",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "unknown",
+   "path": "references/female/anime/full_body/REF-F-ANIME-001",
+   "files": [
+    {
+     "file": "Anime_Female_A-RigManual.jpg",
+     "bytes": 746372,
+     "sha256": null
+    },
+    {
+     "file": "Anime_Female_A.blend",
+     "bytes": 3653744,
+     "sha256": "091375a69bfcea6b368847bd500ddb81bd4742951efbf6cd01416d44cdd3618e"
+    },
+    {
+     "file": "Anime_Female_A_GameReadyVer.blend",
+     "bytes": 3685732,
+     "sha256": "821c42ec3b15b57bf86b04bfa26b53cc759b7557683b80ce60a50587db8a726f"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 43681,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 926,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-ANIME-002",
+   "sex": "female",
+   "style": "anime",
+   "style_confidence": "owner (pasta anime/)",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "unknown",
+   "path": "references/female/anime/full_body/REF-F-ANIME-002",
+   "files": [
+    {
+     "file": "Base_Female_A-RigManual.jpg",
+     "bytes": 796280,
+     "sha256": null
+    },
+    {
+     "file": "Base_Female_A.blend",
+     "bytes": 3566876,
+     "sha256": "25237c4cff03e1f482b76a39e832f24ba962c29bf89dac0cbf77cfb55d3071f8"
+    },
+    {
+     "file": "Base_Female_A_GameReadyVer.blend",
+     "bytes": 3563004,
+     "sha256": "a0d03aecbe2ecc1bc0fecbff9e8f1df3d2679b9dd7a056130db48d3ac01964c5"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 43524,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 925,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-ANIME-003",
+   "sex": "female",
+   "style": "anime",
+   "style_confidence": "owner (pasta anime/)",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "unknown",
+   "path": "references/female/anime/full_body/REF-F-ANIME-003",
+   "files": [
+    {
+     "file": "Superhero_Female_A-RigManual.jpg",
+     "bytes": 766905,
+     "sha256": null
+    },
+    {
+     "file": "Superhero_Female_A.blend",
+     "bytes": 3599612,
+     "sha256": "55d04b381d8ffa68460eb1b4f9c3dbfc61658faee6139927fe57f0c97a01364a"
+    },
+    {
+     "file": "Superhero_Female_A_GameReadyVer.blend",
+     "bytes": 3596380,
+     "sha256": "16f2f154b8f26c5d52b0095c1a09c0c2f2429c685206840dc9224e83295b6a1e"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 43618,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 930,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
    "id": "REF-F-ANIR-001",
    "sex": "female",
    "style": "anime_realistic",
@@ -12,7 +126,12 @@
    "files": [
     {
      "file": "extraction.json",
-     "bytes": 5842,
+     "bytes": 5848,
+     "sha256": null
+    },
+    {
+     "file": "fffemale 11.mtl",
+     "bytes": 1335,
      "sha256": null
     },
     {
@@ -45,7 +164,7 @@
     },
     {
      "file": "extraction.json",
-     "bytes": 1515,
+     "bytes": 1514,
      "sha256": null
     },
     {
@@ -73,7 +192,7 @@
     },
     {
      "file": "extraction.json",
-     "bytes": 3849,
+     "bytes": 3836,
      "sha256": null
     },
     {
@@ -101,7 +220,7 @@
     },
     {
      "file": "extraction.json",
-     "bytes": 5975,
+     "bytes": 6032,
      "sha256": null
     },
     {
@@ -128,13 +247,168 @@
      "sha256": "221b714c56d00c22806011afc7641f47da91bf2c2e53eee0bd00004bf165081b"
     },
     {
+     "file": "Lucia_Prototype_v01.mtl",
+     "bytes": 1996,
+     "sha256": null
+    },
+    {
      "file": "extraction.json",
-     "bytes": 11621,
+     "bytes": 11694,
      "sha256": null
     },
     {
      "file": "meta.json",
      "bytes": 1079,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-005",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "owner (nome do ficheiro)",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "t_pose",
+   "path": "references/female/realistic/full_body/REF-F-REAL-005",
+   "files": [
+    {
+     "file": "extraction.json",
+     "bytes": 16952,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 778,
+     "sha256": null
+    },
+    {
+     "file": "realistic_female_base_mesh__t-pose.glb",
+     "bytes": 12893296,
+     "sha256": "84066c7ac3f0c73995ad627ab7ae3fced17720ad0dc2867727dce9dc81f7364d"
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-006",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "owner (zip 'realistic-female-body')",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "unknown",
+   "path": "references/female/realistic/full_body/REF-F-REAL-006",
+   "files": [
+    {
+     "file": "extraction.json",
+     "bytes": 3053,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 787,
+     "sha256": null
+    },
+    {
+     "file": "realistic female.blend",
+     "bytes": 1189576,
+     "sha256": "017279de49c2b2e2e3918e30f20d9f5a376e046b4683fd62954b1b5fcc95860a"
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-008",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "provisional_agent (rig de dança)",
+   "scope": "other",
+   "ref_type": "artistic_mesh",
+   "pose": "custom",
+   "path": "references/female/realistic/other/REF-F-REAL-008",
+   "files": [
+    {
+     "file": "Booty Hip Hop Dance.fbx",
+     "bytes": 1634976,
+     "sha256": "a3dcd0ba6c76accc5727f0e12df8207beb43dad24c6350a2ae1aa26fa21adee9"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 2317,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 895,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-F-REAL-007",
+   "sex": "female",
+   "style": "realistic",
+   "style_confidence": "owner (zip 'female-torso-base-mesh' do main)",
+   "scope": "torso",
+   "ref_type": "base_mesh",
+   "pose": "unknown",
+   "path": "references/female/realistic/torso/REF-F-REAL-007",
+   "files": [
+    {
+     "file": "MPPled.fbx",
+     "bytes": 235788,
+     "sha256": "a3fd21ba9c4aaacbf31190fcfc90541074064bc23cf6c15022664b2c60be6872"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 1477,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 760,
+     "sha256": null
+    }
+   ],
+   "has_extraction": true
+  },
+  {
+   "id": "REF-M-ANIME-001",
+   "sex": "male",
+   "style": "anime",
+   "style_confidence": "owner (pasta anime/)",
+   "scope": "full_body",
+   "ref_type": "base_mesh",
+   "pose": "unknown",
+   "path": "references/male/anime/full_body/REF-M-ANIME-001",
+   "files": [
+    {
+     "file": "Anime_Male_A-RigManual.jpg",
+     "bytes": 763541,
+     "sha256": null
+    },
+    {
+     "file": "Anime_Male_A.blend",
+     "bytes": 3524156,
+     "sha256": "4169f6f9659bc485093488313f7c6f1f5790bff8ef4bd59985e40d6051359f0d"
+    },
+    {
+     "file": "Anime_Male_A_GameReadyVer.blend",
+     "bytes": 3522884,
+     "sha256": "71f060de457880453af1dd2367b63fbc29b84c8a9d4173780f7e41e17dcc21c9"
+    },
+    {
+     "file": "extraction.json",
+     "bytes": 43543,
+     "sha256": null
+    },
+    {
+     "file": "meta.json",
+     "bytes": 792,
      "sha256": null
     }
    ],
@@ -152,7 +426,7 @@
    "files": [
     {
      "file": "extraction.json",
-     "bytes": 2293,
+     "bytes": 2288,
      "sha256": null
     },
     {
@@ -169,7 +443,7 @@
    "has_extraction": true
   }
  ],
- "total_bytes": 13473209,
+ "total_bytes": 61420737,
  "policy": {
   "total_cap_bytes": 314572800,
   "file_warn_bytes": 52428800

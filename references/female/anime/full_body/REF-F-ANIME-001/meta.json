@@ -1,0 +1,32 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
+ "id": "REF-F-ANIME-001",
+ "sex": "female",
+ "style": "anime",
+ "style_confidence": "owner (pasta anime/)",
+ "scope": "full_body",
+ "ref_type": "base_mesh",
+ "pose": "unknown",
+ "file": "Anime_Female_A.blend",
+ "limitations": [
+  "pack anime/realista 'SimpleRig' (Base/Anime/Superhero_Female_A + Anime_Male_A + SimpleRigUI.py); OBJ e FBX por parte (corpo+mãos+pés+punhos) + 2 .blend (normal e GameReady) + RigManual.jpg",
+  "estilo anime: usar só em estudos de estilo/estrutura, não como alvo anatômico realista"
+ ],
+ "regions_available": [
+  "full_body",
+  "hands",
+  "feet"
+ ],
+ "observations": {
+  "pack": "SimpleRig"
+ },
+ "unknowns": [
+  "autoria",
+  "escala/unidades",
+  "pose exata"
+ ]
+}

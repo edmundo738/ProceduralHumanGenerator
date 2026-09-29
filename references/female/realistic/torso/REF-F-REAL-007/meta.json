@@ -1,0 +1,29 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
+ "id": "REF-F-REAL-007",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "owner (zip 'female-torso-base-mesh' do main)",
+ "scope": "torso",
+ "ref_type": "base_mesh",
+ "pose": "unknown",
+ "file": "MPPled.fbx",
+ "limitations": [
+  "SÓ tronco (sem membros/cabeça, presumido pelo nome do zip — confirmar por inspeção)"
+ ],
+ "regions_available": [
+  "torso"
+ ],
+ "observations": {
+  "zip_origem": "female-torso-base-mesh.zip (main 429d930e)"
+ },
+ "unknowns": [
+  "autoria",
+  "o que contém exatamente",
+  "pose"
+ ]
+}

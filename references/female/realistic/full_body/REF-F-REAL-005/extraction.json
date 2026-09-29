@@ -1,0 +1,887 @@
+{
+ "id": "REF-F-REAL-005",
+ "file": "realistic_female_base_mesh__t-pose.glb",
+ "objects": [
+  {
+   "object": "Icosphere",
+   "verts": 42,
+   "edges": 120,
+   "faces": 80,
+   "quads": 0,
+   "tris": 80,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.5465265095784362,
+    "p50": 0.5822820142834886,
+    "p95": 0.618039967085711
+   },
+   "bbox_world": [
+    [
+     -0.9510578513145447,
+     -0.9999999403953552,
+     -1.0
+    ],
+    [
+     0.9510578513145447,
+     0.9999999403953552,
+     1.0
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "Object_10",
+   "verts": 4738,
+   "edges": 13114,
+   "faces": 8368,
+   "quads": 0,
+   "tris": 8368,
+   "ngons": 0,
+   "islands": 2,
+   "boundary_edges": 1124,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0018846728578816173,
+    "p50": 0.006389670210189361,
+    "p95": 0.02409211358467062
+   },
+   "bbox_world": [
+    [
+     -0.762683317303285,
+     -0.04805717302305723,
+     1.1265735946939515
+    ],
+    [
+     0.7626727887390672,
+     0.12439344537746422,
+     1.5207717336488713
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Skin_Arm"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_11",
+   "verts": 2590,
+   "edges": 7126,
+   "faces": 4528,
+   "quads": 0,
+   "tris": 4528,
+   "ngons": 0,
+   "islands": 2,
+   "boundary_edges": 668,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.002876072288391466,
+    "p50": 0.0129032879788326,
+    "p95": 0.04222268232597279
+   },
+   "bbox_world": [
+    [
+     -0.17614841067459253,
+     -0.18254071366708757,
+     1.2729921485731205e-06
+    ],
+    [
+     0.17615699374324834,
+     0.09188968257287655,
+     0.8829542462899553
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Skin_Leg"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_12",
+   "verts": 1112,
+   "edges": 2880,
+   "faces": 1788,
+   "quads": 0,
+   "tris": 1788,
+   "ngons": 0,
+   "islands": 20,
+   "boundary_edges": 396,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.00022079357660637243,
+    "p50": 0.0019417845918905416,
+    "p95": 0.004359098536933068
+   },
+   "bbox_world": [
+    [
+     -0.7631536694656234,
+     -0.1808139143728127,
+     0.01459887624662537
+    ],
+    [
+     0.7631433697832364,
+     0.07353855384772956,
+     1.1724491515299462
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Nails"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_13",
+   "verts": 748,
+   "edges": 1940,
+   "faces": 1200,
+   "quads": 0,
+   "tris": 1200,
+   "ngons": 0,
+   "islands": 8,
+   "boundary_edges": 280,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0004879055292963407,
+    "p50": 0.002778782034287072,
+    "p95": 0.00468485959021043
+   },
+   "bbox_world": [
+    [
+     -0.054698151319515276,
+     -0.08473923164801889,
+     1.6741697385290877
+    ],
+    [
+     0.05469234821142965,
+     -0.06828252004247304,
+     1.6914440638703354
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 3,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Eyelash"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_15",
+   "verts": 1403,
+   "edges": 3748,
+   "faces": 2362,
+   "quads": 0,
+   "tris": 2362,
+   "ngons": 0,
+   "islands": 17,
+   "boundary_edges": 410,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0009353399401111329,
+    "p50": 0.0025331825258725574,
+    "p95": 0.0055284791080911135
+   },
+   "bbox_world": [
+    [
+     -0.026971005790583646,
+     -0.08139006041423258,
+     1.611947896054744
+    ],
+    [
+     0.026932558411377094,
+     -0.0266218586689293,
+     1.6319633107124787
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Upper_Teeth"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_16",
+   "verts": 1474,
+   "edges": 3937,
+   "faces": 2480,
+   "quads": 0,
+   "tris": 2480,
+   "ngons": 0,
+   "islands": 17,
+   "boundary_edges": 434,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0007988801624499633,
+    "p50": 0.0023672632026219727,
+    "p95": 0.005499101015717113
+   },
+   "bbox_world": [
+    [
+     -0.02710597931356773,
+     -0.07429906155600463,
+     1.593111680809045
+    ],
+    [
+     0.02712987362303121,
+     -0.021328681627146295,
+     1.6215285861017037
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Lower_Teeth"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_18",
+   "verts": 165,
+   "edges": 484,
+   "faces": 320,
+   "quads": 0,
+   "tris": 320,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 8,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0017626034104728362,
+    "p50": 0.004813164972641084,
+    "p95": 0.011414112966597672
+   },
+   "bbox_world": [
+    [
+     -0.05025281793804126,
+     -0.07608084972037688,
+     1.6649726545020371
+    ],
+    [
+     -0.013977027819074062,
+     -0.04020971003631857,
+     1.7012620281261093
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Eye_R"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_19",
+   "verts": 165,
+   "edges": 484,
+   "faces": 320,
+   "quads": 0,
+   "tris": 320,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 8,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0018666509006014273,
+    "p50": 0.00483725001553283,
+    "p95": 0.011471244713948184
+   },
+   "bbox_world": [
+    [
+     -0.05034351236350432,
+     -0.07688911744624605,
+     1.6648820172801493
+    ],
+    [
+     -0.01388633935407535,
+     -0.040120036025648176,
+     1.7013529705238284
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 1,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Cornea_R"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_20",
+   "verts": 165,
+   "edges": 484,
+   "faces": 320,
+   "quads": 0,
+   "tris": 320,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 8,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0017623634094541456,
+    "p50": 0.004813161971076242,
+    "p95": 0.011414148312014833
+   },
+   "bbox_world": [
+    [
+     0.013928895877400871,
+     -0.07607986743566997,
+     1.6649873029419382
+    ],
+    [
+     0.050204671691253644,
+     -0.04020858470044075,
+     1.701276371390179
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Eye_L"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_21",
+   "verts": 165,
+   "edges": 484,
+   "faces": 320,
+   "quads": 0,
+   "tris": 320,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 8,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0018666434381093386,
+    "p50": 0.004837252010679596,
+    "p95": 0.011471272983881968
+   },
+   "bbox_world": [
+    [
+     0.01383820622030929,
+     -0.07688813516153914,
+     1.6648966657200504
+    ],
+    [
+     0.050295351811602274,
+     -0.04011891068977036,
+     1.7013673137878982
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 1,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Cornea_L"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_23",
+   "verts": 98,
+   "edges": 233,
+   "faces": 136,
+   "quads": 0,
+   "tris": 136,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 58,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0004113761570567668,
+    "p50": 0.0012526556389696724,
+    "p95": 0.004295452449515204
+   },
+   "bbox_world": [
+    [
+     -0.04750236405054409,
+     -0.07782602155336882,
+     1.6759260254380592
+    ],
+    [
+     -0.017651054464629556,
+     -0.06744666728248028,
+     1.687562227296553
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Tearline_R"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_24",
+   "verts": 98,
+   "edges": 233,
+   "faces": 136,
+   "quads": 0,
+   "tris": 136,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 58,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.00043670971611966316,
+    "p50": 0.0012587201444276919,
+    "p95": 0.004221147927326008
+   },
+   "bbox_world": [
+    [
+     0.01765174230221489,
+     -0.07779436909761905,
+     1.675962188774065
+    ],
+    [
+     0.047492851149450566,
+     -0.06756029759590554,
+     1.6876455402984902
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Tearline_L"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_26",
+   "verts": 91,
+   "edges": 234,
+   "faces": 144,
+   "quads": 0,
+   "tris": 144,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 36,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.00021075673912557123,
+    "p50": 0.0026114872696757,
+    "p95": 0.004221278688936239
+   },
+   "bbox_world": [
+    [
+     -0.047252911465177405,
+     -0.07773552738265188,
+     1.6761527710806945
+    ],
+    [
+     -0.017655528389166397,
+     -0.06764194166751558,
+     1.6877763081421904
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 3,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Eye_Occlusion_R"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_27",
+   "verts": 91,
+   "edges": 234,
+   "faces": 144,
+   "quads": 0,
+   "tris": 144,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 36,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.00025223592197373104,
+    "p50": 0.0026211064636228517,
+    "p95": 0.004213003059397987
+   },
+   "bbox_world": [
+    [
+     0.017652690016045636,
+     -0.07771952472499954,
+     1.6761340027670713
+    ],
+    [
+     0.04724324597619667,
+     -0.0677560631232943,
+     1.6878596211441277
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 3,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Eye_Occlusion_L"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_29",
+   "verts": 666,
+   "edges": 1718,
+   "faces": 1056,
+   "quads": 0,
+   "tris": 1056,
+   "ngons": 0,
+   "islands": 4,
+   "boundary_edges": 268,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0017480771251680077,
+    "p50": 0.014393744867741679,
+    "p95": 0.023568602104458217
+   },
+   "bbox_world": [
+    [
+     -0.14464811001759514,
+     -0.1375641189993182,
+     1.2718738351853176
+    ],
+    [
+     0.14395769751166476,
+     0.13548101738528828,
+     1.5229961602830144
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "material"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_31",
+   "verts": 845,
+   "edges": 2205,
+   "faces": 1364,
+   "quads": 0,
+   "tris": 1364,
+   "ngons": 0,
+   "islands": 4,
+   "boundary_edges": 318,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0018157441188289321,
+    "p50": 0.012450591527909543,
+    "p95": 0.028763452091289377
+   },
+   "bbox_world": [
+    [
+     -0.16288230531925763,
+     -0.09592891358163769,
+     0.8762036806082563
+    ],
+    [
+     0.16288034075020974,
+     0.12763152307192271,
+     1.059768087527857
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Underwear_Bottoms"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_33",
+   "verts": 30631,
+   "edges": 59429,
+   "faces": 29948,
+   "quads": 0,
+   "tris": 29948,
+   "ngons": 0,
+   "islands": 1151,
+   "boundary_edges": 29014,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.004208330937644355,
+    "p50": 0.011271721929524367,
+    "p95": 0.02181122458807516
+   },
+   "bbox_world": [
+    [
+     -0.1015713001436449,
+     -0.1059798509743537,
+     1.5195040332457665
+    ],
+    [
+     0.11895354005053171,
+     0.1389866293795805,
+     1.8843428076471014
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Fbx_Default_Material_Transparency"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_6",
+   "verts": 331,
+   "edges": 922,
+   "faces": 592,
+   "quads": 0,
+   "tris": 592,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 68,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.001370783048804921,
+    "p50": 0.0036909890442894744,
+    "p95": 0.0067822029638193275
+   },
+   "bbox_world": [
+    [
+     -0.016771200520443896,
+     -0.07365432039197373,
+     1.6018184998631568
+    ],
+    [
+     0.016700356825433138,
+     -0.020612188379973695,
+     1.6195100005657537
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Tongue"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_8",
+   "verts": 5086,
+   "edges": 13400,
+   "faces": 8314,
+   "quads": 0,
+   "tris": 8314,
+   "ngons": 0,
+   "islands": 64,
+   "boundary_edges": 1858,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0012465297644748661,
+    "p50": 0.0045138243731847275,
+    "p95": 0.015499456259148931
+   },
+   "bbox_world": [
+    [
+     -0.09503449227583793,
+     -0.10262852443625903,
+     1.4654003256470105
+    ],
+    [
+     0.0950532796594512,
+     0.11489665007387018,
+     1.7999195760356201
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Skin_Head"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Object_9",
+   "verts": 2060,
+   "edges": 5951,
+   "faces": 3892,
+   "quads": 0,
+   "tris": 3892,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 226,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.004365734910902815,
+    "p50": 0.017936062463964363,
+    "p95": 0.029378910333774745
+   },
+   "bbox_world": [
+    [
+     -0.17566020572945007,
+     -0.12977454405307398,
+     0.8421172950161804
+    ],
+    [
+     0.17567088688155508,
+     0.12837211805720727,
+     1.5163190656826941
+    ]
+   ],
+   "scale_factor_object": 0.010000001639127731,
+   "uv_layers": 2,
+   "vertex_groups": 102,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "Std_Skin_Body"
+   ],
+   "armature": true
+  }
+ ],
+ "totals": {
+  "verts": 52764,
+  "edges": 119360,
+  "faces": 67812,
+  "quads": 0,
+  "tris": 67812,
+  "ngons": 0,
+  "islands": 1300,
+  "boundary_edges": 35284,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  0.604
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

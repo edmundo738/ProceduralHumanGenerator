@@ -35,7 +35,7 @@ testes: 133 passed / 1 skip / 1 xfail). Site: `site/` commitado —
 
 ## Reference Library (docs/REFERENCE_LIBRARY.md) — FEITA a infraestrutura
 
-`references/` (commitada; 6 primeiras entradas migradas de 408517a com proveniência — NÃO ground truth, suitability UNKNOWN por design): estrutura female/male × 6 estilos × 11 componentes; `meta.json` por modelo (schema.py validado em tests/test_reflib.py); `extraction.json` (inspect_model.py: contagens/ilhas/contorno/densidade/pose_hint); `INDEX.json` (index.py; guarda da política híbrida ≤300 MB — atual 13.5 MB). Snapshot mínimo reproduzível em `tools/snapshot/` (round-trip verificado 7/7 numa ref + gerador). Regra: a biblioteca é observação externa — nunca altera o gerador sem hipótese validada. Dono povoa; agente estuda.
+`references/` (commitada; **14 entradas** — 6 migradas de 408517a + 8 do 1.º povoamento do dono: pack anime ×4 (1 masculina movida para male/), base mesh T-pose GLB, realistic female.blend, torso MPPled.fbx, rig de dança em other/; NÃO ground truth, suitability UNKNOWN por design): estrutura female/male × 6 estilos × 11 componentes; `meta.json` por modelo (schema.py validado em tests/test_reflib.py); `extraction.json` (inspect_model.py: contagens/ilhas/contorno/densidade/pose_hint); `INDEX.json` (index.py; guarda da política híbrida ≤300 MB — atual 13.5 MB). Snapshot mínimo reproduzível em `tools/snapshot/` (round-trip verificado 7/7 numa ref + gerador). Regra: a biblioteca é observação externa — nunca altera o gerador sem hipótese validada. Dono povoa; agente estuda.
 
 ## Próximos passos — programa PESCOÇO+TRONCO (TORSO STUDY 01, docs/TORSO_STUDY_01.md)
 

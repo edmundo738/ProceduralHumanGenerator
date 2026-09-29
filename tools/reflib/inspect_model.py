@@ -34,14 +34,23 @@ import bpy  # noqa: E402
 import schema  # noqa: E402
 
 LIB = os.path.join(ROOT, "references")
-EXTS = (".blend", ".obj", ".fbx")
+EXTS = (".blend", ".glb", ".obj", ".fbx")
 
 
 def find_model_file(d):
-    for f in sorted(os.listdir(d)):
-        if f.lower().endswith(EXTS):
-            return f
-    return None
+    """Ficheiro principal: prefere o que tem o nome da pasta; senão .blend>.glb>.obj>.fbx."""
+    cand = sorted(f for f in os.listdir(d) if f.lower().endswith(EXTS))
+    if not cand:
+        return None
+    stem = os.path.basename(d)
+    same = [f for f in cand if os.path.splitext(f)[0] == stem]
+    if same:
+        return same[0]
+    for ext in (".blend", ".glb", ".obj", ".fbx"):
+        for f in cand:
+            if f.lower().endswith(ext):
+                return f
+    return cand[0]
 
 
 def load_model(path):
@@ -51,7 +60,24 @@ def load_model(path):
     elif path.lower().endswith(".obj"):
         bpy.ops.wm.obj_import(filepath=path)
     elif path.lower().endswith(".fbx"):
+        # BUG do importador FBX do bpy 5.0 com ficheiros com LUZES
+        # (CyclesLightSettings.cast_shadow foi removido; medido em MPPled.fbx).
+        # Patch defensivo: ignora o erro nos settings de sombra da luz (não afeta
+        # a geometria, que é o que este inspetor mede).
+        try:
+            import io_scene_fbx.import_fbx as _IF
+            _orig = _IF.blen_read_light
+            def _safe_light(*a, **k):
+                try:
+                    return _orig(*a, **k)
+                except AttributeError:
+                    return None
+            _IF.blen_read_light = _safe_light
+        except Exception:
+            pass
         bpy.ops.import_scene.fbx(filepath=path)
+    elif path.lower().endswith(".glb") or path.lower().endswith(".gltf"):
+        bpy.ops.import_scene.gltf(filepath=path)
     else:
         raise ValueError(path)
     return [o for o in bpy.data.objects if o.type == "MESH"]

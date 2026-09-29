@@ -1,0 +1,29 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
+ "id": "REF-F-REAL-006",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "owner (zip 'realistic-female-body')",
+ "scope": "full_body",
+ "ref_type": "base_mesh",
+ "pose": "unknown",
+ "file": "realistic female.blend",
+ "limitations": [
+  "nome do ficheiro com espaço; .blend de versão Blender desconhecida (inspetor confirma)"
+ ],
+ "regions_available": [
+  "full_body"
+ ],
+ "observations": {
+  "zip_origem": "realistic-female-body.zip (extraído; zip removido por duplicação)"
+ },
+ "unknowns": [
+  "autoria",
+  "escala/unidades",
+  "pose"
+ ]
+}

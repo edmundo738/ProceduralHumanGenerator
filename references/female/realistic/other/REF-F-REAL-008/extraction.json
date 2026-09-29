@@ -1,0 +1,112 @@
+{
+ "id": "REF-F-REAL-008",
+ "file": "Booty Hip Hop Dance.fbx",
+ "objects": [
+  {
+   "object": "blue",
+   "verts": 3088,
+   "edges": 8756,
+   "faces": 5708,
+   "quads": 0,
+   "tris": 5708,
+   "ngons": 0,
+   "islands": 38,
+   "boundary_edges": 388,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0009475430932564778,
+    "p50": 0.004302910338511986,
+    "p95": 0.015718606464570354
+   },
+   "bbox_world": [
+    [
+     -0.10832283961174437,
+     -0.07907010549279862,
+     0.6673572658393139
+    ],
+    [
+     0.09835914315282447,
+     0.06391278176430394,
+     0.9187060590513453
+    ]
+   ],
+   "scale_factor_object": 0.009999999776482582,
+   "uv_layers": 1,
+   "vertex_groups": 8,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "blue"
+   ],
+   "armature": true
+  },
+  {
+   "object": "sd",
+   "verts": 7406,
+   "edges": 22179,
+   "faces": 14774,
+   "quads": 0,
+   "tris": 14774,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 36,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.0010549450699511174,
+    "p50": 0.005507697625256572,
+    "p95": 0.01837420747787568
+   },
+   "bbox_world": [
+    [
+     -0.32436934623026065,
+     -0.07869275941260441,
+     -0.0028489362104659253
+    ],
+    [
+     0.3243718654655274,
+     0.06641785634985324,
+     0.7938126230883451
+    ]
+   ],
+   "scale_factor_object": 0.009999998845160007,
+   "uv_layers": 1,
+   "vertex_groups": 52,
+   "shape_keys": 0,
+   "modifiers": [
+    "ARMATURE"
+   ],
+   "materials": [
+    "sd"
+   ],
+   "armature": true
+  }
+ ],
+ "totals": {
+  "verts": 10494,
+  "edges": 30935,
+  "faces": 20482,
+  "quads": 0,
+  "tris": 20482,
+  "ngons": 0,
+  "islands": 39,
+  "boundary_edges": 424,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 0
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  0.814
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

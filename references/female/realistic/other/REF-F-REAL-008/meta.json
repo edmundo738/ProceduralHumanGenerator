@@ -1,0 +1,31 @@
+{
+ "provided_by_owner": true,
+ "license": "UNKNOWN",
+ "suitability": {},
+ "extraction": "extraction.json",
+ "origin": "upload direto do dono no ramo arena/01a0d51d (commits 8ddb0c6, db0a62a, 62f980f) e zips do main (429d930e)",
+ "id": "REF-F-REAL-008",
+ "sex": "female",
+ "style": "realistic",
+ "style_confidence": "provisional_agent (rig de dança)",
+ "scope": "other",
+ "ref_type": "artistic_mesh",
+ "pose": "custom",
+ "file": "Booty Hip Hop Dance.fbx",
+ "limitations": [
+  "RIG + ANIMAÇÃO (dança) — NÃO é malha anatômica estática; util para estudos futuros de rig/skinning, não para alvos de forma",
+  "inclui textura (textures/Character_Diffuse.jpg)"
+ ],
+ "regions_available": [
+  "full_body_rigged"
+ ],
+ "observations": {
+  "zip_origem": "rig.zip (main 429d930e)",
+  "tipo": "rig+animação"
+ },
+ "unknowns": [
+  "autoria (Mixamo?)",
+  "esqueleto",
+  "malha por baixo do rig"
+ ]
+}

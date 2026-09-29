@@ -1,0 +1,2306 @@
+{
+ "id": "REF-F-ANIME-001",
+ "file": "Anime_Female_A.blend",
+ "objects": [
+  {
+   "object": "Anime_Female_A",
+   "verts": 2317,
+   "edges": 4577,
+   "faces": 2261,
+   "quads": 2261,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 110,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 1,
+   "edge_len": {
+    "p05": 0.013072474945585263,
+    "p50": 0.049648416076502284,
+    "p95": 0.2505187216528686
+   },
+   "bbox_world": [
+    [
+     0.0,
+     -1.2047734260559082,
+     -0.009969234466552734
+    ],
+    [
+     3.4350380897521973,
+     0.4977377653121948,
+     9.069164276123047
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 66,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "ARMATURE",
+    "SUBSURF"
+   ],
+   "materials": [
+    "_Base",
+    "Hand",
+    "Foot"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Anime_Female_A_EyeBall",
+   "verts": 86,
+   "edges": 180,
+   "faces": 96,
+   "quads": 72,
+   "tris": 24,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.02830447513436763,
+    "p50": 0.05575171144554318,
+    "p95": 0.0739635416039202
+   },
+   "bbox_world": [
+    [
+     0.07204052805900574,
+     -0.736192524433136,
+     8.155830383300781
+    ],
+    [
+     0.3578171133995056,
+     -0.45041710138320923,
+     8.441709518432617
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 1,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "ARMATURE",
+    "SUBSURF"
+   ],
+   "materials": [
+    "_Base",
+    "Hand",
+    "Foot"
+   ],
+   "armature": true
+  },
+  {
+   "object": "Anime_Female_A_Fist01",
+   "verts": 775,
+   "edges": 1543,
+   "faces": 769,
+   "quads": 769,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.007949315322798845,
+    "p50": 0.028877115513052977,
+    "p95": 0.08110021315709601
+   },
+   "bbox_world": [
+    [
+     -0.08008456230163574,
+     -0.4204225540161133,
+     -0.5081315040588379
+    ],
+    [
+     0.5117857456207275,
+     0.1264660656452179,
+     0.09107446670532227
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 6,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Hand"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_Fist02",
+   "verts": 623,
+   "edges": 1239,
+   "faces": 617,
+   "quads": 617,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.010478623753513135,
+    "p50": 0.03292704677256592,
+    "p95": 0.08557955409843827
+   },
+   "bbox_world": [
+    [
+     -0.07831883430480957,
+     -0.417502760887146,
+     -0.4905204772949219
+    ],
+    [
+     0.5109388828277588,
+     0.12944477796554565,
+     0.08991003036499023
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 6,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Hand"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_Foot01",
+   "verts": 361,
+   "edges": 715,
+   "faces": 355,
+   "quads": 355,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.009647516496620028,
+    "p50": 0.04923083011693264,
+    "p95": 0.1743799128986937
+   },
+   "bbox_world": [
+    [
+     -0.2454197108745575,
+     -0.9993442296981812,
+     -0.9718508124351501
+    ],
+    [
+     0.2398081123828888,
+     0.33156833052635193,
+     7.68899917602539e-06
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 8,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "_Base.001",
+    "Hand.001",
+    "Foot.001"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_Foot02",
+   "verts": 118,
+   "edges": 229,
+   "faces": 112,
+   "quads": 112,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.06885699343651168,
+    "p50": 0.1315100381618094,
+    "p95": 0.2567505711953715
+   },
+   "bbox_world": [
+    [
+     -0.24340124428272247,
+     -0.9866237044334412,
+     -0.9681434035301208
+    ],
+    [
+     0.2768644094467163,
+     0.3315683603286743,
+     0.0001242724247276783
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 8,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Foot"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_Foot03",
+   "verts": 148,
+   "edges": 289,
+   "faces": 142,
+   "quads": 142,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.06306067857697004,
+    "p50": 0.12561686535417144,
+    "p95": 0.2311704653073859
+   },
+   "bbox_world": [
+    [
+     -0.2580147981643677,
+     -0.9627603888511658,
+     -0.9905074238777161
+    ],
+    [
+     0.275905966758728,
+     0.3315685987472534,
+     7.863443897804245e-06
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 8,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Foot"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_Hand01",
+   "verts": 775,
+   "edges": 1543,
+   "faces": 769,
+   "quads": 769,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 1,
+   "edge_len": {
+    "p05": 0.011995305253251527,
+    "p50": 0.032001826538987775,
+    "p95": 0.08127015380969194
+   },
+   "bbox_world": [
+    [
+     -0.0774834156036377,
+     -0.6804878115653992,
+     -0.7805142402648926
+    ],
+    [
+     0.7345082759857178,
+     0.13056257367134094,
+     0.08922195434570312
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 36,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Hand"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_Hand02",
+   "verts": 623,
+   "edges": 1239,
+   "faces": 617,
+   "quads": 617,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 10,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.018054074301143284,
+    "p50": 0.0366178520211559,
+    "p95": 0.08502010201426533
+   },
+   "bbox_world": [
+    [
+     -0.0774834156036377,
+     -0.6735831499099731,
+     -0.7828617095947266
+    ],
+    [
+     0.7318592071533203,
+     0.13056263327598572,
+     0.08922290802001953
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 36,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [
+    "Hand"
+   ],
+   "armature": false
+  },
+  {
+   "object": "Anime_Female_A_MouthPart",
+   "verts": 100,
+   "edges": 167,
+   "faces": 70,
+   "quads": 70,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 3,
+   "boundary_edges": 54,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.022255872347370986,
+    "p50": 0.04983513413744321,
+    "p95": 0.15524662879486864
+   },
+   "bbox_world": [
+    [
+     0.0,
+     -0.7766383290290833,
+     7.827061653137207
+    ],
+    [
+     0.16216140985488892,
+     -0.38026130199432373,
+     8.052095413208008
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 2,
+   "shape_keys": 0,
+   "modifiers": [
+    "MIRROR",
+    "ARMATURE",
+    "SUBSURF"
+   ],
+   "materials": [
+    "_Base",
+    "Hand",
+    "Foot"
+   ],
+   "armature": true
+  },
+  {
+   "object": "shape_breast",
+   "verts": 76,
+   "edges": 80,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.10234542539791307,
+    "p50": 0.28153313029989785,
+    "p95": 0.3445763739028961
+   },
+   "bbox_world": [
+    [
+     6.4497517347335815,
+     -2.9471752643585205,
+     1.3008017539978027
+    ],
+    [
+     9.331100344657898,
+     -2.0947799682617188,
+     4.16555392742157
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [
+    "SUBSURF"
+   ],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_chest",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.12702536767363296,
+    "p50": 0.16833279768582826,
+    "p95": 0.26104697962203377
+   },
+   "bbox_world": [
+    [
+     1.8559715031227053,
+     -0.9937136219589178,
+     4.3180125454515235
+    ],
+    [
+     3.274749328301854,
+     0.4166452111058064,
+     5.185413916995268
+    ]
+   ],
+   "scale_factor_object": 0.5061126947402954,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_cube",
+   "verts": 8,
+   "edges": 12,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 2.0,
+    "p50": 2.0,
+    "p95": 2.0
+   },
+   "bbox_world": [
+    [
+     11.828170776367188,
+     -1.47892165184021,
+     -1.0
+    ],
+    [
+     13.828170776367188,
+     0.52107834815979,
+     1.0
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_finger_master",
+   "verts": 6,
+   "edges": 5,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 2,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11922720074653625,
+    "p50": 0.17443948984146118,
+    "p95": 0.7802242398262267
+   },
+   "bbox_world": [
+    [
+     6.24011817574501,
+     -0.603868305683136,
+     2.9924073219299316
+    ],
+    [
+     6.359345376491547,
+     0.5019176602363586,
+     2.9924075603485107
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_foot_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.04596709558377964,
+    "p50": 0.04882043392385576,
+    "p95": 0.05152189440471394
+   },
+   "bbox_world": [
+    [
+     3.4892273244621452,
+     -0.13958534801013794,
+     0.5164543326650389
+    ],
+    [
+     3.95760813836956,
+     0.3684490335176539,
+     0.6533936538290334
+    ]
+   ],
+   "scale_factor_object": 0.8632951974868774,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_foot_IK",
+   "verts": 22,
+   "edges": 22,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.03898611331570952,
+    "p50": 0.11438129882270781,
+    "p95": 0.6606002920544887
+   },
+   "bbox_world": [
+    [
+     3.422898641734836,
+     -0.9937166265136312,
+     1.3694503309125139e-09
+    ],
+    [
+     4.06792785100718,
+     0.44791140970501786,
+     1.3694503309125139e-09
+    ]
+   ],
+   "scale_factor_object": 0.9563723802566528,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_foot_spin_IK",
+   "verts": 44,
+   "edges": 44,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.013190859588987662,
+    "p50": 0.01544731024275994,
+    "p95": 0.01809017576308028
+   },
+   "bbox_world": [
+    [
+     2.250953233711302,
+     -0.6748730393343072,
+     0.21738453049928275
+    ],
+    [
+     2.451814138420046,
+     -0.48594208368575975,
+     0.3291663757778629
+    ]
+   ],
+   "scale_factor_object": 0.44962242245674133,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_footroll",
+   "verts": 44,
+   "edges": 44,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.025112776286453174,
+    "p50": 0.04677405578811857,
+    "p95": 0.06291087099248939
+   },
+   "bbox_world": [
+    [
+     2.7712579170519227,
+     0.29482030084591493,
+     0.3745298825682468
+    ],
+    [
+     3.257420500153888,
+     0.46862589056775406,
+     0.7818164385377102
+    ]
+   ],
+   "scale_factor_object": 0.4835459291934967,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_forearm_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.05305558376925638,
+    "p50": 0.05319018859667547,
+    "p95": 0.05332448333981782
+   },
+   "bbox_world": [
+    [
+     4.24796824124739,
+     -0.5371471521843239,
+     6.217450556334336
+    ],
+    [
+     4.583146849829326,
+     -0.029030642435177806,
+     6.684219603375212
+    ]
+   ],
+   "scale_factor_object": 1.34650456905365,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_hand_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.10285321581314291,
+    "p50": 0.10311417205628533,
+    "p95": 0.10337450955306914
+   },
+   "bbox_world": [
+    [
+     4.850288777963715,
+     -1.120023906060875,
+     5.474865394407802
+    ],
+    [
+     5.500063918619812,
+     -0.1349924359634162,
+     6.379740877930785
+    ]
+   ],
+   "scale_factor_object": 1.34650456905365,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_hand_IK",
+   "verts": 22,
+   "edges": 22,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.038689388142451854,
+    "p50": 0.1128089928659764,
+    "p95": 0.2636077070729077
+   },
+   "bbox_world": [
+    [
+     3.40245940239015,
+     -0.1939383661592906,
+     7.036316619706087
+    ],
+    [
+     4.088367061849748,
+     0.6990030350263794,
+     7.036316835827976
+    ]
+   ],
+   "scale_factor_object": 0.9563723802566528,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_head",
+   "verts": 41,
+   "edges": 42,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.10564546282459437,
+    "p50": 0.14179449857478668,
+    "p95": 0.18239206463244548
+   },
+   "bbox_world": [
+    [
+     1.6647989451885223,
+     -0.7393336815295872,
+     8.14621474675898
+    ],
+    [
+     2.290167599916458,
+     0.3291673192818139,
+     9.339109671152972
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_hips",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.13112159489018244,
+    "p50": 0.15827322289792473,
+    "p95": 0.30726224499444255
+   },
+   "bbox_world": [
+    [
+     2.617499788509703,
+     -0.8369632966498144,
+     3.278887829945648
+    ],
+    [
+     4.4414970685691895,
+     0.5881318739156423,
+     3.9880699070968344
+    ]
+   ],
+   "scale_factor_object": 0.6234031915664673,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_index01",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.09263331295070422,
+    "p50": 0.09286838279492159,
+    "p95": 0.09310287821045687
+   },
+   "bbox_world": [
+    [
+     3.304394199721056,
+     -0.30567093115612565,
+     5.687889357660694
+    ],
+    [
+     4.254303389813494,
+     -0.2724532588486568,
+     6.632330848441988
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_index02",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11987055745509834,
+    "p50": 0.12017475730475088,
+    "p95": 0.12047816170726107
+   },
+   "bbox_world": [
+    [
+     3.7816077271800346,
+     -0.6519325324746106,
+     5.006541239634426
+    ],
+    [
+     5.010821212448882,
+     -0.6089477915405261,
+     6.228679610513659
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_index03",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11161995446526438,
+    "p50": 0.11190322192339157,
+    "p95": 0.11218575964493428
+   },
+   "bbox_world": [
+    [
+     3.6916598986910003,
+     -0.8361002591885835,
+     4.690709323267168
+    ],
+    [
+     4.836267710056465,
+     -0.7960741063290229,
+     5.828728759419125
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_index04",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.1709057967335062,
+    "p50": 0.17133950306835632,
+    "p95": 0.17177211761803074
+   },
+   "bbox_world": [
+    [
+     4.888891838863721,
+     -0.8467301837722037,
+     4.3884858710171954
+    ],
+    [
+     6.6414468497794985,
+     -0.7854445539000205,
+     6.130953113347893
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_jaw",
+   "verts": 14,
+   "edges": 14,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.06342286783240962,
+    "p50": 0.08174216412966417,
+    "p95": 0.1063357737138071
+   },
+   "bbox_world": [
+    [
+     1.8018116831989175,
+     0.6105479791054615,
+     7.55825087151185
+    ],
+    [
+     2.1261345364548747,
+     1.002930410182592,
+     7.689964469303779
+    ]
+   ],
+   "scale_factor_object": 0.5063080191612244,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_middle01",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.07050037492489442,
+    "p50": 0.07067930378092366,
+    "p95": 0.07085775594815642
+   },
+   "bbox_world": [
+    [
+     4.426593410338253,
+     -0.3017025779790039,
+     5.800717435543827
+    ],
+    [
+     5.1495403271100635,
+     -0.2764216521547418,
+     6.519502850816782
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_middle02",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11017499184391798,
+    "p50": 0.11045463533294919,
+    "p95": 0.11073352103059463
+   },
+   "bbox_world": [
+    [
+     5.095964947052643,
+     -0.025470061971653024,
+     5.331299521907823
+    ],
+    [
+     6.22575597881778,
+     0.014037865456323573,
+     6.454586813066506
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_middle03",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.09167914533872061,
+    "p50": 0.09191184116827886,
+    "p95": 0.09214390031960469
+   },
+   "bbox_world": [
+    [
+     5.7363282898160435,
+     0.04901902899512578,
+     5.114557501077137
+    ],
+    [
+     6.676453314611084,
+     0.08189452163284727,
+     6.049270687810328
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_middle04",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.1366030940694081,
+    "p50": 0.13694980634952864,
+    "p95": 0.1372955836610206
+   },
+   "bbox_world": [
+    [
+     6.112457017293195,
+     0.08991925921442956,
+     4.498753361258643
+    ],
+    [
+     7.513255198063334,
+     0.1389041454371689,
+     5.891488020892382
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_neck",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.05180250757540511,
+    "p50": 0.053660394115968645,
+    "p95": 0.05545846315836818
+   },
+   "bbox_world": [
+    [
+     2.102383811337999,
+     -0.36470383687305397,
+     4.911032944978587
+    ],
+    [
+     2.66854034756569,
+     0.14022636247688336,
+     5.065831698450557
+    ]
+   ],
+   "scale_factor_object": 0.5667728185653687,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_pinky01",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.07050037492489442,
+    "p50": 0.07067930378092366,
+    "p95": 0.07085775594815642
+   },
+   "bbox_world": [
+    [
+     3.6310964697254597,
+     -0.36783190479937744,
+     6.101046643917851
+    ],
+    [
+     4.3540433864972705,
+     -0.34255097897511533,
+     6.819832059190805
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_pinky02",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11799461911215867,
+    "p50": 0.11829409552098441,
+    "p95": 0.118592778216759
+   },
+   "bbox_world": [
+    [
+     3.746083544644044,
+     -0.33290915605715554,
+     5.700428276235435
+    ],
+    [
+     4.956060886934811,
+     -0.29059713706321944,
+     6.903440501030936
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_pinky03",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.10243157429424916,
+    "p50": 0.10269155416805426,
+    "p95": 0.10295083068935862
+   },
+   "bbox_world": [
+    [
+     4.076700273100588,
+     -0.34192783963346685,
+     5.609773624733034
+    ],
+    [
+     5.127086144877296,
+     -0.3051966358185041,
+     6.654113119757458
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_pinky04",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.12155121858324269,
+    "p50": 0.12185973193830554,
+    "p95": 0.12216741866594087
+   },
+   "bbox_world": [
+    [
+     4.199627238910779,
+     -0.35052686569611247,
+     5.369880944879977
+    ],
+    [
+     5.4460759564371735,
+     -0.3069394780239785,
+     6.609154383072699
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_pole",
+   "verts": 4,
+   "edges": 4,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.05484061315655708,
+    "p50": 0.5274203065782842,
+    "p95": 1.0000000000000113
+   },
+   "bbox_world": [
+    [
+     10.702838635072112,
+     0.0,
+     0.0
+    ],
+    [
+     10.75767924822867,
+     1.0,
+     1.5099580252808664e-07
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_rigproperties",
+   "verts": 5928,
+   "edges": 10308,
+   "faces": 4402,
+   "quads": 1482,
+   "tris": 2920,
+   "ngons": 0,
+   "islands": 69,
+   "boundary_edges": 5928,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 4,
+   "edge_len": {
+    "p05": 0.0031104708798387467,
+    "p50": 0.01335549279411294,
+    "p95": 0.0985654040807216
+   },
+   "bbox_world": [
+    [
+     -0.9513197541236877,
+     -0.015325315296649933,
+     -0.3934550881385803
+    ],
+    [
+     0.9276077151298523,
+     0.01396230235695839,
+     0.3837190270423889
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 1,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_ring01",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.07050037492489442,
+    "p50": 0.07067930378092366,
+    "p95": 0.07085775594815642
+   },
+   "bbox_world": [
+    [
+     3.8858147734058797,
+     -0.41062553635302734,
+     5.902238927548222
+    ],
+    [
+     4.60876169017769,
+     -0.38534461052876523,
+     6.621024342821176
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_ring02",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.10853704658486424,
+    "p50": 0.10881251921917577,
+    "p95": 0.10908725878025104
+   },
+   "bbox_world": [
+    [
+     3.2666100828468245,
+     -0.4842756909736181,
+     5.6710009973119355
+    ],
+    [
+     4.379604612387457,
+     -0.44535509105196525,
+     6.777588620408537
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_ring03",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.09729247379962687,
+    "p50": 0.09753939500004985,
+    "p95": 0.09778567229504745
+   },
+   "bbox_world": [
+    [
+     3.608951771776127,
+     -0.29786747711817796,
+     6.130423697676989
+    ],
+    [
+     4.606638594247681,
+     -0.26297911568316223,
+     7.122367527689676
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_ring04",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.12584863436603627,
+    "p50": 0.12616805138246495,
+    "p95": 0.12648660818487759
+   },
+   "bbox_world": [
+    [
+     3.9566856159777117,
+     -0.14197189706186486,
+     6.332194692144938
+    ],
+    [
+     5.247202122830561,
+     -0.09684348195860859,
+     7.615282417200326
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_root",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.44196791660998136,
+    "p50": 0.44196814986706157,
+    "p95": 1.031032597723756
+   },
+   "bbox_world": [
+    [
+     3.5730743408203125,
+     -3.8544716835021973,
+     0.022891616448760033
+    ],
+    [
+     8.082163333892822,
+     2.3061556816101074,
+     0.022892693057656288
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_shin_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.06396457003439263,
+    "p50": 0.06410734230163466,
+    "p95": 0.06424974613826233
+   },
+   "bbox_world": [
+    [
+     2.318749990624448,
+     -0.7836978336689887,
+     1.6959738007304885
+    ],
+    [
+     2.9742733381651183,
+     -0.13154423689004568,
+     1.7189113412263282
+    ]
+   ],
+   "scale_factor_object": 2.212555170059204,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_shoulder",
+   "verts": 34,
+   "edges": 34,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.09696120117612793,
+    "p50": 0.11637961358101985,
+    "p95": 0.19053449900782507
+   },
+   "bbox_world": [
+    [
+     1.6946001648902893,
+     0.9340082721412273,
+     7.834380611777306
+    ],
+    [
+     2.795504629611969,
+     2.063110740631828,
+     8.463486075401306
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_sphere",
+   "verts": 96,
+   "edges": 96,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 3,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.19603420390108864,
+    "p50": 0.1960343430690851,
+    "p95": 0.19603439808328724
+   },
+   "bbox_world": [
+    [
+     13.023237228393555,
+     -0.4324646592140198,
+     -0.9024642184376717
+    ],
+    [
+     15.023237228393555,
+     1.567535161972046,
+     1.0975359603762627
+    ]
+   ],
+   "scale_factor_object": 1.0,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_spine01_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.12735928641932612,
+    "p50": 0.12768253565582338,
+    "p95": 0.1280049676652389
+   },
+   "bbox_world": [
+    [
+     -0.6530037754562557,
+     -0.7519476331438284,
+     4.782121138772766
+    ],
+    [
+     0.6530041464145242,
+     0.4912488341445922,
+     5.159775851464879
+    ]
+   ],
+   "scale_factor_object": 0.6223645806312561,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_spine02_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11354821929669515,
+    "p50": 0.12491183813997078,
+    "p95": 0.13535904684676534
+   },
+   "bbox_world": [
+    [
+     1.7199320483696283,
+     -0.9433142782800772,
+     4.5427375080015295
+    ],
+    [
+     3.102907030569341,
+     0.21268179206425053,
+     4.554972544713653
+    ]
+   ],
+   "scale_factor_object": 0.9921199679374695,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_spine03_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.1145225930698204,
+    "p50": 0.1204708056218197,
+    "p95": 0.12614944977240988
+   },
+   "bbox_world": [
+    [
+     1.6774600504098132,
+     -0.9632042960214866,
+     4.857554342845431
+    ],
+    [
+     2.965581283086294,
+     0.19828370059137512,
+     4.972599555538952
+    ]
+   ],
+   "scale_factor_object": 0.5581653714179993,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_spine04_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.11511681070539995,
+    "p50": 0.12109588372363794,
+    "p95": 0.12680395637120573
+   },
+   "bbox_world": [
+    [
+     1.5102362102489764,
+     -1.1402824229128072,
+     5.260691411597386
+    ],
+    [
+     2.8050406521788176,
+     0.03227054018475117,
+     5.300477203850493
+    ]
+   ],
+   "scale_factor_object": 1.0051884651184082,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_thigh_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.09055272263566773,
+    "p50": 0.0907548389976171,
+    "p95": 0.09095642977158303
+   },
+   "bbox_world": [
+    [
+     2.6125934461183573,
+     -0.711267611615757,
+     2.5567725749851467
+    ],
+    [
+     3.5405980497038443,
+     0.2119666474757455,
+     2.589244534694843
+    ]
+   ],
+   "scale_factor_object": 2.212555170059204,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_thigh_IK",
+   "verts": 8,
+   "edges": 12,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.6666190820073581,
+    "p50": 0.6666192176282967,
+    "p95": 2.27682286544103
+   },
+   "bbox_world": [
+    [
+     3.639370755367576,
+     -0.6038683534830978,
+     2.9924073395270314
+    ],
+    [
+     4.305989837374934,
+     0.06275090041960762,
+     5.269230255296413
+    ]
+   ],
+   "scale_factor_object": 2.275341749191284,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_thumb01",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.1359946097513864,
+    "p50": 0.13633967583399983,
+    "p95": 0.1366839067122677
+   },
+   "bbox_world": [
+    [
+     2.539936385175558,
+     0.2737624586155718,
+     5.9515251586497655
+    ],
+    [
+     3.93449370847393,
+     0.32252914109250597,
+     7.338056041078829
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_thumb02",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.12323607899733355,
+    "p50": 0.12354877429262129,
+    "p95": 0.12386071243478625
+   },
+   "bbox_world": [
+    [
+     3.5563794624683354,
+     0.2760500101664043,
+     6.016564858051364
+    ],
+    [
+     4.820104424059995,
+     0.3202415895416735,
+     7.273016301548267
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_thumb03",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.10133659219144688,
+    "p50": 0.10159372550710605,
+    "p95": 0.1018502255377363
+   },
+   "bbox_world": [
+    [
+     4.9809495925099085,
+     0.27997650883484226,
+     6.128202751013067
+    ],
+    [
+     6.020106134379326,
+     0.3163150908732355,
+     7.161378328328638
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_thumb04",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.12186343301744276,
+    "p50": 0.12217264380772275,
+    "p95": 0.12248110372003528
+   },
+   "bbox_world": [
+    [
+     5.731059593772624,
+     0.27629611174635293,
+     6.0235621949253755
+    ],
+    [
+     6.980708757201818,
+     0.31999546925823275,
+     7.26601874274208
+    ]
+   ],
+   "scale_factor_object": 1.3465046882629395,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_toe",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.028326636217342816,
+    "p50": 0.0450690387271372,
+    "p95": 0.05722690303281687
+   },
+   "bbox_world": [
+    [
+     2.92034258854563,
+     -0.6955573397887016,
+     -0.059684965967626125
+    ],
+    [
+     3.506343289212855,
+     -0.6955570888790766,
+     0.2249168377833229
+    ]
+   ],
+   "scale_factor_object": 0.35117897391319275,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_upperarm_FK",
+   "verts": 32,
+   "edges": 32,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.06011966069861653,
+    "p50": 0.060272192157244525,
+    "p95": 0.06042435862832966
+   },
+   "bbox_world": [
+    [
+     3.489209633163847,
+     -0.3330288986317869,
+     6.871583428080703
+    ],
+    [
+     3.7796228676764714,
+     0.2800878133362704,
+     7.41539159097861
+    ]
+   ],
+   "scale_factor_object": 1.3590600490570068,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  },
+  {
+   "object": "shape_upperarm_IK",
+   "verts": 8,
+   "edges": 12,
+   "faces": 0,
+   "quads": 0,
+   "tris": 0,
+   "ngons": 0,
+   "islands": 1,
+   "boundary_edges": 0,
+   "non_manifold_edges": 0,
+   "degenerate_faces": 0,
+   "edge_len": {
+    "p05": 0.6666190820073581,
+    "p50": 0.6666192176282967,
+    "p95": 2.27682286544103
+   },
+   "bbox_world": [
+    [
+     4.9909625808528055,
+     -0.6038683534830978,
+     2.9924073395270314
+    ],
+    [
+     5.657581662860164,
+     0.06275090041960762,
+     5.269230255296413
+    ]
+   ],
+   "scale_factor_object": 2.275341749191284,
+   "uv_layers": 0,
+   "vertex_groups": 0,
+   "shape_keys": 0,
+   "modifiers": [],
+   "materials": [],
+   "armature": false
+  }
+ ],
+ "totals": {
+  "verts": 13401,
+  "edges": 23592,
+  "faces": 10210,
+  "quads": 7266,
+  "tris": 2944,
+  "ngons": 0,
+  "islands": 133,
+  "boundary_edges": 6162,
+  "non_manifold_edges": 0,
+  "degenerate_faces": 6
+ },
+ "pose_hint": [
+  "t_pose (envergadura ≈ altura)",
+  2.418
+ ],
+ "pose_hint_basis": "HEURÍSTICA (largura/altura) — confirmar; meta.pose é que manda",
+ "units": "UNKNOWN (bbox cru por objeto; escala do objeto registada)",
+ "limitations_of_extraction": [
+  "sem avaliação de modificadores (cage, não superfície final)",
+  "materiais: só nomes (árvore de nodes não extraída ainda)",
+  "armadura: só presença (hierarquia de ossos não extraída ainda)",
+  "normais/UV: só presença e contagem"
+ ]
+}

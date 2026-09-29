@@ -21,7 +21,7 @@ POSES = ["t_pose", "a_pose", "custom", "unknown"]
 
 REQUIRED = ["id", "sex", "style", "style_confidence", "scope", "ref_type", "origin",
             "pose", "file", "limitations", "regions_available", "unknowns", "suitability"]
-ID_RE = re.compile(r"^REF-(F|M)-[A-Z]{3,4}-\d{3}$")
+ID_RE = re.compile(r"^REF-(F|M)-[A-Z]{3,5}-\d{3}$")
 ENUMS = {"style": STYLES, "scope": SCOPES, "ref_type": REF_TYPES, "sex": SEXES, "pose": POSES}
 
 
