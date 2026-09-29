@@ -53,6 +53,10 @@ COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2",
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
+    ("torso_system_sagittal.png", "T-TORSO — perfis sagitais: refs vs nós", "Estudo do torso como SISTEMA (TORSO_STUDY_02): perfil posterior e anterior da linha média, refs (cinza) vs nós T1-off (tracejado) e T1-on (sólido). 17 padrões medidos com proveniência; painel 1 de 4."),
+    ("torso_system_coronal.png", "T-TORSO — larguras normalizadas pela anca", "Largura do tronco / largura da anca (invariante à orientação): a cintura das refs (0.63–0.66 da anca) vs a nossa (0.70 — tubular). Padrão P7; painel 2."),
+    ("torso_system_gluteal.png", "T-TORSO — contorno glúteo", "Contorno posterior no ápice da nádega: todas as refs válidas têm lóbulos laterais + sulco central (7–26 mm); nosso T1-on tem um esboço (4.4), T1-off é bloco. Padrão P16; painel 3."),
+    ("torso_system_curvature.png", "T-TORSO — curvatura do perfil posterior", "κ(z) do perfil posterior (transições/quebras de plano). Instrumento limitado pela quantização dos cortes (5 mm) — comparação visual; a métrica de transições fica como gap G3. Painel 4."),
     ("renders_T1_vs_refs.png", "TORSO T1 — costas em S: nós vs refs (mesma câmara)", "Frente, ¾, lado e costas do tronco: ours T1 (curva S, braços caídos) e as refs (femalebase/femalechar/bodytopo/real005; T/A-pose). IoU lado 0.67–0.75 vs ref↔ref 0.69. A/B medido (amp0→amp1): lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação do dono: NEGATIVA por agora (docs/TORSO_STUDY_01.md §7)."),
     ("renders_F2_vs_refs.png", "F2 vs REFS — painel comparativo (mesma câmara)", "Cinco fontes × seis vistas (frente, ¾, lado, costas, orelha, orelha-¾), Cycles cinza neutro: oursF1, oursF2 e as 3 refs. IoU de silhueta: frente 0.91–0.94 vs baseline ref↔ref 0.90."),
     ("renders_F2_ear.png", "F2 — CONT1: close-up da orelha (PROXIMIDADE)", "F1 vs F2, lado e ¾ posterior; Cycles cinza neutro, sem cabelo, mesma câmara. A janela C¹ funde a orelha na casca (sem degrau no bordo) e o relevo entra na gama das refs (turn 462→619°)."),

@@ -75,6 +75,25 @@ Estudo MEDIDO feito; plano T1–T5 (uma mudança estrutural por fase, pré-regis
 5. **T5 PESCOÇO-BASE + CONT2** — circ 417→≤382; nuca (CONT2 pré-registado em HEAD_CONT1.md §5).
 Aguarda: validação do painel `renders_T1_vs_refs.png` + decisão do busto.
 
+## T-TORSO SISTEMA — estudo REAL das refs FEITO (2026-09-29, docs/TORSO_STUDY_02.md)
+
+Sem NENHUMA alteração de geometria. 17 padrões medidos com proveniência
+(n refs/quais) sobre 11 modelos (2 excluídos com causa medida: whitewalker
+normalização quebrada; real006 estilizada; mppled frame próprio). Síntese:
+**de 13 dimensões, dentro só em 2** (cotas P12, razão peito/anca P8). Fora:
+lombar 45.3 vs refs 53.7–69.7 (P1 — a banda T1 [40,75] era mais LARGA que as
+refs: achado de método que explica "3/3 bandas" vs "não gostei"); mama alta
+demais +45–115 e saliência 26 vs 54–70 (P4/P5 — real005 FECHA o gap do busto);
+barril +40 largura/+74 profundidade (P9/P10); secção do peito redonda (n 2.2)
+vs boxy das refs (≈3.8, P13) e dominada pela frente (1.06) vs costas
+(0.60–0.72, P14); cintura 0.70 vs 0.63–0.66 (P7); sulco glúteo 4.4 vs 7–26
+(P16). Respostas às 3 perguntas do dono em §4 do doc (1: NÃO — P4/P5/P13/
+P14/P16 nunca tinham sido medidos; 2: PARCIALMENTE — bandas achatadas; 3: SIM
+para a T1). Hipóteses H-D1..H-D4 + gaps G1–G5 + perguntas de decisão §7.
+**Próximo: checkpoint de DECISÃO com o dono** (T1: recalibrar vs balanço
+estrutural vs manter; ordem barril→cintura→volumes). Painéis:
+docs/head_phaseA/torso_system_{sagittal,coronal,gluteal,curvature}.png (+site).
+
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 
 | achado | classificação |
