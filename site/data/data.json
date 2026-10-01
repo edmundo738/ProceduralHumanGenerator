@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 567028d2a472d879 · faseA 4c6e70e822c55783 · a2b 77c605b73cd18f75 · n1 25b7c510867a18e9 · f1 838fa5ba96031c6e · f2 fed1fac2790f7bbd · t1 8c6f568ccfbbe530",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d",
  "variants": [
   {
    "id": "antes",
@@ -8,7 +8,7 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "8716b88…de08023",
-   "digest": "567028d2a472d879",
+   "digest": "5f4cca658b590976",
    "smooth": {
     "verts": 107074,
     "faces": 105096,
@@ -32,7 +32,7 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "642cb7f",
-   "digest": "4c6e70e822c55783",
+   "digest": "36e4ed980833e2a3",
    "smooth": {
     "verts": 109424,
     "faces": 108672,
@@ -56,7 +56,7 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "5eb8c32",
-   "digest": "77c605b73cd18f75",
+   "digest": "74b26997887c6580",
    "smooth": {
     "verts": 109424,
     "faces": 108672,
@@ -81,12 +81,12 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "3ad83da",
-   "digest": "25b7c510867a18e9",
+   "digest": "92dc3aa66b3fc4fd",
    "smooth": {
     "verts": 109424,
     "faces": 108672,
     "quads": 108672,
-    "bytes": 5235192
+    "bytes": 5235196
    },
    "cage": {
     "verts": 6932,
@@ -106,12 +106,12 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "2d6039f",
-   "digest": "838fa5ba96031c6e",
+   "digest": "28be5bf88bc9bab4",
    "smooth": {
     "verts": 563700,
     "faces": 562944,
     "quads": 562944,
-    "bytes": 27040348
+    "bytes": 27040352
    },
    "cage": {
     "verts": 35304,
@@ -131,12 +131,12 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "029063e",
-   "digest": "fed1fac2790f7bbd",
+   "digest": "f900e2327198fcb5",
    "smooth": {
     "verts": 563700,
     "faces": 562944,
     "quads": 562944,
-    "bytes": 27040348
+    "bytes": 27040352
    },
    "cage": {
     "verts": 35304,
@@ -155,12 +155,12 @@
     "HCG_NECK": "N1"
    },
    "commit": "4258f24",
-   "digest": "8c6f568ccfbbe530",
+   "digest": "9ed92eee38c0ee3d",
    "smooth": {
     "verts": 563700,
     "faces": 562944,
     "quads": 562944,
-    "bytes": 27040348
+    "bytes": 27040352
    },
    "cage": {
     "verts": 35304,
@@ -493,6 +493,16 @@
    "src": "sweep_breast_zoom.png",
    "title": "SWEEP 01 MAMA — ZOOM peito (pós-gate)",
    "caption": "Resposta ao gate NEGATIVO: zoom 620mm com controlo N0 (mama OFF = parede nua), V0/V5/V6/V7 e refs. Verificação numérica: variantes diferem 6-12mm (real mas sub-limiar a corpo inteiro); a mama é um inchaço difuso, não volume — evidência para a decisão C2 (docs/MECHANISM_AUDIT_01.md)."
+  },
+  {
+   "src": "breast_c2_zoom.png",
+   "title": "BREAST C2 — ZOOM 660mm: protótipo estruturado (gate visual)",
+   "caption": "MANDATO RND · docs/BREAST_C2_01.md. Causa-raiz do SWEEP 01 corrigida: o cage 16pts não tinha vértices na mama (uma aresta atravessava x 30-75 — 'linha-não-volume'); _densify_front insere pontos colineares (parede intacta) e o campo C2 forma volume. Especificação v3 (instrumento plane_scan v3.2): swB2 EM BANDA refs — gap 17 (refs 7-34), base 54 (58-90), prega 38 (21-79), f@1350 24 (22-27), ápice x 69 (69-71). Painel: 3 refs + N0 (parede) + V0 (H-TT1) + B2 (C2) × frente/¾/perfil. GATE do dono pendente."
+  },
+  {
+   "src": "breast_c2_torso.png",
+   "title": "BREAST C2 — corpo-torso (contexto)",
+   "caption": "As mesmas fontes em vista corpo-torso (ortho 1.06): B2 vs V0 vs N0 vs refs — integração da mama estruturada no conjunto, peito superior recuado (f@1350 24 vs 50 do V0) e barriga plana (barriga-peito -6.7, banda refs -7..+9)."
   },
   {
    "src": "renders_T1_vs_refs.png",

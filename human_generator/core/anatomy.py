@@ -426,12 +426,16 @@ class Anatomy:
         # TORSO B — cintura por RAZÃO (P7: refs waist/hip 0.63–0.66): wf≈0.905
         # sobre waist_half mantém a razão sem magrear os absolutos ANSUR (P18).
         # Barriga > lombar (P15: front_share refs 1.06–1.52).
+        # H-TT2-parcial (BREAST_C2_01): fs/bs re-equilibrados MEASURED — com
+        # fs 1.12/1.02 a frente do umbigo ficava +22 mm à frente da parede do
+        # peito (refs 0–+9; plane_scan v3.2, barriga−peito).  fs+bs totais
+        # mantidos (2.04/2.02) ⇒ profundidade ANSUR intacta.
         wf = 0.912
-        add(zf("waist"), waist * wf, depth_for(0.709, waist * wf, 1.12, 0.92),
-            sup=2.0, fs=1.12, bs=0.92)
+        add(zf("waist"), waist * wf, depth_for(0.709, waist * wf, 0.94, 1.10),
+            sup=2.0, fs=0.94, bs=1.10)
         # navel
         navel_w = mix(waist * wf, hip, 0.35)
-        add(zf("navel"), navel_w, depth_for(0.709, navel_w, 1.02, 1.0), sup=2.05, fs=1.02)
+        add(zf("navel"), navel_w, depth_for(0.709, navel_w, 0.86, 1.16), sup=2.05, fs=0.86, bs=1.16)
         # iliac flare
         add(zf("hip_flare"), hip * 0.93, depth_for(0.52, hip * 0.93, 1.0, 0.98), sup=2.1, bs=0.98)
         # hip widest (trochanteric level)

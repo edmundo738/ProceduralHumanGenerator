@@ -6,7 +6,7 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "8716b88\u2026de08023",
-  "digest": "567028d2a472d879",
+  "digest": "5f4cca658b590976",
   "smooth": {
    "verts": 107074,
    "faces": 105096,
@@ -29,7 +29,7 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "642cb7f",
-  "digest": "4c6e70e822c55783",
+  "digest": "36e4ed980833e2a3",
   "smooth": {
    "verts": 109424,
    "faces": 108672,
@@ -52,7 +52,7 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "5eb8c32",
-  "digest": "77c605b73cd18f75",
+  "digest": "74b26997887c6580",
   "smooth": {
    "verts": 109424,
    "faces": 108672,
@@ -76,12 +76,12 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "3ad83da",
-  "digest": "25b7c510867a18e9",
+  "digest": "92dc3aa66b3fc4fd",
   "smooth": {
    "verts": 109424,
    "faces": 108672,
    "quads": 108672,
-   "bytes": 5235192
+   "bytes": 5235196
   },
   "cage": {
    "verts": 6932,
@@ -100,12 +100,12 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "2d6039f",
-  "digest": "838fa5ba96031c6e",
+  "digest": "28be5bf88bc9bab4",
   "smooth": {
    "verts": 563700,
    "faces": 562944,
    "quads": 562944,
-   "bytes": 27040348
+   "bytes": 27040352
   },
   "cage": {
    "verts": 35304,
@@ -124,12 +124,12 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "029063e",
-  "digest": "fed1fac2790f7bbd",
+  "digest": "f900e2327198fcb5",
   "smooth": {
    "verts": 563700,
    "faces": 562944,
    "quads": 562944,
-   "bytes": 27040348
+   "bytes": 27040352
   },
   "cage": {
    "verts": 35304,
@@ -147,12 +147,12 @@
    "HCG_NECK": "N1"
   },
   "commit": "4258f24",
-  "digest": "8c6f568ccfbbe530",
+  "digest": "9ed92eee38c0ee3d",
   "smooth": {
    "verts": 563700,
    "faces": 562944,
    "quads": 562944,
-   "bytes": 27040348
+   "bytes": 27040352
   },
   "cage": {
    "verts": 35304,

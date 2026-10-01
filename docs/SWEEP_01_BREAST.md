@@ -79,3 +79,13 @@ eliminados por medição: cabelo (não desce de z≈1455), grelha abdominal
   determinismo confirmado).
 - Fila após escolha: vencedor → default + medição do aprendido → próximo sweep
   (costas R8/R9 = H-TT2; ombro = H-TT5) → C decide-se com dados de ≥2 sweeps.
+
+## 5. Adenda (2026-10-01): resolução da causa-raiz
+
+O MECHANISM_AUDIT (§8) encontrou a causa-raiz: cage sem vértices na frente
+da mama (uma aresta atravessa x 30–75). O protótipo C2 (HCG_BREAST2,
+`_densify_front` + `_structured_breast`) corrige-a e mede-se EM BANDA das
+refs em gap (17 vs 7–34), base (54 vs 58–90), f@1350 (24 vs 22–27), ápice
+x (69 vs 69–71) — ver docs/BREAST_C2_01.md e breast_spec_v3.json
+(instrumento plane_scan v3.2; os números v2 deste doc §3.5 com bug de fill
+foram supersedidos). Painel: breast_c2_{zoom,torso}.png.

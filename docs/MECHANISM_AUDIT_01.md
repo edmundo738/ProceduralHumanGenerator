@@ -138,3 +138,15 @@ Medições: perfis measure.py por variante (prof_sw*.json, instrumento comum);
 dump da gaiola (anéis registados); componentes geom.py; presets (muscle_tone
 0.45). Render zoom: `docs/head_phaseA/sweep_breast_zoom.png` (janela 620 mm,
 câmara idêntica, N0/V0/V5/V6/V7 + refs). Nenhuma alteração de geometria.
+
+## 8. ADENDO (2026-10-01, MANDATO RND): causa-raiz do §2 encontrada — CAGE
+
+A mama "linha-não-volume" do §2 tem causa-raiz medida e não era (só) o
+vocabulário gaussiano: **os anéis do tronco (16 pts) não têm NENHUM vértice
+em x 30–75 mm** — uma única aresta atravessa a mama (pontos frontais em
+x≈0/±84/±137). Qualquer campo por vértice degrada na crista dessa aresta;
+a recessão do peito superior realizava −4 dos −32 mm pedidos. Isto explica
+também o SWEEP 01 (parâmetros sem onde se expressar ⇒ variantes
+indistinguíveis). Ver docs/BREAST_C2_01.md §1 (correcção: pontos colineares
+`_densify_front`), §2 (instrumento v3.2: 3 bugs corrigidos) e §3
+(especificação v3: swB2 em banda; gap 0→17, base 10→54 vs V0).

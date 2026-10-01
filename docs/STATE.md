@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-10-01 (gate SWEEP 01 NEGATIVO; MECHANISM AUDIT 01; decisão C aguarda gate) · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-10-01 (MANDATO RND activo; BREAST_C2_01 protótipo pronto — gate visual do dono pendente; 15.ª recriação do sandbox recuperada, digests reproduzem) · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
@@ -219,6 +219,42 @@ C2 híbrido (estações + volumes próprios p/ mama-glúteo-ombro) / C3 camadas 
 RECOMENDAÇÃO C2** (preserva o que funciona, substitui os mecanismos que
 produzem a aparência artificial). AGUARDA GATE do dono (C1/C2/C3).
 Painel novo: docs/head_phaseA/sweep_breast_zoom.png (N0/V0/V5/V6/V7 + refs).
+
+## MANDATO RND (2026-10-01, permanente) + BREAST_C2_01 — protótipo C2 da mama
+
+**MANDATO RND** (docs/MANDATE.md, íntegra): refs = material de estudo ACTIVO
+(medir/isolar/separar/extrair); objectivo = PROGRAMA que gera corpos ao clicar;
+visão computacional quando a inspecção falha; FACT/MEASURED/OBSERVED/INFERRED/
+HYPOTHESIS/UNKNOWN obrigatório; demonstrar geometricamente (não por parâmetros);
+propor outro mecanismo quando o actual não chega; preservar o que funciona;
+BUILD DON'T FREEZE.
+
+**BREAST_C2_01** (docs/BREAST_C2_01.md — protótipo C2 em HCG_BREAST2=1):
+causa-raiz do SWEEP 01 medida = **cage 16 pts sem vértices na mama** (uma
+aresta atravessa x 30–75; "linha-não-volume"). Correcção `_densify_front`
+(pontos COLINEARES nas arestas frontais — parede não muda, campo ganha
+controlo x≈21/42/63; ring_n=32 puro medido e REJEITADO: incha a parede +16).
+Instrumento plane_scan v3.2 (3 bugs corrigidos: fill encadeava mal → topo
+fantasma +24; plano exacto em vértice → segmentos perdidos; refs fragmentadas
+→ reparo por contexto). **Especificação v3 (breast_spec_v3.json): swB2 EM
+BANDA refs** — ápice (69,95,1261) vs refs x 69–71/y 79–97/z 1214–1266; gap
+17 vs 7–34; base 54 vs 58–90; prega 38 vs 21–79; f@1350 24 vs 22–27;
+barriga−peito −6.7 vs −7..+9. V0 (H-TT1, re-build sobre a anatomia actual)
+com instrumento corrigido: gap −0, base 10, esterno 121 — crista confirmada.
+Sagital do lobo rastreia real005 quase paralelo. Digests: N0
+0437cc4ce71c49b2, B2 2ea834f946c214ad, V0-rebuild 9ed92eee38c0ee3d;
+**default actual (com fs/bs H-TT2-parcial, não-gated) = ee588326c69b1f8d**
+(H-TT1 histórico pré-fs/bs = 70437b0bcc3a90f5); P1–P12 por re-medir antes de
+qualquer promoção. **AGUARDA GATE VISUAL do dono** (painéis
+breast_c2_{zoom,torso}.png, modo A). Fila: gate → base 54→58+ → estações F/B
+do esterno (coluna peito anterior, propriedade da parede).
+
+**15.ª recriação do sandbox (2026-10-01):** trabalho do dia perdeu-se ANTES
+do push (token GitHub expirado) — re-aplicado do zero e VERIFICADO: os 3
+digests e a tabela de especificação reproduzem exactamente. Refspec do clone
+agora inclui refs/heads/arena/* (era single-branch main — causa do push
+"fetch first"). Ambiente: apt bloqueado → libs X/GL por stubs
+(/usr/lib/x86_64-linux-gnu/stubs; LD_LIBRARY_PATH no headless_blender).
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 
