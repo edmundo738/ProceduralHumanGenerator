@@ -20,8 +20,8 @@ CONTRACT_VERSION_PIN = "1.0.0"
 PINS = {
     ("realistic_female", 42): {
         "fingerprint": "ad620a90b8eba085",   # S3.7: shoulder_head_ratio now has a source
-        "verts": 6483,          # TORSO B: +16 (1 estação de cifose; T1 era 6467)
-        "faces": 6389,
+        "verts": 6883,          # H-TT1: +400 (25 anéis PCHIP; TORSO B era 6483)
+        "faces": 6789,
         "strands": 2400,
         # re-measured in S4.2 (a casca do crânio deixou de ser fechada: orbita,
         # boca e narinas cortadas; refinamento local em 2 passagens cobrindo
@@ -65,8 +65,19 @@ PINS = {
         # sub-4 mm confinadas à zona anca/nádega).  Knife-edge SEMÂNTICO em
         # float32: palm 62 (pure) / 86 (math), skin 3601/3577 (§S3.6).
         # previous: pure-python 49fcc725984aec75, mathutils e9692d34c0dde938)
-        "digest": {"pure-python": "8b74b578adb1755b",
-                   "mathutils": "ad377832122c78c3"},
+        # (H-TT1 — docs/TORSO_TRANSITIONS_01.md §4, implementado após gate
+        # visual NEGATIVO do TORSO B: loft deixa de ser linear por troços —
+        # anéis densos por PCHIP (C¹, monotona, sem overshoot) dos CAMINHOS
+        # DOS PONTOS das estações (interp de parâmetros incha os cantos, +18 mm
+        # medidos na T1 §7.2).  +25 anéis = +400 verts/faces; estação perineal
+        # nova (H-TT1: o PCHIP alargava anca→virilha e o tronco atravessava as
+        # pernas); recalibração das amplitudes (a malha densa realiza os campos
+        # por inteiro: mama 1.20→0.86, lombar 0.0215→0.0202, sacro
+        # 0.0240→0.0222, cifose 0.740→0.700, infra 0.550→0.540, wf 0.905→0.912).
+        # P1–P12: 11/11 na banda pela primeira vez (P10 232 ✓, era 242).
+        # previous: pure-python 8b74b578adb1755b, mathutils ad377832122c78c3)
+        "digest": {"pure-python": "70437b0bcc3a90f5",
+                   "mathutils": "625a96991cc38bd0"},
     },
 }
 
@@ -80,9 +91,9 @@ PINS = {
 # (6307 vs 6309): o corte é dirigido pela anatomia e 2 faces do `neon_idol`
 # caem do lado oposto da janela da boca (medido, doc S4_FACE §10).
 PRESET_COUNTS = {
-    "cyber_angel": (6483, 6389, 2800),     # TORSO B: +16/+16 (neon: +16/+16)
-    "neon_idol": (6485, 6391, 3200),
-    "realistic_female": (6483, 6389, 2400),
+    "cyber_angel": (6883, 6789, 2800),     # H-TT1: +400/+400 em todos
+    "neon_idol": (6869, 6775, 3200),  # −1 anel: duas estações a <3 mm fundem (dedup)
+    "realistic_female": (6883, 6789, 2400),
 }
 
 # post-weld audit, Blender-side (docs/S2_TOPOLOGY.md §4).
@@ -90,7 +101,7 @@ PRESET_COUNTS = {
 # no-ops on the default build (0 vertices removed, 0 edges collapsed), so the
 # audited mesh IS the built mesh and every defect counter reads 0.  Measured
 # identically in the mathutils (float32) and pure-python (float64) regimes.
-AUDIT_PINS = {"verts": 6483, "faces": 6389,
+AUDIT_PINS = {"verts": 6883, "faces": 6789,
               "non_manifold_edges": 0,
               "degenerate_faces": 0,
               "loose_edges": 0,
@@ -132,9 +143,9 @@ SEMANTIC_PINS = {
                 "cornea": 102, "enamel": 1400, "eye": 264,
                 "eyelid": 240, "gum": 196, "lip": 126,
                 "nail": 192, "nostril": 1, "oral": 127,
-                # TORSO B: skin +16 (a estação de cifose); knife-edge do
-                # ``palm`` em float32 (62 pure / 86 math, §S3.6).
-                "palm": 62, "scalp": 132, "skin": 3601,
+                # H-TT1: skin +400 (25 anéis PCHIP); knife-edge do ``palm``
+                # em float32 mantém-se (62 pure / 86 math, §S3.6).
+                "palm": 62, "scalp": 132, "skin": 4001,
                 "sole": 40
             },
             "groups": {
@@ -165,9 +176,8 @@ SEMANTIC_PINS = {
                 "cornea": 102, "enamel": 1400, "eye": 264,
                 "eyelid": 240, "gum": 196, "lip": 126,
                 "nail": 192, "nostril": 1, "oral": 127,
-                # TORSO B float32: 24 verts do palm/skin caem do outro lado do
-                # threshold (palm 86 / skin 3577) — knife-edge S3.6 reaberto.
-                "palm": 86, "scalp": 132, "skin": 3577,
+                # H-TT1 float32: knife-edge do palm mantém-se (86 / 3977).
+                "palm": 86, "scalp": 132, "skin": 3977,
                 "sole": 40
             },
             "groups": {

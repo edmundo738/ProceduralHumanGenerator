@@ -39,10 +39,10 @@ _K = 0.98965
 # uma gaussiana estreita morre no subsurf (medido, §7.2).  Pico zp ALTO
 # (sacro/ilíaca ~980 mm@1700), calibrado §7: bs@920 = −149, banda nádega
 # −6.0 (realização CC do pad ≈ 0.5 — medido).
-_SACRAL = {"z0": 0.4982, "zp": 0.5500, "z1": 0.6000, "amp": 0.0240,
+_SACRAL = {"z0": 0.4982, "zp": 0.5500, "z1": 0.6000, "amp": 0.0222,
            "xfull": 0.0233, "xzero": 0.0466}
 # lombar: pico em zp, cauda lateral gaussiana larga (σx).
-_LOMBAR = {"z0": 0.6035, "zp": 0.6434, "z1": 0.6928, "amp": 0.0215,
+_LOMBAR = {"z0": 0.6035, "zp": 0.6434, "z1": 0.6928, "amp": 0.0202,
            "sigmax": 0.0524}
 # costas altas: rampa z0→plat (ápice aplanado), cauda lateral estreita.
 _ALTA = {"z0": 0.7663, "plat": 0.7972, "z1": 0.8263, "amp": 0.0282,

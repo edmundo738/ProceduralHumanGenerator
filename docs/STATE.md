@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-09-30 (gate TORSO B NEGATIVO; TORSO TRANSITIONS 01 estudado) · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-09-30 (H-TT1 loft spline implementado; 11/11 guardrails) · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
@@ -162,6 +162,27 @@ INTERPOLADOR é o que tem de mudar. Hipóteses H-TT1..H-TT6 + plano ordenado
 (H-TT1 spline C² primeiro, zero parâmetros novos). Mama-assimetria e dobra
 glútea: linha média não discrimina (registado; cortes laterais na implementação).
 Painel: docs/head_phaseA/torso_transitions.png.
+
+## H-TT1 IMPLEMENTADO — loft spline C¹ (2026-09-30, docs/CHECKPOINT_TORSO_TT1.md)
+
+Passo 1 do plano TORSO_TRANSITIONS_01: `spline_rings` (PCHIP monótona, C¹, sem
+overshoot) dos CAMINHOS DOS PONTOS das estações substitui o loft linear +
+subdivide_rings (+25 anéis = +400 verts/faces → 6883/6789; digests pure
+`70437b0bcc3a90f5`/math `625a96991cc38bd0`). Interp de PARÂMETROS evitada (incha
+cantos +18 mm, T1 §7.2). Estação perineal NOVA (sem ela o PCHIP alargava
+anca→virilha e o tronco ATRAVESSAVA as pernas — componentes fundiam, banda `lo`
+do instrumento saltava 0.475→0.540). Recalibração: a malha densa REALIZA os
+campos por inteiro (gaiola dispersa amortecia ~30%) — mama 1.20→0.86, lombar
+0.0215→0.0202, sacro 0.0240→0.0222, cifose 0.740→0.700, infra 0.550→0.540,
+wf 0.905→0.912. **P1–P12: 11/11 na banda pela 1.ª VEZ (P10 232 ✓ — nunca
+tinha entrado; alavanca = estação de cifose, o máximo de profundidade é o ápice
+posterior z≈1305).** Transições: R1/R4/R5/R6 aproximam-se das refs (recessão
+submamária COMEÇA a existir, R5 0→2); extremos NAS estações mantêm-se (R9 3,
+R8 3 com dip @1260) — como previsto, fila H-TT2/TT4. 136 tests ✓, audit limpo.
+Bugs próprios apanhados: dedup em metros (apagava a grelha), anéis 0.2 mm.
+**Gate visual: PENDENTE** (renders + painéis + site). Fila: H-TT2 (sequências
+de estações → matar extremos R8/R9) → H-TT3 mama → H-TT4 sagital → H-TT5 ombro
+→ H-TT6 junções.
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 

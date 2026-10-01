@@ -410,10 +410,10 @@ class Anatomy:
         # TORSO B — ápice posterior da caixa torácica (cifose T7–T8; P3: refs
         # 1280–1335).  Interpolação linear entre estações NÃO cria máximos
         # interiores — o ápice precisa da SUA estação.
-        add(zf("bust") + 0.034 * s, chest * 0.870, chest * 0.740, sup=3.4,
+        add(zf("bust") + 0.034 * s, chest * 0.870, chest * 0.700, sup=3.4,
             fs=0.62, bs=1.00, y=0.002 * s)
         # inframammary / ribs — a frente recresce (costelas + epigástrio)
-        add(zf("inframammary"), chest * 0.845, chest * 0.550, sup=3.2, fs=0.82)
+        add(zf("inframammary"), chest * 0.845, chest * 0.540, sup=3.2, fs=0.82)
         # H2 (docs/H3H2_TRUNK.md) — a profundidade destas quatro estações deixa
         # de ser uma fração quase circular da meia-largura (0.82–0.86: prof./larg.
         # total 0.81–0.89) e passa a vir da razão ANSUR prof./larg. TOTAL:
@@ -426,7 +426,7 @@ class Anatomy:
         # TORSO B — cintura por RAZÃO (P7: refs waist/hip 0.63–0.66): wf≈0.905
         # sobre waist_half mantém a razão sem magrear os absolutos ANSUR (P18).
         # Barriga > lombar (P15: front_share refs 1.06–1.52).
-        wf = 0.905
+        wf = 0.912
         add(zf("waist"), waist * wf, depth_for(0.709, waist * wf, 1.12, 0.92),
             sup=2.0, fs=1.12, bs=0.92)
         # navel
@@ -436,6 +436,12 @@ class Anatomy:
         add(zf("hip_flare"), hip * 0.93, depth_for(0.52, hip * 0.93, 1.0, 0.98), sup=2.1, bs=0.98)
         # hip widest (trochanteric level)
         add(zf("hip"), hip, depth_for(0.52, hip, 1.0, 0.98), sup=2.05, y=-0.004 * s, bs=0.98)
+        # H-TT1 — estação de transição PERINEAL: sem ela, o PCHIP (tangente nula
+        # no máximo local da anca) alarga a passagem anca→virilha ~+12 mm a meio
+        # (medido: w@850 147→159) e o tronco atravessa os tubos das pernas
+        # (componentes fundem até z 991; a banda `lo` do instrumento saltava
+        # 0.475→0.540).  Âncora a transição no valor da interp linear anterior.
+        add(zf("hip") - 0.030 * s, hip * 0.76, hip * 0.365, sup=2.1, y=-0.007 * s, bs=0.99)
         # perineum cap
         add(zf("crotch"), hip * 0.52, hip * 0.40, sup=2.2, y=-0.010 * s)
         return secs

@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 9526c6cb06bc9635 · faseA 8649f5e671276b92 · a2b c57e9cbd19cebef0 · n1 041a538e215b1a7f · f1 df25d7b6db48c370 · f2 cdc1996498342cdd · t1 25cafb179b04ed34",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 567028d2a472d879 · faseA 4c6e70e822c55783 · a2b 77c605b73cd18f75 · n1 25b7c510867a18e9 · f1 838fa5ba96031c6e · f2 fed1fac2790f7bbd · t1 8c6f568ccfbbe530",
  "variants": [
   {
    "id": "antes",
@@ -8,19 +8,19 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "8716b88…de08023",
-   "digest": "9526c6cb06bc9635",
+   "digest": "567028d2a472d879",
    "smooth": {
-    "verts": 100674,
-    "faces": 98696,
-    "quads": 98696,
-    "bytes": 4785776
+    "verts": 107074,
+    "faces": 105096,
+    "quads": 105096,
+    "bytes": 5092976
    },
    "cage": {
-    "verts": 6483,
-    "faces": 6389,
-    "quads": 5507,
-    "bytes": 227848,
-    "edges": 12818
+    "verts": 6883,
+    "faces": 6789,
+    "quads": 5907,
+    "bytes": 242248,
+    "edges": 13618
    },
    "desc": "cabeça original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g–op 174 vs 196–210, relação globo–órbita invertida."
   },
@@ -32,19 +32,19 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "642cb7f",
-   "digest": "8649f5e671276b92",
+   "digest": "4c6e70e822c55783",
    "smooth": {
-    "verts": 103024,
-    "faces": 102272,
-    "quads": 102272,
-    "bytes": 4928000
+    "verts": 109424,
+    "faces": 108672,
+    "quads": 108672,
+    "bytes": 5235200
    },
    "cage": {
-    "verts": 6532,
-    "faces": 6476,
-    "quads": 6140,
-    "bytes": 233344,
-    "edges": 12960
+    "verts": 6932,
+    "faces": 6876,
+    "quads": 6540,
+    "bytes": 247744,
+    "edges": 13760
    },
    "desc": "nova representação: casca fechada cubo-esfera 3456 quads cujo raio é o modelo de 6 massas R1 ajustado ao alvo médio das refs. Sem traços (por desenho da fase)."
   },
@@ -56,19 +56,19 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "5eb8c32",
-   "digest": "c57e9cbd19cebef0",
+   "digest": "77c605b73cd18f75",
    "smooth": {
-    "verts": 103024,
-    "faces": 102272,
-    "quads": 102272,
-    "bytes": 4927996
+    "verts": 109424,
+    "faces": 108672,
+    "quads": 108672,
+    "bytes": 5235196
    },
    "cage": {
-    "verts": 6532,
-    "faces": 6476,
-    "quads": 6140,
-    "bytes": 233340,
-    "edges": 12960
+    "verts": 6932,
+    "faces": 6876,
+    "quads": 6540,
+    "bytes": 247740,
+    "edges": 13760
    },
    "desc": "Fase A + canto mentoniano: união local com o envelope médio do queixo de 3 refs (frente do queixo + plano submental)."
   },
@@ -81,19 +81,19 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "3ad83da",
-   "digest": "041a538e215b1a7f",
+   "digest": "25b7c510867a18e9",
    "smooth": {
-    "verts": 103024,
-    "faces": 102272,
-    "quads": 102272,
-    "bytes": 4927992
+    "verts": 109424,
+    "faces": 108672,
+    "quads": 108672,
+    "bytes": 5235192
    },
    "cage": {
-    "verts": 6532,
-    "faces": 6476,
-    "quads": 6140,
-    "bytes": 233340,
-    "edges": 12960
+    "verts": 6932,
+    "faces": 6876,
+    "quads": 6540,
+    "bytes": 247736,
+    "edges": 13760
    },
    "desc": "A2b + pescoço superior (anéis trunk.2/3) calibrado para o perfil médio das refs. Só 32 vértices do corpo mudam."
   },
@@ -106,19 +106,19 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "2d6039f",
-   "digest": "df25d7b6db48c370",
+   "digest": "838fa5ba96031c6e",
    "smooth": {
-    "verts": 557300,
-    "faces": 556544,
-    "quads": 556544,
-    "bytes": 26733148
+    "verts": 563700,
+    "faces": 562944,
+    "quads": 562944,
+    "bytes": 27040348
    },
    "cage": {
-    "verts": 34904,
-    "faces": 34892,
-    "quads": 34460,
-    "bytes": 1254692,
-    "edges": 69744
+    "verts": 35304,
+    "faces": 35292,
+    "quads": 34860,
+    "bytes": 1269088,
+    "edges": 70544
    },
    "desc": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓)."
   },
@@ -131,19 +131,19 @@
     "HCG_T1_AMP": "0"
    },
    "commit": "029063e",
-   "digest": "cdc1996498342cdd",
+   "digest": "fed1fac2790f7bbd",
    "smooth": {
-    "verts": 557300,
-    "faces": 556544,
-    "quads": 556544,
-    "bytes": 26733148
+    "verts": 563700,
+    "faces": 562944,
+    "quads": 562944,
+    "bytes": 27040348
    },
    "cage": {
-    "verts": 34904,
-    "faces": 34892,
-    "quads": 34460,
-    "bytes": 1254692,
-    "edges": 69744
+    "verts": 35304,
+    "faces": 35292,
+    "quads": 34860,
+    "bytes": 1269088,
+    "edges": 70544
    },
    "desc": "F2 = CONT1 + N1: orelha INTEGRADA — janela C¹ (smoothstep, valor e declive nulos no bordo) × colina recentrada no envelope medido das refs + relevo reforçado; K mantido (suprimi-lo custou relevo: turn 449° vs 462°). Turn da secção 462→619° (refs 571–993). Fora da orelha: máx 0.035 mm. 8/8 critérios intactos."
   },
@@ -155,21 +155,21 @@
     "HCG_NECK": "N1"
    },
    "commit": "4258f24",
-   "digest": "25cafb179b04ed34",
+   "digest": "8c6f568ccfbbe530",
    "smooth": {
-    "verts": 557300,
-    "faces": 556544,
-    "quads": 556544,
-    "bytes": 26733152
+    "verts": 563700,
+    "faces": 562944,
+    "quads": 562944,
+    "bytes": 27040348
    },
    "cage": {
-    "verts": 34904,
-    "faces": 34892,
-    "quads": 34460,
-    "bytes": 1254692,
-    "edges": 69744
+    "verts": 35304,
+    "faces": 35292,
+    "quads": 34860,
+    "bytes": 1269088,
+    "edges": 70544
    },
-   "desc": "TORSO B = F2 + tronco reconstruído (decisão C de TORSO_DECISION_01): tórax como sistema — estações estruturais (cifose T7–T8 NOVA, busto boxy costas-dominante, níveis mama 0.742/0.730 com bug +h·0.5 corrigido), mama = volume localizado sobre a parede, lóbulos glúteos, T1-lombar como andaime (janela ALTA off). 12/18 padrões na banda das refs (era ~2): P1 54.4 ✓ P2 −8 ✓ P3 1310 ✓ P4 1230 ✓ P5 64 ✓ P7 0.63 ✓ P8 0.80 ✓ P9 312 ✓ P11 198 ✓ P13 3.8 ✓ P15 1.19 ✓ P18 392 ✓(ANSUR). Fora: P10 242 (aproximação +2.5%), P14 1.10 (H-T2), P16 sulco (regressão declarada, fila T2/T4). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_B.md)."
+   "desc": "H-TT1 = TORSO B + loft SPLINE: o tronco deixa de ser C0 por troços — anéis densos por PCHIP (C¹, monotónica, sem overshoot) dos caminhos dos pontos das estações (a interpolação linear concentrava a curvatura nas estações = as 'lombas de estrada' medidas: R9 3 extremos vs 1 [1–1] das refs). Estação perineal nova (o PCHIP alargava anca→virilha e o tronco atravessava as pernas — corrigido). Amplitudes recalibradas para a malha densa (que agora realiza os campos por inteiro): mama 1.20→0.86, lombar, sacro, cifose, wf. P1–P12: 11/11 na banda pela PRIMEIRA vez (P10 232 ✓, era 242). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_TT1.md)."
   }
  ],
  "metrics": {
@@ -647,6 +647,14 @@
    "status": "info",
    "verdict": "12/18 padrões ✓ na banda das refs (era ~2); P10 aproximação; P16 regressão declarada; gate visual do dono: PENDENTE",
    "text": "Reconstrução estrutural (TORSO_STUDY_02 + TORSO_DECISION_01): estação de cifose T7–T8 nova, parede torácica boxy/costas-dominante, níveis da mama corrigidos (bug +h·0.5), mama = bump localizado, lóbulos glúteos laterais, cintura por razão wf 0.905, T1-ALTA off durante B. Calibração 7 its; P2/P10/P11 acoplados (P10 242 vs ≤236 = aproximação declarada). Pins 6483/6389; 136 tests ✓. RECONSTRUÇÃO: o commit B original perdeu-se num reset do sandbox antes do push; re-implementado dos parâmetros registados (10/11 métricas ao dígito, P11 198 vs 202 na banda). Regressões NÃO escondidas: sulco glúteo (amp lóbulos ↓; fila T2/T4), P14 1.10 (H-T2). docs/CHECKPOINT_TORSO_B.md.",
+   "variant": "t1"
+  },
+  {
+   "title": "H-TT1 — loft spline C¹ (transições)",
+   "commit": "8c6f568",
+   "status": "info",
+   "verdict": "P1–P12 11/11 na banda pela 1.ª vez (P10 232 ✓); +25 anéis PCHIP; gate visual: PENDENTE",
+   "text": "Resposta ao gate NEGATIVO do TORSO B ('a forma denuncia a construção procedural'): estudo TORSO_TRANSITIONS_01 mediu as ondas — 6/9 extremos a ≤18 mm das estações, R9 lombar 3 extremos vs 1 [1–1] das refs — e o mecanismo (loft LINEAR = C0 por troços). H-TT1: PCHIP dos caminhos dos pontos (interp de parâmetros incha os cantos +18 mm, T1 §7.2 — evitado), passagem exacta pelas estações, zero parâmetros novos de spec. Estação perineal (tronco atravessava as pernas com o PCHIP). Recalibração: a malha densa realiza os campos por inteiro (mama 1.20→0.86 etc.). Extremos NAS estações mantêm-se (R9) — H-TT2/TT4 na fila. 136 tests ✓; audit limpo.",
    "variant": "t1"
   }
  ]

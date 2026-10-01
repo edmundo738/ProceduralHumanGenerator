@@ -117,6 +117,98 @@ def make_section(center, tangent=(1, 0, 0), front=(0, 1, 0), *, width=0.1, depth
                    front_scale, back_scale, x_offset, y_offset, superellipse, roll, region)
 
 
+# --------------------------------------------------------------- H-TT1 splines
+def make_pchip(xs, ys):
+    """PCHIP — Hermite cúbica monótona (Fritsch–Carlson), C¹, passa pelos nós,
+    SEM overshoot: cada valor fica dentro do intervalo dos nós vizinhos.
+
+    H-TT1 (docs/TORSO_TRANSITIONS_01.md §3–§4): o loft entre anéis era LINEAR
+    (``mix(v0, v1, k/(K-1))``) ⇒ superfície C0 por troços; o Catmull-Clark
+    concentra a curvatura à volta das estações — o padrão "extremos nas
+    estações" medido no estudo (6/9 extremos a ≤18 mm de uma estação; R9
+    lombar 3 extremos vs 1 [1–1] das refs).
+    """
+    from bisect import bisect_right
+    xs = [float(x) for x in xs]
+    ys = [float(y) for y in ys]
+    n = len(xs)
+    if n == 0:
+        raise ValueError("make_pchip: sem nós")
+    if n == 1:
+        return lambda x: ys[0]
+    if n == 2:
+        slope = (ys[1] - ys[0]) / (xs[1] - xs[0])
+        return lambda x: ys[0] + slope * (x - xs[0])
+    d = [(ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]) for i in range(n - 1)]
+    m = [d[0]] + [0.0] * (n - 2) + [d[-1]]
+    for i in range(1, n - 1):
+        if d[i - 1] * d[i] <= 0.0:
+            m[i] = 0.0                      # extremo do dado: tangente nula (C¹)
+        else:
+            h0 = xs[i] - xs[i - 1]
+            h1 = xs[i + 1] - xs[i]
+            w1 = 2.0 * h1 + h0
+            w2 = h1 + 2.0 * h0
+            m[i] = (w1 + w2) / (w1 / d[i - 1] + w2 / d[i])
+    def f(x):
+        if x <= xs[0]:
+            return ys[0]
+        if x >= xs[-1]:
+            return ys[-1]
+        j = bisect_right(xs, x) - 1
+        if j >= n - 1:
+            j = n - 2
+        h = xs[j + 1] - xs[j]
+        t = (x - xs[j]) / h
+        t2 = t * t
+        t3 = t2 * t
+        return ((2 * t3 - 3 * t2 + 1) * ys[j] + (t3 - 2 * t2 + t) * h * m[j]
+                + (-2 * t3 + 3 * t2) * ys[j + 1] + (t3 - t2) * h * m[j + 1])
+    return f
+
+
+def spline_rings(rings, max_step):
+    """H-TT1 — anéis densos por PCHIP dos CAMINHOS DOS PONTOS.
+
+    Por cada índice do anel, x(z) e y(z) são PCHIP através do ponto homólogo
+    de cada estação (os anéis das estações partilham parametria: mesmo n, sem
+    roll); a grelha inclui os z das estações ⇒ passagem EXACTA pelas estações.
+    Interpolar os PONTOS (não os PARÂMETROS) evita re-avaliar superelipses,
+    que incha os cantos (+18 mm de profundidade no peito, medido na calibração
+    T1 §7.2 — docs/TORSO_STUDY_01.md).  Monotonia por componente ⇒ sem novos
+    extremos ENTRE estações e sem overshoot.
+
+    ``rings`` em qualquer ordem; devolve ordem DESCendente de z (o loft desce).
+    Zero parâmetros novos (só a densidade ``max_step``).
+    """
+    zs = [sum(p.z for p in r) / len(r) for r in rings]
+    order = sorted(range(len(rings)), key=lambda k: zs[k])
+    zs_asc = [zs[k] for k in order]
+    rings_asc = [rings[k] for k in order]
+    n = len(rings_asc[0])
+    paths = []
+    for i in range(n):
+        px = make_pchip(zs_asc, [r[i].x for r in rings_asc])
+        py = make_pchip(zs_asc, [r[i].y for r in rings_asc])
+        paths.append((px, py))
+    z0, z1 = zs_asc[0], zs_asc[-1]
+    grid = {round(z, 6) for z in zs_asc}
+    k = max(1, int((z1 - z0) / max_step))
+    for i in range(k + 1):
+        g = round(z0 + (z1 - z0) * i / k, 6)
+        # sem anéis quase duplicados: a grelha cede a menos de max_step/6
+        # (~3 mm) de uma estação (medido: estação 1224.0 + grelha 1224.2 →
+        # pares a 0.2 mm).  ATENÇÃO às unidades: z em METROS (o valor 3.0
+        # literal aqui apagava a grelha TODA — bug apanhado pela gaiola).
+        if all(abs(g - z) >= max_step / 6.0 for z in zs_asc):
+            grid.add(g)
+    out = []
+    for g in sorted(g for g in grid if z0 <= g <= z1):
+        out.append([Vector((px(g), py(g), g)) for px, py in paths])
+    out.reverse()
+    return out
+
+
 # ----------------------------------------------------------------------------- builder
 # ``cap_pole`` coloca o pólo a ``POLE_SCALE · r_médio`` do anel: é o ápice real
 # da superfície, por isso os geradores que precisam de respeitar uma medida

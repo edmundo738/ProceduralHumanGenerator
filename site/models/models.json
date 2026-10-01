@@ -6,19 +6,19 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "8716b88\u2026de08023",
-  "digest": "9526c6cb06bc9635",
+  "digest": "567028d2a472d879",
   "smooth": {
-   "verts": 100674,
-   "faces": 98696,
-   "quads": 98696,
-   "bytes": 4785776
+   "verts": 107074,
+   "faces": 105096,
+   "quads": 105096,
+   "bytes": 5092976
   },
   "cage": {
-   "verts": 6483,
-   "faces": 6389,
-   "quads": 5507,
-   "bytes": 227848,
-   "edges": 12818
+   "verts": 6883,
+   "faces": 6789,
+   "quads": 5907,
+   "bytes": 242248,
+   "edges": 13618
   }
  },
  {
@@ -29,19 +29,19 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "642cb7f",
-  "digest": "8649f5e671276b92",
+  "digest": "4c6e70e822c55783",
   "smooth": {
-   "verts": 103024,
-   "faces": 102272,
-   "quads": 102272,
-   "bytes": 4928000
+   "verts": 109424,
+   "faces": 108672,
+   "quads": 108672,
+   "bytes": 5235200
   },
   "cage": {
-   "verts": 6532,
-   "faces": 6476,
-   "quads": 6140,
-   "bytes": 233344,
-   "edges": 12960
+   "verts": 6932,
+   "faces": 6876,
+   "quads": 6540,
+   "bytes": 247744,
+   "edges": 13760
   }
  },
  {
@@ -52,19 +52,19 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "5eb8c32",
-  "digest": "c57e9cbd19cebef0",
+  "digest": "77c605b73cd18f75",
   "smooth": {
-   "verts": 103024,
-   "faces": 102272,
-   "quads": 102272,
-   "bytes": 4927996
+   "verts": 109424,
+   "faces": 108672,
+   "quads": 108672,
+   "bytes": 5235196
   },
   "cage": {
-   "verts": 6532,
-   "faces": 6476,
-   "quads": 6140,
-   "bytes": 233340,
-   "edges": 12960
+   "verts": 6932,
+   "faces": 6876,
+   "quads": 6540,
+   "bytes": 247740,
+   "edges": 13760
   }
  },
  {
@@ -76,19 +76,19 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "3ad83da",
-  "digest": "041a538e215b1a7f",
+  "digest": "25b7c510867a18e9",
   "smooth": {
-   "verts": 103024,
-   "faces": 102272,
-   "quads": 102272,
-   "bytes": 4927992
+   "verts": 109424,
+   "faces": 108672,
+   "quads": 108672,
+   "bytes": 5235192
   },
   "cage": {
-   "verts": 6532,
-   "faces": 6476,
-   "quads": 6140,
-   "bytes": 233340,
-   "edges": 12960
+   "verts": 6932,
+   "faces": 6876,
+   "quads": 6540,
+   "bytes": 247736,
+   "edges": 13760
   }
  },
  {
@@ -100,19 +100,19 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "2d6039f",
-  "digest": "df25d7b6db48c370",
+  "digest": "838fa5ba96031c6e",
   "smooth": {
-   "verts": 557300,
-   "faces": 556544,
-   "quads": 556544,
-   "bytes": 26733148
+   "verts": 563700,
+   "faces": 562944,
+   "quads": 562944,
+   "bytes": 27040348
   },
   "cage": {
-   "verts": 34904,
-   "faces": 34892,
-   "quads": 34460,
-   "bytes": 1254692,
-   "edges": 69744
+   "verts": 35304,
+   "faces": 35292,
+   "quads": 34860,
+   "bytes": 1269088,
+   "edges": 70544
   }
  },
  {
@@ -124,19 +124,19 @@
    "HCG_T1_AMP": "0"
   },
   "commit": "029063e",
-  "digest": "cdc1996498342cdd",
+  "digest": "fed1fac2790f7bbd",
   "smooth": {
-   "verts": 557300,
-   "faces": 556544,
-   "quads": 556544,
-   "bytes": 26733148
+   "verts": 563700,
+   "faces": 562944,
+   "quads": 562944,
+   "bytes": 27040348
   },
   "cage": {
-   "verts": 34904,
-   "faces": 34892,
-   "quads": 34460,
-   "bytes": 1254692,
-   "edges": 69744
+   "verts": 35304,
+   "faces": 35292,
+   "quads": 34860,
+   "bytes": 1269088,
+   "edges": 70544
   }
  },
  {
@@ -147,19 +147,19 @@
    "HCG_NECK": "N1"
   },
   "commit": "4258f24",
-  "digest": "25cafb179b04ed34",
+  "digest": "8c6f568ccfbbe530",
   "smooth": {
-   "verts": 557300,
-   "faces": 556544,
-   "quads": 556544,
-   "bytes": 26733152
+   "verts": 563700,
+   "faces": 562944,
+   "quads": 562944,
+   "bytes": 27040348
   },
   "cage": {
-   "verts": 34904,
-   "faces": 34892,
-   "quads": 34460,
-   "bytes": 1254692,
-   "edges": 69744
+   "verts": 35304,
+   "faces": 35292,
+   "quads": 34860,
+   "bytes": 1269088,
+   "edges": 70544
   }
  }
 ]
