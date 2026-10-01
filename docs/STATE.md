@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-09-30 (H-TT1 loft spline implementado; 11/11 guardrails) · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-10-01 (modo A activado; SWEEP 01 mama pronto para gate) · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
@@ -183,6 +183,23 @@ Bugs próprios apanhados: dedup em metros (apagava a grelha), anéis 0.2 mm.
 **Gate visual: PENDENTE** (renders + painéis + site). Fila: H-TT2 (sequências
 de estações → matar extremos R8/R9) → H-TT3 mama → H-TT4 sagital → H-TT5 ombro
 → H-TT6 junções.
+
+## MODO A ACTIVADO (decisão do dono 2026-10-01): busca guiada pelos olhos do dono
+
+Após declaração honesta de limites do agente (cegueira visual raiz; memória com
+perdas; viés optimista; vocabulário de representação limitado), o dono decidiu:
+**A dominante** (loop invertido: agente gera variantes de UMA região → dono
+escolhe/rankinga em folhas padronizadas com grelha → agente mede as diferenças
+e aprende a função perceptual do dono), B (grelhas A–H × 1–8) suporte, C
+(paradigma de representação) decidido com dados de ≥2 sweeps, D (expectativas
+honestas: alvo = "convence à primeira vista na maioria das vistas") registada.
+
+**SWEEP 01 MAMA pronto para o gate** (docs/SWEEP_01_BREAST.md): 8 variantes
+V0–V7 (só a mama muda; V0 = H-TT1 digest exacto 8c6f568ccfbbe530) + 2 refs,
+3 vistas (frente/3-4/perfil), folhas sweep_breast_*.png com grelha; gancho
+HCG_BREAST (instrumento por chamada, default = H-TT1; vencedor vira default
+calibrado — sem flags de spec). Protocolo de resposta no doc §3 (ranking +
+células p.ex. "V3 perfil C4"). 30/30 tiles verificados numericamente.
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 

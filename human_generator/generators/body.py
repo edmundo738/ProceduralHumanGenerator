@@ -10,7 +10,9 @@ the *merged* cage so junctions deform coherently.
 """
 from __future__ import annotations
 
+import json
 import math
+import os as _os
 from dataclasses import dataclass, field
 
 from ..core._math import Vector
@@ -20,6 +22,23 @@ from ..core.rng import Rng
 from .hands import build_hand
 from .feet import build_foot
 from .back_curve import apply_sagittal_back
+
+
+def _breast_params() -> dict:
+    """SWEEP modo A (docs/SWEEP_01_BREAST.md) — gancho de busca da mama.
+
+    Default = valores calibrados H-TT1 (digest-pinados; NÃO mudar sem re-medir).
+    ``HCG_BREAST='{"amp": 0.86, ...}'`` sobrepõe POR CHAMADA (instrumento A/B
+    como HCG_T1_AMP; lido a cada build).  NÃO é parâmetro de spec (directriz
+    "sem variável por descoberta"): os vencedores dos sweeps tornam-se os novos
+    defaults calibrados, não flags permanentes.
+    """
+    p = {"amp": 0.86, "sx": 0.048, "sy": 0.040, "sz": 0.055,
+         "cy": 0.008, "cz": -0.010, "dirz": -0.18}
+    raw = _os.environ.get("HCG_BREAST", "")
+    if raw:
+        p.update(json.loads(raw))
+    return p
 
 
 @dataclass
@@ -110,13 +129,16 @@ def build_body(spec, anat, *, ring_n: int = 16, include_hands: bool = True,
     mus = spec.body.muscle_tone
     stack = DeformStack()
 
-    # TORSO B — mama = VOLUME LOCALIZADO sobre a parede torácica (a parede é
-    # das estações; o bump é a mama).  Amp 1.20·bust_protrusion, σ em estatura.
+    # TORSO B/H-TT1 — mama = VOLUME LOCALIZADO sobre a parede torácica (a
+    # parede é das estações; o bump é a mama).  Parâmetros via _breast_params()
+    # (default H-TT1; gancho de sweep HCG_BREAST — modo A, ver docstring).
+    bp = _breast_params()
     for tag in ("L", "R"):
         c = Vector(lm[f"bust.{tag}"])
-        stack.bump(c + Vector((0, 0.008 * s, -0.010 * s)),
-                   anat.bust_protrusion() * 0.86, sigma=(0.048 * s, 0.040 * s, 0.055 * s),
-                   direction=Vector((0, 1, -0.18)))
+        stack.bump(c + Vector((0, bp["cy"] * s, bp["cz"] * s)),
+                   anat.bust_protrusion() * bp["amp"],
+                   sigma=(bp["sx"] * s, bp["sy"] * s, bp["sz"] * s),
+                   direction=Vector((0, 1, bp["dirz"])))
     # TORSO B — glúteos = LÓBULOS LATERAIS (P16: refs 7–26 mm de sulco);
     # âncoras próprias em ±0.60·hip_half (não o landmark iliac).
     for tag in ("L", "R"):

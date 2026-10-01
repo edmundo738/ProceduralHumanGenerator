@@ -475,6 +475,21 @@
    "caption": "κ(z) do perfil posterior (transições/quebras de plano). Instrumento limitado pela quantização dos cortes (5 mm) — comparação visual; a métrica de transições fica como gap G3. Painel 4."
   },
   {
+   "src": "sweep_breast_front.png",
+   "title": "SWEEP 01 MAMA (modo A) — frente",
+   "caption": "Busca guiada pelo dono: 8 variantes da mama (só a mama muda; resto = H-TT1) + 2 refs, grelha A–H × 1–8 para apontar. O dono rankinga; o agente mede o que distingue as escolhas. docs/SWEEP_01_BREAST.md."
+  },
+  {
+   "src": "sweep_breast_q.png",
+   "title": "SWEEP 01 MAMA (modo A) — 3/4",
+   "caption": "Vistas 3/4 das mesmas variantes V0–V7 + refs (real005, femalebase)."
+  },
+  {
+   "src": "sweep_breast_side.png",
+   "title": "SWEEP 01 MAMA (modo A) — perfil",
+   "caption": "Vistas de perfil das mesmas variantes: polo superior/inferior, saliência, implantação."
+  },
+  {
    "src": "renders_T1_vs_refs.png",
    "title": "TORSO T1 — costas em S: nós vs refs (mesma câmara)",
    "caption": "Frente, ¾, lado e costas do tronco: ours T1 (curva S, braços caídos) e as refs (femalebase/femalechar/bodytopo/real005; T/A-pose). IoU lado 0.67–0.75 vs ref↔ref 0.69. A/B medido (amp0→amp1): lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação do dono: NEGATIVA por agora (docs/TORSO_STUDY_01.md §7)."
