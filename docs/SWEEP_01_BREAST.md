@@ -53,6 +53,22 @@ O agente então: mede escolhidas vs rejeitadas (P5/P10/R4/R5 + contornos),
 promove o vencedor a default (commit + digests), e regista o APRENDIDO
 (ex.: "o dono prefere base larga + polo inferior curto") para os próximos sweeps.
 
+## 3.5 RESULTADO DO GATE (2026-10-01): NÃO APROVADO — veredicto e causa
+
+**Diagnóstico do dono/analista (OBSERVED, resumo; íntegra na sessão):** V0–V7
+visualmente indistinguíveis; mama não lê como volume (linha/sombra); ombro =
+aba/parábola pontiaguda; tórax caixa suavizada; abdómen em ondas; costas em
+lombas; glúteo triangular/"boca"; refs muito superiores em continuidade.
+"Nao interpretar variantes/parâmetros/métricas como evidência de melhoria
+visual."
+
+**Verificação numérica (docs/MECHANISM_AUDIT_01.md):** parâmetros NÃO anulados
+(saliências 42–58 mm, Δ 6–12 mm vs V0, digests reproduzidos) — mas sub-limiar
+visual a zoom de corpo inteiro e a base nem é mama legível. Confundidores
+eliminados por medição: cabelo (não desce de z≈1455), grelha abdominal
+(inactiva, mus 0.45). Controlo negativo N0 construído a posteriori.
+**Nenhuma variante promovida.** Painel zoom: sweep_breast_zoom.png.
+
 ## 4. Estado
 
 - Folhas geradas (front/q/side, 10 tiles cada, grelha A–H × 1–8): prontas para

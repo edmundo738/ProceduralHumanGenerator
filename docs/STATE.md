@@ -1,6 +1,6 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-10-01 (modo A activado; SWEEP 01 mama pronto para gate) · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-10-01 (gate SWEEP 01 NEGATIVO; MECHANISM AUDIT 01; decisão C aguarda gate) · branch `arena/01a0d51d-proceduralhumangenerator`
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
@@ -200,6 +200,25 @@ V0–V7 (só a mama muda; V0 = H-TT1 digest exacto 8c6f568ccfbbe530) + 2 refs,
 HCG_BREAST (instrumento por chamada, default = H-TT1; vencedor vira default
 calibrado — sem flags de spec). Protocolo de resposta no doc §3 (ranking +
 células p.ex. "V3 perfil C4"). 30/30 tiles verificados numericamente.
+
+## GATE SWEEP 01: NÃO APROVADO (2026-10-01) + MECHANISM AUDIT 01 FEITO
+
+Veredicto do dono: V0–V7 indistinguíveis; mama não lê como volume; linguagem de
+forma mecânica (aba no ombro, lombas, ondas, glúteo "boca"). Verificação:
+parâmetros actuam (saliência 42–58mm, Δ 6–12mm) mas sub-limiar visual; cabelo e
+grelha abdominal ELIMINADOS como confundidores (medidas); controlo negativo N0
+adicionado. **MECHANISM_AUDIT_01.md**: cada defeito OBSERVED→mecanismo→medida —
+ombro: largura 109→219mm em 32mm de z (gaiola); mama: gaussiana = vocabulário
+insuficiente (9 características visíveis vs 4+3 DOF; amplitude JÁ comparável às
+refs — falta FORMA); costas: zigzag de profundidades + planaltos PCHIP (R9 3
+extremos, 2 nas estações); glúteo: lóbulos σx 55mm não cobrem o centro → canal
+(peso e^−(116/55)²≈0.01) = "boca". Protocolo modo A corrigido (variantes de
+REPRESENTAÇÃO quando a base está em causa; zoom à região; controlo negativo;
+números Δ com cada folha). **Decisão C formulada com evidência: C1 refinamento /
+C2 híbrido (estações + volumes próprios p/ mama-glúteo-ombro) / C3 camadas —
+RECOMENDAÇÃO C2** (preserva o que funciona, substitui os mecanismos que
+produzem a aparência artificial). AGUARDA GATE do dono (C1/C2/C3).
+Painel novo: docs/head_phaseA/sweep_breast_zoom.png (N0/V0/V5/V6/V7 + refs).
 
 ## Contabilidade técnica (METHOD: nenhum achado é apagado)
 

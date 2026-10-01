@@ -490,6 +490,11 @@
    "caption": "Vistas de perfil das mesmas variantes: polo superior/inferior, saliência, implantação."
   },
   {
+   "src": "sweep_breast_zoom.png",
+   "title": "SWEEP 01 MAMA — ZOOM peito (pós-gate)",
+   "caption": "Resposta ao gate NEGATIVO: zoom 620mm com controlo N0 (mama OFF = parede nua), V0/V5/V6/V7 e refs. Verificação numérica: variantes diferem 6-12mm (real mas sub-limiar a corpo inteiro); a mama é um inchaço difuso, não volume — evidência para a decisão C2 (docs/MECHANISM_AUDIT_01.md)."
+  },
+  {
    "src": "renders_T1_vs_refs.png",
    "title": "TORSO T1 — costas em S: nós vs refs (mesma câmara)",
    "caption": "Frente, ¾, lado e costas do tronco: ours T1 (curva S, braços caídos) e as refs (femalebase/femalechar/bodytopo/real005; T/A-pose). IoU lado 0.67–0.75 vs ref↔ref 0.69. A/B medido (amp0→amp1): lombar 26.9→45.3 ✓; nádega-vs-torácica +12→−6.0 ✓; costas altas −38→−26.0 ✓; larguras Δ0.0. Validação do dono: NEGATIVA por agora (docs/TORSO_STUDY_01.md §7)."
