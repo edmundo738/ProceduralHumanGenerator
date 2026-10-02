@@ -500,6 +500,16 @@
    "caption": "MANDATO RND · docs/BREAST_C2_01.md. Causa-raiz do SWEEP 01 corrigida: o cage 16pts não tinha vértices na mama (uma aresta atravessava x 30-75 — 'linha-não-volume'); _densify_front insere pontos colineares (parede intacta) e o campo C2 forma volume. Especificação v3 (instrumento plane_scan v3.2): swB2 EM BANDA refs — gap 17 (refs 7-34), base 54 (58-90), prega 38 (21-79), f@1350 24 (22-27), ápice x 69 (69-71). Painel: 3 refs + N0 (parede) + V0 (H-TT1) + B2 (C2) × frente/¾/perfil. GATE do dono pendente."
   },
   {
+   "src": "e1_gate.png",
+   "title": "E1 REMAKE — MICRO-GATE: mama como VOLUME (SDF)",
+   "caption": "docs/REMAKE_01.md §8. Corpo modelado como função de distância: parede = loft polar suave das estações (resolução infinita, sem anéis) ∪ lóbulos mamários teardrop (união suave) − fossa clavicular; malha por marching cubes. Spec 7/7 em banda (ápice (69,94,1250), gap 21.8, prega 36.2, f1350 27.7, barriga −1.2) — 1.ª vez. Rig numpy IDÊNTICO em todos os tiles (Blender/EGL crasha neste sandbox): E1→real005 ΔL1 0.145 < baseline ref↔ref 0.169. Controlo E1N (sem lóbulos) incluído. GATE: 'E1 lê como volume?'"
+  },
+  {
+   "src": "e1_gate_side.png",
+   "title": "E1 REMAKE — perfil (projeção da mama)",
+   "caption": "Perfil 660mm: real005 vs B2 (campo) vs E1 (volumes). Costas ainda sem curva S (é o estágio E2 — esperado)."
+  },
+  {
    "src": "breast_c2_torso.png",
    "title": "BREAST C2 — corpo-torso (contexto)",
    "caption": "As mesmas fontes em vista corpo-torso (ortho 1.06): B2 vs V0 vs N0 vs refs — integração da mama estruturada no conjunto, peito superior recuado (f@1350 24 vs 50 do V0) e barriga plana (barriga-peito -6.7, banda refs -7..+9)."
