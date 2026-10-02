@@ -1,6 +1,22 @@
 # STATE — estado do HCG (entrada para qualquer agente/desenvolvedor)
 
-Última atualização: 2026-10-01 (MANDATO RND activo; BREAST_C2_01 protótipo pronto — gate visual do dono pendente; 15.ª recriação do sandbox recuperada, digests reproduzem) · branch `arena/01a0d51d-proceduralhumangenerator`
+Última atualização: 2026-10-02 (veredicto do dono: mama continua LINHA, nada no corpo realista além de cabeça/pescoço → DECISÃO: REMAKE do corpo do zero — docs/REMAKE_01.md; spike SDF mede a razão) · branch `arena/01a0d51d-proceduralhumangenerator`
+
+## REMAKE_01 — decisão do dono (3 opções) → agente escolhe 3 (2026-10-02)
+
+Veredicto OBSERVED: "a mama continua uma linha; nada está bom ou perto; nada
+no corpo além da cabeça e por consequência o pescoço é realista". Gates do
+corpo: 0/4 aprovados. **Decisão: REMAKE do CORPO do zero** (docs/REMAKE_01.md)
+— mantém cabeça/pescoço validados, pipeline, instrumentos, refs, specs,
+MANDATO/OPERATING_MODE/modos A-D. Morre: estações+superelipse+campos como
+caminho de realismo (fica como baseline). Arquitectura nova [HYPOTHESIS]:
+união suave de volumes anatómicos SDF (tórax, mamas, glúteo, ombros) com
+parâmetros de relações. **Razão medida (spike, MEASURED)**: contraste local
+de sombreado na caixa da mama: refs 0.040–0.043 | B2 0.029 (abaixo da banda —
+olho do dono confirmado) | **SDF volume 0.208** (volume ⇒ estrutura legível;
+calibração futura). Geometria do spike em banda (gap 23, prega, ápice 99).
+Protocolo anti-erro (7 regras) + estágios E1–E5 com micro-gates em
+REMAKE_01.md. Próximo: E1 (tórax+mama frontal SDF) com gate barato cedo.
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
