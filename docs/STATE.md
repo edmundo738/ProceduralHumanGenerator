@@ -17,6 +17,14 @@ olho do dono confirmado) | **SDF volume 0.208** (volume ⇒ estrutura legível;
 calibração futura). Geometria do spike em banda (gap 23, prega, ápice 99).
 Protocolo anti-erro (7 regras) + estágios E1–E5 com micro-gates em
 REMAKE_01.md. Próximo: E1 (tórax+mama frontal SDF) com gate barato cedo.
+**E1 EXECUTADO no mesmo dia** (REMAKE_01 §8): SDF loft polar suave das
+estações + lóbulos teardrop smin + fossa clavicular; marching cubes 1.5mm.
+Spec 7/7 em banda (ápice (69,94,1250), gap 21.8, prega 36.2, f1350 27.7,
+barriga −1.2 — 1.ª vez; B2 tinha base fora). Imagem (rig numpy comum —
+Blender/EGL crasha neste sandbox, caveat no doc): E1→real005 ΔL1 0.145 <
+baseline ref↔ref 0.169 (1.ª vez dentro do spread); controlo limpo E1/E1N
+0.046. Painéis e1_gate.png / e1_gate_side.png — **MICRO-GATE do dono
+pendente**.
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 

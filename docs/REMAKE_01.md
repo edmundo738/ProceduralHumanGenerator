@@ -109,3 +109,42 @@ O spike demonstra a razão de ordem de grandeza, não o sucesso final. A
 calibração de smooth-union/luz/prega pode ainda falhar o gate — os
 micro-gates baratos dizem-no em horas, não em semanas. Sem promessa de
 prazo; promessa de medição honesta a cada passo.
+
+## 8. E1 EXECUTADO (2026-10-02) — tórax + mama volumétricos [MEASURED]
+
+Implementação (tools/refstudy/e1_body.py): corpo = FUNÇÃO DE DISTÂNCIA —
+parede torácica = loft polar SUAVE (PCHIP) das mesmas 16 estações (resolução
+infinita, sem anéis, sem subsurf) ∪ 2 lóbulos mamários teardrop (elipsoide
+rz superior 78 / inferior 62 mm, tilt −20°, yaw 5°, smin k=28 mm) − fossa
+clavicular (elipsoide subtractivo, smax k=30). Malha: marching cubes 1.5 mm
+(412k verts). Controlo E1N: sem lóbulos (raw_e1n.npz).
+
+**Especificação (instrumento plane_scan v3.2, frame mm@1700) — 7/7 em banda
+(1.ª vez; o B2 tinha base 54 fora):**
+
+| métrica | E1 | banda refs |
+|---|---|---|
+| ápice (x,y,z) | (69, 94, 1250) | x 69–71 · y 79–97 · z 1214–1266 |
+| esterno | 72.6 | 58–89 |
+| gap | 21.8 | 7–34 |
+| prega (prominência) | 36.2 | 21–79 |
+| f@1350 | 27.7 | 22–27 |
+| barriga−peito | −1.2 | −7..+9 |
+
+**Imagem (rig numpy — MESMO rig em todos; ver caveat):**
+contraste local caixa da mama: refs 0.099–0.104 · parede E1N 0.075 ·
+**E1 0.087** · B2 0.100. ΔL1: **E1→real005 0.145 < baseline ref↔ref 0.169**
+(1.ª vez dentro do spread; B2→real005 0.164). Controlo limpo E1 vs E1N
+(só lóbulos) = 0.046 — a diferença APARECE no render. (B2 vs N0 0.119 não é
+controlo limpo: inclui prato esterno + cage.)
+
+**Caveat honesto:** o Blender 5.0.1 deste sandbox crasha em epoxy/EGL mesmo
+em Cycles CPU → o rig passou a numpy (Lambert 2 luzes, mesmas constantes do
+build_scene) aplicado a TODOS os tiles. Rig numpy = normais por gradiente =
+MAIS duro/sensível que o Cycles dos painéis anteriores (amplifica diferenças
+de declive). Os números acima são INTERNOS ao rig (comparação válida entre
+si); NÃO comparar com os ΔL1 do painel Cycles. O gate é o olho do dono:
+docs/head_phaseA/e1_gate.png (frontal) + e1_gate_side.png (perfil).
+
+**Estado: micro-gate E1 pendente (dono).** Se aprovado: E2 (perfil/costas —
+curva S no loft SDF + zigzag), E3 (glúteo/ombro), E4 integração, E5 variação.
