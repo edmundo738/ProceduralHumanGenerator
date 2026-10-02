@@ -245,8 +245,12 @@ Sagital do lobo rastreia real005 quase paralelo. Digests: N0
 0437cc4ce71c49b2, B2 2ea834f946c214ad, V0-rebuild 9ed92eee38c0ee3d;
 **default actual (com fs/bs H-TT2-parcial, não-gated) = ee588326c69b1f8d**
 (H-TT1 histórico pré-fs/bs = 70437b0bcc3a90f5); P1–P12 por re-medir antes de
-qualquer promoção. **AGUARDA GATE VISUAL do dono** (painéis
-breast_c2_{zoom,torso}.png, modo A). Fila: gate → base 54→58+ → estações F/B
+qualquer promoção. **GATE VISUAL do dono: NEGATIVO** (2026-10-02, "não vi diferença, está
+sempre mal") — confirmado numericamente: B2 vs V0 frente = 0.1% silhueta /
+2.5 níveis; B2 vs parede nua = 0.9 níveis (a mama é volume em profundidade,
+invisível na frontal com luz plana; só o perfil mexe 13.2). A mama era 1 de
+4 mecanismos auditados; dominadores frontais por reconstruir: ombro, costas,
+glúteo, proporções (BREAST_C2_01 §8). Fila: gate → base 54→58+ → estações F/B
 do esterno (coluna peito anterior, propriedade da parede).
 
 **15.ª recriação do sandbox (2026-10-01):** trabalho do dia perdeu-se ANTES

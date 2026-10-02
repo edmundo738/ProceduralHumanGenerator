@@ -169,3 +169,27 @@ estão real005 91 / femalechar 97).
 - Sandbox (15.ª recriação): apt bloqueado → libs X/GL satisfeitas com stubs
   em /usr/lib/x86_64-linux-gnu/stubs (LD_LIBRARY_PATH no headless_blender;
   Cycles CPU não usa GL real; 519 símbolos stubados).
+
+## 8. GATE VISUAL do dono: NEGATIVO — "não vi diferença, está sempre mal" (2026-10-02, OBSERVED)
+
+Verificação NUMÉRICA do painel (o olho do dono confirmado ao pixel):
+
+| comparação | silhueta frente | imagem c/ sombreado |
+|---|---|---|
+| B2 vs V0 | 134 px (0.1%), IoU 0.999 | ΔL1 2.5/255 |
+| **B2 vs N0 (mama vs parede nua!)** | 5 px (0.0%) | **ΔL1 0.9/255** |
+| V0 vs N0 | 133 px (0.1%) | ΔL1 3.6/255 |
+| baseline real005 vs femalebase | 2837 px (2.9%) | ΔL1 6.4/255 |
+| (perfil) B2 vs V0 | 7.9% | ΔL1 13.2 (baseline 19.4) |
+
+**Leitura honesta (classificação: MEASURED + OBSERVED):**
+1. As secções mudaram de verdade (§3), mas a mama é volume em PROFUNDIDADE —
+   não mexe a silhueta frontal, e com a luz plana do painel o sombreado le-se
+   a 1–3 níveis de cinza: INVISÍVEL na frente, modesta no perfil.
+2. O dono viu correctamente o que havia para ver. Risco de FALSE
+   IMPROVEMENT a nível VISUAL assumido: "em banda nas secções" ≠ "lê como
+   mama à primeira vista".
+3. Implicação estratégica: a mama NÃO é o dominador da primeira impressão
+   frontal. Os dominadores auditados continuam por reconstruir: ombro-aba
+   (109→219mm/32mm), costas-zigzag, glúteo-boca + proporções globais.
+   A mama era 1 de 4 mecanismos da "linguagem de forma mecânica".
