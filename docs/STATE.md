@@ -23,8 +23,15 @@ Spec 7/7 em banda (ápice (69,94,1250), gap 21.8, prega 36.2, f1350 27.7,
 barriga −1.2 — 1.ª vez; B2 tinha base fora). Imagem (rig numpy comum —
 Blender/EGL crasha neste sandbox, caveat no doc): E1→real005 ΔL1 0.145 <
 baseline ref↔ref 0.169 (1.ª vez dentro do spread); controlo limpo E1/E1N
-0.046. Painéis e1_gate.png / e1_gate_side.png — **MICRO-GATE do dono
-pendente**.
+0.046. Painéis e1_gate.png / e1_gate_side.png — **MICRO-GATE do dono pendente.**
+**GATE E1 (2026-10-06): NEGATIVO — "pior que V0, embrulhado, pescoço
+exagerado"** (REMAKE_01 §9): fragmento de tronco apresentado contra corpos
+completos (framing meu), rig numpy duro, aposta em arquitectura sem confirmação
+visual incremental. 5.º gate visual do corpo sem aprovação. REMAKE SUSPENSO;
+E2–E5 cancelados até decisão do dono: (A) base-mesh CC0 + morphs paramétricos
+(deixar de gerar geometria do zero — abordagem MakeHuman, nunca testada aqui),
+(B) congelar corpo em V0 + foco no produto (variação/pele/cabelo/poses/export),
+(C) pausa/encerrar.
 **Directriz BODY_SPEC_REMAKE (2026-10-06, do dono):** adoptada — anatomia
 funcional ("que estrutura produz este volume"), hierarquia N0–N4 com regra
 "nível seguinte nunca corrige anterior", transições como cidadãs de 1.ª

@@ -148,3 +148,27 @@ docs/head_phaseA/e1_gate.png (frontal) + e1_gate_side.png (perfil).
 
 **Estado: micro-gate E1 pendente (dono).** Se aprovado: E2 (perfil/costas —
 curva S no loft SDF + zigzag), E3 (glúteo/ombro), E4 integração, E5 variação.
+
+## 9. GATE E1: NEGATIVO — "uma porcaria, pior que o V0" (2026-10-06, OBSERVED)
+
+Veredicto do dono: E1 pior que V0; pescoço lê exagerado; "embrulhaste
+tudo"; "pegou tudo que tava horrível nos outros e piorou"; "antes no V0
+parecia que conseguias ver algo próximo; agora já não"; "está a complicar
+demais". Pergunta do dono: focar noutra coisa OU refazer tudo do zero?
+
+**Post-mortem honesto (minha autópsia, sem defesa):**
+1. **Framing enganador**: o E1 é um FRAGMENTO do tronco (z 833–1632, sem
+   cabeça/membros, tampas cegas nas pontas) apresentado ao lado de corpos
+   completos — a "tampa" no topo lê como pescoço balão. Erro meu de painel,
+   não do dono.
+2. **Rig numpy** (Lambert plano + normais por gradiente) faz a superfície
+   marching-cubes ler "embrulhada" — e eu sabia que era mais duro.
+3. **Erro estratégico**: investi em arquitectura (SDF) sem confirmar
+   visualmente com o dono um único volume à vez. Medir bem ≠ ler bem —
+   pela 5.ª vez.
+4. Resultado: 5 gates visuais do corpo (TORSO B, T1, SWEEP 01, B2, E1),
+   0 aprovados. **Evidência forte contra "gerar geometria de corpo do
+   zero" como caminho** — quer em estações+campos, quer em SDF.
+
+**Estado: REMAKE SUSPENSO. Decisão do dono pendente** (base-mesh+morphs /
+congelar em V0 + foco no produto / pausa). E2-E5 cancelados até decisão.
