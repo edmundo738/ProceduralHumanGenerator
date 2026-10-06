@@ -4,7 +4,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const $ = (s) => document.querySelector(s);
-const DATA = await (await fetch("data/data.json")).json();
+const DATA = await (await fetch(`data/data.json?v=${Date.now()}`)).json();
 
 // ------------------------------------------------------------------ tabs
 document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => {

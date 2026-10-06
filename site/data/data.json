@@ -450,6 +450,26 @@
  ],
  "renders": [
   {
+   "src": "e1_views.png",
+   "title": "E1 — MULTI-VISTA clay (frente/¾/perfil/costas)",
+   "caption": "BODY_SPEC_REMAKE §7: clay cinzento, câmara/luz/escala comuns. real005 · femalebase · V0 (antigo) · E1 (volumes SDF) × 4 vistas. Gate: 'lê como corpo?' — apontar zona (p.ex. 'E1 costas Z6')."
+  },
+  {
+   "src": "transition_kappa.png",
+   "title": "TRANSIÇÕES — κ(z) sagital: onde o corpo deixa de ser sistema",
+   "caption": "BODY_SPEC_REMAKE §4 executado: curvatura dos perfis sagitais (frente/costas) por zona anatómica. MEASURED: pescoço→ombro (Z1/Z4) = 4-7× refs em TODAS as versões (o pior breakpoint — 'ombro=conector mecânico'); E1 já 2× melhor em torácica→lombar; frente sub-curvada no abdómen→pelve. Alvos do E2 definidos por número."
+  },
+  {
+   "src": "e1_gate.png",
+   "title": "E1 REMAKE — MICRO-GATE: mama como VOLUME (SDF)",
+   "caption": "docs/REMAKE_01.md §8. Corpo modelado como função de distância: parede = loft polar suave das estações (resolução infinita, sem anéis) ∪ lóbulos mamários teardrop (união suave) − fossa clavicular; malha por marching cubes. Spec 7/7 em banda (ápice (69,94,1250), gap 21.8, prega 36.2, f1350 27.7, barriga −1.2) — 1.ª vez. Rig numpy IDÊNTICO em todos os tiles (Blender/EGL crasha neste sandbox): E1→real005 ΔL1 0.145 < baseline ref↔ref 0.169. Controlo E1N (sem lóbulos) incluído. GATE: 'E1 lê como volume?'"
+  },
+  {
+   "src": "e1_gate_side.png",
+   "title": "E1 REMAKE — perfil (projeção da mama)",
+   "caption": "Perfil 660mm: real005 vs B2 (campo) vs E1 (volumes). Costas ainda sem curva S (é o estágio E2 — esperado)."
+  },
+  {
    "src": "torso_system_panels.png",
    "title": "T-TORSO — painel COMPOSTO (4 painéis, gate visual do dono)",
    "caption": "Os 4 painéis do estudo do torso como sistema (TORSO_STUDY_02) numa imagem: sagital (refs vs nós), larguras normalizadas, contorno glúteo, curvatura. É o material de leitura visual para o checkpoint de decisão (TORSO_DECISION_01) — os números orientam, o gate visual do dono decide."
@@ -498,26 +518,6 @@
    "src": "breast_c2_zoom.png",
    "title": "BREAST C2 — ZOOM 660mm: protótipo estruturado (gate visual)",
    "caption": "MANDATO RND · docs/BREAST_C2_01.md. Causa-raiz do SWEEP 01 corrigida: o cage 16pts não tinha vértices na mama (uma aresta atravessava x 30-75 — 'linha-não-volume'); _densify_front insere pontos colineares (parede intacta) e o campo C2 forma volume. Especificação v3 (instrumento plane_scan v3.2): swB2 EM BANDA refs — gap 17 (refs 7-34), base 54 (58-90), prega 38 (21-79), f@1350 24 (22-27), ápice x 69 (69-71). Painel: 3 refs + N0 (parede) + V0 (H-TT1) + B2 (C2) × frente/¾/perfil. GATE do dono pendente."
-  },
-  {
-   "src": "e1_views.png",
-   "title": "E1 — MULTI-VISTA clay (frente/¾/perfil/costas)",
-   "caption": "BODY_SPEC_REMAKE §7: clay cinzento, câmara/luz/escala comuns. real005 · femalebase · V0 (antigo) · E1 (volumes SDF) × 4 vistas. Gate: 'lê como corpo?' — apontar zona (p.ex. 'E1 costas Z6')."
-  },
-  {
-   "src": "transition_kappa.png",
-   "title": "TRANSIÇÕES — κ(z) sagital: onde o corpo deixa de ser sistema",
-   "caption": "BODY_SPEC_REMAKE §4 executado: curvatura dos perfis sagitais (frente/costas) por zona anatómica. MEASURED: pescoço→ombro (Z1/Z4) = 4-7× refs em TODAS as versões (o pior breakpoint — 'ombro=conector mecânico'); E1 já 2× melhor em torácica→lombar; frente sub-curvada no abdómen→pelve. Alvos do E2 definidos por número."
-  },
-  {
-   "src": "e1_gate.png",
-   "title": "E1 REMAKE — MICRO-GATE: mama como VOLUME (SDF)",
-   "caption": "docs/REMAKE_01.md §8. Corpo modelado como função de distância: parede = loft polar suave das estações (resolução infinita, sem anéis) ∪ lóbulos mamários teardrop (união suave) − fossa clavicular; malha por marching cubes. Spec 7/7 em banda (ápice (69,94,1250), gap 21.8, prega 36.2, f1350 27.7, barriga −1.2) — 1.ª vez. Rig numpy IDÊNTICO em todos os tiles (Blender/EGL crasha neste sandbox): E1→real005 ΔL1 0.145 < baseline ref↔ref 0.169. Controlo E1N (sem lóbulos) incluído. GATE: 'E1 lê como volume?'"
-  },
-  {
-   "src": "e1_gate_side.png",
-   "title": "E1 REMAKE — perfil (projeção da mama)",
-   "caption": "Perfil 660mm: real005 vs B2 (campo) vs E1 (volumes). Costas ainda sem curva S (é o estágio E2 — esperado)."
   },
   {
    "src": "breast_c2_torso.png",
