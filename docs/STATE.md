@@ -25,6 +25,17 @@ Blender/EGL crasha neste sandbox, caveat no doc): E1→real005 ΔL1 0.145 <
 baseline ref↔ref 0.169 (1.ª vez dentro do spread); controlo limpo E1/E1N
 0.046. Painéis e1_gate.png / e1_gate_side.png — **MICRO-GATE do dono
 pendente**.
+**Directriz BODY_SPEC_REMAKE (2026-10-06, do dono):** adoptada — anatomia
+funcional ("que estrutura produz este volume"), hierarquia N0–N4 com regra
+"nível seguinte nunca corrige anterior", transições como cidadãs de 1.ª
+classe (C=f(d,θ,κ)), parametria em bandas, clay multi-vista, ε de assimetria
+controlado, loop de erro hierárquico Es→Ep→Ea→Ec→Ev. **Autópsia de
+transições EXECUTADA** (transition_report.py): Z1/Z4 pescoço→ombro = 4–7×
+refs em TODAS as versões (pior breakpoint; alvo E2 nº1); Z5/Z6 E1 2× melhor
+que V0 (loft suave funcionou); Z3 frente sub-curvada (10k vs refs 20–73k).
+Painéis novos: transition_kappa.png + e1_views.png (multi-vista clay 4
+vistas × 4 fontes). Alvos E2: cintura escapular/trapézio (volumes), curva
+lombar/sacral, arco costal→abdómen.
 Processo: ver `METHOD.md` (ciclo 16+1) e **`OPERATING_MODE.md` (novo, em vigor
 — leitura obrigatória)** e `DEVELOPMENT_AGREEMENT.md` (formato).
 
