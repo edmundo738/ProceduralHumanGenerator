@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 65864061cc204eb5 · w03 645527975e09613c · w05 ef1d7911355cc88a",
  "variants": [
   {
    "id": "antes",
@@ -170,6 +170,94 @@
     "edges": 70544
    },
    "desc": "H-TT1 = TORSO B + loft SPLINE: o tronco deixa de ser C0 por troços — anéis densos por PCHIP (C¹, monotónica, sem overshoot) dos caminhos dos pontos das estações (a interpolação linear concentrava a curvatura nas estações = as 'lombas de estrada' medidas: R9 3 extremos vs 1 [1–1] das refs). Estação perineal nova (o PCHIP alargava anca→virilha e o tronco atravessava as pernas — corrigido). Amplitudes recalibradas para a malha densa (que agora realiza os campos por inteiro): mama 1.20→0.86, lombar, sacro, cifose, wf. P1–P12: 11/11 na banda pela PRIMEIRA vez (P10 232 ✓, era 242). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_TT1.md)."
+  },
+  {
+   "id": "m00",
+   "label": "A·BASE (Female base CC0)",
+   "env": {
+    "HCG_BODY": "basemesh"
+   },
+   "commit": "basemesh-A.1",
+   "digest": "d6ce7b046f6a089a",
+   "desc": "A·BASE — fundação CC0 (Female base, 18577 verts) sem morphs; mama já em banda refs (gap 20.5). O ponto de partida do caminho A.",
+   "smooth": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891756
+   },
+   "cage": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891756
+   }
+  },
+  {
+   "id": "w02",
+   "label": "A·seed 202 (largo)",
+   "env": {
+    "HCG_BODY": "basemesh"
+   },
+   "commit": "basemesh-A.1",
+   "digest": "65864061cc204eb5",
+   "desc": "A·seed 202 (A.1 largas) — estatura 1607, cintura 209, WHR 0.67, mama+.",
+   "smooth": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891752
+   },
+   "cage": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891752
+   }
+  },
+  {
+   "id": "w03",
+   "label": "A·seed 303 (largo)",
+   "env": {
+    "HCG_BODY": "basemesh"
+   },
+   "commit": "basemesh-A.1",
+   "digest": "645527975e09613c",
+   "desc": "A·seed 303 (A.1 largas) — estatura 1566, cintura 194, anca 291: compacta.",
+   "smooth": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891756
+   },
+   "cage": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891756
+   }
+  },
+  {
+   "id": "w05",
+   "label": "A·seed 505 (largo)",
+   "env": {
+    "HCG_BODY": "basemesh"
+   },
+   "commit": "basemesh-A.1",
+   "digest": "ef1d7911355cc88a",
+   "desc": "A·seed 505 (A.1 largas) — estatura 1764, cintura 317, mama++: robusta.",
+   "smooth": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891756
+   },
+   "cage": {
+    "verts": 18577,
+    "faces": 37088,
+    "quads": 0,
+    "bytes": 891756
+   }
   }
  ],
  "metrics": {
@@ -449,6 +537,16 @@
   }
  ],
  "renders": [
+  {
+   "src": "basemesh_gen2.png",
+   "title": "CAMINHO A.1 — AMPLITUDES LARGAS: variação VISÍVEL (6 corpos)",
+   "caption": "Resposta ao gate A.0 ('diferenças microscópicas'): bandas 3x mais largas — estatura 1566-1792, cintura 194-317, WHR 0.67-0.97, mama/glúteo com amplitude. A fundação CC0 mantém a anatomia; os morphs agora LÊEM. Gate: 'qual alcance queres ao clicar?'"
+  },
+  {
+   "src": "basemesh_zoom2.png",
+   "title": "CAMINHO A.1 — zoom mama (bandas largas)",
+   "caption": "Variação de mama −0.30..+0.55 da projecção da base; gap 6-31 (banda refs 7-34)."
+  },
   {
    "src": "basemesh_gen.png",
    "title": "CAMINHO A — base mesh + MORPHS: 6 corpos, 1 fundação",

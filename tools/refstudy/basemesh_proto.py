@@ -34,6 +34,9 @@ BASE_OBJ = os.path.join(ROOT, "references", "female", "realistic",
                         "full_body", "REF-F-REAL-001", "Female base.obj")
 
 # ---------------------------------------------------------------- bandas dos morphs [HYPOTHESIS p/ proto]
+# A.0 (gate A POSITIVO 2026-10-07, mas dono: "diferenças microscópicas") →
+# A.1 alarga as amplitudes ~3× (HCG_BM_WIDE=1).  A base é a fundação; os
+# morphs têm licença para variar VISIVELMENTE sem "desenhar anatomia".
 BANDS = {
     "stature": (1600.0, 1740.0),     # mm (uniforme — preserva anatomia)
     "waist": (0.93, 1.05),           # × largura da cintura da base
@@ -44,6 +47,19 @@ BANDS = {
     "thigh": (0.98, 1.06),
     "asym": (0.0, 0.035),            # ε: mama esq mais cheia (directriz §13)
 }
+BANDS_WIDE = {
+    "stature": (1500.0, 1810.0),
+    "waist": (0.80, 1.20),
+    "hip": (0.94, 1.12),
+    "breast": (-0.30, 0.55),
+    "glute": (-0.20, 0.35),
+    "shoulder": (0.96, 1.08),
+    "thigh": (0.95, 1.12),
+    "asym": (0.0, 0.06),
+}
+WIDE = os.environ.get("HCG_BM_WIDE", "") == "1"
+if WIDE:
+    BANDS = BANDS_WIDE
 SEEDS = [101, 202, 303, 404, 505]
 
 
@@ -246,10 +262,11 @@ def main():
     print(f"base: v={len(V0)} tris={len(T)} estatura={V0[:,2].max():.0f} mm")
     N0 = vertex_normals(V0, T)
 
-    bodies = [("m00", None)]
+    bodies = [("m00", None)]  # base sempre
     for sid in SEEDS:
         rng = np.random.default_rng(sid)
-        bodies.append((f"m{sid % 100:02d}", sample_params(rng)))
+        pfx = "w" if WIDE else "m"
+        bodies.append((f"{pfx}{sid % 100:02d}", sample_params(rng)))
 
     table = {}
     tiles_full, tiles_zoom, tiles_side = [], [], []
@@ -282,7 +299,7 @@ def main():
     H = 34 + rows * (TILE + LH + PAD)
     sheet = Image.new("RGB", (W, H), (12, 12, 16))
     dr = ImageDraw.Draw(sheet)
-    dr.text((10, 8), "CAMINHO A — base mesh + MORPHS: 6 corpos, 1 fundação "
+    dr.text((10, 8), "CAMINHO A — base mesh + MORPHS: 6 corpos, 1 fundação " + ("· AMPLITUDES LARGAS (A.1) " if WIDE else "") +
                      "(Female base CC0) · rig v2 (normais de vértice)",
             fill=(240, 240, 240))
     for i, (name, p, img) in enumerate(tiles_full):
@@ -292,7 +309,7 @@ def main():
         dr.text((x0 + 2, y0), caption(p), fill=(230, 230, 230))
         im = Image.fromarray((img * 255).clip(0, 255).astype(np.uint8))
         sheet.paste(im.resize((TILE, TILE)), (x0, y0 + LH))
-    out = os.path.join(DOCS, "basemesh_gen.png")
+    out = os.path.join(DOCS, "basemesh_gen2.png" if WIDE else "basemesh_gen.png")
     sheet.save(out)
     print("painel →", out)
 
@@ -316,7 +333,7 @@ def main():
         y0 = 30 + TILE + LH + PAD
         im = Image.fromarray((img * 255).clip(0, 255).astype(np.uint8))
         sheet2.paste(im.resize((TILE, TILE)), (x0, y0 + LH))
-    out2 = os.path.join(DOCS, "basemesh_zoom.png")
+    out2 = os.path.join(DOCS, "basemesh_zoom2.png" if WIDE else "basemesh_zoom.png")
     sheet2.save(out2)
     print("painel →", out2)
 

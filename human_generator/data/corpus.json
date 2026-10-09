@@ -1,0 +1,252 @@
+{
+ "version": 1,
+ "updated": "2026-10-07",
+ "purpose": "Conhecimento acumulado do projecto (mandato RND: 'copiar como aprendizado'). Tudo o que o gerador precisa para produzir corpos ao clicar + tudo o que os gates do dono ensinaram. Fonte única de verdade para o caminho A (base mesh + morphs).",
+ "base_meshes": {
+  "femalebase": {
+   "source": "references/female/realistic/full_body/REF-F-REAL-001/Female base.obj",
+   "license": "CC0 (biblioteca do dono)",
+   "verts": 18577,
+   "tris": 37088,
+   "frame_map": "(x,y,z)_ref = (x_obj, -z_obj, y_obj) * S ; S=1700/z_span",
+   "frame_note": "mapa validado por diff directo contra pipeline das refs (erro 0.1µm). HEURÍSTICAS DE ORIENTAÇÃO BANIDAS (uma escolheu as costas como frente).",
+   "pose": "T-pose",
+   "measures_base_mm1700": {
+    "stature": 1700,
+    "waist_w": 264.6,
+    "hip_w": 324.9,
+    "whr": 0.814,
+    "breast_apex": [
+     69,
+     75,
+     1265
+    ],
+    "breast_gap": 20.5
+   },
+   "facts": [
+    "a base JÁ tem anatomia mamária em banda refs (gap 20.5 vs 7-34)",
+    "cabeça incluída (figura completa)"
+   ]
+  }
+ },
+ "morph_channels": {
+  "stature": {
+   "kind": "scale_uniform",
+   "unit": "mm",
+   "band_default": [
+    1600,
+    1740
+   ],
+   "band_wide": [
+    1500,
+    1810
+   ]
+  },
+  "waist": {
+   "kind": "width_region",
+   "unit": "x_base",
+   "band_default": [
+    0.93,
+    1.05
+   ],
+   "band_wide": [
+    0.8,
+    1.2
+   ],
+   "z": [
+    1010,
+    1105
+   ]
+  },
+  "hip": {
+   "kind": "width_region",
+   "unit": "x_base",
+   "band_default": [
+    0.98,
+    1.07
+   ],
+   "band_wide": [
+    0.94,
+    1.12
+   ],
+   "z": [
+    880,
+    985
+   ]
+  },
+  "shoulder": {
+   "kind": "width_region",
+   "unit": "x_base",
+   "band_default": [
+    0.98,
+    1.04
+   ],
+   "band_wide": [
+    0.96,
+    1.08
+   ],
+   "z": [
+    1385,
+    1470
+   ]
+  },
+  "thigh": {
+   "kind": "width_region",
+   "unit": "x_base",
+   "band_default": [
+    0.98,
+    1.06
+   ],
+   "band_wide": [
+    0.95,
+    1.12
+   ],
+   "z": [
+    690,
+    880
+   ]
+  },
+  "breast": {
+   "kind": "proj_region",
+   "unit": "frac_proj(28mm)",
+   "band_default": [
+    -0.15,
+    0.3
+   ],
+   "band_wide": [
+    -0.3,
+    0.55
+   ],
+   "z": [
+    1140,
+    1330
+   ]
+  },
+  "glute": {
+   "kind": "proj_region_back",
+   "unit": "frac(30mm)",
+   "band_default": [
+    -0.1,
+    0.2
+   ],
+   "band_wide": [
+    -0.2,
+    0.35
+   ],
+   "z": [
+    830,
+    965
+   ]
+  },
+  "asym": {
+   "kind": "asymmetry_lr",
+   "unit": "frac",
+   "band_default": [
+    0.0,
+    0.035
+   ],
+   "band_wide": [
+    0.0,
+    0.06
+   ]
+  }
+ },
+ "measured_bands_refs": {
+  "provenance": "plane_scan v3.2 (binning+reparo); refs real005/femalebase/femalechar/animeF; frame mm@1700",
+  "whr": [
+   0.72,
+   0.81
+  ],
+  "breast": {
+   "apex_x": [
+    69,
+    71
+   ],
+   "apex_y": [
+    79,
+    97
+   ],
+   "apex_z": [
+    1214,
+    1266
+   ],
+   "gap_sterno_apex": [
+    7,
+    34
+   ],
+   "base": [
+    58,
+    90
+   ],
+   "fold_prom": [
+    21,
+    79
+   ],
+   "f1350": [
+    22,
+    27
+   ],
+   "barriga_peito": [
+    -7,
+    9
+   ]
+  },
+  "transitions_kappa": {
+   "Z1_Z4_neck_shoulder": "4-7x refs em todas as versões antigas — pior breakpoint (motivo da mudança de paradigma)",
+   "fonte": "tools/refstudy/transition_report.py"
+  }
+ },
+ "gates_learning": [
+  {
+   "date": "2026-09-30",
+   "subject": "TORSO B",
+   "verdict": "NEGATIVO",
+   "lesson": "estrutura antes de parâmetros; 'a forma denuncia a construção procedural'"
+  },
+  {
+   "date": "2026-10-01",
+   "subject": "SWEEP 01 (V0-V7)",
+   "verdict": "NEGATIVO",
+   "lesson": "cage sem vértices na mama; variantes de um mecanismo errado = indistinguíveis"
+  },
+  {
+   "date": "2026-10-02",
+   "subject": "BREAST C2",
+   "verdict": "NEGATIVO",
+   "lesson": "campo em banda nas secções mas INVISÍVEL no render frontal (ΔL1 0.9); secções nunca sozinhas"
+  },
+  {
+   "date": "2026-10-06",
+   "subject": "E1 (SDF volumes)",
+   "verdict": "NEGATIVO",
+   "lesson": "NÃO apresentar fragmentos contra corpos completos; rig com gradientes lê 'embrulhado'; gerar geometria do zero falhou 5x"
+  },
+  {
+   "date": "2026-10-07",
+   "subject": "A.0 (base mesh + morphs)",
+   "verdict": "POSITIVO",
+   "lesson": "PRIMEIRO gate positivo: 'lê como corpos reais'. Dono quer VARIAÇÃO VISÍVEL (A.0 era microscópica) → A.1 bandas largas. Fundação CC0 + morphs = paradigma aprovado"
+  }
+ ],
+ "instruments": {
+  "plane_scan": "v3.2 (tools/refstudy/plane_scan.py)",
+  "rig_render": "v2 normais de vértice (tools/refstudy/basemesh_proto.py)",
+  "transition": "tools/refstudy/transition_report.py",
+  "breast_spec": "out/refstudy/breast_spec_v3.json"
+ },
+ "seed_registry": {
+  "proto_A0": [
+   "m00..m05"
+  ],
+  "proto_A1_wide": [
+   "w01..w05"
+  ],
+  "params_file": "out/refstudy/basemesh_proto.json",
+  "note": "seeds determinísticos; regeneráveis sem Blender"
+ },
+ "next_decisions_pending": [
+  "amplitude final da variação (dono)",
+  "cabeça: manter da base OU transplantar F2 validada",
+  "UX do botão: galeria pré-gerada vs gerador interactivo"
+ ]
+}

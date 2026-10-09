@@ -37,9 +37,13 @@ executado (basemesh_proto.py, numpy puro): frame exacto da base validado por
 diff (y=−z_obj; heurísticas banidas); morphs por seed em bandas; **a base
 JÁ tem anatomia mamária em banda (gap 20.5)**; 5 seeds: WHR 0.726–0.862,
 cintura 226–286, tudo dentro/limítrofe das bandas refs. Rig v2 (normais de
-vértice). Painéis basemesh_gen.png / basemesh_zoom.png. GATE do dono
-pendente → se aprovado: preset female_basemesh + seeds no gerador (o
-'gerar corpos ao clicar').
+vértice). Painéis basemesh_gen.png / basemesh_zoom.png. GATE do dono pendente → **GATE A.0: POSITIVO (2026-10-07) — "lê como corpos
+reais" — 1.º gate visual positivo do projecto.** Directrizes: variação
+visível (A.1: bandas 3× largas; estatura 1566–1792, cintura 194–317, WHR
+0.67–0.97) + APRENDIZADO PERSISTENTE: human_generator/data/corpus.json v1
+(base meshes, canais morph, bandas refs, lições dos gates, seeds). Botão v0:
+4 GLBs no visualizador do site (m00 + w02/w03/w05). Pendente: amplitude
+final, cabeça (base vs F2), UX do botão (perguntas feitas ao dono).
 **Directriz BODY_SPEC_REMAKE (2026-10-06, do dono):** adoptada — anatomia
 funcional ("que estrutura produz este volume"), hierarquia N0–N4 com regra
 "nível seguinte nunca corrige anterior", transições como cidadãs de 1.ª

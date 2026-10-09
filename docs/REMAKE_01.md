@@ -207,3 +207,23 @@ anatomia" para "não estragar anatomia" (morphs pequenos).
 
 Nota: a biblioteca references/ ESTÁ no git (falso alarme do turno — o check
 correu antes da recuperação do sandbox); refs intactas, sem re-upload.
+
+## 11. GATE A.0: **POSITIVO** — "lê como corpos reais" (2026-10-07, OBSERVED)
+
+Primeiro gate visual POSITIVO do projecto (6 tentativas). Direcção aprovada
+pelo dono, com duas directrizes: (1) as diferenças entre seeds eram
+"microscópicas" → **A.1 com bandas ~3× mais largas** (estatura 1500–1810,
+cintura ×0.80–1.20, mama −0.30..+0.55...; medidas: estatura 1566–1792,
+cintura 194–317, WHR 0.67–0.97); (2) **guardar o aprendizado** →
+`human_generator/data/corpus.json` (v1): base meshes + frame maps, canais de
+morph com bandas, bandas medidas das refs, lições dos gates (positivas E
+negativas), instrumentos, registry de seeds. O corpus é a fonte de verdade
+do gerador (o "conhecimento" do algoritmo, versionado no git).
+
+**Botão v0:** 4 corpos exportados como GLB para o visualizador do site
+(m00 base + w02/w03/w05 largos; tools/refstudy/basemesh_glb.py — writer
+glTF minimal, transform ours→glTF (x,y,z)→(−x,z,y), winding revertido;
+variants registadas em data.json e models.json — sobrevivem a rebuilds).
+
+**Pendente (perguntas ao dono):** amplitude final; cabeça (base vs
+transplante F2); UX do botão (galeria vs gerador interactivo).
