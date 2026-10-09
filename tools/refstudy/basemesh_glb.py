@@ -46,6 +46,12 @@ def write_glb(V_m, T, N, path):
     def pad(b):
         return b + b"\x00" * ((4 - len(b) % 4) % 4)
 
+    # glTF spec: chunk JSON acochoado com ESPAÇOS (0x20); BIN com NUL.
+    # (bug 2026-10-09: NUL no JSON → JSON.parse do three.js lança SyntaxError
+    #  → corpos novos nunca carregaram no browser; spinner eterno. FIX.)
+    def pad_js(b):
+        return b + b" " * ((4 - len(b) % 4) % 4)
+
     bin_ = pad(P.tobytes()) + pad(NN.tobytes()) + pad(I.tobytes())
     nv, ni = len(P), len(I)
     views = [
@@ -70,7 +76,7 @@ def write_glb(V_m, T, N, path):
         "bufferViews": views,
         "buffers": [{"byteLength": len(bin_)}],
     }
-    js = pad(json.dumps(gltf).encode())
+    js = pad_js(json.dumps(gltf).encode())
     hdr = struct.pack("<III", 0x46546C67, 2, 12 + 8 + len(js) + 8 + len(bin_))
     out = hdr + struct.pack("<II", len(js), 0x4E4F534A) + js + \
         struct.pack("<II", len(bin_), 0x004E4942) + bin_

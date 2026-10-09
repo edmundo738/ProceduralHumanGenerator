@@ -133,7 +133,12 @@ new GLTFLoader().load("models/m00_smooth.glb", (gltf) => {
   scene.add(mesh);
   morph();
   document.getElementById("seedVal").textContent = "base m00";
-}, undefined, (e) => console.error(e));
+}, undefined, (e) => {
+  console.error(e);
+  const el = document.getElementById("seedVal");
+  el.textContent = "ERRO ao carregar models/m00_smooth.glb — (re)iniciar o servidor";
+  el.style.color = "#ff6b6b";
+});
 
 // ---------------------------------------------------------------- UI
 const slidersEl = document.getElementById("sliders");
