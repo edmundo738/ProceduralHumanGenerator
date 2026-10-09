@@ -32,6 +32,14 @@ E2–E5 cancelados até decisão do dono: (A) base-mesh CC0 + morphs paramétric
 (deixar de gerar geometria do zero — abordagem MakeHuman, nunca testada aqui),
 (B) congelar corpo em V0 + foco no produto (variação/pele/cabelo/poses/export),
 (C) pausa/encerrar.
+**DECISÃO DO DONO: A — base mesh + morphs (2026-10-07).** Protótipo A.0
+executado (basemesh_proto.py, numpy puro): frame exacto da base validado por
+diff (y=−z_obj; heurísticas banidas); morphs por seed em bandas; **a base
+JÁ tem anatomia mamária em banda (gap 20.5)**; 5 seeds: WHR 0.726–0.862,
+cintura 226–286, tudo dentro/limítrofe das bandas refs. Rig v2 (normais de
+vértice). Painéis basemesh_gen.png / basemesh_zoom.png. GATE do dono
+pendente → se aprovado: preset female_basemesh + seeds no gerador (o
+'gerar corpos ao clicar').
 **Directriz BODY_SPEC_REMAKE (2026-10-06, do dono):** adoptada — anatomia
 funcional ("que estrutura produz este volume"), hierarquia N0–N4 com regra
 "nível seguinte nunca corrige anterior", transições como cidadãs de 1.ª

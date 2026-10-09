@@ -172,3 +172,38 @@ demais". Pergunta do dono: focar noutra coisa OU refazer tudo do zero?
 
 **Estado: REMAKE SUSPENSO. Decisão do dono pendente** (base-mesh+morphs /
 congelar em V0 + foco no produto / pausa). E2-E5 cancelados até decisão.
+
+## 10. DECISÃO: caminho A — base mesh + morphs (dono, 2026-10-07)
+
+Após o gate E1 negativo (§9), o dono escolheu: **deixar de gerar geometria
+do zero**; a fundação anatómica = base mesh feminina da biblioteca
+(REF-F-REAL-001 "Female base.obj", CC0, 18577 verts) e o programa gera
+corpos DIFERENTES por morphs paramétricos medidos (bandas).  É a abordagem
+MakeHuman/MetaHuman — nunca testada aqui; o risco muda de "desenhar
+anatomia" para "não estragar anatomia" (morphs pequenos).
+
+### Protótipo A.0 executado no mesmo dia [MEASURED]
+
+- `tools/refstudy/basemesh_proto.py` (numpy puro, sem Blender): loader .obj
+  → frame exacto **(x,y,z) = (x, −z_obj, y_obj)·S** (validado por diff
+  directo contra a frame do pipeline das refs, erro 0.1 µm — LIÇÃO: mapa
+  determinístico, heurísticas de orientação BANIDAS: uma delas escolheu as
+  costas como frente) → morphs por seed (estatura uniforme 1600–1740,
+  cintura ×0.93–1.05, anca ×0.98–1.07, mama ±fracção da projecção,
+  glúteo, ombro, coxa, ε de assimetria) → medidas (plane_scan v3.2) →
+  render rig v2 (normais de VÉRTICE interpoladas nos cortes — não
+  gradientes; mata o aspecto "embrulhado" do rig v1).
+- **m00 (base, sem morphs): ápice (69, 75, 1265), gap 20.5 — a base JÁ TEM
+  a anatomia mamária dentro da banda refs** (7–34).  5 seeds: WHR
+  0.726–0.862 (refs 0.72–0.81; m05 0.86 ligeiro excesso — afinar banda),
+  cintura 226–286, anca 304–352, ápice x 67–73 ✓ z 1215–1290 ✓,
+  gap 19–29 ✓.
+- Painéis: docs/head_phaseA/basemesh_gen.png (6 corpos × frente) e
+  basemesh_zoom.png (zoom mama frente/perfil ×3).  Rig = clay numpy v2
+  (declaração honesta: ainda não é Cycles; serve para gates de forma).
+- **GATE do dono pendente**: "a direcção lê como corpos reais? qual
+  seed/parametro preferes?"  Se aprovado: integração no human_generator
+  (preset female_basemesh + sistema de seeds = o 'gerar ao clicar').
+
+Nota: a biblioteca references/ ESTÁ no git (falso alarme do turno — o check
+correu antes da recuperação do sandbox); refs intactas, sem re-upload.

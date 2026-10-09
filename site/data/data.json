@@ -450,6 +450,16 @@
  ],
  "renders": [
   {
+   "src": "basemesh_gen.png",
+   "title": "CAMINHO A — base mesh + MORPHS: 6 corpos, 1 fundação",
+   "caption": "Decisão do dono (REMAKE_01 §10): fundação = Female base CC0 (18577 verts, biblioteca) + morphs paramétricos medidos por seed — o programa gera corpos DIFERENTES ao clicar. A BASE JÁ TEM a anatomia (gap mama 20.5, banda refs 7-34); os 5 seeds variam estatura 1630-1732, cintura 226-286, WHR 0.726-0.862. Rig v2: normais de vértice (fim do 'embrulhado'). GATE: 'a direcção lê como corpos reais? que seed preferes?'"
+  },
+  {
+   "src": "basemesh_zoom.png",
+   "title": "CAMINHO A — zoom mama: base vs 2 seeds (frente+perfil)",
+   "caption": "A variação de mama por morph (±fracção da projecção da base) mantém gap 19-29 (banda refs 7-34) e ápice x 67-73. Linha 1: frente; linha 2: perfil."
+  },
+  {
    "src": "e1_views.png",
    "title": "E1 — MULTI-VISTA clay (frente/¾/perfil/costas)",
    "caption": "BODY_SPEC_REMAKE §7: clay cinzento, câmara/luz/escala comuns. real005 · femalebase · V0 (antigo) · E1 (volumes SDF) × 4 vistas. Gate: 'lê como corpo?' — apontar zona (p.ex. 'E1 costas Z6')."
