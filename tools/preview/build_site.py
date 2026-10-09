@@ -28,9 +28,9 @@ THREE_VERSION = "0.186.1"
 
 DESC = {
     "m00": "A·BASE — fundação CC0 (Female base, 18577 verts) sem morphs; mama já em banda refs (gap 20.5). O ponto de partida do caminho A.",
-    "w02": "A·seed 202 (A.1 largas) — estatura 1607, cintura 209, WHR 0.67, mama+.",
-    "w03": "A·seed 303 (A.1 largas) — estatura 1566, cintura 194, anca 291: compacta.",
-    "w05": "A·seed 505 (A.1 largas) — estatura 1764, cintura 317, mama++: robusta.",
+    "w02": "A·seed 202 (A.2 carne ligada) — estatura 1607, cintura 226, WHR 0.72, mama+.",
+    "w03": "A·seed 303 (A.2 carne ligada) — estatura 1566, cintura 206, anca 290: compacta.",
+    "w05": "A·seed 505 (A.2 carne ligada) — estatura 1764, cintura 294, WHR 0.90, mama++: robusta.",
     "antes": "cabeça original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g–op 174 vs 196–210, relação globo–órbita invertida.",
     "faseA": "nova representação: casca fechada cubo-esfera 3456 quads cujo raio é o modelo de 6 massas R1 ajustado ao alvo médio das refs. Sem traços (por desenho da fase).",
     "a2b": "Fase A + canto mentoniano: união local com o envelope médio do queixo de 3 refs (frente do queixo + plano submental).",
@@ -57,6 +57,8 @@ COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2",
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
+    ("basemesh_gen3.png", "CAMINHO A.2 — CARNE LIGADA: morphs propagam às regiões vizinhas", "Directriz do dono: 'músculos são conectados, isso é carne — cada alteração muda as vizinhas em gradiente suave'. Cada canal tem efeito principal + propagação (anca→coxa 0.35, glúteo→coxa traseira 0.30 + lombar 0.25, cintura→costelas 0.30...); rampas 45→120mm. Sem 'divisões' ao esticar. Também: winding GLB corrigido (fim do x-ray) + auto-frame corpo/cabeça."),
+    ("basemesh_zoom3.png", "CAMINHO A.2 — zoom mama (carne ligada)", "Mama agora arrasta a parede torácica (0.25) — o peito acompanha, não é ilha."),
     ("basemesh_gen2.png", "CAMINHO A.1 — AMPLITUDES LARGAS: variação VISÍVEL (6 corpos)", "Resposta ao gate A.0 ('diferenças microscópicas'): bandas 3x mais largas — estatura 1566-1792, cintura 194-317, WHR 0.67-0.97, mama/glúteo com amplitude. A fundação CC0 mantém a anatomia; os morphs agora LÊEM. Gate: 'qual alcance queres ao clicar?'"),
     ("basemesh_zoom2.png", "CAMINHO A.1 — zoom mama (bandas largas)", "Variação de mama −0.30..+0.55 da projecção da base; gap 6-31 (banda refs 7-34)."),
     ("basemesh_gen.png", "CAMINHO A — base mesh + MORPHS: 6 corpos, 1 fundação", "Decisão do dono (REMAKE_01 §10): fundação = Female base CC0 (18577 verts, biblioteca) + morphs paramétricos medidos por seed — o programa gera corpos DIFERENTES ao clicar. A BASE JÁ TEM a anatomia (gap mama 20.5, banda refs 7-34); os 5 seeds variam estatura 1630-1732, cintura 226-286, WHR 0.726-0.862. Rig v2: normais de vértice (fim do 'embrulhado'). GATE: 'a direcção lê como corpos reais? que seed preferes?'"),

@@ -149,6 +149,11 @@
     0.0,
     0.06
    ]
+  },
+  "_v2_carne_ligada": {
+   "date": "2026-10-09",
+   "changes": "rampas 45→120mm; mama→parede torácica 0.25; glúteo→coxa traseira 0.30 + lombar 0.25; anca→coxa alta 0.35 + cintura baixa 0.30; cintura→costelas 0.30 + anca alta 0.20; ombro→peito 0.25; coxa→perna 0.25",
+   "measured_A2_wide": "estatura 1566-1792, cintura 200-337, WHR 0.71-0.90, gap 6.1-31.6"
   }
  },
  "measured_bands_refs": {
@@ -226,6 +231,12 @@
    "subject": "A.0 (base mesh + morphs)",
    "verdict": "POSITIVO",
    "lesson": "PRIMEIRO gate positivo: 'lê como corpos reais'. Dono quer VARIAÇÃO VISÍVEL (A.0 era microscópica) → A.1 bandas largas. Fundação CC0 + morphs = paradigma aprovado"
+  },
+  {
+   "date": "2026-10-09",
+   "subject": "RENDER A (GLB + câmara)",
+   "verdict": "BUG (meu)",
+   "lesson": "2 bugs: (1) writer GLB invertia o winding desnecessariamente — mapa (−x,z,y) é rotação própria (det=+1) → volume assinado NEGATIVO = x-ray 'ver dentro da boneca'; PROVA: m00 −0.049 m³ vs t1 +0.068. Validação obrigatória de agora: volume assinado >0. (2) site principal usava moldura de CABEÇA (size 0.34) em CORPOS de 1.7m → câmara a 0.6m = dentro do corpo + 'olho de peixe' → AUTO-FRAME por bbox. E directriz CARNE LIGADA."
   }
  ],
  "instruments": {
@@ -248,5 +259,13 @@
   "amplitude final da variação (dono)",
   "cabeça: manter da base OU transplantar F2 validada",
   "UX do botão: galeria pré-gerada vs gerador interactivo"
- ]
+ ],
+ "principles": {
+  "carne_ligada": {
+   "date": "2026-10-09",
+   "source": "directriz do dono",
+   "statement": "músculos/pele/fáscia são contínuos — toda alteração propaga em gradiente suave às regiões vizinhas; nunca ilhas nem costuras",
+   "implementation": "WIDTH_EFFECTS: efeito principal amp 1.0 + propagação 0.20-0.35 às bandas vizinhas; RAMP_W 120mm (basemesh_proto.py, espelhado em generator.js)"
+  }
+ }
 }

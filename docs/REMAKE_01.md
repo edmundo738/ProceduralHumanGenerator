@@ -227,3 +227,26 @@ variants registadas em data.json e models.json — sobrevivem a rebuilds).
 
 **Pendente (perguntas ao dono):** amplitude final; cabeça (base vs
 transplante F2); UX do botão (galeria vs gerador interactivo).
+
+
+## 12. Render A: 2 bugs MEUS + directriz CARNE LIGADA (2026-10-09, OBSERVED)
+
+O dono viu os corpos A no visualizador: "dá para ver dentro da boneca",
+"distorção e olho de peixe ao subir a câmara", "divisões na bunda ao
+esticar". Diagnóstico e correcção:
+
+1. **Winding invertido (x-ray).** O writer GLB revertia os índices por
+   engano — o mapa nosso→glTF (−x,z,y) é UMA ROTAÇÃO PRÓPRIA (det=+1), não
+   espelha, logo o winding do OBJ preserva-se. Prova por volume assinado:
+   m00 −0.049 m³ (errado) vs t1 (Blender) +0.068 m³. Corrigido no writer +
+   GLBs regenerados: 6/6 positivos. **Validação permanente nova: volume
+   assinado > 0 em todo GLB exportado.**
+2. **Moldura de cabeça em corpo (olho de peixe).** O site calibrava a
+   câmara para cabeças (size 0.34 m); num corpo de 1.7 m a câmara ficava a
+   ~0.6 m — DENTRO do mesh. AUTO-FRAME: bbox > 1.2 m ⇒ moldura "body".
+   Gerador: fov 35→30, câmara mais afastada.
+3. **Directriz CARNE LIGADA** (directriz anatómica permanente, ver
+   OPERATING_MODE): morphs deixam de ser ilhas — cada canal propaga às
+   regiões vizinhas (amp 0.20–0.35, rampas 45→120 mm). A.2 medido:
+   estatura 1566–1792, cintura 200–337, WHR 0.71–0.90, gap 6.1–31.6.
+   Painéis basemesh_gen3/zoom3.

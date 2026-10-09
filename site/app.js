@@ -83,6 +83,12 @@ async function show(vp, id) {
   vp.variant = DATA.variants.find((v) => v.id === id);
   vp.loading.style.display = "flex";
   const geo = await loadGLB(`models/${id}_${state.mesh}.glb`);
+  // AUTO-FRAME: corpos completos (~1.7 m) não podem usar a moldura de
+  // cabeça (câmara a 0.6 m = DENTRO do corpo → x-ray + "olho de peixe").
+  if (geo.boundingBox === null) geo.computeBoundingBox();
+  if (geo.boundingBox.max.y - geo.boundingBox.min.y > 1.2 && state.frame !== "body") {
+    setFrame("body");
+  }
   const group = new THREE.Group();
   group.add(new THREE.Mesh(geo, material));
   if (state.wire) group.add(new THREE.LineSegments(await loadEdges(`models/${id}_edges.bin`), wireMat));
@@ -95,6 +101,12 @@ async function show(vp, id) {
   updateNote();
 }
 function refreshAll() { vps.forEach((v) => v.variant && show(v, v.variant.id)); }
+
+function setFrame(name) {   // define moldura E sincroniza os botões da UI
+  state.frame = name;
+  document.querySelectorAll("#frame button").forEach((b) => b.classList.toggle("on", b.dataset.v === name));
+  setCamera();
+}
 
 function setCamera() {
   const f = FRAMES[state.frame], d = VIEWS[state.view];

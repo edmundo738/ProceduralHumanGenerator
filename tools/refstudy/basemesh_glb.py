@@ -41,7 +41,10 @@ def write_glb(V_m, T, N, path):
     P = np.stack([-V_m[:, 0], V_m[:, 2], V_m[:, 1]], 1).astype(np.float32) / 1000.0
     NN = np.stack([-N[:, 0], N[:, 2], N[:, 1]], 1).astype(np.float32)
     NN /= np.maximum(np.linalg.norm(NN, axis=1, keepdims=True), 1e-12)
-    I = T[:, ::-1].astype(np.uint32).ravel()          # winding invertido
+    # (−x,z,y) é ROTAÇÃO PRÓPRIA (det=+1) → o winding do OBJ PRESERVA-SE.
+    # (bug 2026-10-09: reversão desnecessária → volume assinado NEGATIVO
+    #  (m00 −0.049 m³ vs t1 +0.068) → x-ray 'ver dentro da boneca'.)
+    I = T.astype(np.uint32).ravel()
 
     def pad(b):
         return b + b"\x00" * ((4 - len(b) % 4) % 4)
@@ -115,6 +118,10 @@ def main():
     # regista nas DUAS fontes (site vivo + out/preview p/ futuros builds)
     for mp in (os.path.join(OUT_M, "models.json"),):
         cur = json.load(open(mp)) if os.path.exists(mp) else []
+        if not cur:  # sandbox recriado: recupera variants do data.json vivo (git)
+            dj = os.path.join(ROOT, "site", "data", "data.json")
+            if os.path.exists(dj):
+                cur = [v for v in json.load(open(dj))["variants"]]
         cur = [v for v in cur if v["id"] not in {r["id"] for r in manifest}] + manifest
         json.dump(cur, open(mp, "w"), indent=1)
     dj = os.path.join(ROOT, "site", "data", "data.json")

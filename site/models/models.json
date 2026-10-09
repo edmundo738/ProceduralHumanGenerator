@@ -19,7 +19,8 @@
    "quads": 5907,
    "bytes": 242248,
    "edges": 13618
-  }
+  },
+  "desc": "cabe\u00e7a original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g\u2013op 174 vs 196\u2013210, rela\u00e7\u00e3o globo\u2013\u00f3rbita invertida."
  },
  {
   "id": "faseA",
@@ -42,7 +43,8 @@
    "quads": 6540,
    "bytes": 247744,
    "edges": 13760
-  }
+  },
+  "desc": "nova representa\u00e7\u00e3o: casca fechada cubo-esfera 3456 quads cujo raio \u00e9 o modelo de 6 massas R1 ajustado ao alvo m\u00e9dio das refs. Sem tra\u00e7os (por desenho da fase)."
  },
  {
   "id": "a2b",
@@ -65,7 +67,8 @@
    "quads": 6540,
    "bytes": 247740,
    "edges": 13760
-  }
+  },
+  "desc": "Fase A + canto mentoniano: uni\u00e3o local com o envelope m\u00e9dio do queixo de 3 refs (frente do queixo + plano submental)."
  },
  {
   "id": "n1",
@@ -89,7 +92,8 @@
    "quads": 6540,
    "bytes": 247736,
    "edges": 13760
-  }
+  },
+  "desc": "A2b + pesco\u00e7o superior (an\u00e9is trunk.2/3) calibrado para o perfil m\u00e9dio das refs. S\u00f3 32 v\u00e9rtices do corpo mudam."
  },
  {
   "id": "f1",
@@ -113,7 +117,8 @@
    "quads": 34860,
    "bytes": 1269088,
    "edges": 70544
-  }
+  },
+  "desc": "F1 = faceB + N1: sobre a mesma casca, campos anat\u00f3micos com limites de sinal (nariz, l\u00e1bios, \u00f3rbitas, orelhas) + camada corretiva estat\u00edstica das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira vers\u00e3o 8/8 crit\u00e9rios (W1 153.2 \u2713)."
  },
  {
   "id": "f2",
@@ -137,7 +142,8 @@
    "quads": 34860,
    "bytes": 1269088,
    "edges": 70544
-  }
+  },
+  "desc": "F2 = CONT1 + N1: orelha INTEGRADA \u2014 janela C\u00b9 (smoothstep, valor e declive nulos no bordo) \u00d7 colina recentrada no envelope medido das refs + relevo refor\u00e7ado; K mantido (suprimi-lo custou relevo: turn 449\u00b0 vs 462\u00b0). Turn da sec\u00e7\u00e3o 462\u2192619\u00b0 (refs 571\u2013993). Fora da orelha: m\u00e1x 0.035 mm. 8/8 crit\u00e9rios intactos."
  },
  {
   "id": "t1",
@@ -160,7 +166,8 @@
    "quads": 34860,
    "bytes": 1269088,
    "edges": 70544
-  }
+  },
+  "desc": "H-TT1 = TORSO B + loft SPLINE: o tronco deixa de ser C0 por tro\u00e7os \u2014 an\u00e9is densos por PCHIP (C\u00b9, monot\u00f3nica, sem overshoot) dos caminhos dos pontos das esta\u00e7\u00f5es (a interpola\u00e7\u00e3o linear concentrava a curvatura nas esta\u00e7\u00f5es = as 'lombas de estrada' medidas: R9 3 extremos vs 1 [1\u20131] das refs). Esta\u00e7\u00e3o perineal nova (o PCHIP alargava anca\u2192virilha e o tronco atravessava as pernas \u2014 corrigido). Amplitudes recalibradas para a malha densa (que agora realiza os campos por inteiro): mama 1.20\u21920.86, lombar, sacro, cifose, wf. P1\u2013P12: 11/11 na banda pela PRIMEIRA vez (P10 232 \u2713, era 242). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_TT1.md)."
  },
  {
   "id": "m00",
@@ -170,7 +177,7 @@
   },
   "commit": "basemesh-A.1",
   "digest": "d6ce7b046f6a089a",
-  "desc": "A\u00b7BASE \u2014 funda\u00e7\u00e3o CC0 (Female base, 18577 verts) sem morphs; mama j\u00e1 em banda refs (gap 20.5). O ponto de partida do caminho A.",
+  "desc": "Funda\u00e7\u00e3o anat\u00f3mica do caminho A (REF-F-REAL-001, 18577 verts) \u2014 sem morphs. Mama j\u00e1 em banda refs (gap 20.5).",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -191,8 +198,8 @@
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
-  "digest": "65864061cc204eb5",
-  "desc": "A\u00b7seed 202 (A.1 largas) \u2014 estatura 1607, cintura 209, WHR 0.67, mama+.",
+  "digest": "1452663b067adcd4",
+  "desc": "Morphs A.1 amplitudes largas: estatura 1607, cintura 209, WHR 0.67, mama+. VARIANTE VIS\u00cdVEL.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -213,8 +220,8 @@
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
-  "digest": "645527975e09613c",
-  "desc": "A\u00b7seed 303 (A.1 largas) \u2014 estatura 1566, cintura 194, anca 291: compacta.",
+  "digest": "1ed74e508a171d8a",
+  "desc": "Morphs A.1: estatura 1566 (baixa), cintura 194, anca 291 \u2014 compacta.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -235,8 +242,8 @@
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
-  "digest": "ef1d7911355cc88a",
-  "desc": "A\u00b7seed 505 (A.1 largas) \u2014 estatura 1764, cintura 317, mama++: robusta.",
+  "digest": "856cd322e0696f08",
+  "desc": "Morphs A.1: estatura 1764, cintura 317, anca 328, mama++ \u2014 robusta.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,

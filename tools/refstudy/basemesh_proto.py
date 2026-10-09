@@ -113,37 +113,58 @@ def vertex_normals(V, T):
 
 
 # ---------------------------------------------------------------- morphs
+# CARNE LIGADA: cada canal afecta a sua banda (amp 1.0) E PROPAGA às vizinhas
+WIDTH_EFFECTS = [          # (canal, z_lo, z_hi, amplitude)
+    ("shoulder", 1385, 1470, 1.00),
+    ("shoulder", 1270, 1400, 0.25),   # → peito alto (peitoral acompanha)
+    ("waist",    1010, 1105, 1.00),
+    ("waist",    1080, 1230, 0.30),   # → costelas
+    ("waist",     920, 1040, 0.20),   # → anca alta
+    ("hip",       880,  985, 1.00),
+    ("hip",       950, 1090, 0.30),   # → cintura baixa
+    ("hip",       750,  900, 0.35),   # → coxa alta (anca-coxa contínuas)
+    ("thigh",     690,  880, 1.00),
+    ("thigh",     560,  730, 0.25),   # → perna/joelho
+]
+RAMP_W = 120.0             # rampa LARGA: transições em gradiente (fáscia)
 def morph(V, p):
     """Aplica o conjunto de morphs (frame mm@1700). Devolve V novo."""
     V = V.copy()
     # 1) estatura: escala UNIFORME (anatomia proporcional)
     V *= p["stature"] / 1700.0
-    # 2) larguras regionais (laterais + 60% em profundidade)
-    for key, (lo, hi, axis) in (("shoulder", (1385, 1470, 0)),
-                                ("waist", (1010, 1105, 0)),
-                                ("hip", (880, 985, 0)),
-                                ("thigh", (690, 880, 0))):
+    # 2) larguras regionais — CARNE LIGADA (directriz do dono 2026-10-09:
+    #    "todos os músculos são conectados aos próximos; cada alteração muda
+    #    as regiões vizinhas em gradiente suave").  Efeito PRINCIPAL (amp 1.0)
+    #    na banda própria + PROPAGAÇÃO (amp<1) nas vizinhas; rampas LARGAS —
+    #    sem "divisões" entre regiões (o erro da A.1: a bunda ficava partida).
+    for key, lo, hi, amp in WIDTH_EFFECTS:
         s = p[key] - 1.0
         if abs(s) < 1e-4:
             continue
-        w = band_w(V[:, 2], lo, hi)
+        w = band_w(V[:, 2], lo, hi, RAMP_W) * amp
         V[:, 0] += s * V[:, 0] * w
         V[:, 1] += 0.6 * s * V[:, 1] * w
-    # 3) mama: deslocamento +y com janela |x|, z (base já TEM anatomia)
+    # 3) mama: núcleo + propagação à parede torácica (o peito acompanha)
     if abs(p["breast"]) > 1e-4:
         ax = np.abs(V[:, 0])
-        w = band_w(V[:, 2], 1140, 1330, 55.0) * \
-            (1.0 - sm01((ax - 125.0) / 40.0)) * sm01((ax - 12.0) / 22.0)
-        proj = 28.0
+        core = band_w(V[:, 2], 1140, 1330, 70.0) * \
+            (1.0 - sm01((ax - 125.0) / 60.0)) * sm01((ax - 12.0) / 22.0)
+        chest = 0.25 * band_w(V[:, 2], 1290, 1430, 90.0) * \
+            (1.0 - sm01((ax - 140.0) / 60.0)) * sm01((ax - 12.0) / 30.0)
         asym = 1.0 + np.where(V[:, 0] < 0, p["asym"], -p["asym"])
-        V[:, 1] += p["breast"] * proj * w * asym
-    # 4) glúteo: −y na janela posterior
+        V[:, 1] += p["breast"] * 28.0 * (core + chest) * asym
+    # 4) glúteo: núcleo + propagação à coxa traseira e às costas baixas
+    #    (a "bunda" é contínua com a coxa e a lombar — não é uma ilha)
     if abs(p["glute"]) > 1e-4:
         ax = np.abs(V[:, 0])
         back = V[:, 1] < -20.0
-        w = band_w(V[:, 2], 830, 965, 50.0) * \
-            (1.0 - sm01((ax - 115.0) / 40.0)) * sm01((ax - 15.0) / 25.0)
-        V[:, 1] -= p["glute"] * 30.0 * w * back
+        core = band_w(V[:, 2], 830, 965, 75.0) * \
+            (1.0 - sm01((ax - 115.0) / 60.0)) * sm01((ax - 15.0) / 25.0)
+        thigh_b = 0.30 * band_w(V[:, 2], 700, 850, 90.0) * \
+            (1.0 - sm01((ax - 110.0) / 60.0)) * sm01((ax - 15.0) / 25.0)
+        low_back = 0.25 * band_w(V[:, 2], 950, 1090, 90.0) * \
+            (1.0 - sm01((ax - 120.0) / 60.0)) * sm01((ax - 15.0) / 25.0)
+        V[:, 1] -= p["glute"] * 30.0 * (core + thigh_b + low_back) * back
     return V
 
 
@@ -309,7 +330,7 @@ def main():
         dr.text((x0 + 2, y0), caption(p), fill=(230, 230, 230))
         im = Image.fromarray((img * 255).clip(0, 255).astype(np.uint8))
         sheet.paste(im.resize((TILE, TILE)), (x0, y0 + LH))
-    out = os.path.join(DOCS, "basemesh_gen2.png" if WIDE else "basemesh_gen.png")
+    out = os.path.join(DOCS, "basemesh_gen3.png" if WIDE else "basemesh_gen.png")
     sheet.save(out)
     print("painel →", out)
 
@@ -333,7 +354,7 @@ def main():
         y0 = 30 + TILE + LH + PAD
         im = Image.fromarray((img * 255).clip(0, 255).astype(np.uint8))
         sheet2.paste(im.resize((TILE, TILE)), (x0, y0 + LH))
-    out2 = os.path.join(DOCS, "basemesh_zoom2.png" if WIDE else "basemesh_zoom.png")
+    out2 = os.path.join(DOCS, "basemesh_zoom3.png" if WIDE else "basemesh_zoom.png")
     sheet2.save(out2)
     print("painel →", out2)
 

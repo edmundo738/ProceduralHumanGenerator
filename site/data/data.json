@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 65864061cc204eb5 · w03 645527975e09613c · w05 ef1d7911355cc88a",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08",
  "variants": [
   {
    "id": "antes",
@@ -200,8 +200,8 @@
     "HCG_BODY": "basemesh"
    },
    "commit": "basemesh-A.1",
-   "digest": "65864061cc204eb5",
-   "desc": "A·seed 202 (A.1 largas) — estatura 1607, cintura 209, WHR 0.67, mama+.",
+   "digest": "1452663b067adcd4",
+   "desc": "A·seed 202 (A.2 carne ligada) — estatura 1607, cintura 226, WHR 0.72, mama+.",
    "smooth": {
     "verts": 18577,
     "faces": 37088,
@@ -222,8 +222,8 @@
     "HCG_BODY": "basemesh"
    },
    "commit": "basemesh-A.1",
-   "digest": "645527975e09613c",
-   "desc": "A·seed 303 (A.1 largas) — estatura 1566, cintura 194, anca 291: compacta.",
+   "digest": "1ed74e508a171d8a",
+   "desc": "A·seed 303 (A.2 carne ligada) — estatura 1566, cintura 206, anca 290: compacta.",
    "smooth": {
     "verts": 18577,
     "faces": 37088,
@@ -244,8 +244,8 @@
     "HCG_BODY": "basemesh"
    },
    "commit": "basemesh-A.1",
-   "digest": "ef1d7911355cc88a",
-   "desc": "A·seed 505 (A.1 largas) — estatura 1764, cintura 317, mama++: robusta.",
+   "digest": "856cd322e0696f08",
+   "desc": "A·seed 505 (A.2 carne ligada) — estatura 1764, cintura 294, WHR 0.90, mama++: robusta.",
    "smooth": {
     "verts": 18577,
     "faces": 37088,
@@ -537,6 +537,16 @@
   }
  ],
  "renders": [
+  {
+   "src": "basemesh_gen3.png",
+   "title": "CAMINHO A.2 — CARNE LIGADA: morphs propagam às regiões vizinhas",
+   "caption": "Directriz do dono: 'músculos são conectados, isso é carne — cada alteração muda as vizinhas em gradiente suave'. Cada canal tem efeito principal + propagação (anca→coxa 0.35, glúteo→coxa traseira 0.30 + lombar 0.25, cintura→costelas 0.30...); rampas 45→120mm. Sem 'divisões' ao esticar. Também: winding GLB corrigido (fim do x-ray) + auto-frame corpo/cabeça."
+  },
+  {
+   "src": "basemesh_zoom3.png",
+   "title": "CAMINHO A.2 — zoom mama (carne ligada)",
+   "caption": "Mama agora arrasta a parede torácica (0.25) — o peito acompanha, não é ilha."
+  },
   {
    "src": "basemesh_gen2.png",
    "title": "CAMINHO A.1 — AMPLITUDES LARGAS: variação VISÍVEL (6 corpos)",

@@ -17,7 +17,14 @@ const BANDS = {
   glute:   { min: -0.20, max: 0.35, step: 0.01, def: 0.0, label: "Glúteo (±projecção)" },
   asym:    { min: 0.0,  max: 0.06, step: 0.005, def: 0.0, label: "Assimetria ε" },
 };
-const ZONES = { shoulder: [1385, 1470], waist: [1010, 1105], hip: [880, 985], thigh: [690, 880] };
+// CARNE LIGADA (directriz do dono): efeito principal + PROPAGAÇÃO às vizinhas
+const WIDTH_EFFECTS = [   // [canal, z_lo, z_hi, amp]
+  ["shoulder", 1385, 1470, 1.00], ["shoulder", 1270, 1400, 0.25],
+  ["waist", 1010, 1105, 1.00], ["waist", 1080, 1230, 0.30], ["waist", 920, 1040, 0.20],
+  ["hip", 880, 985, 1.00], ["hip", 950, 1090, 0.30], ["hip", 750, 900, 0.35],
+  ["thigh", 690, 880, 1.00], ["thigh", 560, 730, 0.25],
+];
+const RAMP_W = 120;
 
 // arquétipos do dono (2026-10-07) — pontos de partida, sliders refinam
 const PRESETS = {
@@ -60,8 +67,8 @@ box.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x101016);
-const camera = new THREE.PerspectiveCamera(35, box.clientWidth / box.clientHeight, 0.05, 30);
-camera.position.set(0.4, 1.15, 3.4);
+const camera = new THREE.PerspectiveCamera(30, box.clientWidth / box.clientHeight, 0.05, 30);
+camera.position.set(0.5, 1.05, 4.3);   // corpo completo: fora do mesh, perspectiva calma
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 0.88, 0);
 controls.update();
@@ -88,23 +95,25 @@ function morph() {
   for (let i = 0; i < n; i++) {
     let x = out[3 * i], y = out[3 * i + 1], z = out[3 * i + 2];
     x *= s; y *= s; z *= s;                                   // estatura
-    for (const k of ["shoulder", "waist", "hip", "thigh"]) {  // larguras
+    for (const [k, lo, hi, amp] of WIDTH_EFFECTS) {          // larguras ligadas
       const f = params[k] - 1;
       if (Math.abs(f) < 1e-4) continue;
-      const [lo, hi] = ZONES[k];
-      const w = bandW(z, lo, hi);
+      const w = bandW(z, lo, hi, RAMP_W) * amp;
       x += f * x * w; y += 0.6 * f * y * w;
     }
-    if (Math.abs(params.breast) > 1e-4) {                     // mama
+    if (Math.abs(params.breast) > 1e-4) {                     // mama + parede torácica
       const ax = Math.abs(x);
-      const w = bandW(z, 1140, 1330, 55) * (1 - sm01((ax - 125) / 40)) * sm01((ax - 12) / 22);
+      const core = bandW(z, 1140, 1330, 70) * (1 - sm01((ax - 125) / 60)) * sm01((ax - 12) / 22);
+      const chest = 0.25 * bandW(z, 1290, 1430, 90) * (1 - sm01((ax - 140) / 60)) * sm01((ax - 12) / 30);
       const asym = 1 + (x < 0 ? params.asym : -params.asym);
-      y += params.breast * 28 * w * asym;
+      y += params.breast * 28 * (core + chest) * asym;
     }
-    if (Math.abs(params.glute) > 1e-4 && y < -20) {           // glúteo
+    if (Math.abs(params.glute) > 1e-4 && y < -20) {           // glúteo + coxa traseira + lombar
       const ax = Math.abs(x);
-      const w = bandW(z, 830, 965, 50) * (1 - sm01((ax - 115) / 40)) * sm01((ax - 15) / 25);
-      y -= params.glute * 30 * w;
+      const core = bandW(z, 830, 965, 75) * (1 - sm01((ax - 115) / 60)) * sm01((ax - 15) / 25);
+      const thighB = 0.30 * bandW(z, 700, 850, 90) * (1 - sm01((ax - 110) / 60)) * sm01((ax - 15) / 25);
+      const lowBack = 0.25 * bandW(z, 950, 1090, 90) * (1 - sm01((ax - 120) / 60)) * sm01((ax - 15) / 25);
+      y -= params.glute * 30 * (core + thighB + lowBack);
     }
     out[3 * i] = x; out[3 * i + 1] = y; out[3 * i + 2] = z;
   }

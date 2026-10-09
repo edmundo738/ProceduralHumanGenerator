@@ -246,3 +246,18 @@ com o contexto e as alternativas já pensadas.
     → VALIDAÇÃO
     → CHECKPOINT
     → (só então) refinar
+
+
+## ANATOMIA CONTÍNUA — "CARNE LIGADA" (directriz do dono, 2026-10-09)
+> "Todos os músculos são conectados aos próximos, por consequência isso é
+> carne. Cada alteração próximo a algo altera as regiões vizinhas de forma
+> suave, em gradiente."
+
+- NENHUMA região anatómica é uma ilha: pele, músculo, fáscia e tendão são
+  contínuos. Toda alteração num canal PROPAGA às regiões vizinhas com
+  amplitudes menores e rampas largas — nunca degraus nem "divisões".
+- Diagnóstico do dono (válido para sempre): "tratas a anatomia por chunks
+  separados" é um erro persistente do agente; a bunda/estreitamentos não
+  podem deixar costuras visíveis quando o corpo é esticado.
+- Implementado em basemesh_proto.py WIDTH_EFFECTS (efeito principal amp 1.0
+  + propagações 0.20–0.35; RAMP_W 120 mm) e espelhado em generator.js.
