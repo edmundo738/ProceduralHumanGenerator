@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HCG — Gerador de corpos (caminho A)</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": {
+        "three": "./vendor/three/three.module.js",
+        "three/addons/": "./vendor/three/addons/"
+    } }
+  </script>
+  <style>
+    body { margin: 0; background: #0d0d12; color: #e8e8e8; font: 14px/1.4 system-ui, sans-serif; }
+    .gen { display: flex; height: 100vh; }
+    .panel { width: 320px; overflow-y: auto; padding: 14px; border-right: 1px solid #26262e; background: #12121a; }
+    .panel h1 { font-size: 15px; margin: 0 0 2px; }
+    .panel .sub { color: #9a9aa5; font-size: 12px; margin-bottom: 12px; }
+    .panel a { color: #7aa2f7; }
+    .canvas { flex: 1; position: relative; }
+    .presets { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 8px 0 14px; }
+    .presets button, .rnd { background: #1e1e2a; color: #e8e8e8; border: 1px solid #2e2e3a;
+      border-radius: 6px; padding: 7px 6px; cursor: pointer; font-size: 12.5px; }
+    .presets button:hover, .rnd:hover { background: #2a2a3a; border-color: #7aa2f7; }
+    .rnd { width: 100%; font-weight: 700; padding: 10px; background: #23304a; border-color: #7aa2f7; font-size: 14px; }
+    .ctl { margin: 9px 0; }
+    .ctl label { display: flex; justify-content: space-between; font-size: 12px; color: #b9b9c3; }
+    .ctl input[type=range] { width: 100%; }
+    .tones { display: flex; gap: 6px; margin: 8px 0 4px; }
+    .tones button { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #2e2e3a; cursor: pointer; }
+    .tones button.sel { border-color: #7aa2f7; }
+    .seedbox { margin-top: 10px; font-size: 12px; color: #9a9aa5; }
+    h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: #7f7f8c; margin: 14px 0 4px; }
+  </style>
+</head>
+<body>
+<div class="gen">
+  <div class="panel">
+    <h1>⚙ Gerador de corpos</h1>
+    <div class="sub">Caminho A · fundação CC0 + morphs · <a href="index.html">← site principal</a></div>
+
+    <button class="rnd" id="btnRandom">🎲 GERAR CORPO</button>
+    <div class="seedbox">seed: <span id="seedVal">—</span> · arrasta para rodar · scroll = zoom</div>
+
+    <h2>Arquétipos (pontos de partida)</h2>
+    <div class="presets" id="presets"></div>
+
+    <h2>Ajuste fino</h2>
+    <div id="sliders"></div>
+
+    <h2>Tom de pele (placeholder — texturas depois)</h2>
+    <div class="tones" id="tones"></div>
+  </div>
+  <div class="canvas" id="canvas"></div>
+</div>
+<script type="module" src="generator.js"></script>
+</body>
+</html>

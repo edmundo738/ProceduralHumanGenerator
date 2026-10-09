@@ -42,8 +42,14 @@ reais" — 1.º gate visual positivo do projecto.** Directrizes: variação
 visível (A.1: bandas 3× largas; estatura 1566–1792, cintura 194–317, WHR
 0.67–0.97) + APRENDIZADO PERSISTENTE: human_generator/data/corpus.json v1
 (base meshes, canais morph, bandas refs, lições dos gates, seeds). Botão v0:
-4 GLBs no visualizador do site (m00 + w02/w03/w05). Pendente: amplitude
-final, cabeça (base vs F2), UX do botão (perguntas feitas ao dono).
+4 GLBs no visualizador do site (m00 + w02/w03/w05). Pendente: amplitude final, cabeça (base vs F2), UX do botão (perguntas feitas ao dono).
+**Respostas do dono (2026-10-07): amplitude = realista largo (A.1); cabeça =
+da base; UX = GERADOR INTERACTIVO COM SLIDERS (foco) + galeria.** ENTREGUE no
+mesmo dia: site/generator.html — morphs CLIENT-SIDE em three.js (base m00
+carrega 1×, 18577 verts deformados ao vivo; espelha basemesh_proto.py),
+11 arquétipos do dono (boazuda/magra/robusta/leviana/chique/anca-rabuda/
+atlética/modelo/chamativa/intelectual), 🎲 GERAR (seed), sliders por canal,
+7 tons de pele (placeholder). Decisões registadas no corpus.json.
 **Directriz BODY_SPEC_REMAKE (2026-10-06, do dono):** adoptada — anatomia
 funcional ("que estrutura produz este volume"), hierarquia N0–N4 com regra
 "nível seguinte nunca corrige anterior", transições como cidadãs de 1.ª

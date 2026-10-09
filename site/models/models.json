@@ -161,5 +161,93 @@
    "bytes": 1269088,
    "edges": 70544
   }
+ },
+ {
+  "id": "m00",
+  "label": "A\u00b7BASE (Female base CC0)",
+  "env": {
+   "HCG_BODY": "basemesh"
+  },
+  "commit": "basemesh-A.1",
+  "digest": "d6ce7b046f6a089a",
+  "desc": "A\u00b7BASE \u2014 funda\u00e7\u00e3o CC0 (Female base, 18577 verts) sem morphs; mama j\u00e1 em banda refs (gap 20.5). O ponto de partida do caminho A.",
+  "smooth": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891756
+  },
+  "cage": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891756
+  }
+ },
+ {
+  "id": "w02",
+  "label": "A\u00b7seed 202 (largo)",
+  "env": {
+   "HCG_BODY": "basemesh"
+  },
+  "commit": "basemesh-A.1",
+  "digest": "65864061cc204eb5",
+  "desc": "A\u00b7seed 202 (A.1 largas) \u2014 estatura 1607, cintura 209, WHR 0.67, mama+.",
+  "smooth": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891752
+  },
+  "cage": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891752
+  }
+ },
+ {
+  "id": "w03",
+  "label": "A\u00b7seed 303 (largo)",
+  "env": {
+   "HCG_BODY": "basemesh"
+  },
+  "commit": "basemesh-A.1",
+  "digest": "645527975e09613c",
+  "desc": "A\u00b7seed 303 (A.1 largas) \u2014 estatura 1566, cintura 194, anca 291: compacta.",
+  "smooth": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891756
+  },
+  "cage": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891756
+  }
+ },
+ {
+  "id": "w05",
+  "label": "A\u00b7seed 505 (largo)",
+  "env": {
+   "HCG_BODY": "basemesh"
+  },
+  "commit": "basemesh-A.1",
+  "digest": "ef1d7911355cc88a",
+  "desc": "A\u00b7seed 505 (A.1 largas) \u2014 estatura 1764, cintura 317, mama++: robusta.",
+  "smooth": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891756
+  },
+  "cage": {
+   "verts": 18577,
+   "faces": 37088,
+   "quads": 0,
+   "bytes": 891756
+  }
  }
 ]
