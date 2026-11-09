@@ -275,3 +275,24 @@ Zelda anime cartoons kawai."  Fundação = pack SimpleRig anime do dono
 
 GATE: "lê como waifu Zelda/anime?" — se sim: morphs A.2 adaptados às
 proporções anime + integração no gerador (base selector) + texturas.
+
+
+## 14. WAIFU v2 — CABELO + ROUPAS + ANIMAÇÃO (pedido do dono, 2026-09-24)
+
+"Cabeça e anima a personagem e dá-lhe roupas, ajusta nela."
+
+- **Roupa por INVÓLUCRO da própria geometria** (offset ao longo das
+  normais) → ajuste perfeito por construção; a roupa segue o corpo
+  (CARNE LIGADA aplicada a vestuário): cabelo bob c/ franja (janela da
+  cara excluída por teste frontal), vestido rosa sakura (topo por
+  invólucro do tronco + saia A amostrada do contorno da anca, 48 ângulos,
+  abertura 1.02→1.40, doubleSided), botas (zona cz<300).
+- **Writer GLB multi-material** (write_glb_multi): 11 meshes/6 materiais;
+  bug apanhado pelo volume assinado: parse glTF→nosso com permuta NUA
+  (x,z,y) é IMPROPRIA (det=−1) e invertia o winding → mapa próprio
+  (−x,z,y). Accessors relativos→absolutos corrigidos. Volume +0.038 m³ ✓.
+- **ANIMAÇÃO idle no site** (app.js idleAnim): respiração (escala
+  1±0.004), balanço suave (rot.z ±0.02) e PESTANEJAR (meshes de olho por
+  material, a cada 3.4 s).
+- Painel waifu_v2.png (3 vistas, com roupa). Medidas do corpo por baixo
+  inalteradas (WHR 0.70, gap 24).

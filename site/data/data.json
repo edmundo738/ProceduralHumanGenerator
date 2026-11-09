@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544",
  "variants": [
   {
    "id": "antes",
@@ -281,6 +281,29 @@
     "bytes": 317236
    },
    "desc": "WAIFU v1 — fundação anime CC (pack SimpleRig do dono): corpo+olhos+boca+mãos montados, ~5k tris LOW POLY com UVs, cores kawaii (pele/olhos escuros/boca rosa), sombreamento TOON. Estatura 1.58 m estilo Zelda; WHR 0.70; gap mama 26 (banda refs)."
+  },
+  {
+   "id": "waifu2",
+   "label": "WAIFU v2 — cabelo+vestido+ANIMADA",
+   "env": {
+    "HCG_BODY": "waifu2"
+   },
+   "commit": "waifu-v2",
+   "digest": "14d33719be7db544",
+   "toon": true,
+   "smooth": {
+    "verts": 7272,
+    "faces": 12736,
+    "quads": 0,
+    "bytes": 520880
+   },
+   "cage": {
+    "verts": 7272,
+    "faces": 12736,
+    "quads": 0,
+    "bytes": 520880
+   },
+   "desc": "WAIFU v2 — CABELO bob (com franja), VESTIDO rosa sakura (topo + saia A), BOTAS chocolate; tudo construído por invólucro sobre a própria geometria = ajuste perfeito. ANIMADA no visualizador: respira, balança e PESTANEJA. ~14k tris com roupa."
   }
  ],
  "metrics": {
@@ -560,6 +583,11 @@
   }
  ],
  "renders": [
+  {
+   "src": "waifu_v2.png",
+   "title": "WAIFU v2 — CABELO + VESTIDO + BOTAS (frente/perfil/costas)",
+   "caption": "Pedido do dono: 'cabeça e anima a personagem e dá-lhe roupas, ajusta nela'. Cabelo bob com franja (invólucro do crânio, cara excluída por janela frontal), vestido rosa sakura (topo por invólucro do tronco + saia A amostrada do contorno da anca, abertura 1.02→1.40), botas (zona dos pés). Ajuste PERFEITO por construção — a roupa segue o corpo (CARNE LIGADA). No visualizador: variante 'WAIFU v2' com idle animada (respiração, balanço, pestanejar)."
+  },
   {
    "src": "waifu_v1.png",
    "title": "WAIFU v1 — anime low-poly game-ready (frente/perfil/costas)",

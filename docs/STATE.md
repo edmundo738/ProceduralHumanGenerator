@@ -379,3 +379,8 @@ SimpleRig (corpo+olhos+boca+mãos; ~5k tris; UVs; toon+kawaii no site; 1.58 m;
 WHR 0.70, gap 26). Painel waifu_v1.png no TOPO; variante 'WAIFU' no Modelo 3D.
 GATE pendente: 'lê como waifu Zelda/anime?' → se sim: morphs A.2 adaptados +
 base selector no gerador + texturas. bpy 5.0.1 + stubs /tmp/stubs OK.
+
+**WAIFU v2 (2026-09-24):** CABELO bob+franja, VESTIDO rosa (saia A), BOTAS —
+invólucros da própria geometria (ajuste perfeito); ANIMADA no site (respira,
+balança, pestaneja). Variant 'waifu2' + painel waifu_v2.png no TOPO. Writer
+GLB multi-material com validação de volume assinado (lição aplicada).

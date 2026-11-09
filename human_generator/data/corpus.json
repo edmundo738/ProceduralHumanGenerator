@@ -49,7 +49,45 @@
    },
    "style": "anime/kawaii; cabeça grande (olhos a 90% da estatura); estatura alvo 1.58 m",
    "render": "TOON (MeshToonMaterial 3 tons) + cores kawaii no site",
-   "arquetipo_licenca": "license UNKNOWN no meta.json - pack do dono"
+   "arquetipo_licenca": "license UNKNOWN no meta.json - pack do dono",
+   "v2": {
+    "date": "2026-09-24",
+    "clothes_by_shell": {
+     "principle": "roupa = invólucro da própria geometria (offset ao longo das normais) → ajuste perfeito por construção; CARNE LIGADA aplicada a vestuário",
+     "hair_bob": "cz>1330 menos janela da cara (Ny>0.25, 1260<cz<1490, |cx|<96); offset 12mm (+4 topo)",
+     "dress_top": "790<cz<1140, |cx|<350 (exclui braços); offset 8mm",
+     "skirt_A": "anel da anca z=776 (48 ângulos) anéis 776/690/615/545 abertura 1.02/1.12/1.26/1.40; doubleSided",
+     "boots": "zona do corpo cz<300"
+    },
+    "colors": {
+     "hair": [
+      0.23,
+      0.14,
+      0.1,
+      1.0
+     ],
+     "dress": [
+      0.93,
+      0.55,
+      0.65,
+      1.0
+     ],
+     "boot": [
+      0.22,
+      0.14,
+      0.11,
+      1.0
+     ]
+    },
+    "animation": "idle no site (app.js idleAnim): respiração (escala 1±0.004), balanço (rot.z ±0.02), pestanejar (olhos por material 'eye', a cada 3.4s)",
+    "tris_with_clothes": {
+     "hair": 1306,
+     "dress_top": 578,
+     "skirt": 288,
+     "boot": 1500
+    },
+    "glb_writer": "write_glb_multi (multi-material/multi-primitive; accessors relativos→absolutos; parse glTF→nosso usa mapa PRÓPRIO (−x,z,y) — a permuta nua inverteria o winding)"
+   }
   }
  },
  "morph_channels": {
@@ -292,6 +330,7 @@
   }
  },
  "artefacts": {
-  "waifu": "tools/waifu/build_waifu.py -> site/models/waifu_*.glb + docs/head_phaseA/waifu_v1.png"
+  "waifu": "tools/waifu/build_waifu.py -> site/models/waifu_*.glb + docs/head_phaseA/waifu_v1.png",
+  "waifu2": "tools/waifu/build_waifu2.py → site/models/waifu2_*.glb + docs/head_phaseA/waifu_v2.png"
  }
 }

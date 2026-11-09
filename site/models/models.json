@@ -278,6 +278,29 @@
    "quads": 0,
    "bytes": 317236
   },
-  "desc": "WAIFU v1 \u2014 anime game-ready"
+  "desc": "WAIFU v1 \u2014 funda\u00e7\u00e3o anime CC (pack SimpleRig do dono): corpo+olhos+boca+m\u00e3os montados, ~5k tris LOW POLY com UVs, cores kawaii (pele/olhos escuros/boca rosa), sombreamento TOON. Estatura 1.58 m estilo Zelda; WHR 0.70; gap mama 26 (banda refs)."
+ },
+ {
+  "id": "waifu2",
+  "label": "WAIFU v2 \u2014 cabelo+vestido+ANIMADA",
+  "env": {
+   "HCG_BODY": "waifu2"
+  },
+  "commit": "waifu-v2",
+  "digest": "14d33719be7db544",
+  "toon": true,
+  "smooth": {
+   "verts": 7272,
+   "faces": 12736,
+   "quads": 0,
+   "bytes": 520880
+  },
+  "cage": {
+   "verts": 7272,
+   "faces": 12736,
+   "quads": 0,
+   "bytes": 520880
+  },
+  "desc": "WAIFU v2"
  }
 ]

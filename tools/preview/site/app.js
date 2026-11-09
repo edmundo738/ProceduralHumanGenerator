@@ -80,6 +80,7 @@ async function loadGLB(url, toon) {
         const col = (o.material && o.material.color) ? o.material.color.clone()
                                                      : new THREE.Color(0xcccccc);
         m = new THREE.MeshToonMaterial({ color: col, gradientMap: TOON_RAMP });
+        m.name = (o.material && o.material.name) || "toon";
       }
       group.add(new THREE.Mesh(geo, m));
     });
@@ -108,6 +109,8 @@ async function show(vp, id) {
   }
   const group = new THREE.Group();
   group.add(loaded);
+  vp.anim = vp.variant.toon ? loaded : null;
+  if (vp.anim) prepAnim(vp.anim);
   if (state.wire && !vp.variant.toon)
     group.add(new THREE.LineSegments(await loadEdges(`models/${id}_edges.bin`), wireMat));
   if (vp.group) vp.scene.remove(vp.group);
@@ -147,12 +150,38 @@ function resize() {
 }
 window.addEventListener("resize", resize);
 
+function prepAnim(g) {   // olhos = meshes com material "eye" → pestanejar
+  g.userData.eyes = [];
+  g.traverse((o) => {
+    if (o.isMesh && o.material && /eye/i.test(o.material.name)) {
+      const bb = new THREE.Box3().setFromObject(o);
+      o.userData.cy = (bb.max.y + bb.min.y) / 2;
+      g.userData.eyes.push(o);
+    }
+  });
+}
+
+function idleAnim(g, t) {   // respiração + balanço + pestanejar (kawaii idle)
+  g.rotation.z = Math.sin(t * 0.9) * 0.02;
+  g.position.y = Math.sin(t * 1.7) * 0.006;
+  const br = 1 + Math.sin(t * 1.7) * 0.004;
+  g.scale.x = br; g.scale.z = br;
+  const ph = t % 3.4;
+  const k = ph < 0.14 ? Math.sin((ph / 0.14) * Math.PI) : 0;
+  for (const e of g.userData.eyes || []) {
+    e.scale.y = 1 - 0.85 * k;
+    e.position.y = e.userData.cy * 0.85 * k;
+  }
+}
+
 function loop() {
   requestAnimationFrame(loop);
+  const tAnim = performance.now() / 1000;
   if (state.spin) {
     const t = vps[0].controls.target, p = camera.position.clone().sub(t);
     p.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.006); camera.position.copy(t).add(p);
   }
+  vps.forEach((v) => { if (v.anim) idleAnim(v.anim, tAnim); });
   vps.forEach((v) => v.controls.update());
   vps.forEach((v) => { if (state.mode === "compare" || v.side === "L") v.renderer.render(v.scene, camera); });
 }
