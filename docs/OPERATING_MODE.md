@@ -261,3 +261,14 @@ com o contexto e as alternativas já pensadas.
   podem deixar costuras visíveis quando o corpo é esticado.
 - Implementado em basemesh_proto.py WIDTH_EFFECTS (efeito principal amp 1.0
   + propagações 0.20–0.35; RAMP_W 120 mm) e espelhado em generator.js.
+
+
+## SEMPRE ACTUALIZA O PREVIEW (directriz do dono, 2026-09-24)
+> "Mano sempre atualiza o preview."
+
+- TODO o trabalho que muda algo visível termina com: rebuild do site →
+  deploy para site/ → servidor vivo (recomeçar se o sandbox recriar) →
+  verificação com curl (páginas + assets + data) → dizer ao dono o que
+  ver e onde.
+- Cache do browser NUNCA pode ser desculpa: data.json já tinha ?v=;
+  agora app.js/generator.js/style.css também levam ?v=<hash> no build.

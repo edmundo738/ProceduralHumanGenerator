@@ -389,3 +389,8 @@ GLB multi-material com validação de volume assinado (lição aplicada).
 via sparse-checkout), PELE NEGRA recolorida no atlas albedo, ANIMAÇÕES REAIS no site
 (Samba nativa + retarget Xbot: idle/walk/run/agree/negar + crossfade + botões).
 Variant 'waifu3'; painel waifu_v3.png no TOPO. Shells v2 rejeitadas pelo dono.
+
+**DIRECTRIZ 'SEMPRE ACTUALIZA O PREVIEW' (2026-09-24):** toda a mudança visível
+termina com rebuild+deploy+servidor vivo+curls. Cache-buster agora TAMBÉM em
+app.js/generator.js/style.css (hash no build) — o browser cacheava os scripts
+e o dono via versões velhas.

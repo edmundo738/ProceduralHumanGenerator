@@ -327,6 +327,11 @@
    "source": "directriz do dono",
    "statement": "músculos/pele/fáscia são contínuos — toda alteração propaga em gradiente suave às regiões vizinhas; nunca ilhas nem costuras",
    "implementation": "WIDTH_EFFECTS: efeito principal amp 1.0 + propagação 0.20-0.35 às bandas vizinhas; RAMP_W 120mm (basemesh_proto.py, espelhado em generator.js)"
+  },
+  "sempre_actualiza_preview": {
+   "date": "2026-09-24",
+   "source": "directriz do dono",
+   "statement": "todo o trabalho visível termina com rebuild+deploy+servidor vivo+verificação; cache-buster em TODOS os recursos (js/css incluídos, não só data.json)"
   }
  },
  "artefacts": {

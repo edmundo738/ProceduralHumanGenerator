@@ -142,6 +142,24 @@ def main():
         sys.exit("falta out/preview/models — correr primeiro tools/preview/export_glb.py (ver docstring)")
     for f in os.listdir(SITE):
         shutil.copy2(os.path.join(SITE, f), os.path.join(OUT, f))
+    # CACHE-BUSTER nos scripts/estilos (directriz do dono: 'SEMPRE actualiza
+    # o preview') — o browser cacheava app.js/generator.js e o dono via
+    # versões velhas. Versão = hash do ficheiro (muda só quando muda o js).
+    import hashlib, re
+    for html in ("index.html", "generator.html"):
+        hp = os.path.join(OUT, html)
+        if not os.path.exists(hp):
+            continue
+        txt = open(hp).read()
+        def bust(m):
+            f = m.group(1)
+            try:
+                h = hashlib.sha1(open(os.path.join(OUT, f), "rb").read()).hexdigest()[:8]
+            except OSError:
+                return m.group(0)
+            return f'="{f}?v={h}"'
+        txt = re.sub(r'="(app\.js|generator\.js|style\.css)(\?v=[0-9a-f]+)?"', bust, txt)
+        open(hp, "w").write(txt)
     vendor_three(os.path.join(OUT, "vendor", "three"))
     os.makedirs(os.path.join(OUT, "renders"), exist_ok=True)
     for src, *_ in RENDERS:
