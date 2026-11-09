@@ -27,6 +27,29 @@
     "a base JÁ tem anatomia mamária em banda refs (gap 20.5 vs 7-34)",
     "cabeça incluída (figura completa)"
    ]
+  },
+  "waifu_anime": {
+   "source": "references/female/anime/full_body/REF-F-ANIME-001/Anime_Female_A.blend (pack SimpleRig, do dono)",
+   "verts": 6446,
+   "tris": 12736,
+   "pose": "A-pose (~40 graus)",
+   "parts": "corpo (meio+Mirror), EyeBall, MouthPart (no sítio; face = -y), Hand01 (LOCAL: pulso no origem, dedos ao longo do braço - PCA 8 graus do osso bn_hand), pés JÁ no corpo (Foot0X = substitutos)",
+   "frame_map": "blender (x,y,z; -y=frente) -> nosso (x,-y,z); escala 1700/zmax",
+   "measures_mm1700": {
+    "stature": 1702.0,
+    "waist_w": 264.3,
+    "hip_w": 369.8,
+    "whr": 0.71,
+    "apex": [
+     61.0,
+     202.0,
+     1250.0
+    ],
+    "gap": 26.0
+   },
+   "style": "anime/kawaii; cabeça grande (olhos a 90% da estatura); estatura alvo 1.58 m",
+   "render": "TOON (MeshToonMaterial 3 tons) + cores kawaii no site",
+   "arquetipo_licenca": "license UNKNOWN no meta.json - pack do dono"
   }
  },
  "morph_channels": {
@@ -267,5 +290,8 @@
    "statement": "músculos/pele/fáscia são contínuos — toda alteração propaga em gradiente suave às regiões vizinhas; nunca ilhas nem costuras",
    "implementation": "WIDTH_EFFECTS: efeito principal amp 1.0 + propagação 0.20-0.35 às bandas vizinhas; RAMP_W 120mm (basemesh_proto.py, espelhado em generator.js)"
   }
+ },
+ "artefacts": {
+  "waifu": "tools/waifu/build_waifu.py -> site/models/waifu_*.glb + docs/head_phaseA/waifu_v1.png"
  }
 }

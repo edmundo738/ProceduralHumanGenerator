@@ -250,3 +250,28 @@ esticar". Diagnóstico e correcção:
    regiões vizinhas (amp 0.20–0.35, rampas 45→120 mm). A.2 medido:
    estatura 1566–1792, cintura 200–337, WHR 0.71–0.90, gap 6.1–31.6.
    Painéis basemesh_gen3/zoom3.
+
+
+## 13. WAIFU v1 — anime low-poly game-ready (pedido do dono, 2026-09-24)
+
+"Mano faça uma waifu simples low poly bem feita mesmo para jogos 3D estilo
+Zelda anime cartoons kawai."  Fundação = pack SimpleRig anime do dono
+(REF-F-ANIME-001, o caminho A aplicado a estilo):
+
+- corpo A-pose (meio + Mirror aplicado), ~4.5k verts/9k tris → com olhos,
+  boca e mãos: ~5k tris LOW POLY, UVs intactas para texturização;
+- EyeBall/MouthPart já no sítio (face = −y, PROVA pelos próprios olhos);
+- Hand01 ancorada à cabeça do osso bn_hand SEM rotação (PROVA por PCA:
+  eixo principal do asset ≈ direcção do osso, 8°); cópia espelhada;
+- pés JÁ fazem parte do corpo (277 verts com forma de pé ao rés do chão) —
+  Foot01/02/03 são substitutos opcionais (calçado);
+- cores kawaii (pele quente, olhos azul-marinho escuros, boca rosa) +
+  sombreamento TOON no site (MeshToonMaterial 3 tons);
+- estatura normalizada 1.58 m (Zelda feminino); medidas frame 1700:
+  WHR 0.70, gap mama 26 (banda refs 7–34), anca 370.
+- bpx: tools/waifu/build_waifu.py; painel waifu_v1.png (3 vistas);
+  GLB multi-mesh no visualizador (app.js agora suporta variantes
+  multi-mesh + toon).
+
+GATE: "lê como waifu Zelda/anime?" — se sim: morphs A.2 adaptados às
+proporções anime + integração no gerador (base selector) + texturas.

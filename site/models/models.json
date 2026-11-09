@@ -177,7 +177,7 @@
   },
   "commit": "basemesh-A.1",
   "digest": "d6ce7b046f6a089a",
-  "desc": "Funda\u00e7\u00e3o anat\u00f3mica do caminho A (REF-F-REAL-001, 18577 verts) \u2014 sem morphs. Mama j\u00e1 em banda refs (gap 20.5).",
+  "desc": "A\u00b7BASE \u2014 funda\u00e7\u00e3o CC0 (Female base, 18577 verts) sem morphs; mama j\u00e1 em banda refs (gap 20.5). O ponto de partida do caminho A.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -199,7 +199,7 @@
   },
   "commit": "basemesh-A.1",
   "digest": "1452663b067adcd4",
-  "desc": "Morphs A.1 amplitudes largas: estatura 1607, cintura 209, WHR 0.67, mama+. VARIANTE VIS\u00cdVEL.",
+  "desc": "A\u00b7seed 202 (A.2 carne ligada) \u2014 estatura 1607, cintura 226, WHR 0.72, mama+.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -221,7 +221,7 @@
   },
   "commit": "basemesh-A.1",
   "digest": "1ed74e508a171d8a",
-  "desc": "Morphs A.1: estatura 1566 (baixa), cintura 194, anca 291 \u2014 compacta.",
+  "desc": "A\u00b7seed 303 (A.2 carne ligada) \u2014 estatura 1566, cintura 206, anca 290: compacta.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -243,7 +243,7 @@
   },
   "commit": "basemesh-A.1",
   "digest": "856cd322e0696f08",
-  "desc": "Morphs A.1: estatura 1764, cintura 317, anca 328, mama++ \u2014 robusta.",
+  "desc": "A\u00b7seed 505 (A.2 carne ligada) \u2014 estatura 1764, cintura 294, WHR 0.90, mama++: robusta.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -256,5 +256,28 @@
    "quads": 0,
    "bytes": 891756
   }
+ },
+ {
+  "id": "waifu",
+  "label": "WAIFU (anime low-poly)",
+  "env": {
+   "HCG_BODY": "waifu"
+  },
+  "commit": "waifu-v1",
+  "digest": "28606978867289ec",
+  "toon": true,
+  "smooth": {
+   "verts": 6446,
+   "faces": 12736,
+   "quads": 0,
+   "bytes": 317236
+  },
+  "cage": {
+   "verts": 6446,
+   "faces": 12736,
+   "quads": 0,
+   "bytes": 317236
+  },
+  "desc": "WAIFU v1 \u2014 anime game-ready"
  }
 ]

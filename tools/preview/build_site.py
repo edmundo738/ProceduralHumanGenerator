@@ -27,6 +27,7 @@ DOCS = os.path.join(ROOT, "docs", "head_phaseA")
 THREE_VERSION = "0.186.1"
 
 DESC = {
+    "waifu": "WAIFU v1 — fundação anime CC (pack SimpleRig do dono): corpo+olhos+boca+mãos montados, ~5k tris LOW POLY com UVs, cores kawaii (pele/olhos escuros/boca rosa), sombreamento TOON. Estatura 1.58 m estilo Zelda; WHR 0.70; gap mama 26 (banda refs).",
     "m00": "A·BASE — fundação CC0 (Female base, 18577 verts) sem morphs; mama já em banda refs (gap 20.5). O ponto de partida do caminho A.",
     "w02": "A·seed 202 (A.2 carne ligada) — estatura 1607, cintura 226, WHR 0.72, mama+.",
     "w03": "A·seed 303 (A.2 carne ligada) — estatura 1566, cintura 206, anca 290: compacta.",
@@ -57,6 +58,7 @@ COLUMNS = [("antes", "ours", True), ("Fase A", "oursA", True), ("A2b", "oursA2",
            ("femalechar", "femalechar", False)]
 
 RENDERS = [
+    ("waifu_v1.png", "WAIFU v1 — anime low-poly game-ready (frente/perfil/costas)", "Pedido do dono: 'waifu simples low poly bem feita para jogos 3D estilo Zelda anime cartoon kawaii'. Fundação = pack SimpleRig anime do dono (REF-F-ANIME-001): corpo A-pose + EyeBall + MouthPart + Hand01 ancorada ao osso bn_hand (PROVA por PCA: asset modelado na direcção do braço, 8 de diferença), pés já no corpo. ~5k tris, UVs intactas p/ texturas. Ver em 3D: variante 'WAIFU' no Modelo 3D (sombreado toon + cores kawaii). Gate: 'lê como waifu Zelda/anime?'"),
     ("basemesh_gen3.png", "CAMINHO A.2 — CARNE LIGADA: morphs propagam às regiões vizinhas", "Directriz do dono: 'músculos são conectados, isso é carne — cada alteração muda as vizinhas em gradiente suave'. Cada canal tem efeito principal + propagação (anca→coxa 0.35, glúteo→coxa traseira 0.30 + lombar 0.25, cintura→costelas 0.30...); rampas 45→120mm. Sem 'divisões' ao esticar. Também: winding GLB corrigido (fim do x-ray) + auto-frame corpo/cabeça."),
     ("basemesh_zoom3.png", "CAMINHO A.2 — zoom mama (carne ligada)", "Mama agora arrasta a parede torácica (0.25) — o peito acompanha, não é ilha."),
     ("basemesh_gen2.png", "CAMINHO A.1 — AMPLITUDES LARGAS: variação VISÍVEL (6 corpos)", "Resposta ao gate A.0 ('diferenças microscópicas'): bandas 3x mais largas — estatura 1566-1792, cintura 194-317, WHR 0.67-0.97, mama/glúteo com amplitude. A fundação CC0 mantém a anatomia; os morphs agora LÊEM. Gate: 'qual alcance queres ao clicar?'"),

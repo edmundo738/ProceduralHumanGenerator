@@ -61,12 +61,29 @@ vps.forEach((v) => v.controls.addEventListener("change", () => {
   vps.forEach((o) => { if (o !== v) o.controls.target.copy(v.controls.target); });
 }));
 
-async function loadGLB(url) {
+const TOON_RAMP = new THREE.DataTexture(new Uint8Array([70, 150, 255]), 3, 1, THREE.RedFormat);
+TOON_RAMP.minFilter = THREE.NearestFilter; TOON_RAMP.magFilter = THREE.NearestFilter;
+TOON_RAMP.needsUpdate = true;
+
+async function loadGLB(url, toon) {
+  // devolve um GROUP (variantes multi-mesh p/ ex. waifu: corpo+olhos+boca+mãos)
   if (!cache.has(url)) cache.set(url, loader.loadAsync(url).then((g) => {
-    let geo = null;
-    g.scene.traverse((o) => { if (o.isMesh && !geo) geo = o.geometry; });
-    geo.computeVertexNormals();
-    return geo;
+    const group = new THREE.Group();
+    g.scene.updateMatrixWorld(true);
+    g.scene.traverse((o) => {
+      if (!o.isMesh) return;
+      const geo = o.geometry.clone();
+      geo.applyMatrix4(o.matrixWorld);
+      geo.computeVertexNormals();
+      let m = material;
+      if (toon) {   // look anime/kawaii: toon + cor do próprio GLB
+        const col = (o.material && o.material.color) ? o.material.color.clone()
+                                                     : new THREE.Color(0xcccccc);
+        m = new THREE.MeshToonMaterial({ color: col, gradientMap: TOON_RAMP });
+      }
+      group.add(new THREE.Mesh(geo, m));
+    });
+    return group;
   }));
   return cache.get(url);
 }
@@ -82,16 +99,17 @@ async function loadEdges(url) {
 async function show(vp, id) {
   vp.variant = DATA.variants.find((v) => v.id === id);
   vp.loading.style.display = "flex";
-  const geo = await loadGLB(`models/${id}_${state.mesh}.glb`);
+  const loaded = await loadGLB(`models/${id}_${state.mesh}.glb`, !!vp.variant.toon);
   // AUTO-FRAME: corpos completos (~1.7 m) não podem usar a moldura de
   // cabeça (câmara a 0.6 m = DENTRO do corpo → x-ray + "olho de peixe").
-  if (geo.boundingBox === null) geo.computeBoundingBox();
-  if (geo.boundingBox.max.y - geo.boundingBox.min.y > 1.2 && state.frame !== "body") {
+  const bb = new THREE.Box3().setFromObject(loaded);
+  if (bb.max.y - bb.min.y > 1.2 && state.frame !== "body") {
     setFrame("body");
   }
   const group = new THREE.Group();
-  group.add(new THREE.Mesh(geo, material));
-  if (state.wire) group.add(new THREE.LineSegments(await loadEdges(`models/${id}_edges.bin`), wireMat));
+  group.add(loaded);
+  if (state.wire && !vp.variant.toon)
+    group.add(new THREE.LineSegments(await loadEdges(`models/${id}_edges.bin`), wireMat));
   if (vp.group) vp.scene.remove(vp.group);
   vp.group = group; vp.scene.add(group);
   const m = vp.variant[state.mesh];

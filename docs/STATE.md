@@ -373,3 +373,9 @@ mkdir -p out/refs && git archive 408517a "treino para o arena" | tar -x -C out/r
 /home/user/.venv-hcg/bin/python tools/headless_blender.py run tools/headstudy/export_heads.py
 # site: tools/preview/serve.sh 8080  (a cópia commitada em site/ já serve)
 ```
+
+**WAIFU v1 (2026-09-24, pedido do dono):** anime low-poly game-ready do pack
+SimpleRig (corpo+olhos+boca+mãos; ~5k tris; UVs; toon+kawaii no site; 1.58 m;
+WHR 0.70, gap 26). Painel waifu_v1.png no TOPO; variante 'WAIFU' no Modelo 3D.
+GATE pendente: 'lê como waifu Zelda/anime?' → se sim: morphs A.2 adaptados +
+base selector no gerador + texturas. bpy 5.0.1 + stubs /tmp/stubs OK.
