@@ -384,3 +384,8 @@ base selector no gerador + texturas. bpy 5.0.1 + stubs /tmp/stubs OK.
 invólucros da própria geometria (ajuste perfeito); ANIMADA no site (respira,
 balança, pestaneja). Variant 'waifu2' + painel waifu_v2.png no TOPO. Writer
 GLB multi-material com validação de volume assinado (lição aplicada).
+
+**WAIFU v3 (2026-09-24):** assets REAIS baixados (three.js MIT: Michelle+Xbot+Soldier
+via sparse-checkout), PELE NEGRA recolorida no atlas albedo, ANIMAÇÕES REAIS no site
+(Samba nativa + retarget Xbot: idle/walk/run/agree/negar + crossfade + botões).
+Variant 'waifu3'; painel waifu_v3.png no TOPO. Shells v2 rejeitadas pelo dono.

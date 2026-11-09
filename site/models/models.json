@@ -301,6 +301,30 @@
    "quads": 0,
    "bytes": 520880
   },
-  "desc": "WAIFU v2"
+  "desc": "WAIFU v2 \u2014 CABELO bob (com franja), VESTIDO rosa sakura (topo + saia A), BOTAS chocolate; tudo constru\u00eddo por inv\u00f3lucro sobre a pr\u00f3pria geometria = ajuste perfeito. ANIMADA no visualizador: respira, balan\u00e7a e PESTANEJA. ~14k tris com roupa."
+ },
+ {
+  "id": "waifu3",
+  "label": "WAIFU v3 \u2014 assets REAIS + ANIMADA (dan\u00e7a!) + pele NEGRA",
+  "env": {
+   "HCG_BODY": "waifu3"
+  },
+  "commit": "waifu-v3",
+  "digest": "aac748dc53ee51c8",
+  "toon": false,
+  "animated": true,
+  "smooth": {
+   "verts": 16340,
+   "faces": 28106,
+   "quads": 0,
+   "bytes": 3267264
+  },
+  "cage": {
+   "verts": 16340,
+   "faces": 28106,
+   "quads": 0,
+   "bytes": 3267264
+  },
+  "desc": "WAIFU v3"
  }
 ]

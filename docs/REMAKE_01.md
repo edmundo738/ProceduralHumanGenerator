@@ -296,3 +296,27 @@ proporções anime + integração no gerador (base selector) + texturas.
   material, a cada 3.4 s).
 - Painel waifu_v2.png (3 vistas, com roupa). Medidas do corpo por baixo
   inalteradas (WHR 0.70, gap 24).
+
+
+## 15. WAIFU v3 — ASSETS REAIS da net + ANIMAÇÕES + PELE NEGRA (2026-09-24)
+
+Pedido do dono: "vai na net e baixa assets de roupa e cabelo, estes teus
+estão errados; aproveita e baixa animações, faça force isso acontecer; e
+textura negra de pele."  (As shells v2 foram REJEITADAS.)
+
+- **Saída para a net**: o sandbox só acede a github/npm — os assets vieram
+  do repositório three.js (MIT) via git sparse-checkout: **Michelle.glb**
+  (feminina com cabelo+roupa REAIS texturizados, esqueleto, clip
+  SambaDance) + **Xbot.glb** (7 clips) + Soldier.glb (reserva).
+  Originais arquivados em references/female/stylized/downloaded_assets/.
+- **Pele NEGRA**: recolorida DENTRO do atlas albedo do Michelle (máscara
+  de pele clássica + multiplicação [0.40, 0.29, 0.24] que preserva o
+  sombreado — roupa/cabelo intactos); GLB reconstruído byte a byte
+  (skin_negra.py).
+- **ANIMAÇÕES (force ✓)**: AnimationMixer no site — 💃 Samba nativa +
+  idle/walk/run/agree/headShake RETARGET do Xbot via
+  SkeletonUtils.retargetClip (ambos rigs Mixamo), com crossfade e barra
+  de botões (#animbar).
+- Painel waifu_v3.png; variant 'waifu3' (animated).
+- Nota honesta: as 3 imagens de referência do dono não são visíveis neste
+  ambiente — o critério final é o olho dele no 3D.

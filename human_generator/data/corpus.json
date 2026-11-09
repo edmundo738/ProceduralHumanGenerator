@@ -331,6 +331,21 @@
  },
  "artefacts": {
   "waifu": "tools/waifu/build_waifu.py -> site/models/waifu_*.glb + docs/head_phaseA/waifu_v1.png",
-  "waifu2": "tools/waifu/build_waifu2.py → site/models/waifu2_*.glb + docs/head_phaseA/waifu_v2.png"
+  "waifu2": "tools/waifu/build_waifu2.py → site/models/waifu2_*.glb + docs/head_phaseA/waifu_v2.png",
+  "waifu3": "tools/waifu/skin_negra.py -> site/models/waifu3_*.glb + anim_xbot.glb"
+ },
+ "downloaded_assets": {
+  "note": "saida para a net = so github/npm (restricao do sandbox); fontes verificadas por licenca",
+  "threejs_repo_MIT": {
+   "Michelle.glb": "personagem feminina (cabelo+roupa+texturas+esqueleto+clip SambaDance); usada como waifu3",
+   "Xbot.glb": "7 clips (idle/walk/run/agree/headShake/sad_pose/sneak_pose) - fonte de retarget",
+   "Soldier.glb": "clips Idle/Walk/Run/TPose (reserva)",
+   "obtencao": "git sparse-checkout (blob:none) de github.com/mrdoob/three.js",
+   "licenca": "repositorio MIT; creditos Mixamo/three.js; originais arquivados em references/female/stylized/downloaded_assets/"
+  },
+  "waifu3_negra": {
+   "tecnica": "pele recolorida DENTRO do atlas albedo (mascara de pele classica + multiplicacao [0.40,0.29,0.24] preservando sombreado); GLB reconstruido byte-a-byte (so a imagem muda)",
+   "animacoes_site": "AnimationMixer + SkeletonUtils.retargetClip(Xbot->Michelle) + crossfade; barra de botoes"
+  }
  }
 }

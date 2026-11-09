@@ -1,0 +1,7 @@
+Assets baixados do repositorio mrdoob/three.js (MIT) em 2026-09-24:
+- Michelle.glb: modelo de personagem feminina (exemplos three.js)
+- Xbot.glb: 7 clips de animacao (idle/walk/run/agree/headShake/sad/sneak)
+- Soldier.glb: clips Idle/Walk/Run/TPose
+Fonte: https://github.com/mrdoob/three.js (examples/models/gltf)
+Licenca do repositorio: MIT. Creditos dos modelos: Mixamo/three.js.
+Michelle com pele recolorida para negra (skin_negra.py) = waifu3.

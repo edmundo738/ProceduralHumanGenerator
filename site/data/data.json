@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8",
  "variants": [
   {
    "id": "antes",
@@ -304,6 +304,30 @@
     "bytes": 520880
    },
    "desc": "WAIFU v2 — CABELO bob (com franja), VESTIDO rosa sakura (topo + saia A), BOTAS chocolate; tudo construído por invólucro sobre a própria geometria = ajuste perfeito. ANIMADA no visualizador: respira, balança e PESTANEJA. ~14k tris com roupa."
+  },
+  {
+   "id": "waifu3",
+   "label": "WAIFU v3 — assets REAIS + ANIMADA (dança!) + pele NEGRA",
+   "env": {
+    "HCG_BODY": "waifu3"
+   },
+   "commit": "waifu-v3",
+   "digest": "aac748dc53ee51c8",
+   "toon": false,
+   "animated": true,
+   "smooth": {
+    "verts": 16340,
+    "faces": 28106,
+    "quads": 0,
+    "bytes": 3267264
+   },
+   "cage": {
+    "verts": 16340,
+    "faces": 28106,
+    "quads": 0,
+    "bytes": 3267264
+   },
+   "desc": "WAIFU v3 — ASSETS REAIS baixados da net (three.js/MIT): Michelle (cabelo, roupa e texturas de verdade) com PELE NEGRA recolorida na textura (selectiva, roupa/cabelo intactos) + ANIMAÇÕES REAIS: 💃 Samba embutida + idle/andar/correr/concordar/negar retonados do Xbot. Usa a barra de botões acima do modelo."
   }
  ],
  "metrics": {
@@ -583,6 +607,11 @@
   }
  ],
  "renders": [
+  {
+   "src": "waifu_v3.png",
+   "title": "WAIFU v3 — ASSETS REAIS (baixados) + PELE NEGRA + ANIMAÇÕES (frente/perfil/costas)",
+   "caption": "Pedido do dono: 'vai na net e baixa assets de roupa e cabelo; aproveita e baixa animações; textura negra de pele'. Fundação = Michelle (repo three.js, MIT): cabelo e roupa REAIS (texturas, não shells). Pele recolorida para NEGRA dentro do atlas albedo (máscara de pele + multiplicação que preserva sombreado). ANIMAÇÕES: clip Samba embutido + idle/walk/run/agree/headShake retonados do Xbot (SkeletonUtils) — barra de botões no visualizador. As minhas shells v2 foram rejeitadas ('estão errados') — substituídas por assets a sério."
+  },
   {
    "src": "waifu_v2.png",
    "title": "WAIFU v2 — CABELO + VESTIDO + BOTAS (frente/perfil/costas)",

@@ -2,6 +2,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js";
 
 const $ = (s) => document.querySelector(s);
 const DATA = await (await fetch(`data/data.json?v=${Date.now()}`)).json();
@@ -97,10 +98,79 @@ async function loadEdges(url) {
   return cache.get(url);
 }
 
+const clock = new THREE.Clock();
+
+function loadAnimated(url) {   // preserva cena skinned + clips (p/ ex. waifu3)
+  if (!cache.has(url)) cache.set(url, loader.loadAsync(url).then((g) => g));
+  return cache.get(url);
+}
+
+function findSkinned(root) {
+  let out = null;
+  root.traverse((o) => { if (o.isSkinnedMesh && !out) out = o; });
+  return out;
+}
+
+async function playClip(vp, name) {
+  const c = vp.clips[name];
+  if (!c || !vp.mixer) return;
+  const next = vp.mixer.clipAction(c);
+  if (vp.action && vp.action !== next) {
+    next.reset().play();
+    vp.action.crossFadeTo(next, 0.35, true);
+  } else if (!vp.action) {
+    next.play();
+  }
+  vp.action = next;
+  state.clip = name;
+  document.querySelectorAll("#animbar button").forEach((b) =>
+    b.classList.toggle("on", b.dataset.clip === name));
+}
+
+function showAnimBar(clips) {
+  const bar = $("#animbar");
+  bar.innerHTML = "";
+  bar.style.display = "flex";
+  for (const c of clips) {
+    const b = document.createElement("button");
+    b.dataset.clip = c;
+    b.textContent = ({ SambaDance: "💃 Samba", idle: "Idle", walk: "Andar",
+                       run: "Correr", agree: "👍 Concordar",
+                       headShake: "🙅 Negar", TPose: "T-pose" })[c] || c;
+    b.addEventListener("click", () => vps.forEach((v) => v.mixer && playClip(v, c)));
+    bar.appendChild(b);
+  }
+}
+
 async function show(vp, id) {
   vp.variant = DATA.variants.find((v) => v.id === id);
   vp.loading.style.display = "flex";
-  const loaded = await loadGLB(`models/${id}_${state.mesh}.glb`, !!vp.variant.toon);
+  let loaded;
+  if (vp.variant.animated) {
+    // variantes ANIMADAS: cena skinned original + mixer + retarget (Xbot)
+    const g = await loadAnimated(`models/${id}_${state.mesh}.glb`);
+    loaded = g.scene;
+    vp.mixer = new THREE.AnimationMixer(loaded);
+    vp.clips = {};
+    for (const c of g.animations) vp.clips[c.name] = c;
+    try {
+      const xb = await loadAnimated("models/anim_xbot.glb");
+      const src = findSkinned(xb.scene), dst = findSkinned(loaded);
+      if (src && dst) for (const n of ["idle", "walk", "run", "agree", "headShake"]) {
+        const c = xb.animations.find((a) => a.name === n);
+        if (c) vp.clips[n] = SkeletonUtils.retargetClip(dst, src, c);
+      }
+    } catch (e) { console.warn("retarget Xbot falhou (uso só clips nativos):", e); }
+    const names = Object.keys(vp.clips);
+    showAnimBar(names);
+    vps.forEach((v) => { if (v !== vp && v.variant && v.variant.id === id) v.clips = vp.clips; });
+    playClip(vp, vp.clips.SambaDance ? "SambaDance" : names[0]);
+    vp.anim = null;
+  } else {
+    $("#animbar").style.display = "none";
+    vp.mixer = null; vp.action = null;
+    loaded = await loadGLB(`models/${id}_${state.mesh}.glb`, !!vp.variant.toon);
+  }
   // AUTO-FRAME: corpos completos (~1.7 m) não podem usar a moldura de
   // cabeça (câmara a 0.6 m = DENTRO do corpo → x-ray + "olho de peixe").
   const bb = new THREE.Box3().setFromObject(loaded);
@@ -109,8 +179,10 @@ async function show(vp, id) {
   }
   const group = new THREE.Group();
   group.add(loaded);
-  vp.anim = vp.variant.toon ? loaded : null;
-  if (vp.anim) prepAnim(vp.anim);
+  if (!vp.variant.animated) {
+    vp.anim = vp.variant.toon ? loaded : null;
+    if (vp.anim) prepAnim(vp.anim);
+  }
   if (state.wire && !vp.variant.toon)
     group.add(new THREE.LineSegments(await loadEdges(`models/${id}_edges.bin`), wireMat));
   if (vp.group) vp.scene.remove(vp.group);
@@ -176,7 +248,9 @@ function idleAnim(g, t) {   // respiração + balanço + pestanejar (kawaii idle
 
 function loop() {
   requestAnimationFrame(loop);
+  const dt = clock.getDelta();
   const tAnim = performance.now() / 1000;
+  vps.forEach((v) => { if (v.mixer) v.mixer.update(dt); });
   if (state.spin) {
     const t = vps[0].controls.target, p = camera.position.clone().sub(t);
     p.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.006); camera.position.copy(t).add(p);
