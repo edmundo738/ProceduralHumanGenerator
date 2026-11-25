@@ -1,40 +1,52 @@
-// THE STALKER v2 — geometria CRIADA DE RAIO (build_stalker2.py) + pivôs
-// (stalker2_rig.json) → hierarquia em three.js → ANIMAÇÃO PROCEDURAL
-// própria (marcha assimétrica, respiração, mandíbula). Zero modelos
-// emprestados, zero retarget. FSM 7 estados + áudio + PSX sujo.
+// THE STALKER v3 — geometria medida (build_stalker2.py) + pivôs
+// (stalker2_rig.json) → hierarquia three.js → ANIMAÇÃO PROCEDURAL
+// própria (módulo stalker_pose.js?v=db15d471: IK 2-ossos, pés plantados, joelho
+// invertido). O módulo de postura é PURO e é partilhado com o
+// instrumento tools/creature/anim_check.mjs — a animação é MEDIDA.
+//
+// BUGS v2 corrigidos aqui (o boneco "esticava"):
+//   1. grupos filhos recebiam pivôs ABSOLUTOS como posição LOCAL →
+//      cada parte deslocava-se pelo pivô do pai (criatura desmontada);
+//   2. torso.scale no GRUPO (pai de tudo) → respiração esticava o
+//      boneco; agora escala só na MALHA;
+//   3. DORMANT afundava o root −0.42m (pés debaixo do chão) → agora
+//      agacha por articulação (IK).
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { computePose, stepHz } from "./stalker_pose.js?v=db15d471";
 
 const $ = (s) => document.querySelector(s);
 
-// ---------------------------------------------------------------- cena (igual v1)
+// ---------------------------------------------------------------- cena
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x020202);
-scene.fog = new THREE.Fog(0x020202, 1.5, 17);
+scene.fog = new THREE.Fog(0x020202, 2.0, 20);
 const camera = new THREE.PerspectiveCamera(50, innerWidth / innerHeight, 0.05, 40);
-camera.position.set(0, 1.55, 5.5);
+camera.position.set(0, 1.45, 4.6);
 const renderer = new THREE.WebGLRenderer({ antialias: false });
 renderer.setSize(innerWidth / 2, innerHeight / 2, false);
 $("#scene").appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 1.1, 0);
+controls.target.set(0, 1.05, 0);
 controls.enableDamping = true;
 controls.maxDistance = 12; controls.minDistance = 1.2;
 controls.maxPolarAngle = 1.65;
-scene.add(new THREE.AmbientLight(0x1a1418, 0.6));
-const spot = new THREE.SpotLight(0xcfc4bd, 60, 30, 0.55, 1.0, 1.2);
-spot.position.set(0, 4.5, 0); scene.add(spot); scene.add(spot.target);
+scene.add(new THREE.AmbientLight(0x241c20, 1.1));
+const spot = new THREE.SpotLight(0xcfc4bd, 55, 30, 0.55, 1.0, 1.2);
+spot.position.set(0, 3.6, 2.4); scene.add(spot); scene.add(spot.target);
+const rim = new THREE.PointLight(0x3a0d0d, 6, 14);          // contraluz vermelho frio
+rim.position.set(-3, 2.0, -4); scene.add(rim);
 const eyeLight = new THREE.PointLight(0x660000, 0.0, 3.5); scene.add(eyeLight);
 const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 80),
   new THREE.MeshStandardMaterial({ color: 0x0a0708, roughness: 1 }));
 ground.rotation.x = -Math.PI / 2; scene.add(ground);
 
-// ---------------------------------------------------------------- criatura v2
+// ---------------------------------------------------------------- criatura v3
 const loader = new GLTFLoader();
-const G = {};           // grupos por parte
+const G = {};           // grupos por parte (pivot = origem do grupo)
 const M = {};           // meshes por parte
-let creatureRoot = null, headG = null, mandibleG = null, eyeMats = [];
+let creatureRoot = null, headG = null, mandibleG = null, eyeMats = [], torsoMesh = null;
 
 async function load() {
   const gltf = await loader.loadAsync("models/stalker2_smooth.glb");
@@ -42,27 +54,32 @@ async function load() {
   creatureRoot = new THREE.Group();
   scene.add(creatureRoot);
   for (const o of gltf.scene.children) M[o.name] = o;
+  const PV = {};                                    // pivôs absolutos
+  for (const r of def.rig) PV[r.name] = r.pivot;
   for (const r of def.rig) {
     const g = new THREE.Group();
     g.name = r.name;
-    g.position.set(r.pivot[0], r.pivot[1], r.pivot[2]);
+    // LOCAL = pivô − pivô do pai → mundo do grupo = pivô absoluto
+    // (bug v2: pivô absoluto como local desmontava a criatura)
+    const pp = r.parent ? PV[r.parent] : [0, 0, 0];
+    g.position.set(r.pivot[0] - pp[0], r.pivot[1] - pp[1], r.pivot[2] - pp[2]);
     G[r.name] = g;
     const mesh = M[r.name];
     if (mesh) {
-      mesh.position.sub(g.position);       // geometria absoluta → local ao pivô
+      mesh.position.set(-r.pivot[0], -r.pivot[1], -r.pivot[2]);  // verts absolutos
       g.add(mesh);
       if (r.name.startsWith("eye_")) eyeMats.push(mesh.material);
+      if (r.name === "torso") torsoMesh = mesh;
     }
     (r.parent ? G[r.parent] : creatureRoot).add(g);
   }
   headG = G.head; mandibleG = G.mandible;
-  // emissive dos olhos já vem do GLB; intensidade controlada por estado
-  for (const m of eyeMats) { m.emissiveIntensity = 1.0; }
+  for (const m of eyeMats) m.emissiveIntensity = 1.0;
   $("#st").textContent = "DORMANT";
 }
 load().catch((e) => { $("#st").textContent = "ERRO: " + e.message; console.error(e); });
 
-// ---------------------------------------------------------------- FSM (igual v1)
+// ---------------------------------------------------------------- FSM
 const state = { s: "DORMANT", auto: true, next: 5, mouth: 0 };
 const pos = new THREE.Vector3(0, 0, -4);
 let target = pos.clone(), speed = 0, phase = 0;
@@ -107,7 +124,7 @@ renderer.domElement.addEventListener("pointerdown", (e) => {
   }
 });
 
-// ---------------------------------------------------------------- som (igual v1)
+// ---------------------------------------------------------------- som
 let audio = null;
 function initAudio() {
   audio = new (window.AudioContext || window.webkitAudioContext)();
@@ -137,50 +154,30 @@ function breath(dt) {
   audio.gain.gain.value = (hunting ? 0.16 : 0.06) * env;
 }
 
-// ---------------------------------------------------------------- ANIMAÇÃO PROCEDURAL (nossa)
+// ---------------------------------------------------------------- ANIMAÇÃO (postura do módulo PURO)
 const clock = new THREE.Clock();
 const tmp = new THREE.Vector3();
-const S = (nm) => G[nm];
 
 function animate() {
   requestAnimationFrame(animate);
   const dt = Math.min(clock.getDelta(), 0.05);
   const t = clock.elapsedTime;
   if (creatureRoot) {
+    const d = STATES[state.s];
     const hunting = state.s === "HUNTING";
-    const gaitHz = speed > 2.5 ? 3.1 : speed > 1 ? 1.9 : 1.35;
-    if (speed > 0) phase += dt * gaitHz * (1 + 0.05 * Math.sin(t * 0.7));  // claudicação leve
-    const dormant = state.s === "DORMANT";
+    if (speed > 0.01) phase += dt * 2 * Math.PI * stepHz(speed) * (1 + 0.05 * Math.sin(t * 0.7));
 
-    // ---- pernas: passada assimétrica (a esquerda anda 94% da direita)
-    for (const [s, ph] of [["R", 0], ["L", Math.PI]]) {
-      const p = phase + ph + (s === "L" ? 0.18 : 0);
-      const swing = dormant ? 1.25 : Math.sin(p) * (hunting ? 0.85 : 0.55);
-      const knee = dormant ? -2.1 : (0.35 + 0.45 * Math.max(0, Math.sin(p + 1.1)))
-        + (hunting ? 0.35 : 0);
-      if (S("thigh_" + s)) S("thigh_" + s).rotation.x = swing;
-      if (S("shin_" + s)) S("shin_" + s).rotation.x = -knee;      // joelho estranho: dobrado ao contrário
-      if (S("foot_" + s)) S("foot_" + s).rotation.x = -0.25 - Math.sin(p + 0.4) * 0.18;
+    // ---- postura (stalker_pose.js?v=db15d471 — o MESMO código que o anim_check.mjs mede)
+    const P = computePose(state.s, t, phase, speed);
+    for (const [nm, r] of Object.entries(P.parts)) {
+      const g = G[nm];
+      if (g) g.rotation.set(r[0], r[1] || 0, r[2] || 0);
     }
-    // ---- braços: pendem, contrafase, arrasto
-    for (const [s, ph] of [["R", 0], ["L", Math.PI]]) {
-      const p = phase + ph;
-      const dangle = dormant ? 0.12 : Math.sin(p) * (hunting ? 0.7 : 0.32);
-      if (S("upperarm_" + s)) S("upperarm_" + s).rotation.x = -0.1 + dangle;
-      if (S("upperarm_" + s)) S("upperarm_" + s).rotation.z = (s === "R" ? -1 : 1) * (0.14 + 0.05 * Math.sin(t * 0.9 + ph));
-      if (S("forearm_" + s)) S("forearm_" + s).rotation.x = 0.3 + Math.sin(p + 0.5) * 0.18;
-      if (S("hand_" + s)) S("hand_" + s).rotation.x = Math.sin(p + 0.8) * 0.22 + 0.1;
-    }
-    // ---- tronco: respiração irregular + balanço; agachado em DORMANT
-    const torso = S("torso");
-    if (torso) {
-      const br = 1 + Math.sin(t * 1.9) * 0.012 + Math.sin(t * 7.3) * 0.004;
-      torso.scale.set(br, 1, br);
-      torso.rotation.z = Math.sin(phase * 0.5) * (speed > 0 ? 0.05 : 0.012);
-      torso.rotation.x = dormant ? 0.28 : 0.10 + Math.sin(t * 1.1) * 0.015;
-    }
-    creatureRoot.position.y = dormant ? -0.42 : Math.abs(Math.sin(phase)) * (speed > 2 ? 0.05 : 0.02);
-    // ---- cabeça: olha o jogador com ATRASO forte + tremor (a cara segue devagar)
+    // respiração: escala SÓ na malha do tronco (grupo nunca — esticava)
+    if (torsoMesh) torsoMesh.scale.set(P.torsoMesh.x, 1, P.torsoMesh.z);
+    creatureRoot.position.y = P.rootY;
+
+    // ---- cabeça: tremor do módulo + look-at com ATRASO (a cara segue devagar)
     if (headG) {
       const hp = headG.getWorldPosition(tmp.set(0, 0, 0));
       const dirv = camera.position.clone().sub(hp);
@@ -189,17 +186,16 @@ function animate() {
       const k = 1 - Math.pow(0.004, dt);
       headG.rotation.y += (THREE.MathUtils.clamp(yaw, -1.1, 1.1) - headG.rotation.y) * k;
       headG.rotation.x += (THREE.MathUtils.clamp(-pitch + 0.25, -0.5, 0.6) - headG.rotation.x) * k;
-      headG.rotation.z = Math.sin(t * 13.0) * 0.02 * (hunting ? 2 : 1);
+      headG.rotation.z = P.headTremorZ;
     }
     // ---- olhos + mandíbula
-    const d = STATES[state.s];
     for (const m of eyeMats) m.emissiveIntensity = d.eye * (0.8 + 0.25 * Math.sin(t * 2.3));
     eyeLight.intensity = d.eye * 0.5;
     if (mandibleG) {
       state.mouth += (d.mouth * 0.95 - state.mouth) * Math.min(1, dt * 2.0);
       mandibleG.rotation.x = state.mouth * 0.95 + Math.sin(t * 2.6) * 0.02 * state.mouth;
     }
-    // ---- movimento FSM (igual v1)
+    // ---- movimento FSM
     const toT = target.clone().sub(pos).setY(0);
     const dist = toT.length();
     if (speed > 0 && dist > (state.s === "HUNTING" ? 1.35 : 0.3)) {
@@ -212,7 +208,7 @@ function animate() {
       speed = 1.1;
     }
     creatureRoot.position.x = pos.x; creatureRoot.position.z = pos.z;
-    const face = (state.s === "STALKING" || state.s === "HUNTING" || dist < 0.4 || dormant)
+    const face = (state.s === "STALKING" || state.s === "HUNTING" || dist < 0.4 || state.s === "DORMANT")
       ? camera.position : target;
     const fv = face.clone().sub(creatureRoot.position).setY(0);
     if (fv.lengthSq() > 1e-4) {
@@ -220,9 +216,9 @@ function animate() {
       creatureRoot.rotation.y += ((yaw - creatureRoot.rotation.y + Math.PI * 3) % (Math.PI * 2) - Math.PI) * Math.min(1, dt * 3);
     }
     // luz segue + flicker
-    spot.position.set(pos.x, 4.2, pos.z + 0.6);
+    spot.position.set(pos.x, 3.6, pos.z + 2.4);
     spot.target.position.copy(pos);
-    spot.intensity = 55 + Math.sin(t * 31) * 6 + Math.random() * 8;
+    spot.intensity = 48 + Math.sin(t * 31) * 6 + Math.random() * 8;
     eyeLight.position.copy(creatureRoot.position).add(new THREE.Vector3(0, 1.62, 0));
     // AUTO
     if (state.auto) {

@@ -414,3 +414,12 @@ anel; M9 por pivôs do rig). Ciclo 10 FAIL→8→5→5→1→0 = **17/17 PASS**
 (estatura 1752, punho −12mm do joelho, corcunda 100, coxa/canela 1.055,
 assim 19mm…). Painel = vistas + TABELA (panel_stalker.py). GLB 3492v/
 6188t digest 75a4e90d. Deploy com curls por hash. Próximo: gate do dono.
+
+**STALKER v3.1 (2026-09-24):** dono: "a animação estica o boneco" → 3
+bugs achados por diagnóstico (pivôs absolutos como local = criatura
+desmontada; torso.scale no grupo = esticão; DORMANT enterrava os pés).
+Instrumento anim_check.mjs (spec A1–A6, módulo puro stalker_pose.js
+partilhado site/instrumento; IK 2-ossos, pé plantado, joelho
+invertido) → **6/6 PASS**. Painel = 2 tabelas (17/17 + 6/6). Deploy
+cp+curls por hash; cache-buster cobre o import do módulo. Próximo:
+gate do dono (estética: o que está pior).

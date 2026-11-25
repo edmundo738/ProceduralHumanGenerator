@@ -393,3 +393,33 @@ de proporção sem medição numérica do OUTPUT = mentira**.
   métrica/valor/banda/PASS. O painel É a prova.
 - GLB: 3492 verts / 6188 tris, digest 75a4e90d3441075e. Deploy:
   build + cp + curls com verificação por hash (GLB e painel).
+
+## 19. STALKER v3.1 — ANIMAÇÃO MEDIDA: 6/6 PASS (2026-09-24)
+
+Dono: "está horrível tudo, desde a animação que criaste que estica o
+boneco". Diagnóstico por código + instrumento (não por palpite) —
+**3 bugs reais no stalker.js v2**:
+
+1. **Criatura desmontada**: grupos filhos recebiam pivôs ABSOLUTOS como
+   posição LOCAL → cada parte deslocava-se pelo pivô do pai (cabeça a
+   y=2.52 em vez de 1.52; pernas a 2.06) — o boneco estava literalmente
+   espalhado/esticado. Correcção: local = pivô − pivô do pai.
+2. **Respiração esticava o corpo**: `torso.scale` no GRUPO (pai de
+   cabeça/braços/pernas). Correcção: escala só na MALHA do tronco.
+3. **DORMANT enterrava os pés**: root −0.42m cego → pés 42cm abaixo do
+   chão. Correcção: agacho por articulação (IK) + root −0.33m.
+
+**Instrumento novo**: `tools/creature/anim_check.mjs` (node + three
+vendorizado) monta a MESMA hierarquia do site e aplica o MESMO módulo
+puro de postura (`tools/preview/site/stalker_pose.js` — partilhado
+site/instrumento, o que é medido é o que corre). Spec A1–A6 declarada
+antes de medir. Postura refeita: **IK de 2 ossos por perna** (pivôs do
+rig: coxa 0.500 + canela 0.475), joelho invertido (dobra p/ trás), pé
+com alvo: apoio recua à velocidade exacta do corpo (pé parado no
+mundo), balanço eleva cedo (garra), claudicação L 94%.
+
+**Resultado: 6/6 PASS** — ossos 0.0mm de desvio (fim do esticão) ·
+solas +10mm mín (nunca debaixo do chão) · patinação 0.40 m/s ·
+DORMANT agacha a 1.36m por articulação. Painel com as DUAS tabelas
+(geometria 17/17 + animação 6/6). Cache-buster agora cobre também o
+import do módulo de postura.

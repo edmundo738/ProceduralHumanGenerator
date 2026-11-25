@@ -61,7 +61,8 @@ def main():
     xT = sum(colw) + 30
     x0 = 20
     W = x0 + sum(t[0].width for t in tiles) + 20 * len(tiles) + xT + 20
-    H = max(t[0].height for t in tiles) + 34
+    # altura: tiles OU tabela geometria (17 linhas) + tabela animação (6)
+    H = max(max(t[0].height for t in tiles) + 34, 34 + 22 + 17 * 19 + 44 + 40 + 24 + 6 * 19 + 30)
     panel = Image.new("L", (W, H), 24)
     dr = ImageDraw.Draw(panel)
 
@@ -101,6 +102,37 @@ def main():
     dr.line([(xt, y), (xt + sum(colw), y)], fill=70)
     dr.text((xt, y + 8), "PASS = dentro da banda (docs/CREATURE_SPEC_STALKER.md)",
             font=fs, fill=120)
+
+    # ---- tabela da ANIMAÇÃO (anim_check.mjs: mesmíssimo módulo do site)
+    ANIM = os.path.join(ROOT, "out", "refstudy", "stalker_anim_check.json")
+    if os.path.exists(ANIM):
+        aj = json.load(open(ANIM))
+        y += 40
+        dr.text((xt, y), f"ANIMAÇÃO (anim_check.mjs) · {aj['n_pass']}/6 PASS", font=fb, fill=235)
+        y += 24
+        am, sp, vd = aj["measures"], aj["spec"], aj["verdicts"]
+        for k in ("A1_ossos_mm", "A2_sola_min_mm", "A3_patin_ms", "A4_bob_mm",
+                  "A5_topo_de_pe_m", "A6_topo_dormant_m"):
+            v, p = am[k], vd[k]
+            lo, hi = sp[k]
+            unit = "mm" if k.endswith("_mm") else ("m/s" if k.endswith("_ms") else "m")
+            if k.endswith("_ms") and k == "A3_patin_ms":
+                band = f"[0..{aj['a3_band_ms']:.2f}]"
+                vv = f"{v:.2f}"
+            elif k == "A5_topo_de_pe_m":
+                band = f"[{lo:g}..{hi:g}]"
+                vv = f"{v:.2f}"
+            else:
+                band = f"[{lo:g}..{hi:g}]"
+                vv = f"{v:.1f}{unit}"
+            fill = 235 if p == "PASS" else 120
+            xc = xt
+            for txt, w, fnt in ((k, colw[0], fm), (vv, colw[1], fm),
+                                (band, colw[2], fs), (p, colw[3], fb)):
+                dr.text((xc, y), txt, font=fnt, fill=fill)
+                xc += w
+            y += 19
+        dr.line([(xt, y), (xt + sum(colw), y)], fill=70)
 
     out = os.path.join(DOC, "stalker2_views.png")
     panel.save(out)

@@ -374,7 +374,7 @@
     "quads": 0,
     "bytes": 3745012
    },
-   "desc": "THE STALKER v3 — CONSISTÊNCIA MEDIDA: 17/17 métricas PASS no GLB (measure_stalker.py → out/refstudy/stalker_measure.json). Estatura 1752mm; braços 0.607·estatura c/ punho ao nível do joelho (−12mm); mãos 177mm; cabeça 0.140·estatura a 34.4°; corcunda 100mm c/ pescoço retractado 79mm; coxa/canela 1.055; pés 259mm; ombro 0.203·S, cintura 0.112, anca/cintura 1.235; olhos r21 interocular 104mm; mandíbula 135mm; assimetria de braços 19mm. 3492 verts/6188 tris, 19 partes com pivôs. Animação 100% procedural em stalker.html."
+   "desc": "THE STALKER v3 — CONSISTÊNCIA MEDIDA: 17/17 métricas PASS no GLB (measure_stalker.py → out/refstudy/stalker_measure.json). Estatura 1752mm; braços 0.607·estatura c/ punho ao nível do joelho (−12mm); mãos 177mm; cabeça 0.140·estatura a 34.4°; corcunda 100mm c/ pescoço retractado 79mm; coxa/canela 1.055; pés 259mm; ombro 0.203·S, cintura 0.112, anca/cintura 1.235; olhos r21 interocular 104mm; mandíbula 135mm; assimetria de braços 19mm. 3492 verts/6188 tris, 19 partes com pivôs. Animação 100% procedural em stalker.html — MEDIDA (anim_check.mjs): ossos 0.0mm de desvio (fim do esticão), solas nunca debaixo do chão, pés plantados (patinação máx 0.40 m/s), DORMANT agacha por articulação (1.36m)."
   }
  ],
  "metrics": {
@@ -656,7 +656,7 @@
  "renders": [
   {
    "src": "stalker2_views.png",
-   "title": "THE STALKER v3 — MEDIDO DO GLB: 17/17 PASS (frente/perfil/costas + cabeça + tabela)",
+   "title": "THE STALKER v3 — MEDIDO: GEOMETRIA 17/17 + ANIMAÇÃO 6/6 (painel com 2 tabelas)",
    "caption": "Resposta ao gate do dono ('não mediu, só mentiste na cara dura; precisa de ser consistente'). Painel = vistas + TABELA de 17 métricas medidas do GLB gerado (z-up, mm) contra as bandas de docs/CREATURE_SPEC_STALKER.md: estatura 1752, punho −12mm do joelho, alcance 0.607·S, mão 177, cabeça 0.140·S a 34.4°, corcunda 100, pescoço retractado 79, coxa/canela 1.055, pé 259, ombro 0.203·S, cintura 0.112, anca/cintura 1.235, interocular 104, olho r21, mandíbula 135, assimetria 19mm. Ciclo de conformidade: 10 FAIL→8→5→5→1→0 (a medição apanhou a troca de eixos do loft, anéis a poluir fatias, esferas de junção a inflar extensões, braços 127mm curtos). Instrumento: tools/creature/measure_stalker.py; regra v3: proporção só se declara com a tabela."
   },
   {

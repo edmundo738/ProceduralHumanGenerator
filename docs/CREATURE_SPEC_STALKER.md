@@ -42,3 +42,33 @@ Regra v3: proporção só se declara com a tabela PASS; bandas = fonte única (S
 Ciclo de conformidade desta versão: 10 FAIL → 8 → 5 → 5 → 1 → 0 (cada FAIL diagnosticado
 por números: troca de eixos do loft, anéis do pescoço a poluir fatias, esferas de junção
 a inflar extensões, braços 127mm curtos, corcunda inexistente).
+
+## v3.1 — spec da ANIMAÇÃO (declarada ANTES da medição)
+
+Instrumento: `tools/creature/anim_check.mjs` (aplica o módulo puro
+`tools/preview/site/stalker_pose.js` — o MESMO código do site — à
+hierarquia real do GLB; 7 estados × 8s × 30fps). Saída:
+`out/refstudy/stalker_anim_check.json`.
+
+| id | o que garante | banda |
+|---|---|---|
+| A1 | ossos constantes (ombro−cotovelo−punho, anca−joelho−tornozelo, pescoço): desvio ≤ 2mm — apanha escala em grupos (o "estica o boneco") | ≤ 2mm |
+| A2 | solas nunca abaixo do chão | ≥ −25mm |
+| A3 | patinação: velocidade horizontal do pé durante contacto | ≤ 0.35·v + 0.15 m/s |
+| A4 | bob vertical do root | ≤ 60mm |
+| A5 | de pé (não-DORMANT): topo da cabeça | 1.50–1.86m |
+| A6 | DORMANT agacha de verdade: topo da cabeça + canela dobrada | 0.90–1.45m e |rx|≥0.8 |
+
+## v3.1 — resultado medido da animação (2026-09-24)
+
+`node tools/creature/anim_check.mjs` → **6/6 PASS**
+(out/refstudy/stalker_anim_check.json): A1 ossos 0.0mm · A2 sola mín
++10.2mm (HUNTING 21.6 = só as garras tocam, corrida) · A3 patinação
+0.40 m/s (banda 1.27) · A4 bob 26mm · A5 topo de pé 1.69–1.72m ·
+A6 DORMANT topo 1.355m + canela 1.68 rad. Ciclo: 1/6 → 4/6 → 5/6 → 6/6.
+Refinamentos DECLARADOS (instrumento): A4 passou a medir a AMPLITUDE da
+oscilação dentro do estado (o offset estático do agachado não é bob);
+bug do instrumento corrigido (Float32Array de um Buffer converte bytes —
+agora readFloatLE). Movimento: apoio do pé recua à velocidade exacta do
+corpo (dz/dt = −v ⇒ pé parado no mundo); alvo do tornozelo sobe pela
+folga da garra (HUNTING escavava −25.5mm sem folga).
