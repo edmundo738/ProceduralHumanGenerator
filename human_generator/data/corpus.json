@@ -310,6 +310,12 @@
    "subject": "THE STALKER v3.1 (animação 'estica o boneco')",
    "verdict": "GATE NEGATIVO do dono + emenda medida",
    "lesson": "Dono: 'está horrível tudo, desde a animação que criaste que estica o boneco'. Diagnóstico por CÓDIGO (não palpite) achou 3 bugs: (1) pivôs ABSOLUTOS como posição LOCAL de grupos filhos → criatura desmontada (cabeça a y=2.52!); (2) torso.scale no GRUPO pai de tudo → respiração esticava o boneco; (3) DORMANT root −0.42m cego → pés debaixo do chão. Emenda: postura em MÓDULO PURO partilhado site/instrumento (stalker_pose.js) + anim_check.mjs com spec A1–A6 declarada antes; IK 2-ossos por perna (pivôs do rig), apoio recua a dz/dt=−v (pé parado no mundo). 6/6 PASS (ossos 0.0mm). Lições de instrumento: Float32Array(nodeBuffer) converte BYTES (usar readFloatLE); 'bob' = amplitude dentro do estado, não offset estático; alvo do tornozelo precisa da folga da garra. REGRAS: animação também se MEDE; escala nunca em grupos (só malhas); hierarquia se valida por comprimento de ossos."
+  },
+  {
+   "date": "2026-09-24",
+   "subject": "THE STALKER v3.2 (forma/silhueta)",
+   "verdict": "GATE NEGATIVO do dono + emenda medida",
+   "lesson": "Dono: 'a forma/silhueta do monstro é o pior'. Diagnóstico: tubo liso de elipses = zero relevo (horror PSX lê por RELEVO: costelas/espinal/escápulas/nós-vs-cordas). Emenda: spec F1-F8 + measure_form.py; relevo Gaussiano contínuo (CARNE LIGADA) indexado à ESTAÇÃO do loft. BUG REAL apanhado pela medição: OLHOS ENTERRADOS 43mm dentro da cabeça — invisíveis desde a v2 (gate 'olhos que brilham' nunca cumprido!). Lições de instrumento: (1) contagem de gomos exige bumps alinhados às estações (bumps entre estações aliasam a zero); (2) des-tendência por ÍNDICE de anel (janela em mm < espaçamento → cada anel contra si próprio = 0.0); (3) mean10-verts media DENSIDADE da malha (usar distância a triângulos); (4) ruído por anel LIMITADO (randn +4σ inflava larguras MAX); (5) anéis inclinados (corcunda) espalham verts ±40mm em z — features por z-de-vértice diluem e 'yl<-0.35' apanhava verts laterais (espinhos de 29mm nos flancos)."
   }
  ],
  "instruments": {
@@ -429,6 +435,24 @@
     "torso.scale no grupo (esticão)",
     "DORMANT root −0.42m (pés enterrados)"
    ]
+  },
+  "v32_form_measured": {
+   "date": "2026-09-24",
+   "gate": "9/9 PASS (out/refstudy/stalker_form.json) + 17/17 + 6/6 re-medidos",
+   "measures": {
+    "F1_costelas_n": 6,
+    "F1b_costelas_amp": 14.1,
+    "F2_espinha_mm": 38.7,
+    "F3_vertebras_n": 7,
+    "F4_escapula_mm": 20.9,
+    "F5_braco_contraste": 2.0,
+    "F6_joelho_bojo": 1.4,
+    "F6b_cotovelo_bojo": 1.6,
+    "F8_olho_assente_mm": 18.1
+   },
+   "instrumento": "tools/creature/measure_form.py",
+   "bug_real": "olhos enterrados 43mm (invisíveis v2-v3.1) — agora assentados na superfície",
+   "glb": "4400v/8004t · digest 5ae3e746ec8ff93e"
   }
  }
 }

@@ -62,11 +62,12 @@ def main():
     x0 = 20
     W = x0 + sum(t[0].width for t in tiles) + 20 * len(tiles) + xT + 20
     # altura: tiles OU tabela geometria (17 linhas) + tabela animação (6)
-    H = max(max(t[0].height for t in tiles) + 34, 34 + 22 + 17 * 19 + 44 + 40 + 24 + 6 * 19 + 30)
+    H = max(max(t[0].height for t in tiles) + 34,
+            34 + 22 + 17 * 19 + 44 + 40 + 24 + 9 * 19 + 44 + 40 + 24 + 6 * 19 + 30)
     panel = Image.new("L", (W, H), 24)
     dr = ImageDraw.Draw(panel)
 
-    dr.text((x0, 6), "THE STALKER v3 — MEDIDO DO GLB (z-up, mm)", font=fT, fill=235)
+    dr.text((x0, 6), "THE STALKER v3 — MEDIDO: GEOMETRIA 17/17 · FORMA 9/9 · ANIMAÇÃO 6/6", font=fT, fill=235)
     x = x0
     for img, name in tiles:
         panel.paste(img, (x, 40))
@@ -102,6 +103,37 @@ def main():
     dr.line([(xt, y), (xt + sum(colw), y)], fill=70)
     dr.text((xt, y + 8), "PASS = dentro da banda (docs/CREATURE_SPEC_STALKER.md)",
             font=fs, fill=120)
+
+    # ---- tabela da FORMA/RELEVO (measure_form.py)
+    FORM = os.path.join(ROOT, "out", "refstudy", "stalker_form.json")
+    if os.path.exists(FORM):
+        fj = json.load(open(FORM))
+        y += 44
+        dr.text((xt, y), f"FORMA/RELEVO (measure_form.py) · {len(fj['spec']) - fj['n_fail']}/{len(fj['spec'])} PASS", font=fb, fill=235)
+        y += 24
+        fm2, spf = fj["measures"], fj["spec"]
+        vdf = {k: ("PASS" if (fm2[k] >= v[0] and fm2[k] <= v[1]) else "FAIL")
+               for k, v in spf.items()}
+        for k in ("F1_costelas_n", "F1b_costelas_amp", "F2_espinha_mm", "F3_vertebras_n",
+                  "F4_escapula_mm", "F5_braco_contraste", "F6_joelho_bojo",
+                  "F6b_cotovelo_bojo", "F8_olho_assente_mm"):
+            v, p2 = fm2[k], vdf[k]
+            lo, hi = spf[k]
+            if k.endswith("_n"):
+                vv, unit = f"{int(v)}", "gomos"
+            elif "contraste" in k or "bojo" in k:
+                vv, unit = f"{v:.2f}", "x"
+            else:
+                vv, unit = f"{v:.1f}", "mm"
+            band = f"[{lo:g}..{hi:g}]" if hi < 1e8 else f"≥{lo:g}"
+            fill = 235 if p2 == "PASS" else 120
+            xc = xt
+            for txt, w, fnt in ((k, colw[0], fm), (vv, colw[1], fm),
+                                (band, colw[2], fs), (p2, colw[3], fb)):
+                dr.text((xc, y), txt, font=fnt, fill=fill)
+                xc += w
+            y += 19
+        dr.line([(xt, y), (xt + sum(colw), y)], fill=70)
 
     # ---- tabela da ANIMAÇÃO (anim_check.mjs: mesmíssimo módulo do site)
     ANIM = os.path.join(ROOT, "out", "refstudy", "stalker_anim_check.json")

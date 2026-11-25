@@ -423,3 +423,30 @@ solas +10mm mín (nunca debaixo do chão) · patinação 0.40 m/s ·
 DORMANT agacha a 1.36m por articulação. Painel com as DUAS tabelas
 (geometria 17/17 + animação 6/6). Cache-buster agora cobre também o
 import do módulo de postura.
+
+## 20. STALKER v3.2 — FORMA MEDIDA: 9/9 PASS (2026-09-24)
+
+Gate do dono: "a forma/silhueta do monstro" é o pior. Diagnóstico: o
+tronco era um TUBO LISO de elipses (zero relevo) e os membros salsichas
+lineares — silhueta genérica, não de terror.
+
+- **Spec de relevo F1–F8 declarada antes** (docs/CREATURE_SPEC_STALKER.md
+  §v3.2) + instrumento `tools/creature/measure_form.py` (perfis por anel
+  e por linha óssea; RELEVO ≠ TENDÊNCIA ≠ ELIPSE: des-tendência por
+  índice de anel e perfil angular).
+- **Relevo construído** (Gaussiana contínua = CARNE LIGADA): 6 costelas
+  (gomos 13mm em estações alternadas), crista espinal com 7 vértebras
+  (39mm), escápulas, ilíacas, esterno, barriga encovada, arcada
+  superciliar, órbitas fundas, bochechas encovadas, crista sagital;
+  membros com NÓS vs CORDAS (deltoideu 2.0x antebraço, bojo de joelho
+  1.4x).
+- **BUG REAL apanhado pela medição (F8)**: os olhos estavam ENTERRADOS
+  43mm dentro da cabeça — INVISÍVEIS desde a v2 (o emissive nunca
+  brilhou). Agora assentados NA superfície (vértice real − 21mm ao
+  longo da normal; 18.1mm medidos).
+- **Causa-raiz técnica**: anéis INCLINADOS pela corcunda espalham os
+  vértices ±40mm em z → relevo indexado à ESTAÇÃO do loft (não ao
+  z do vértice); ruído por anel limitado a ±noise (randn dava +4σ e
+  inflava larguras MAX).
+- Ciclo: 6 FAIL → 2 → 0; re-medições cruzadas intactas (17/17, 6/6).
+  GLB 4400v/8004t, digest 5ae3e746ec8ff93e. Painel com 3 tabelas.

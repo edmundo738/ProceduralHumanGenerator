@@ -72,3 +72,78 @@ bug do instrumento corrigido (Float32Array de um Buffer converte bytes —
 agora readFloatLE). Movimento: apoio do pé recua à velocidade exacta do
 corpo (dz/dt = −v ⇒ pé parado no mundo); alvo do tornozelo sobe pela
 folga da garra (HUNTING escavava −25.5mm sem folga).
+
+## v3.2 — spec da FORMA/RELEVO (declarada ANTES da medição)
+
+Gate do dono: "a forma/silhueta do monstro" é o pior. Diagnóstico: o
+tronco é um tubo liso de elipses (zero relevo) e os membros são
+salsichas de raio linear — silhueta genérica, não de terror. Horror
+PSX lê por RELEVO: costelas à mostra, crista espinal, escápulas,
+braços de nó vs antebraços de corda, órbitas fundas. Tudo com CARNE
+LIGADA (modulação Gaussiana contínua dos anéis — nunca degraus).
+
+Instrumento: `tools/creature/measure_form.py` (mede o GLB; perfis
+radiais por anel do torso/cabeça e por linha óssea dos membros).
+Saída: `out/refstudy/stalker_form.json`.
+
+| id | relevo | banda |
+|---|---|---|
+| F1 | costelas: nº de máximos do perfil lateral r(z), z 1260–1445 | ≥ 5 |
+| F1b | amplitude do perfil lateral (máx−mín) | 6–30mm |
+| F2 | crista espinal: r_costas(z) − r_lateral(z), máximo | ≥ 10mm |
+| F3 | vértebras: nº de máximos do perfil costas, z 1150–1450 | ≥ 6 |
+| F4 | escápulas: min/max do raio no sector costas a z 1370–1420 | ≥ 6mm |
+| F5 | contraste braço: r raiz supra / r meio antebraço | 1.45–2.1 |
+| F6 | bojo do joelho: r máx canela f<0.12 / r meio canela | ≥ 1.2 |
+| F6b | bojo do cotovelo: r máx antebraço f<0.1 / r meio antebraço | ≥ 1.15 |
+| F8 | testa vs órbita: r frente z 1620–1660 − r frente z 1580–1615 | ≥ 4mm |
+
+## v3.2.1 — refinamentos de método (declarados antes de re-medir)
+
+As primeiras medições mostraram que os métodos mediam ARTEFACTOS, não
+relevo (elipse/tendência ≠ gomo). Instrumento corrigido:
+
+- **F2/F3**: medidos na LINHA DE SILHUETA COSTAS y_back(z) (média dos 5
+  verts mais recuados por anel), des-tendenciada (janela ±45mm). A
+  elipse (E1>E2) faz o polo costas ser o ponto +próximo — comparar
+  polo/flanco media −15mm de elipse, não relevo.
+- **F4**: des-tendência ANGULAR por anel (r(θ) − média móvel angular
+  ±0.7rad) — a elipse produzia 15-25mm de variação angular SEM nenhuma
+  escápula (F4 "passava" por artefacto).
+- **F8**: recesso do GLOBO OCULAR (distância do centro do olho aos 10
+  verts mais próximos da cabeça, menos raio 21mm), banda 2–12mm — a
+  média do sector frontal diluía órbita/arcada (sinais opostos).
+- **F1**: gomos das costelas EXACTAMENTE nas estações do loft (closure
+  sobre as estações reais; bumps entre estações aliasavam a zero).
+
+## v3.2.2 — F8 apanhou um bug REAL (olhos invisíveis)
+
+F8 mediu +42.9mm: os globos oculares estavam ENTERRADOS 43mm dentro da
+cabeça — invisíveis desde a v2 (os "olhos negros que brilham" nunca
+brilharam; o emissive estava debaixo da pele). Redefinição final do F8:
+**assentamento do olho** = distância média dos 10 verts mais próximos
+da cabeça ao centro do olho, banda [17, 25]mm (globo r21 quase à flor
+da pele — fenda negra; +43 = enterrado, −21 = a flutuar). Olhos agora
+COLOCADOS NA SUPERFÍCIE (vértice real da cabeça − 19mm ao longo da
+normal). Janela de des-tendência ±45→±30mm (os bumps vizinhos a 36.7mm
+entravam na média e comiam os máximos: F1 contava 3 de 5).
+
+## v3.2.3 — terceiro refinamento F8 (densidade da malha)
+
+mean10-verts media DENSIDADE (anéis de 24 verts), não superfície: F8
+por distância mínima aos TRIÂNGULOS da cabeça. E causa-raiz do relevo
+fraco achada: anéis INCLINADOS (corcunda) → verts de um anel espalham
+±40mm em z → gomos por z-de-vértice diluídos + vértebras apanhavam
+verts laterais (espinhos de 29mm nos flancos). Relevo agora INDEXADO
+À ESTAÇÃO (centro do anel) com transição Gaussiana entre anéis.
+
+## v3.2 — resultado medido da FORMA (2026-09-24)
+
+`python3 tools/creature/measure_form.py` → **9/9 PASS**
+(out/refstudy/stalker_form.json): F1 costelas 6 gomos · F1b amplitude
+14.1mm · F2 crista espinal 38.7mm · F3 vértebras 7 · F4 escápulas
+20.9mm · F5 contraste braço 2.00 · F6 joelho 1.4x · F6b cotovelo 1.6x
+· F8 olho assente 18.1mm. Ciclo: 6 FAIL → 2 → 0 (refinamentos de método
+v3.2.1/.2/.3 declarados a cada passo; bug REAL: olhos enterrados 43mm).
+Painel: 3 tabelas (geometria 17/17 + forma 9/9 + animação 6/6).
+Re-medições cruzadas intactas: 17/17 e 6/6.

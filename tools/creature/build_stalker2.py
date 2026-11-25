@@ -77,14 +77,22 @@ def cone(c, r, h, dirv, n=8):
     return V, np.array(T), np.zeros((len(V), 2))
 
 
-def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0):
+def _G(x, c, w):
+    return float(np.exp(-((x - c) / max(w, 1e-6)) ** 2))
+
+
+def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0, mod=None):
     """Tubo ao longo da polilinha pts (N,3); rads (N,) raio base.
-    e1/e2: factores elípticos (N,) nos eixos b1/b2. Devolve V,T,UV."""
+    e1/e2: factores elípticos (N,) nos eixos b1/b2. mod(c, v) → fracção
+    do raio local (RELEVO: costelas/espinal/órbitas — Gaussiana contínua,
+    CARNE LIGADA, nunca degraus). Devolve V,T,UV."""
     N = len(pts)
     e1 = np.ones(N) if e1 is None else e1
     e2 = np.ones(N) if e2 is None else e2
     V, UV = [], []
-    eps = 1.0 + noise * rng.standard_normal((N, 2))
+    # ruído orgânico LIMITADO a ±noise (randn podia dar +4σ e as
+    # larguras MAX das fatias inflavam — M12 FAIL medido)
+    eps = 1.0 + noise * np.clip(rng.standard_normal((N, 2)), -1.0, 1.0)
     for i in range(N):
         t = pts[min(i + 1, N - 1)] - pts[max(i - 1, 0)]
         t = t / max(np.linalg.norm(t), 1e-9)
@@ -97,6 +105,12 @@ def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0):
         th = np.linspace(0, 2 * np.pi, n, endpoint=False) + i * 0.13
         r1, r2 = rads[i] * e1[i] * eps[i, 0], rads[i] * e2[i] * eps[i, 1]
         ring = pts[i] + np.cos(th)[:, None] * (r1 * b1) + np.sin(th)[:, None] * (r2 * b2)
+        if mod is not None:
+            for j in range(n):
+                d_ = ring[j] - pts[i]
+                n_ = np.linalg.norm(d_)
+                if n_ > 1e-9:
+                    ring[j] = pts[i] + d_ * (1.0 + mod(pts[i], ring[j]))
         V.append(ring)
         UV.append(np.stack([th / (2 * np.pi), np.full(n, i / max(N - 1, 1))], 1))
     V = np.vstack(V); UV = np.vstack(UV)
@@ -124,6 +138,88 @@ def merge(*parts):
 
 
 # ---------------------------------------------------------------- anatomia (m, nosso frame: z↑, +y frente)
+# ---------------------------------------------------------------- RELEVO
+# v3.2 (gate do dono: "a forma/silhueta"): terror PSX lê por RELEVO.
+# Frente = +y, costas = -y (o pescoço juta +y; yaw do site aponta +y).
+# Gaussiana contínua por vértice — CARNE LIGADA, zero degraus.
+def make_torso_mod(stz):
+    """stz: z (mm) das estações do loft. RELEVO INDEXADO À ESTAÇÃO: os
+    anéis estão INCLINADOS (corcunda) e os verts de um anel espalham-se
+    por ±40mm de z — gomos por z-de-vértice acertavam em metade do anel
+    e as vértebras (yl<-0.35) apanhavam verts LATERAIS: espinhos de 29mm
+    nos flancos (bug apanhado pela medição F1/F1b). Estação = c (centro
+    do anel, estável); transição suave entre anéis (Gaussiana em zc);
+    sectores angulares por vértice (mundo, imune ao tilt)."""
+    # gomos em estações ALTERNADAS (~30mm entre gomos; janela de medição
+    # ±16 deixa os vizinhos de fora). Ribs ≥1285: o anel inclinado
+    # espalha verts ±20mm — abaixo disso poluía a fatia da cintura (M12)
+    rib_z = [z for i, z in enumerate(stz) if i % 2 == 1 and 1285 <= z <= 1452]
+    vert_z = [z for i, z in enumerate(stz) if i % 2 == 0 and 1150 <= z <= 1455]
+
+    def torso_mod(c, v):
+        d_ = v - c
+        n_ = np.linalg.norm(d_)
+        if n_ < 1e-9:
+            return 0.0
+        zc = c[2] * 1000.0                       # ESTAÇÃO (não o vértice!)
+        zl = v[2] * 1000.0                       # p/ zonas largas
+        yl, xl = d_[1] / n_, d_[0] / n_
+        b = -yl                                  # backness (1 = polo costas)
+        mm = 0.0
+        # costelas: flancos PUROS (|xl|>.55, |yl|<.55), por estação
+        if abs(xl) > 0.55 and abs(yl) < 0.55 and rib_z:
+            mm += 13.0 * max(_G(zc, z, 8) for z in rib_z)
+        # espinal: crista ESTREITA no polo (±0.18 em backness) + vértebras
+        mm += 14.0 * _G(b, 1.0, 0.18) * _G(zc, 1290, 170)
+        if b > 0.7 and vert_z:
+            mm += 18.0 * max(_G(zc, z, 8) for z in vert_z)
+        # escápulas (bosses costas-altas) + cristas ilíacas
+        mm += 10.0 * _G(zl, 1400, 26) * _G(abs(xl), 0.45, 0.16) * _G(b, 0.55, 0.3)
+        mm += 6.0 * _G(zl, 1140, 22) * _G(abs(xl), 0.6, 0.18) * _G(yl, -0.15, 0.4)
+        # esterno (goleta) + fossa clavicular + barriga encovada (gaunt)
+        mm -= 5.0 * _G(yl, 0.75, 0.25) * _G(zc, 1330, 60)
+        mm -= 6.0 * _G(yl, 0.8, 0.2) * _G(zc, 1430, 18)
+        mm -= 7.0 * _G(yl, 0.7, 0.3) * _G(zc, 1215, 28)
+        return mm / 1000.0 / n_
+
+    return torso_mod
+
+
+def head_mod(c, v):
+    d_ = v - c
+    n_ = np.linalg.norm(d_)
+    if n_ < 1e-9:
+        return 0.0
+    zl, yl, xl = v[2] * 1000.0, d_[1] / n_, d_[0] / n_
+    mm = 0.0
+    mm += 6.0 * _G(yl, 0.55, 0.28) * _G(zl, 1682, 20)          # arcada
+    mm -= 7.0 * _G(abs(xl), 0.32, 0.13) * _G(yl, 0.55, 0.25) * (
+        _G(zl, 1615, 20) + _G(zl, 1648, 20))                    # órbitas (2 estações)
+    mm -= 4.0 * _G(abs(xl), 0.7, 0.14) * _G(zl, 1712, 30)      # têmporas
+    mm += 4.0 * _G(abs(xl), 0.55, 0.15) * _G(yl, 0.35, 0.25) * _G(zl, 1580, 16)  # zigomático
+    mm -= 6.0 * _G(abs(xl), 0.45, 0.18) * _G(yl, 0.25, 0.25) * _G(zl, 1545, 22)  # bochechas
+    mm += 4.0 * _G(abs(xl), 0.0, 0.12) * _G(yl, 0.0, 0.4) * _G(zl, 1747, 30)     # crista sagital
+    return mm / 1000.0 / n_
+
+
+def densify(P, R, E1=None, E2=None, mult=2):
+    """Duplica estações (interp linear) + suavização C1 nos interiores:
+    resolução z para o RELEVO (costelas/vértebras precisam de ~35mm)."""
+    N = len(P)
+    u = np.linspace(0.0, 1.0, N)
+    uu = np.linspace(0.0, 1.0, mult * N - (mult - 1))
+    P2 = np.stack([np.interp(uu, u, P[:, k]) for k in range(3)], 1)
+    R2 = np.interp(uu, u, R)
+    E12 = np.interp(uu, u, E1) if E1 is not None else None
+    E22 = np.interp(uu, u, E2) if E2 is not None else None
+    for _ in range(2):
+        P2[1:-1] = (P2[:-2] + 2 * P2[1:-1] + P2[2:]) / 4.0
+    # NÃO suavizar R/E: os raios das estações são os valores medidos
+    # (a suavização achatou o dip da cintura → M12 FAIL, apanhado pela
+    # re-medição 17/17)
+    return P2, R2, E12, E22
+
+
 def build():
     parts = {}    # name -> (V, T, UV)
     rig = []      # {name, parent, pivot}
@@ -134,15 +230,20 @@ def build():
         [0.000, 0.012, 1.060],    # bacia
         [0.000, 0.016, 1.135],    # anca
         [0.000, 0.010, 1.220],    # cintura (gaunt)
+        [0.000, 0.002, 1.275],    # segura o raio até 1275 (M12: a rampa
+                                  # subia cedo e a fatia 1190-1260 apanhava
+                                  # anéis já largos — FAIL medido)
         [0.000, -0.008, 1.325],   # costelas
         [0.000, -0.095, 1.405],   # ombros: dip profundo (corcunda)
         [0.000, -0.040, 1.465],
         [0.000, 0.005, 1.500],    # pescoço (retractado: ~95mm acima do dip)
     ])
-    R = np.array([0.106, 0.100, 0.0775, 0.100, 0.130, 0.145, 0.062])
-    E1 = np.array([1.14, 1.20, 1.24, 1.26, 1.34, 1.35, 1.05])       # largura x
-    E2 = np.array([0.85, 0.82, 0.80, 0.82, 0.86, 0.88, 0.92])       # profundidade y
-    V, T, UV = loft(P, R, E1, E2, n=28, noise=0.02)
+    R = np.array([0.106, 0.094, 0.0775, 0.079, 0.100, 0.130, 0.145, 0.062])
+    E1 = np.array([1.14, 1.20, 1.22, 1.249, 1.26, 1.34, 1.35, 1.05])  # largura x
+    E2 = np.array([0.85, 0.82, 0.80, 0.807, 0.82, 0.86, 0.88, 0.92])  # profundidade y
+    P, R, E1, E2 = densify(P, R, E1, E2, mult=5)                    # 31 estações
+    torso_mod = make_torso_mod([p[2] * 1000 for p in P])
+    V, T, UV = loft(P, R, E1, E2, n=28, noise=0.02, mod=torso_mod)
     parts["torso"] = (V, T, UV)
     rig.append({"name": "torso", "parent": None, "pivot": [0, 0, 1.0]})
 
@@ -153,7 +254,8 @@ def build():
     P = np.stack([Hp + s_ * d for s_ in (0.00, 0.05, 0.11, 0.18, 0.245)])
     R = np.array([0.070, 0.098, 0.108, 0.092, 0.055])
     E1 = np.array([0.95, 1.05, 1.10, 1.02, 0.85])
-    V, T, UV = loft(P, R, E1, None, n=24, noise=0.02)
+    P, R, E1, _ = densify(P, R, E1, None, mult=2)                   # 9 estações
+    V, T, UV = loft(P, R, E1, None, n=24, noise=0.02, mod=head_mod)
     parts["head"] = (V, T, UV)
     rig.append({"name": "head", "parent": "torso", "pivot": list(Hp)})
 
@@ -185,18 +287,36 @@ def build():
     parts["teeth"] = (Vt, Tt, np.zeros((len(Vt), 2)))
     rig.append({"name": "teeth", "parent": "head", "pivot": list(Hp)})
 
-    # ---- olhos (M14: interocular 95-115; M15: raio 18-24)
+    # ---- olhos (M14: interocular 95-115; M15: raio 18-24) — ASSENTES
+    #      NA SUPERFÍCIE: v2/v3.0 enterrava-os 43mm dentro da cabeça
+    #      (invisíveis; F8 do measure_form apanhou o bug)
+    VH = parts["head"][0]
+    c_h = Hp + 0.115 * d
     for s, nm in ((1, "R"), (-1, "L")):
-        e = Hp + 0.115 * d + np.array([s * 0.052, 0.012, 0.016])
+        dir_eye = np.array([s * 0.052, 0.060, 0.020])
+        dir_eye /= np.linalg.norm(dir_eye)
+        sel = (VH[:, 2] > 1.580) & (VH[:, 2] < 1.675) & (VH[:, 0] * s > 0.02)
+        u = VH[sel] - c_h
+        S = VH[sel][np.argmax(u @ dir_eye)]          # vértice mais externo
+        n_ = S - c_h
+        n_ /= np.linalg.norm(n_)
+        e = S - n_ * 0.021 + np.array([s * 0.002, 0, 0])   # 21mm sob a pele
+        # (+2mm lateral: M14 interocular 93.9 < 95 — medido)
         Ve, Te = sphere(e, 0.021, 10)
         parts["eye_" + nm] = (Ve, Te, np.zeros((len(Ve), 2)))
         rig.append({"name": "eye_" + nm, "parent": "head", "pivot": list(Hp)})
 
     # ---- membros: tubos enraizados DENTRO do tronco + esfera no pivô
-    def limb(name, parent, pivot, A, B, r0, r1, n=16, joint=True, root_frac=0.12):
+    def limb(name, parent, pivot, A, B, r0, r1, n=16, joint=True, root_frac=0.12,
+             profile=None):
+        # profile: 5 multiplicadores por estação (f=-root,0,0.35,0.7,1) —
+        # CONTRASTE DE VOLUME: nó na raiz/junções vs meio-corda fino
+        # (terror PSX: deltóide inchado + antebraço de corda)
         dirv = np.asarray(B, float) - np.asarray(A, float)
         P = np.stack([A + (dirv) * f for f in (-root_frac, 0.0, 0.35, 0.7, 1.0)])
         R = np.array([r0, r0 * 0.97, (r0 + r1) / 2, r1 * 1.05, r1])
+        if profile:
+            R = R * np.asarray(profile, float)
         V, T, UV = loft(P, R, None, None, n=n, noise=0.02)
         if joint:
             Vs, Ts = sphere(np.asarray(A, float), max(r0, r1) * 1.12, 9)
@@ -211,8 +331,10 @@ def build():
         uaL, faL = (0.400, 0.435) if s == 1 else (0.392, 0.427)   # assim 16mm (M17)
         el = sh + np.array([s * 0.055, -0.095, -uaL])
         wr = el + np.array([s * 0.018, 0.075, -faL])
-        limb("upperarm_" + nm, "torso", sh, sh + np.array([s * 0.05, -0.02, 0.06]), el, 0.048, 0.038)
-        limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.038, 0.027)
+        limb("upperarm_" + nm, "torso", sh, sh + np.array([s * 0.05, -0.02, 0.06]), el, 0.048, 0.038,
+             profile=[1.18, 1.02, 0.92, 1.06, 1.12])   # nó deltoideu + cotovelo
+        limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.038, 0.027,
+             profile=[1.16, 0.95, 0.88, 1.02, 1.0])    # cotovelo + corda fina
         # mão (M4: 120-180mm): palma 55 + dedos 100-120
         palm_d = (wr - el) / np.linalg.norm(wr - el)
         palm_c = wr + palm_d * 0.045
@@ -237,8 +359,10 @@ def build():
         hip = np.array([s * 0.064, 0.008, 1.060])
         knee = hip + np.array([s * 0.008, -0.045, -0.500])
         ankle = knee + np.array([0, 0.030, -0.475])
-        limb("thigh_" + nm, "torso", hip, hip + np.array([0, 0, 0.06]), knee, 0.070, 0.050, root_frac=0.06)
-        limb("shin_" + nm, "thigh_" + nm, knee, knee - (knee - hip) * 0.04, ankle, 0.048, 0.033)
+        limb("thigh_" + nm, "torso", hip, hip + np.array([0, 0, 0.06]), knee, 0.070, 0.050, root_frac=0.06,
+             profile=[1.16, 1.0, 0.97, 1.08, 1.22])    # nó da anca + joelho
+        limb("shin_" + nm, "thigh_" + nm, knee, knee - (knee - hip) * 0.04, ankle, 0.048, 0.033,
+             profile=[1.24, 0.98, 1.06, 0.95, 0.92])   # bojo do joelho + gémeo + tornozelo fino
         foot = []
         Pd = np.stack([ankle, ankle + np.array([0, 0.105, -0.065]), ankle + np.array([0, 0.185, -0.075])])
         foot.append(loft(Pd, np.array([0.036, 0.030, 0.012]), np.array([1.0, 0.9, 0.8]), np.array([0.75, 0.55, 0.45]), 12))

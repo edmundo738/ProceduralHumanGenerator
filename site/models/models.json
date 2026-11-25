@@ -352,25 +352,25 @@
  },
  {
   "id": "stalker2",
-  "label": "THE STALKER v3 — CONSISTÊNCIA MEDIDA (17/17 PASS)",
+  "label": "THE STALKER v3 — GEOMETRIA+FORMA+ANIMAÇÃO MEDIDAS (17/9/6 PASS)",
   "env": {
    "HCG_BODY": "stalker2"
   },
   "commit": "stalker-v3",
-  "digest": "75a4e90d3441075e",
+  "digest": "5ae3e746ec8ff93e",
   "animated": false,
   "stalker2": true,
   "smooth": {
-   "verts": 3492,
-   "faces": 6188,
+   "verts": 4400,
+   "faces": 8004,
    "quads": 0,
-   "bytes": 3745012
+   "bytes": 3795888
   },
   "cage": {
-   "verts": 3492,
-   "faces": 6188,
+   "verts": 4400,
+   "faces": 8004,
    "quads": 0,
-   "bytes": 3745012
+   "bytes": 3795888
   },
   "desc": "stalker2"
  }

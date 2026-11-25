@@ -423,3 +423,11 @@ partilhado site/instrumento; IK 2-ossos, pé plantado, joelho
 invertido) → **6/6 PASS**. Painel = 2 tabelas (17/17 + 6/6). Deploy
 cp+curls por hash; cache-buster cobre o import do módulo. Próximo:
 gate do dono (estética: o que está pior).
+
+**STALKER v3.2 (2026-09-24):** gate "a forma/silhueta é o pior" → spec
+F1–F8 + measure_form.py → **9/9 PASS** (costelas 6 gomos, espinal 39mm
+c/ 7 vértebras, escápulas, braço nó/corda 2.0x, joelho 1.4x). BUG REAL:
+olhos enterrados 43mm (invisíveis desde v2) → assentados na superfície
+(18.1mm). Relevo por estação do loft (anéis inclinados ±40mm);
+Gaussiana contínua = CARNE LIGADA. Painel 3 tabelas (17/9/6). GLB
+4400v/8004t 5ae3e746. Deploy por hash. Próximo: gate visual do dono.
