@@ -88,7 +88,10 @@ def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0):
     for i in range(N):
         t = pts[min(i + 1, N - 1)] - pts[max(i - 1, 0)]
         t = t / max(np.linalg.norm(t), 1e-9)
-        ref = np.array([0, 0, 1.0]) if abs(t[2]) < 0.9 else np.array([1.0, 0, 0])
+        # e1 = LARGURA (X): para t vertical, b1 tem de ser ±X → ref=+Y.
+        # (bug v2.0: ref=+X fazia b1≈Y → largura/profundidade TROCADAS;
+        #  apanhado pela medição M11/M12: anca 177mm vs ~330 desenhados)
+        ref = np.array([0, 1.0, 0]) if abs(t[2]) > 0.9 else np.array([0, 0, 1.0])
         b1 = np.cross(t, ref); b1 /= np.linalg.norm(b1)
         b2 = np.cross(t, b1)
         th = np.linspace(0, 2 * np.pi, n, endpoint=False) + i * 0.13
@@ -125,38 +128,39 @@ def build():
     parts = {}    # name -> (V, T, UV)
     rig = []      # {name, parent, pivot}
 
-    # ---- tronco: coluna corcunda contínua (bacia → pescoço)
+    # ---- tronco (dimensões p/ BANDAS M7, M8, M11-M13; corcunda ≥45mm,
+    #      pescoço a ≤100mm do dip, ombro 0.19-0.26·S, cintura magra)
     P = np.array([
-        [0.000, 0.010, 0.980],    # bacia
-        [0.000, 0.015, 1.060],    # anca
-        [0.000, 0.010, 1.150],    # cintura (gaunt)
-        [0.000, -0.005, 1.260],   # costelas
-        [0.000, -0.045, 1.360],   # costelas altas (curva p/ trás)
-        [0.000, -0.075, 1.430],   # ombros (corcunda)
-        [0.000, -0.040, 1.480],   # base pescoço (juta p/ frente)
-        [0.000, 0.030, 1.515],    # pescoço
+        [0.000, 0.012, 1.060],    # bacia
+        [0.000, 0.016, 1.135],    # anca
+        [0.000, 0.010, 1.220],    # cintura (gaunt)
+        [0.000, -0.008, 1.325],   # costelas
+        [0.000, -0.095, 1.405],   # ombros: dip profundo (corcunda)
+        [0.000, -0.040, 1.465],
+        [0.000, 0.005, 1.500],    # pescoço (retractado: ~95mm acima do dip)
     ])
-    R = np.array([0.115, 0.105, 0.088, 0.108, 0.125, 0.140, 0.085, 0.055])
-    E1 = np.array([1.25, 1.25, 1.25, 1.30, 1.32, 1.35, 1.10, 1.0])   # largura x
-    E2 = np.array([0.85, 0.82, 0.80, 0.82, 0.85, 0.88, 0.95, 1.0])   # profundidade y
-    V, T, UV = loft(P, R, E1, E2, n=28, noise=0.03)
+    R = np.array([0.106, 0.100, 0.0775, 0.100, 0.130, 0.145, 0.062])
+    E1 = np.array([1.14, 1.20, 1.24, 1.26, 1.34, 1.35, 1.05])       # largura x
+    E2 = np.array([0.85, 0.82, 0.80, 0.82, 0.86, 0.88, 0.92])       # profundidade y
+    V, T, UV = loft(P, R, E1, E2, n=28, noise=0.02)
     parts["torso"] = (V, T, UV)
-    rig.append({"name": "torso", "parent": None, "pivot": [0, 0, 0.98]})
+    rig.append({"name": "torso", "parent": None, "pivot": [0, 0, 1.0]})
 
-    # ---- cabeça alongada, inclinada p/ frente
-    Hp = np.array([0.000, 0.055, 1.540])          # pivô na base do crânio
-    d = np.array([0.0, np.sin(0.62), np.cos(0.62)])  # ~35° para a frente
-    P = np.stack([Hp + s * d for s in (0.00, 0.05, 0.12, 0.20, 0.27)])
+    # ---- cabeça alongada (M5: 0.115-0.150·S ≈ 210-270mm; M6: 20-40°)
+    Hp = np.array([0.000, 0.040, 1.523])          # pivô na base do crânio
+    pitch = 0.60                                   # 34.4°
+    d = np.array([0.0, np.sin(pitch), np.cos(pitch)])
+    P = np.stack([Hp + s_ * d for s_ in (0.00, 0.05, 0.11, 0.18, 0.245)])
     R = np.array([0.070, 0.098, 0.108, 0.092, 0.055])
     E1 = np.array([0.95, 1.05, 1.10, 1.02, 0.85])
-    V, T, UV = loft(P, R, E1, None, n=24, noise=0.025)
+    V, T, UV = loft(P, R, E1, None, n=24, noise=0.02)
     parts["head"] = (V, T, UV)
     rig.append({"name": "head", "parent": "torso", "pivot": list(Hp)})
 
-    # ---- mandíbula (pivô na dobradiça; abre p/ baixo)
+    # ---- mandíbula (M16: 90-140mm) — pivô na dobradiça
     Jp = Hp + 0.10 * d
-    P = np.stack([Jp + s * d + np.array([0, 0, -0.055]) for s in (0.00, 0.05, 0.11, 0.16)])
-    R = np.array([0.052, 0.060, 0.052, 0.018])
+    P = np.stack([Jp + s_ * d + np.array([0, 0, -0.055]) for s_ in (0.00, 0.045, 0.10, 0.135)])
+    R = np.array([0.050, 0.058, 0.050, 0.016])
     E1 = np.array([1.15, 1.2, 1.1, 0.9])
     V, T, UV = loft(P, R, E1, None, n=18, noise=0.02)
     parts["mandible"] = (V, T, UV)
@@ -164,36 +168,34 @@ def build():
 
     # cavidade da boca + dentes (2 fileiras) — filhos da cabeça
     cavity_c = Jp + 0.045 * d + np.array([0, 0.02, -0.01])
-    Vc, Tc = sphere(cavity_c, 0.052, 10)
+    Vc, Tc = sphere(cavity_c, 0.050, 10)
     parts["cavity"] = (Vc, Tc, np.zeros((len(Vc), 2)))
     rig.append({"name": "cavity", "parent": "head", "pivot": list(Hp)})
     teeth = []
     up = Jp + 0.055 * d + np.array([0, 0.025, 0.005])
-    for row, dz in ((0, 0.030), (1, -0.038)):
+    for row, dz in ((0, 0.028), (1, -0.036)):
         for i in range(9):
             a = (i / 8 - 0.5) * 1.35
-            c = up + np.array([np.sin(a) * 0.038, np.cos(a) * 0.012, dz * (0.7 if row else 1.0)])
+            c = up + np.array([np.sin(a) * 0.036, np.cos(a) * 0.012, dz * (0.7 if row else 1.0)])
             vt = np.array([0.0, 0.0, -1.0]) if row == 0 else np.array([0.0, 0.0, 1.0])
-            teeth.append(cone(c, 0.0062, 0.026 if row else 0.020, vt, 6))
-    Vt = np.vstack([t[0] for t in teeth])
+            teeth.append(cone(c, 0.0062, 0.024 if row else 0.020, vt, 6))
     offs = np.cumsum([0] + [len(tv[0]) for tv in teeth[:-1]])
     Tt = np.vstack([tv[1] + int(o) for tv, o in zip(teeth, offs)])
+    Vt = np.vstack([tv[0] for tv in teeth])
     parts["teeth"] = (Vt, Tt, np.zeros((len(Vt), 2)))
     rig.append({"name": "teeth", "parent": "head", "pivot": list(Hp)})
 
-    # ---- olhos negros (embutidos, cor escura emissiva no site)
+    # ---- olhos (M14: interocular 95-115; M15: raio 18-24)
     for s, nm in ((1, "R"), (-1, "L")):
-        e = Hp + 0.115 * d + np.array([s * 0.052, 0.010, 0.018])
+        e = Hp + 0.115 * d + np.array([s * 0.052, 0.012, 0.016])
         Ve, Te = sphere(e, 0.021, 10)
         parts["eye_" + nm] = (Ve, Te, np.zeros((len(Ve), 2)))
         rig.append({"name": "eye_" + nm, "parent": "head", "pivot": list(Hp)})
 
     # ---- membros: tubos enraizados DENTRO do tronco + esfera no pivô
-    def limb(name, parent, pivot, A, B, r0, r1, ry=0.0, n=16, joint=True):
-        """Segmento A→B (A dentro do pai); esfera no pivô A esconde a junção."""
+    def limb(name, parent, pivot, A, B, r0, r1, n=16, joint=True, root_frac=0.12):
         dirv = np.asarray(B, float) - np.asarray(A, float)
-        L = np.linalg.norm(dirv)
-        P = np.stack([A + (dirv) * f for f in (-0.12, 0.0, 0.35, 0.7, 1.0)])  # raiz para dentro
+        P = np.stack([A + (dirv) * f for f in (-root_frac, 0.0, 0.35, 0.7, 1.0)])
         R = np.array([r0, r0 * 0.97, (r0 + r1) / 2, r1 * 1.05, r1])
         V, T, UV = loft(P, R, None, None, n=n, noise=0.02)
         if joint:
@@ -202,43 +204,47 @@ def build():
         parts[name] = (V, T, UV)
         rig.append({"name": name, "parent": parent, "pivot": list(map(float, pivot))})
 
+    # BRAÇOS até à linha do joelho (M2: punho −20..+60 acima do joelho):
+    # joelho z≈0.545 → punho alvo 0.555 (ombro 1.42: 0.40 supra + 0.46 infra)
     for s, nm in ((1, "R"), (-1, "L")):
-        sh = np.array([s * 0.165, -0.06, 1.415])       # ombro
-        el = sh + np.array([s * 0.06, -0.10, -0.335])  # cotovelo (levemente aberto)
-        wr = el + np.array([s * 0.02, 0.06, -0.360])   # pulso (braços pendem p/ frente)
+        sh = np.array([s * 0.170, -0.065, 1.420])
+        uaL, faL = (0.400, 0.435) if s == 1 else (0.392, 0.427)   # assim 16mm (M17)
+        el = sh + np.array([s * 0.055, -0.095, -uaL])
+        wr = el + np.array([s * 0.018, 0.075, -faL])
         limb("upperarm_" + nm, "torso", sh, sh + np.array([s * 0.05, -0.02, 0.06]), el, 0.048, 0.038)
         limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.038, 0.027)
-        # mão: palma achatada + 4 dedos longos + polegar
+        # mão (M4: 120-180mm): palma 55 + dedos 100-120
         palm_d = (wr - el) / np.linalg.norm(wr - el)
-        palm_c = wr + palm_d * 0.055
+        palm_c = wr + palm_d * 0.045
         hand = []
-        Pp = np.stack([palm_c - palm_d * 0.04, palm_c + palm_d * 0.06])
+        Pp = np.stack([palm_c - palm_d * 0.030, palm_c + palm_d * 0.048])
         hand.append(loft(Pp, np.array([0.030, 0.024]), np.array([1.15, 1.1]), np.array([0.55, 0.5]), 12, noise=0.0))
+        fl = 1.0 if s == 1 else 0.97
         for k in range(4):
-            base = palm_c + palm_d * 0.075 + np.array([s * (k - 1.5) * 0.016, 0, 0.004 * (k % 2)])
+            base = palm_c + palm_d * 0.068 + np.array([s * (k - 1.5) * 0.015, 0, 0.004 * (k % 2)])
             fdir = palm_d + np.array([s * (k - 1.5) * 0.22, 0.18, -0.10])
             fdir /= np.linalg.norm(fdir)
-            Pf = np.stack([base - fdir * 0.01, base + fdir * (0.13 - 0.012 * abs(k - 1.5))])
-            hand.append(loft(Pf, np.array([0.0085, 0.0038]), None, None, 8, caps=True))
-        base = palm_c - palm_d * 0.02 + np.array([s * 0.026, 0.01, 0.012])
+            Pf = np.stack([base - fdir * 0.01, base + fdir * (0.082 - 0.008 * abs(k - 1.5)) * fl])
+            hand.append(loft(Pf, np.array([0.0080, 0.0036]), None, None, 8, caps=True))
+        base = palm_c - palm_d * 0.018 + np.array([s * 0.024, 0.01, 0.012])
         fdir = np.array([s * 0.8, 0.35, -0.3]); fdir /= np.linalg.norm(fdir)
-        hand.append(loft(np.stack([base, base + fdir * 0.09]), np.array([0.0075, 0.0035]), None, None, 8))
+        hand.append(loft(np.stack([base, base + fdir * 0.062 * fl]), np.array([0.0072, 0.0034]), None, None, 8))
         parts["hand_" + nm] = merge(*hand)
         rig.append({"name": "hand_" + nm, "parent": "forearm_" + nm, "pivot": list(map(float, wr))})
 
+    # PERNAS (M9: coxa/canela 0.90-1.10; M10: pé 200-280mm)
     for s, nm in ((1, "R"), (-1, "L")):
-        hip = np.array([s * 0.062, 0.005, 0.965])
-        knee = hip + np.array([s * 0.008, -0.045, -0.475])
-        ankle = knee + np.array([0, 0.030, -0.445])
-        limb("thigh_" + nm, "torso", hip, hip + np.array([0, 0, 0.06]), knee, 0.070, 0.050)
+        hip = np.array([s * 0.064, 0.008, 1.060])
+        knee = hip + np.array([s * 0.008, -0.045, -0.500])
+        ankle = knee + np.array([0, 0.030, -0.475])
+        limb("thigh_" + nm, "torso", hip, hip + np.array([0, 0, 0.06]), knee, 0.070, 0.050, root_frac=0.06)
         limb("shin_" + nm, "thigh_" + nm, knee, knee - (knee - hip) * 0.04, ankle, 0.048, 0.033)
-        # pé alongado + 3 garras
         foot = []
-        Pd = np.stack([ankle, ankle + np.array([0, 0.13, -0.075]), ankle + np.array([0, 0.225, -0.085])])
+        Pd = np.stack([ankle, ankle + np.array([0, 0.105, -0.065]), ankle + np.array([0, 0.185, -0.075])])
         foot.append(loft(Pd, np.array([0.036, 0.030, 0.012]), np.array([1.0, 0.9, 0.8]), np.array([0.75, 0.55, 0.45]), 12))
         for k in range(3):
-            b = Pd[2] + np.array([(k - 1) * 0.018, 0.02, 0.002])
-            foot.append(cone(b, 0.009, 0.05, np.array([(k - 1) * 0.25, 1, -0.15]), 6))
+            b = Pd[2] + np.array([(k - 1) * 0.016, 0.018, 0.002])
+            foot.append(cone(b, 0.008, 0.042, np.array([(k - 1) * 0.25, 1, -0.15]), 6))
         parts["foot_" + nm] = merge(*foot)
         rig.append({"name": "foot_" + nm, "parent": "shin_" + nm, "pivot": list(map(float, ankle))})
     return parts, rig

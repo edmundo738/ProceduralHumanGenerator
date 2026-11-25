@@ -405,3 +405,12 @@ atrasado, dentes, respiração sintetizada, ruído por clique. Variant 'stalker'
 modelo') → GEOMETRIA DE RAIO: lofts próprios (6244 tris, 19 partes+pivôs,
 corcunda, mandíbula-larva, garras); animação procedural própria; modelos
 apenas como régua de escala. Painel stalker2_views.png no TOPO.
+
+**STALKER v3 (2026-09-24):** dono: "não mediu, só mentiste na cara dura;
+precisa de ser consistente" → REGRA: proporção sem medição do OUTPUT =
+mentira. SPEC M1–M17 (docs/CREATURE_SPEC_STALKER.md) + instrumento
+tools/creature/measure_stalker.py (mede o GLB; M7/M8 por centróides de
+anel; M9 por pivôs do rig). Ciclo 10 FAIL→8→5→5→1→0 = **17/17 PASS**
+(estatura 1752, punho −12mm do joelho, corcunda 100, coxa/canela 1.055,
+assim 19mm…). Painel = vistas + TABELA (panel_stalker.py). GLB 3492v/
+6188t digest 75a4e90d. Deploy com curls por hash. Próximo: gate do dono.

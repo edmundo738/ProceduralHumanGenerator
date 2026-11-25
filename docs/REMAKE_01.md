@@ -363,3 +363,33 @@ e escala". v1 (Michelle pintada) ARQUIVADA como erro.
   clips emprestados — marcha assimétrica, braços em contrafase,
   respiração irregular, mandíbula por estado, cabeça com atraso.
 - Painel stalker2_views.png (4 vistas) no TOPO.
+
+## 18. STALKER v3 — CONSISTÊNCIA MEDIDA: 17/17 PASS (2026-09-24)
+
+Dono: "não mediu, só mentiste na cara dura; precisa de ser consistente,
+não qualquer coisa aleatória". Regra adoptada (permanente): **afirmação
+de proporção sem medição numérica do OUTPUT = mentira**.
+
+- **SPEC primeiro**: 17 métricas M1–M17 com bandas
+  (docs/CREATURE_SPEC_STALKER.md) — medidas do GLB gerado, nunca dos
+  parâmetros de construção.
+- **Instrumento**: tools/creature/measure_stalker.py → tabela
+  PASS/FAIL (out/refstudy/stalker_measure.json). Métodos robustos:
+  M7/M8 por centróides de anel (ordem dos vértices = topologia),
+  M9 por pivôs do rig (esferas de junção inflam extensões z).
+- **Ciclo de conformidade: 10 FAIL → 8 → 5 → 5 → 1 → 0.** O que a
+  medição apanhou: loft com eixos largura/profundidade TROCADOS
+  (anca real 177mm vs 330 "desenhados" — M11/M12 impossíveis),
+  braços 127mm curtos, corcunda quase nula (7mm), pé 308mm,
+  pescoço retractado 229mm, assimetria zero. Cada FAIL → ajuste
+  guiado por número → re-medição.
+- **Medido (final, seed 13)**: estatura 1752 · punho −12mm do joelho ·
+  alcance 0.607·S · mão 177 · cabeça 0.140·S a 34.4° · corcunda 100 ·
+  pescoço retractado 79 · coxa/canela 1.055 · pé 259 · ombro 0.203·S ·
+  cintura 0.112 · anca/cintura 1.235 · interocular 104 · olho r21 ·
+  mandíbula 135 · assimetria 19mm. **17/17 PASS.**
+- **Painel regenerado COM a tabela** (tools/creature/panel_stalker.py
+  → docs/head_phaseA/stalker2_views.png): 4 vistas + coluna
+  métrica/valor/banda/PASS. O painel É a prova.
+- GLB: 3492 verts / 6188 tris, digest 75a4e90d3441075e. Deploy:
+  build + cp + curls com verificação por hash (GLB e painel).

@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 9881200664deb1a0",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 75a4e90d3441075e",
  "variants": [
   {
    "id": "antes",
@@ -354,27 +354,27 @@
   },
   {
    "id": "stalker2",
-   "label": "THE STALKER v2 — GEOMETRIA PRÓPRIA (6.2k tris)",
+   "label": "THE STALKER v3 — CONSISTÊNCIA MEDIDA (17/17 PASS)",
    "env": {
     "HCG_BODY": "stalker2"
    },
-   "commit": "stalker-v2",
-   "digest": "9881200664deb1a0",
+   "commit": "stalker-v3",
+   "digest": "75a4e90d3441075e",
    "animated": false,
    "stalker2": true,
    "smooth": {
-    "verts": 3520,
-    "faces": 6244,
+    "verts": 3492,
+    "faces": 6188,
     "quads": 0,
-    "bytes": 3746564
+    "bytes": 3745012
    },
    "cage": {
-    "verts": 3520,
-    "faces": 6244,
+    "verts": 3492,
+    "faces": 6188,
     "quads": 0,
-    "bytes": 3746564
+    "bytes": 3745012
    },
-   "desc": "THE STALKER v2 — GEOMETRIA CRIADA DE RAIO (zero modelos emprestados; Michelle serviu só de régua de escala). 6.2k tris, 19 partes com pivôs: coluna corcunda contínua, cabeça alongada inclinada, mandíbula-larva que ABRE, 2 fileiras de dentes, olhos negros embutidos, braços até ao joelho, articulações estranhas. Texturas PBR geradas+computadas. Animação 100% procedural em stalker.html (marcha assimétrica, cabeça com atraso, respiração)."
+   "desc": "THE STALKER v3 — CONSISTÊNCIA MEDIDA: 17/17 métricas PASS no GLB (measure_stalker.py → out/refstudy/stalker_measure.json). Estatura 1752mm; braços 0.607·estatura c/ punho ao nível do joelho (−12mm); mãos 177mm; cabeça 0.140·estatura a 34.4°; corcunda 100mm c/ pescoço retractado 79mm; coxa/canela 1.055; pés 259mm; ombro 0.203·S, cintura 0.112, anca/cintura 1.235; olhos r21 interocular 104mm; mandíbula 135mm; assimetria de braços 19mm. 3492 verts/6188 tris, 19 partes com pivôs. Animação 100% procedural em stalker.html."
   }
  ],
  "metrics": {
@@ -656,8 +656,8 @@
  "renders": [
   {
    "src": "stalker2_views.png",
-   "title": "THE STALKER v2 — GEOMETRIA PRÓPRIA: frente/perfil/costas + cabeça",
-   "caption": "Directriz do dono: 'cria a forma, não uses modelos — só para comparação e escala'. Cada anel foi gerado: coluna corcunda em loft contínuo (bacia→pescoço), cabeça alongada a 35°, mandíbula com pivô (a boca ABRE), 18 dentes em 2 fileiras, olhos negros, braços 0.34+0.36+mãos até ao joelho, joelhos ao contrário, pés com 3 garras. 3520 verts / 6244 tris (PSX). Escala calibrada contra Michelle (1.66m) → criatura 1.84m. Animação procedural própria em stalker.html — zero retarget."
+   "title": "THE STALKER v3 — MEDIDO DO GLB: 17/17 PASS (frente/perfil/costas + cabeça + tabela)",
+   "caption": "Resposta ao gate do dono ('não mediu, só mentiste na cara dura; precisa de ser consistente'). Painel = vistas + TABELA de 17 métricas medidas do GLB gerado (z-up, mm) contra as bandas de docs/CREATURE_SPEC_STALKER.md: estatura 1752, punho −12mm do joelho, alcance 0.607·S, mão 177, cabeça 0.140·S a 34.4°, corcunda 100, pescoço retractado 79, coxa/canela 1.055, pé 259, ombro 0.203·S, cintura 0.112, anca/cintura 1.235, interocular 104, olho r21, mandíbula 135, assimetria 19mm. Ciclo de conformidade: 10 FAIL→8→5→5→1→0 (a medição apanhou a troca de eixos do loft, anéis a poluir fatias, esferas de junção a inflar extensões, braços 127mm curtos). Instrumento: tools/creature/measure_stalker.py; regra v3: proporção só se declara com a tabela."
   },
   {
    "src": "stalker_concept.png",

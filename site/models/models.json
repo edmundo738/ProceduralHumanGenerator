@@ -1,11 +1,11 @@
 [
  {
   "id": "antes",
-  "label": "ANTES (cabe\u00e7a antiga)",
+  "label": "ANTES (cabeça antiga)",
   "env": {
    "HCG_T1_AMP": "0"
   },
-  "commit": "8716b88\u2026de08023",
+  "commit": "8716b88…de08023",
   "digest": "5f4cca658b590976",
   "smooth": {
    "verts": 107074,
@@ -20,7 +20,7 @@
    "bytes": 242248,
    "edges": 13618
   },
-  "desc": "cabe\u00e7a original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g\u2013op 174 vs 196\u2013210, rela\u00e7\u00e3o globo\u2013\u00f3rbita invertida."
+  "desc": "cabeça original: esfera com aberturas e ilhas coladas (olhos, boca, orelhas). HEAD STUDY 01: g–op 174 vs 196–210, relação globo–órbita invertida."
  },
  {
   "id": "faseA",
@@ -44,7 +44,7 @@
    "bytes": 247744,
    "edges": 13760
   },
-  "desc": "nova representa\u00e7\u00e3o: casca fechada cubo-esfera 3456 quads cujo raio \u00e9 o modelo de 6 massas R1 ajustado ao alvo m\u00e9dio das refs. Sem tra\u00e7os (por desenho da fase)."
+  "desc": "nova representação: casca fechada cubo-esfera 3456 quads cujo raio é o modelo de 6 massas R1 ajustado ao alvo médio das refs. Sem traços (por desenho da fase)."
  },
  {
   "id": "a2b",
@@ -68,11 +68,11 @@
    "bytes": 247740,
    "edges": 13760
   },
-  "desc": "Fase A + canto mentoniano: uni\u00e3o local com o envelope m\u00e9dio do queixo de 3 refs (frente do queixo + plano submental)."
+  "desc": "Fase A + canto mentoniano: união local com o envelope médio do queixo de 3 refs (frente do queixo + plano submental)."
  },
  {
   "id": "n1",
-  "label": "A2b + N1 (pesco\u00e7o superior)",
+  "label": "A2b + N1 (pescoço superior)",
   "env": {
    "HCG_HEAD": "massA2",
    "HCG_NECK": "N1",
@@ -93,7 +93,7 @@
    "bytes": 247736,
    "edges": 13760
   },
-  "desc": "A2b + pesco\u00e7o superior (an\u00e9is trunk.2/3) calibrado para o perfil m\u00e9dio das refs. S\u00f3 32 v\u00e9rtices do corpo mudam."
+  "desc": "A2b + pescoço superior (anéis trunk.2/3) calibrado para o perfil médio das refs. Só 32 vértices do corpo mudam."
  },
  {
   "id": "f1",
@@ -118,7 +118,7 @@
    "bytes": 1269088,
    "edges": 70544
   },
-  "desc": "F1 = faceB + N1: sobre a mesma casca, campos anat\u00f3micos com limites de sinal (nariz, l\u00e1bios, \u00f3rbitas, orelhas) + camada corretiva estat\u00edstica das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira vers\u00e3o 8/8 crit\u00e9rios (W1 153.2 \u2713)."
+  "desc": "F1 = faceB + N1: sobre a mesma casca, campos anatómicos com limites de sinal (nariz, lábios, órbitas, orelhas) + camada corretiva estatística das refs (declarada; 43% explicado pelos campos). Globos oculares procedurais. Primeira versão 8/8 critérios (W1 153.2 ✓)."
  },
  {
   "id": "f2",
@@ -143,7 +143,7 @@
    "bytes": 1269088,
    "edges": 70544
   },
-  "desc": "F2 = CONT1 + N1: orelha INTEGRADA \u2014 janela C\u00b9 (smoothstep, valor e declive nulos no bordo) \u00d7 colina recentrada no envelope medido das refs + relevo refor\u00e7ado; K mantido (suprimi-lo custou relevo: turn 449\u00b0 vs 462\u00b0). Turn da sec\u00e7\u00e3o 462\u2192619\u00b0 (refs 571\u2013993). Fora da orelha: m\u00e1x 0.035 mm. 8/8 crit\u00e9rios intactos."
+  "desc": "F2 = CONT1 + N1: orelha INTEGRADA — janela C¹ (smoothstep, valor e declive nulos no bordo) × colina recentrada no envelope medido das refs + relevo reforçado; K mantido (suprimi-lo custou relevo: turn 449° vs 462°). Turn da secção 462→619° (refs 571–993). Fora da orelha: máx 0.035 mm. 8/8 critérios intactos."
  },
  {
   "id": "t1",
@@ -167,17 +167,17 @@
    "bytes": 1269088,
    "edges": 70544
   },
-  "desc": "H-TT1 = TORSO B + loft SPLINE: o tronco deixa de ser C0 por tro\u00e7os \u2014 an\u00e9is densos por PCHIP (C\u00b9, monot\u00f3nica, sem overshoot) dos caminhos dos pontos das esta\u00e7\u00f5es (a interpola\u00e7\u00e3o linear concentrava a curvatura nas esta\u00e7\u00f5es = as 'lombas de estrada' medidas: R9 3 extremos vs 1 [1\u20131] das refs). Esta\u00e7\u00e3o perineal nova (o PCHIP alargava anca\u2192virilha e o tronco atravessava as pernas \u2014 corrigido). Amplitudes recalibradas para a malha densa (que agora realiza os campos por inteiro): mama 1.20\u21920.86, lombar, sacro, cifose, wf. P1\u2013P12: 11/11 na banda pela PRIMEIRA vez (P10 232 \u2713, era 242). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_TT1.md)."
+  "desc": "H-TT1 = TORSO B + loft SPLINE: o tronco deixa de ser C0 por troços — anéis densos por PCHIP (C¹, monotónica, sem overshoot) dos caminhos dos pontos das estações (a interpolação linear concentrava a curvatura nas estações = as 'lombas de estrada' medidas: R9 3 extremos vs 1 [1–1] das refs). Estação perineal nova (o PCHIP alargava anca→virilha e o tronco atravessava as pernas — corrigido). Amplitudes recalibradas para a malha densa (que agora realiza os campos por inteiro): mama 1.20→0.86, lombar, sacro, cifose, wf. P1–P12: 11/11 na banda pela PRIMEIRA vez (P10 232 ✓, era 242). Gate visual do dono: PENDENTE (docs/CHECKPOINT_TORSO_TT1.md)."
  },
  {
   "id": "m00",
-  "label": "A\u00b7BASE (Female base CC0)",
+  "label": "A·BASE (Female base CC0)",
   "env": {
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
   "digest": "d6ce7b046f6a089a",
-  "desc": "A\u00b7BASE \u2014 funda\u00e7\u00e3o CC0 (Female base, 18577 verts) sem morphs; mama j\u00e1 em banda refs (gap 20.5). O ponto de partida do caminho A.",
+  "desc": "A·BASE — fundação CC0 (Female base, 18577 verts) sem morphs; mama já em banda refs (gap 20.5). O ponto de partida do caminho A.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -193,13 +193,13 @@
  },
  {
   "id": "w02",
-  "label": "A\u00b7seed 202 (largo)",
+  "label": "A·seed 202 (largo)",
   "env": {
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
   "digest": "1452663b067adcd4",
-  "desc": "A\u00b7seed 202 (A.2 carne ligada) \u2014 estatura 1607, cintura 226, WHR 0.72, mama+.",
+  "desc": "A·seed 202 (A.2 carne ligada) — estatura 1607, cintura 226, WHR 0.72, mama+.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -215,13 +215,13 @@
  },
  {
   "id": "w03",
-  "label": "A\u00b7seed 303 (largo)",
+  "label": "A·seed 303 (largo)",
   "env": {
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
   "digest": "1ed74e508a171d8a",
-  "desc": "A\u00b7seed 303 (A.2 carne ligada) \u2014 estatura 1566, cintura 206, anca 290: compacta.",
+  "desc": "A·seed 303 (A.2 carne ligada) — estatura 1566, cintura 206, anca 290: compacta.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -237,13 +237,13 @@
  },
  {
   "id": "w05",
-  "label": "A\u00b7seed 505 (largo)",
+  "label": "A·seed 505 (largo)",
   "env": {
    "HCG_BODY": "basemesh"
   },
   "commit": "basemesh-A.1",
   "digest": "856cd322e0696f08",
-  "desc": "A\u00b7seed 505 (A.2 carne ligada) \u2014 estatura 1764, cintura 294, WHR 0.90, mama++: robusta.",
+  "desc": "A·seed 505 (A.2 carne ligada) — estatura 1764, cintura 294, WHR 0.90, mama++: robusta.",
   "smooth": {
    "verts": 18577,
    "faces": 37088,
@@ -278,11 +278,11 @@
    "quads": 0,
    "bytes": 317236
   },
-  "desc": "WAIFU v1 \u2014 funda\u00e7\u00e3o anime CC (pack SimpleRig do dono): corpo+olhos+boca+m\u00e3os montados, ~5k tris LOW POLY com UVs, cores kawaii (pele/olhos escuros/boca rosa), sombreamento TOON. Estatura 1.58 m estilo Zelda; WHR 0.70; gap mama 26 (banda refs)."
+  "desc": "WAIFU v1 — fundação anime CC (pack SimpleRig do dono): corpo+olhos+boca+mãos montados, ~5k tris LOW POLY com UVs, cores kawaii (pele/olhos escuros/boca rosa), sombreamento TOON. Estatura 1.58 m estilo Zelda; WHR 0.70; gap mama 26 (banda refs)."
  },
  {
   "id": "waifu2",
-  "label": "WAIFU v2 \u2014 cabelo+vestido+ANIMADA",
+  "label": "WAIFU v2 — cabelo+vestido+ANIMADA",
   "env": {
    "HCG_BODY": "waifu2"
   },
@@ -301,11 +301,11 @@
    "quads": 0,
    "bytes": 520880
   },
-  "desc": "WAIFU v2 \u2014 CABELO bob (com franja), VESTIDO rosa sakura (topo + saia A), BOTAS chocolate; tudo constru\u00eddo por inv\u00f3lucro sobre a pr\u00f3pria geometria = ajuste perfeito. ANIMADA no visualizador: respira, balan\u00e7a e PESTANEJA. ~14k tris com roupa."
+  "desc": "WAIFU v2 — CABELO bob (com franja), VESTIDO rosa sakura (topo + saia A), BOTAS chocolate; tudo construído por invólucro sobre a própria geometria = ajuste perfeito. ANIMADA no visualizador: respira, balança e PESTANEJA. ~14k tris com roupa."
  },
  {
   "id": "waifu3",
-  "label": "WAIFU v3 \u2014 assets REAIS + ANIMADA (dan\u00e7a!) + pele NEGRA",
+  "label": "WAIFU v3 — assets REAIS + ANIMADA (dança!) + pele NEGRA",
   "env": {
    "HCG_BODY": "waifu3"
   },
@@ -325,11 +325,11 @@
    "quads": 0,
    "bytes": 3267264
   },
-  "desc": "WAIFU v3 \u2014 ASSETS REAIS baixados da net (three.js/MIT): Michelle (cabelo, roupa e texturas de verdade) com PELE NEGRA recolorida na textura (selectiva, roupa/cabelo intactos) + ANIMA\u00c7\u00d5ES REAIS: \ud83d\udc83 Samba embutida + idle/andar/correr/concordar/negar retonados do Xbot. Usa a barra de bot\u00f5es acima do modelo."
+  "desc": "WAIFU v3 — ASSETS REAIS baixados da net (three.js/MIT): Michelle (cabelo, roupa e texturas de verdade) com PELE NEGRA recolorida na textura (selectiva, roupa/cabelo intactos) + ANIMAÇÕES REAIS: 💃 Samba embutida + idle/andar/correr/concordar/negar retonados do Xbot. Usa a barra de botões acima do modelo."
  },
  {
   "id": "stalker",
-  "label": "THE STALKER \u2014 O Encharcado (PBR/PSX)",
+  "label": "THE STALKER — O Encharcado (PBR/PSX)",
   "env": {
    "HCG_BODY": "stalker"
   },
@@ -352,25 +352,25 @@
  },
  {
   "id": "stalker2",
-  "label": "THE STALKER v2 \u2014 GEOMETRIA PR\u00d3PRIA (6.2k tris)",
+  "label": "THE STALKER v3 — CONSISTÊNCIA MEDIDA (17/17 PASS)",
   "env": {
    "HCG_BODY": "stalker2"
   },
-  "commit": "stalker-v2",
-  "digest": "9881200664deb1a0",
+  "commit": "stalker-v3",
+  "digest": "75a4e90d3441075e",
   "animated": false,
   "stalker2": true,
   "smooth": {
-   "verts": 3520,
-   "faces": 6244,
+   "verts": 3492,
+   "faces": 6188,
    "quads": 0,
-   "bytes": 3746564
+   "bytes": 3745012
   },
   "cage": {
-   "verts": 3520,
-   "faces": 6244,
+   "verts": 3492,
+   "faces": 6188,
    "quads": 0,
-   "bytes": 3746564
+   "bytes": 3745012
   },
   "desc": "stalker2"
  }

@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-10-07",
+ "updated": "2026-11-25",
  "purpose": "Conhecimento acumulado do projecto (mandato RND: 'copiar como aprendizado'). Tudo o que o gerador precisa para produzir corpos ao clicar + tudo o que os gates do dono ensinaram. Fonte única de verdade para o caminho A (base mesh + morphs).",
  "base_meshes": {
   "femalebase": {
@@ -298,6 +298,12 @@
    "subject": "RENDER A (GLB + câmara)",
    "verdict": "BUG (meu)",
    "lesson": "2 bugs: (1) writer GLB invertia o winding desnecessariamente — mapa (−x,z,y) é rotação própria (det=+1) → volume assinado NEGATIVO = x-ray 'ver dentro da boneca'; PROVA: m00 −0.049 m³ vs t1 +0.068. Validação obrigatória de agora: volume assinado >0. (2) site principal usava moldura de CABEÇA (size 0.34) em CORPOS de 1.7m → câmara a 0.6m = dentro do corpo + 'olho de peixe' → AUTO-FRAME por bbox. E directriz CARNE LIGADA."
+  },
+  {
+   "date": "2026-09-24",
+   "subject": "THE STALKER v2 → v3 (proporções)",
+   "verdict": "GATE NEGATIVO do dono + emenda medida",
+   "lesson": "Dono: 'não mediu, só mentiste na cara dura; precisa de ser consistente, não qualquer coisa aleatória'. AFIRMAÇÃO DE PROPORÇÃO SEM MEDIÇÃO NUMÉRICA DO OUTPUT = MENTIRA — regra permanente. Emenda v3: SPEC de 17 métricas com bandas (docs/CREATURE_SPEC_STALKER.md) + instrumento measure_stalker.py que mede o GLB gerado (nunca os parâmetros) → ciclo 10 FAIL→8→5→5→1→0. O que a medição apanhou que a minha 'certeza' não via: (1) bug de eixos no loft — largura/profundidade TROCADAS (anca 177mm vs 330 'desenhados'); (2) braços 127mm mais curtos que o alegado ('até ao joelho' era −187mm); (3) corcunda inexistente (7mm vs ≥45); (4) esferas de junção inflam extensões z → M9 por PIVÔS do rig, não por bounding boxes; (5) anéis inclinados do pescoço poluem fatias de medição → centróides de anel pela ordem dos vértices (topologia = dado). Painel regenerado COM a tabela (panel_stalker.py). Regra: proporção só se declara com tabela PASS."
   }
  ],
  "instruments": {
@@ -372,6 +378,32 @@
    "proporcoes": "1.84m; braços até ao joelho (0.34+0.36+0.30); cabeça 0.27 alongada a 35°; joelhos com dobragem inversa; pés 0.22 com 3 garras; mãos 4 dedos + polegar",
    "animacao": "procedural própria em three.js (stalker.js v2): marcha assimétrica (esq 94%), braços em contrafase com arrasto, respiração irregular, mandíbula por estado, cabeça com atraso forte + tremor",
    "tris": "6244 (PSX-low)"
+  },
+  "v3_measured": {
+   "date": "2026-09-24",
+   "gate": "17/17 PASS (out/refstudy/stalker_measure.json, seed 13)",
+   "measures": {
+    "M1_estatura": 1752.4,
+    "M2_punho_acima_joelho": -12.2,
+    "M3_alcance_braco_frac": 0.607,
+    "M4_mao_mm": 177.1,
+    "M5_cabeca_frac": 0.14,
+    "M6_cabeca_graus": 34.4,
+    "M7_corcunda_mm": 100.0,
+    "M8_pescoco_retr_mm": 78.9,
+    "M9_coxa_canela": 1.055,
+    "M10_pe_mm": 258.7,
+    "M11_ombro_frac": 0.203,
+    "M12_cintura_frac": 0.112,
+    "M13_anca_cintura": 1.235,
+    "M14_interocular_mm": 104.0,
+    "M15_olho_raio_mm": 21.0,
+    "M16_mandibula_mm": 135.0,
+    "M17_assim_bracos_mm": 19.0
+   },
+   "glb": "site/models/stalker2_{smooth,cage}.glb · 3492v/6188t · digest 75a4e90d3441075e",
+   "instrumento": "tools/creature/measure_stalker.py (bandas = docs/CREATURE_SPEC_STALKER.md)",
+   "painel": "tools/creature/panel_stalker.py → docs/head_phaseA/stalker2_views.png (vistas + tabela)"
   }
  }
 }
