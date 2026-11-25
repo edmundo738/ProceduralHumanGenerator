@@ -102,8 +102,16 @@ async function load() {
     const c = xb.animations.find((a) => a.name === n);
     if (c) { clips[n] = SkeletonUtils.retargetClip(dst, src, c); actions[n] = mixer.clipAction(clips[n]); }
   }
+  creature.updateMatrixWorld(true);   // matrizes frescas p/ anexar a cara
   head = creature.getObjectByName(B("Head"));
-  buildFace();
+  if (head) buildFace();
+  // rest das costas p/ corcunda determinística
+  state.hunch = [];
+  for (const [nm, add, breath] of [["Spine", 0.14, false], ["Spine1", 0.14, true],
+                                    ["Spine2", 0.13, false], ["Neck", -0.22, false]]) {
+    const bn = creature.getObjectByName(B(nm));
+    if (bn) state.hunch.push({ bone: bn, rest: bn.rotation.x, add, breath });
+  }
   play("idle");
   $("#st").textContent = "DORMANT";
 }
@@ -206,16 +214,17 @@ function animate() {
   const t = clock.elapsedTime;
   if (creature && mixer) {
     mixer.update(dt);
-    // corcunda + braços longos (por cima do clip, cada frame)
-    const sp = creature.getObjectByName(B("Spine")), sp1 = creature.getObjectByName(B("Spine1")),
-          sp2 = creature.getObjectByName(B("Spine2")), nk = creature.getObjectByName(B("Neck"));
-    if (sp) { sp.rotation.x += 0.14; sp1.rotation.x += 0.14; sp2.rotation.x += 0.13; nk.rotation.x -= 0.22; }
+    // corcunda + braços longos — DETERMINÍSTICO: rest capturado no load,
+    // SET por frame (nunca += acumulativo, mesmo se o clip não animar o osso)
+    const hunchBones = state.hunch || [];
+    for (const b3 of hunchBones) {
+      b3.bone.rotation.x = b3.rest + b3.add +
+        (b3.breath ? Math.sin(t * 1.9) * 0.02 + Math.sin(t * 7.3) * 0.006 : 0);
+    }
     for (const s of ["Left", "Right"]) {
       const fa = creature.getObjectByName(B(s + "ForeArm")), hd = creature.getObjectByName(B(s + "Hand"));
       if (fa) fa.scale.setScalar(1.16); if (hd) hd.scale.setScalar(1.16);
     }
-    // respiração irregular + tiques
-    if (sp1) sp1.rotation.x += Math.sin(t * 1.9) * 0.02 + Math.sin(t * 7.3) * 0.006;
     // look-at com ATRASO (a cabeça segue o jogador devagar, com tremor)
     if (head) {
       const m = new THREE.Matrix4().lookAt(camera.position, head.getWorldPosition(new THREE.Vector3()), creature.up);

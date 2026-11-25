@@ -149,7 +149,7 @@ def main():
     # o preview') — o browser cacheava app.js/generator.js e o dono via
     # versões velhas. Versão = hash do ficheiro (muda só quando muda o js).
     import hashlib, re
-    for html in ("index.html", "generator.html"):
+    for html in ("index.html", "generator.html", "stalker.html"):
         hp = os.path.join(OUT, html)
         if not os.path.exists(hp):
             continue
@@ -161,7 +161,7 @@ def main():
             except OSError:
                 return m.group(0)
             return f'="{f}?v={h}"'
-        txt = re.sub(r'="(app\.js|generator\.js|style\.css)(\?v=[0-9a-f]+)?"', bust, txt)
+        txt = re.sub(r'="(app\.js|generator\.js|stalker\.js|style\.css)(\?v=[0-9a-f]+)?"', bust, txt)
         open(hp, "w").write(txt)
     vendor_three(os.path.join(OUT, "vendor", "three"))
     os.makedirs(os.path.join(OUT, "renders"), exist_ok=True)

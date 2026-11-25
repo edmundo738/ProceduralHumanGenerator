@@ -115,21 +115,25 @@ def rebuild(src, out, replacements, extra_images):
         cur += len(d)
     newbin = b"".join(parts)
 
-    img_indices = []
+    tex_indices = []
     for data, mime in extra_images:
         vi = len(js["bufferViews"])
         js["bufferViews"].append({"buffer": 0, "byteOffset": len(newbin), "byteLength": len(data)})
         newbin += pad4(data)
         js["images"].append({"mimeType": mime, "bufferView": vi})
-        img_indices.append(len(js["images"]) - 1)
+        # glTF: materiais referem TEXTURES (que referem images) — nunca
+        # imagens directamente (bug 2026-09-24: occlusionTexture.index=4
+        # apontava para image → GLTFLoader falhava → stalker invisível).
+        js["textures"].append({"source": len(js["images"]) - 1})
+        tex_indices.append(len(js["textures"]) - 1)
 
     for v in js["bufferViews"]:
         if v["byteOffset"] in off_map:      # extras (AO) já têm offset final
             v["byteOffset"] = off_map[v["byteOffset"]]
     js["buffers"][0]["byteLength"] = len(newbin)
     js["materials"][0]["metallicFactor"] = 0.05
-    if img_indices:
-        js["materials"][0]["occlusionTexture"] = {"index": img_indices[0]}
+    if tex_indices:
+        js["materials"][0]["occlusionTexture"] = {"index": tex_indices[0], "strength": 0.9}
 
     jsb = json.dumps(js).encode()
     jsb += b" " * ((4 - len(jsb) % 4) % 4)          # ESPAÇOS (nunca NUL)
@@ -157,6 +161,14 @@ def main():
     blen, _ = struct.unpack("<II", b[off:off + 8])
     for v in js["bufferViews"]:
         assert v["byteOffset"] + v["byteLength"] <= blen, "view fora do buffer"
+    nT = len(js.get("textures", []))
+    for mi, mat in enumerate(js["materials"]):
+        pbr = mat.get("pbrMetallicRoughness", {})
+        for key, t in list(pbr.items()) + list(mat.items()):
+            if isinstance(t, dict) and "index" in t and "Texture" in key:
+                assert t["index"] < nT, f"material {mi}.{key}: texture index inválido"
+        for t in js.get("textures", []):
+            assert t["source"] < len(js["images"]), "texture.source inválido"
     names = [nd.get("name", "?") for nd in js["nodes"]]
     joints = [names[j] for j in js["skins"][0]["joints"]]
     print("VALIDAÇÃO OK · anims:", [a["name"] for a in js["animations"]])
