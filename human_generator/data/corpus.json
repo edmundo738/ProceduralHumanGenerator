@@ -364,6 +364,14 @@
    "site/models/stalker_*.glb",
    "tools/creature/build_stalker.py",
    "tools/preview/site/stalker.*"
-  ]
+  ],
+  "v2_geometry_own": {
+   "date": "2026-09-24",
+   "directriz": "dono: 'cria a forma; não uses modelos nenhum, apenas comparação e escala'",
+   "metodo": "LOFT numpy: polilinhas de centro + perfis de raio elípticos com ε orgânico (seed 13); tronco contínuo corcunda; membros enraizados DENTRO do tronco + esferas de junção nos pivôs (CARNE LIGADA: junções escondidas na carne); 19 partes nomeadas + stalker2_rig.json (hierarquia/pivôs)",
+   "proporcoes": "1.84m; braços até ao joelho (0.34+0.36+0.30); cabeça 0.27 alongada a 35°; joelhos com dobragem inversa; pés 0.22 com 3 garras; mãos 4 dedos + polegar",
+   "animacao": "procedural própria em three.js (stalker.js v2): marcha assimétrica (esq 94%), braços em contrafase com arrasto, respiração irregular, mandíbula por estado, cabeça com atraso forte + tremor",
+   "tris": "6244 (PSX-low)"
+  }
  }
 }

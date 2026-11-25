@@ -1,0 +1,175 @@
+{
+ "rig": [
+  {
+   "name": "torso",
+   "parent": null,
+   "pivot": [
+    0,
+    0.98,
+    0
+   ]
+  },
+  {
+   "name": "head",
+   "parent": "torso",
+   "pivot": [
+    -0.0,
+    1.54,
+    0.055
+   ]
+  },
+  {
+   "name": "mandible",
+   "parent": "head",
+   "pivot": [
+    -0.0,
+    1.6213878456662534,
+    0.11310351605373051
+   ]
+  },
+  {
+   "name": "cavity",
+   "parent": "head",
+   "pivot": [
+    -0.0,
+    1.54,
+    0.055
+   ]
+  },
+  {
+   "name": "teeth",
+   "parent": "head",
+   "pivot": [
+    -0.0,
+    1.54,
+    0.055
+   ]
+  },
+  {
+   "name": "eye_R",
+   "parent": "head",
+   "pivot": [
+    -0.0,
+    1.54,
+    0.055
+   ]
+  },
+  {
+   "name": "eye_L",
+   "parent": "head",
+   "pivot": [
+    -0.0,
+    1.54,
+    0.055
+   ]
+  },
+  {
+   "name": "upperarm_R",
+   "parent": "torso",
+   "pivot": [
+    -0.165,
+    1.415,
+    -0.06
+   ]
+  },
+  {
+   "name": "forearm_R",
+   "parent": "upperarm_R",
+   "pivot": [
+    -0.225,
+    1.08,
+    -0.16
+   ]
+  },
+  {
+   "name": "hand_R",
+   "parent": "forearm_R",
+   "pivot": [
+    -0.245,
+    0.7200000000000001,
+    -0.1
+   ]
+  },
+  {
+   "name": "upperarm_L",
+   "parent": "torso",
+   "pivot": [
+    0.165,
+    1.415,
+    -0.06
+   ]
+  },
+  {
+   "name": "forearm_L",
+   "parent": "upperarm_L",
+   "pivot": [
+    0.225,
+    1.08,
+    -0.16
+   ]
+  },
+  {
+   "name": "hand_L",
+   "parent": "forearm_L",
+   "pivot": [
+    0.245,
+    0.7200000000000001,
+    -0.1
+   ]
+  },
+  {
+   "name": "thigh_R",
+   "parent": "torso",
+   "pivot": [
+    -0.062,
+    0.965,
+    0.005
+   ]
+  },
+  {
+   "name": "shin_R",
+   "parent": "thigh_R",
+   "pivot": [
+    -0.07,
+    0.49,
+    -0.04
+   ]
+  },
+  {
+   "name": "foot_R",
+   "parent": "shin_R",
+   "pivot": [
+    -0.07,
+    0.044999999999999984,
+    -0.010000000000000002
+   ]
+  },
+  {
+   "name": "thigh_L",
+   "parent": "torso",
+   "pivot": [
+    0.062,
+    0.965,
+    0.005
+   ]
+  },
+  {
+   "name": "shin_L",
+   "parent": "thigh_L",
+   "pivot": [
+    0.07,
+    0.49,
+    -0.04
+   ]
+  },
+  {
+   "name": "foot_L",
+   "parent": "shin_L",
+   "pivot": [
+    0.07,
+    0.044999999999999984,
+    -0.010000000000000002
+   ]
+  }
+ ]
+}

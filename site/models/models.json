@@ -349,5 +349,29 @@
    "bytes": 3757216
   },
   "desc": "stalker"
+ },
+ {
+  "id": "stalker2",
+  "label": "THE STALKER v2 \u2014 GEOMETRIA PR\u00d3PRIA (6.2k tris)",
+  "env": {
+   "HCG_BODY": "stalker2"
+  },
+  "commit": "stalker-v2",
+  "digest": "9881200664deb1a0",
+  "animated": false,
+  "stalker2": true,
+  "smooth": {
+   "verts": 3520,
+   "faces": 6244,
+   "quads": 0,
+   "bytes": 3746564
+  },
+  "cage": {
+   "verts": 3520,
+   "faces": 6244,
+   "quads": 0,
+   "bytes": 3746564
+  },
+  "desc": "stalker2"
  }
 ]

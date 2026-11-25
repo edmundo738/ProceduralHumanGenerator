@@ -400,3 +400,8 @@ e o dono via versões velhas.
 rig Michelle + retarget Xbot; cena stalker.html com FSM 7 estados, look-at
 atrasado, dentes, respiração sintetizada, ruído por clique. Variant 'stalker'
 + conceito no TOPO dos renders.
+
+**STALKER v2 (2026-09-24):** dono rejeitou v1 (Michelle+textura='pegaste o
+modelo') → GEOMETRIA DE RAIO: lofts próprios (6244 tris, 19 partes+pivôs,
+corcunda, mandíbula-larva, garras); animação procedural própria; modelos
+apenas como régua de escala. Painel stalker2_views.png no TOPO.

@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 9881200664deb1a0",
  "variants": [
   {
    "id": "antes",
@@ -351,6 +351,30 @@
     "bytes": 3757216
    },
    "desc": "THE STALKER — O Encharcado: humanoide ambíguo de pele vermelho-escuro (pessoa? ave? larva?) com secreção viscosa nos poros e olhos negros que brilham no escuro. Texturas PBR GERADAS por IA + mapas COMPUTADOS (normal/rough/AO), 512px posterizados com dither (PSX moderno sujo). Rig Mixamo + clips. Cena própria: stalker.html."
+  },
+  {
+   "id": "stalker2",
+   "label": "THE STALKER v2 — GEOMETRIA PRÓPRIA (6.2k tris)",
+   "env": {
+    "HCG_BODY": "stalker2"
+   },
+   "commit": "stalker-v2",
+   "digest": "9881200664deb1a0",
+   "animated": false,
+   "stalker2": true,
+   "smooth": {
+    "verts": 3520,
+    "faces": 6244,
+    "quads": 0,
+    "bytes": 3746564
+   },
+   "cage": {
+    "verts": 3520,
+    "faces": 6244,
+    "quads": 0,
+    "bytes": 3746564
+   },
+   "desc": "THE STALKER v2 — GEOMETRIA CRIADA DE RAIO (zero modelos emprestados; Michelle serviu só de régua de escala). 6.2k tris, 19 partes com pivôs: coluna corcunda contínua, cabeça alongada inclinada, mandíbula-larva que ABRE, 2 fileiras de dentes, olhos negros embutidos, braços até ao joelho, articulações estranhas. Texturas PBR geradas+computadas. Animação 100% procedural em stalker.html (marcha assimétrica, cabeça com atraso, respiração)."
   }
  ],
  "metrics": {
@@ -630,6 +654,11 @@
   }
  ],
  "renders": [
+  {
+   "src": "stalker2_views.png",
+   "title": "THE STALKER v2 — GEOMETRIA PRÓPRIA: frente/perfil/costas + cabeça",
+   "caption": "Directriz do dono: 'cria a forma, não uses modelos — só para comparação e escala'. Cada anel foi gerado: coluna corcunda em loft contínuo (bacia→pescoço), cabeça alongada a 35°, mandíbula com pivô (a boca ABRE), 18 dentes em 2 fileiras, olhos negros, braços 0.34+0.36+mãos até ao joelho, joelhos ao contrário, pés com 3 garras. 3520 verts / 6244 tris (PSX). Escala calibrada contra Michelle (1.66m) → criatura 1.84m. Animação procedural própria em stalker.html — zero retarget."
+  },
   {
    "src": "stalker_concept.png",
    "title": "THE STALKER — conceito (gerado por IA, PSX moderno sujo)",

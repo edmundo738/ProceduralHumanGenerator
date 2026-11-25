@@ -343,3 +343,23 @@ depelado" + directriz PSX moderno sujo com PBR.
   SINTETIZADA (WebAudio), clique no chão = ruído → investigação.
 - Nota: o texto do dono mencionava o repo Nsambo; implementado no
   ProceduralHumanGenerator (sessão actual) — portável depois.
+
+
+## 17. STALKER v2 — geometria CRIADA DE RAIO (2026-09-24)
+
+Dono: "apenas pegaste o modelo e puseste uma textura — estranho" → e
+depois: "cria a forma, não uses modelos nenhum, apenas para comparação
+e escala". v1 (Michelle pintada) ARQUIVADA como erro.
+
+- **Geometria 100% própria** (build_stalker2.py): lofts anel-a-anel
+  com coluna corcunda contínua, cabeça alongada a 35°, mandíbula-larva
+  com pivô (boca que abre), 2 fileiras de 18 dentes, olhos negros
+  embutidos, braços até ao joelho, joelhos com dobragem inversa, pés
+  alongados com 3 garras, mãos com 4 dedos+polegar. Membros enraizados
+  DENTRO do tronco com esferas de junção (CARNE LIGADA aplicada).
+  3520 verts / 6244 tris — PSX. Escala calibrada vs Michelle (1.66 m)
+  → 1.84 m (modelos = régua, não corpo).
+- **Animação procedural própria** (stalker.js v2): sem retarget, sem
+  clips emprestados — marcha assimétrica, braços em contrafase,
+  respiração irregular, mandíbula por estado, cabeça com atraso.
+- Painel stalker2_views.png (4 vistas) no TOPO.
