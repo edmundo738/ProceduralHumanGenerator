@@ -90,6 +90,11 @@ def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0, mod=None):
     e1 = np.ones(N) if e1 is None else e1
     e2 = np.ones(N) if e2 is None else e2
     V, UV = [], []
+    # UV FÍSICO (v3.3 T1-T3): v = arco ao longo do centro / 0.25m —
+    # densidade de texel CONSTANTE (o v=i/N esticava 512px por partes
+    # inteiras = leitura Minecraft)
+    seg = np.linalg.norm(np.diff(pts, axis=0), axis=1)
+    s_arc = np.concatenate([[0.0], np.cumsum(seg)])
     # ruído orgânico LIMITADO a ±noise (randn podia dar +4σ e as
     # larguras MAX das fatias inflavam — M12 FAIL medido)
     eps = 1.0 + noise * np.clip(rng.standard_normal((N, 2)), -1.0, 1.0)
@@ -200,6 +205,23 @@ def head_mod(c, v):
     mm -= 6.0 * _G(abs(xl), 0.45, 0.18) * _G(yl, 0.25, 0.25) * _G(zl, 1545, 22)  # bochechas
     mm += 4.0 * _G(abs(xl), 0.0, 0.12) * _G(yl, 0.0, 0.4) * _G(zl, 1747, 30)     # crista sagital
     return mm / 1000.0 / n_
+
+
+def lap_smooth(V, T, center, rad, iters=3, lam=0.35):
+    """Suavização Laplaciana LOCAL (raio rad de center) — funde a esfera
+    de junção no tubo numa transição orgânica (fascia: tudo ligado, sem
+    'esferas + cones enfiados'). CARNE LIGADA em força."""
+    nbr = {i: set() for i in range(len(V))}
+    for a, b, c in T:
+        nbr[a].update((b, c)); nbr[b].update((a, c)); nbr[c].update((a, b))
+    V = V.copy()
+    for _ in range(iters):
+        newV = V.copy()
+        for i in range(len(V)):
+            if np.linalg.norm(V[i] - center) < rad and nbr[i]:
+                newV[i] = (1 - lam) * V[i] + lam * np.mean([V[j] for j in nbr[i]], axis=0)
+        V = newV
+    return V
 
 
 def densify(P, R, E1=None, E2=None, mult=2):
@@ -321,6 +343,9 @@ def build():
         if joint:
             Vs, Ts = sphere(np.asarray(A, float), max(r0, r1) * 1.12, 9)
             V, T, UV = merge((V, T, UV), (Vs, Ts, np.zeros((len(Vs), 2))))
+            # blend da costura (ANATOMY_RESEARCH §1: junção = carne, não
+            # peça enfiada) — Laplaciano local na zona da articulação
+            V = lap_smooth(V, T, np.asarray(A, float), max(r0, r1) * 1.15, 2, 0.30)
         parts[name] = (V, T, UV)
         rig.append({"name": name, "parent": parent, "pivot": list(map(float, pivot))})
 
@@ -332,9 +357,9 @@ def build():
         el = sh + np.array([s * 0.055, -0.095, -uaL])
         wr = el + np.array([s * 0.018, 0.075, -faL])
         limb("upperarm_" + nm, "torso", sh, sh + np.array([s * 0.05, -0.02, 0.06]), el, 0.048, 0.038,
-             profile=[1.18, 1.02, 0.92, 1.06, 1.12])   # nó deltoideu + cotovelo
+             profile=[1.10, 1.30, 1.14, 0.88, 0.98])   # deltoideu→bíceps→tendão
         limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.038, 0.027,
-             profile=[1.16, 0.95, 0.88, 1.02, 1.0])    # cotovelo + corda fina
+             profile=[1.00, 1.30, 1.00, 0.78, 0.60])   # flexores→corda no punho
         # mão (M4: 120-180mm): palma 55 + dedos 100-120
         palm_d = (wr - el) / np.linalg.norm(wr - el)
         palm_c = wr + palm_d * 0.045
@@ -360,9 +385,9 @@ def build():
         knee = hip + np.array([s * 0.008, -0.045, -0.500])
         ankle = knee + np.array([0, 0.030, -0.475])
         limb("thigh_" + nm, "torso", hip, hip + np.array([0, 0, 0.06]), knee, 0.070, 0.050, root_frac=0.06,
-             profile=[1.16, 1.0, 0.97, 1.08, 1.22])    # nó da anca + joelho
+             profile=[1.06, 1.32, 1.16, 0.88, 1.08])   # quad (barriga)→tendão→joelho
         limb("shin_" + nm, "thigh_" + nm, knee, knee - (knee - hip) * 0.04, ankle, 0.048, 0.033,
-             profile=[1.24, 0.98, 1.06, 0.95, 0.92])   # bojo do joelho + gémeo + tornozelo fino
+             profile=[1.10, 0.96, 1.10, 0.86, 0.70])   # condilos→gémeo→tendão de Aquiles
         foot = []
         Pd = np.stack([ankle, ankle + np.array([0, 0.105, -0.065]), ankle + np.array([0, 0.185, -0.075])])
         foot.append(loft(Pd, np.array([0.036, 0.030, 0.012]), np.array([1.0, 0.9, 0.8]), np.array([0.75, 0.55, 0.45]), 12))

@@ -99,6 +99,8 @@ const STATES = { DORMANT: 0, ROAMING: 0.75, INVESTIGATING: 1.4, STALKING: 1.1, H
 const R = { per_state: {}, worst: {} };
 const tmpV = new THREE.Vector3();
 let a1 = 0, a2 = 1e9, a3 = 0, a4 = 0, a5min = 1e9, a5max = -1e9, a6top = 0, a6shin = 0;
+let maxBulge = 0;
+const GLOB = { thR: [], thL: [], contR: [], contL: [] };   // A7 global (estados móveis)
 
 for (const [st, v] of Object.entries(STATES)) {
   // reset
@@ -107,6 +109,7 @@ for (const [st, v] of Object.entries(STATES)) {
   root.position.set(0, 0, 0); root.rotation.set(0, 0, 0);
   let phase = 0, t = 0, rootZ = 0, prevFootZ = null, maxDrift = 0;
   let rootMin = 1e9, rootMax = -1e9;
+  const thR = [], thL = [], contR = [], contL = [];   // A7
   const dt = 1 / 30, N = 240;
   const stW = { bone: 0, sole: 1e9, drift: 0, top: 0 };
   for (let i = 0; i < N; i++) {
@@ -118,7 +121,13 @@ for (const [st, v] of Object.entries(STATES)) {
       const g = G[nm];
       if (g) g.rotation.set(r[0], r[1] || 0, r[2] || 0);
     }
+    if (v > 0.01) { thR.push(P.parts["thigh_R"][0]); thL.push(P.parts["thigh_L"][0]); }
     if (M.torso) M.torso.scale.set(P.torsoMesh.x, 1, P.torsoMesh.z);
+    if (P.bulge) for (const [nm, b] of Object.entries(P.bulge)) {
+      const m = M[nm];
+      if (m) m.scale.set(1 + b, 1 - b * 0.5, 1 + b);
+      maxBulge = Math.max(maxBulge, v > 0.01 ? b : 0);
+    }
     root.position.set(0, P.rootY, rootZ);
     root.updateMatrixWorld(true);
     // A1 ossos
@@ -127,6 +136,7 @@ for (const [st, v] of Object.entries(STATES)) {
       stW.bone = Math.max(stW.bone, d);
     }
     // A2/A3 solas + patinação
+    let contF = {};
     for (const s of ["R", "L"]) {
       const posA = geos["foot_" + s].attributes.position;
       const mtx = M["foot_" + s].matrixWorld;
@@ -136,7 +146,13 @@ for (const [st, v] of Object.entries(STATES)) {
         if (tmpV.y < ymin) ymin = tmpV.y;
       }
       stW.sole = Math.min(stW.sole, ymin);
-      if (ymin < 0.03) {                                  // em contacto
+      // contacto = garra CRavada (≤5mm); limiar de 30mm apanhava frames
+      // de balanço inicial (pé a descolar ainda baixo) → "drift" do
+      // balanço, não do apoio (refinamento declarado §v3.3)
+      if (v > 0.01) contF[s] = ymin < 0.005;
+      if (v > 0.01 && s === "R") contR.push(contF[s]);
+      if (v > 0.01 && s === "L") contL.push(contF[s]);
+      if (ymin < 0.005) {                                 // garra cravada
         const fz = wp("foot_" + s).z;
         if (prevFootZ !== null && prevFootZ[s] !== undefined) {
           maxDrift = Math.max(maxDrift, Math.abs((fz - prevFootZ[s]) / dt));
@@ -171,9 +187,29 @@ for (const [st, v] of Object.entries(STATES)) {
   a2 = Math.min(a2, stW.sole);
   a3 = Math.max(a3, stW.drift);
   a4 = Math.max(a4, Math.max(0, rootMax - rootMin));
+  if (v > 0.01) { GLOB.thR.push(...thR); GLOB.thL.push(...thL);
+                  GLOB.contR.push(...contR); GLOB.contL.push(...contL); }
   R.per_state[st] = { bone_mm: +stW.bone.toFixed(1), sole_mm: +(stW.sole * 1000).toFixed(1),
     drift_ms: +stW.drift.toFixed(2), top_m: +stW.top.toFixed(3) };
 }
+
+// ---- A7 anti-fase (Pearson coxa_R vs coxa_L, estados móveis)
+function pearson(a, b) {
+  const n = a.length;
+  const ma = a.reduce((x, y) => x + y, 0) / n, mb = b.reduce((x, y) => x + y, 0) / n;
+  let sab = 0, sa = 0, sb = 0;
+  for (let i = 0; i < n; i++) {
+    const da = a[i] - ma, db = b[i] - mb;
+    sab += da * db; sa += da * da; sb += db * db;
+  }
+  return sab / Math.sqrt(sa * sb);
+}
+const a7corr = pearson(GLOB.thR, GLOB.thL);
+const a7duty = Math.max(GLOB.contR.filter(Boolean).length / GLOB.contR.length,
+                        GLOB.contL.filter(Boolean).length / GLOB.contL.length);
+let dbl = 0;
+for (let i = 0; i < GLOB.contR.length; i++) if (GLOB.contR[i] && GLOB.contL[i]) dbl++;
+const a7double = dbl / GLOB.contR.length;
 
 // ---- veredictos
 const SPEC = {
@@ -183,12 +219,18 @@ const SPEC = {
   A4_bob_mm: [0, 60],
   A5_topo_de_pe_m: [1.50, 1.86],
   A6_topo_dormant_m: [0.90, 1.45],
+  A7_anti_fase: [-1e9, -0.75],
+  A7b_duty: [0, 0.70],
+  A7c_duplo_apoio: [0, 0.30],
+  A8_bombeio: [0.02, 0.15],
 };
 const vSpeed = STATES.HUNTING;
 const a3band = 0.35 * vSpeed + 0.15;
 const vals = {
   A1_ossos_mm: a1 * 1000, A2_sola_min_mm: a2 * 1000, A3_patin_ms: a3,
   A4_bob_mm: a4 * 1000, A5_topo_de_pe_m: a5max, A6_topo_dormant_m: a6top,
+  A7_anti_fase: a7corr, A7b_duty: a7duty, A7c_duplo_apoio: a7double,
+  A8_bombeio: maxBulge,
 };
 const verdicts = {
   A1_ossos_mm: a1 * 1000 <= 2 ? "PASS" : "FAIL",
@@ -197,6 +239,10 @@ const verdicts = {
   A4_bob_mm: a4 * 1000 <= 60 ? "PASS" : "FAIL",
   A5_topo_de_pe_m: (a5min >= 1.50 && a5max <= 1.86) ? "PASS" : "FAIL",
   A6_topo_dormant_m: (a6top >= 0.90 && a6top <= 1.45 && a6shin >= 0.8) ? "PASS" : "FAIL",
+  A7_anti_fase: a7corr <= -0.75 ? "PASS" : "FAIL",
+  A7b_duty: a7duty <= 0.70 ? "PASS" : "FAIL",
+  A7c_duplo_apoio: a7double <= 0.30 ? "PASS" : "FAIL",
+  A8_bombeio: (maxBulge >= 0.02 && maxBulge <= 0.15) ? "PASS" : "FAIL",
 };
 R.measures = { ...vals, A6_shin_rx_abs: a6shin };
 R.spec = SPEC;
@@ -213,7 +259,11 @@ fmt("A3_patin_ms", a3.toFixed(2), `[0..${a3band.toFixed(2)}]`);
 fmt("A4_bob_mm", (a4 * 1000).toFixed(1), "[0..60]");
 fmt("A5_topo_de_pe_m", `${a5min.toFixed(2)}..${a5max.toFixed(2)}`, "[1.50..1.86]");
 fmt("A6_topo_dormant_m", a6top.toFixed(2), "[0.90..1.45]");
-console.log(`\n${R.n_pass}/6 PASS · A6_shin_rx=${a6shin.toFixed(2)} rad`);
+fmt("A7_anti_fase", a7corr.toFixed(2), "[-∞..-0.75]");
+fmt("A7b_duty", a7duty.toFixed(2), "[0..0.70]");
+fmt("A7c_duplo_apoio", a7double.toFixed(2), "[0..0.30]");
+fmt("A8_bombeio", maxBulge.toFixed(3), "[0.02..0.15]");
+console.log(`\n${R.n_pass}/${Object.keys(SPEC).length} PASS · A6_shin_rx=${a6shin.toFixed(2)} rad`);
 console.log("por estado:", JSON.stringify(R.per_state));
 
 fs.mkdirSync(path.join(ROOT, "out/refstudy"), { recursive: true });

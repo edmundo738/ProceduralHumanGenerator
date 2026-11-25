@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 5ae3e746ec8ff93e",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 b99761ff24886584",
  "variants": [
   {
    "id": "antes",
@@ -354,12 +354,12 @@
   },
   {
    "id": "stalker2",
-   "label": "THE STALKER v3 — GEOMETRIA+FORMA+ANIMAÇÃO MEDIDAS (17/9/6 PASS)",
+   "label": "THE STALKER v3.3 — ANATOMIA MEDIDA (17/13/10 PASS)",
    "env": {
     "HCG_BODY": "stalker2"
    },
-   "commit": "stalker-v3",
-   "digest": "5ae3e746ec8ff93e",
+   "commit": "stalker-v3.3",
+   "digest": "b99761ff24886584",
    "animated": false,
    "stalker2": true,
    "smooth": {
@@ -374,7 +374,7 @@
     "quads": 0,
     "bytes": 3795888
    },
-   "desc": "THE STALKER v3 — MEDIDO A SÉRIO: GEOMETRIA 17/17 + FORMA 9/9 + ANIMAÇÃO 6/6 (três instrumentos sobre o GLB). Forma/relevo (measure_form.py): 6 costelas visíveis (amplitude 14mm), crista espinal 39mm c/ 7 vértebras, escápulas 21mm, contraste de braço 2.0 (nó deltoideu vs antebraço de corda), bojo de joelho 1.4x, olhos ASSENTES na superfície (18mm — antes estavam enterrados 43mm e eram INVISÍVEIS). Geometria: estatura 1751, punho −12mm do joelho, cabeça 0.140·S a 34.4°, corcunda 100. Animação (anim_check.mjs): ossos 0.0mm, pés plantados, DORMANT agacha 1.35m. Relevo por Gaussiana contínua = CARNE LIGADA."
+   "desc": "THE STALKER v3.3 — ANATOMIA APLICADA E MEDIDA: GEO 17/17 + FORMA 13/13 + ANIM 10/10. Pesquisa de anatomia (docs/ANATOMY_RESEARCH_STALKER.md): músculo = tendão→BARRIGA→tendão a cruzar as juntas; fascia liga tudo. Membros com barriga a meio do osso e tendão fino nas juntas (gémeo/tornozelo 1.9x, flexores/punho 3.0x, joelho 0.6x do quadríceps); juntas fundidas por Laplaciano (fim de esferas+cones); PERNAS EM ANTI-FASE (bug: moviam-se em uníssono!) c/ pés plantados (drift 0.00) e BOMBEIO muscular por dobragem; UV físico = densidade de texel constante 1017px/m (fim do esticão Minecraft da textura). Forma/relevo (measure_form.py): 6 costelas visíveis (amplitude 14mm), crista espinal 39mm c/ 7 vértebras, escápulas 21mm, contraste de braço 2.0 (nó deltoideu vs antebraço de corda), bojo de joelho 1.4x, olhos ASSENTES na superfície (18mm — antes estavam enterrados 43mm e eram INVISÍVEIS). Geometria: estatura 1751, punho −12mm do joelho, cabeça 0.140·S a 34.4°, corcunda 100. Animação (anim_check.mjs): ossos 0.0mm, pés plantados, DORMANT agacha 1.35m. Relevo por Gaussiana contínua = CARNE LIGADA."
   }
  ],
  "metrics": {

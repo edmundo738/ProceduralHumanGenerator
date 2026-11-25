@@ -67,8 +67,11 @@ export function computePose(s, t, phase, speed) {
     : moving ? -0.02 - 0.02 * Math.abs(Math.cos(phase)) * (speed > 2 ? 1.3 : 1)
     : 0;
 
-  for (const [sd, ph] of [["R", 0], ["L", 0]]) {
-    const p = phase + ph + (sd === "L" ? 0.18 : 0);   // claudicação
+  // ANTI-FASE OBRIGATÓRIA (R=0, L=π): bug v3.1 — as duas pernas
+  // partilhavam a MESMA fase (saltava com as duas juntas; o dono viu
+  // "as pernas mexem-se de forma unificada"). +0.18 = claudicação.
+  for (const [sd, ph] of [["R", 0], ["L", Math.PI]]) {
+    const p = phase + ph + (sd === "L" ? 0.10 : 0);   // leve atraso L (claudicação no PASSO: 0.94)
     const hz0 = 0.008, hxz = 0.0;
     if (dormant) {
       // agachado: tornozelo no chão, ligeiro avanço; hip efectivo = rootY
@@ -83,11 +86,16 @@ export function computePose(s, t, phase, speed) {
       const frac = ((p / (2 * Math.PI)) % 1 + 1) % 1;
       // folga da garra: alvo do tornozelo acima do chão pelo drop dos
       // dedos (medido: HUNTING escavava −25.5mm sem folga)
-      const ay0 = LEG.ankleY + (speed > 2 ? 0.035 : 0.012);
+      const ay0 = LEG.ankleY + (speed > 2 ? 0.030 : 0.0);   // passo: garras ao chão
       let ay, az;
       if (frac < 0.5) {
         az = hs * (1 - 4 * frac);        // +hs → −hs linear (dz/dt = −v)
-        ay = ay0;
+        // heel-strike / toe-off (anatomia do passo): alvo sobe 18-20mm
+        // nas PONTAS da fase de apoio — sem isto o IK clampa a perna
+        // 100% esticada no início do contacto e o pé SALTA 28mm/frame
+        ay = ay0
+          + 0.018 * (frac < 0.12 ? (0.12 - frac) / 0.12 : 0)
+          + 0.020 * (frac > 0.40 ? (frac - 0.40) / 0.10 : 0);
       } else {
         const sg = (frac - 0.5) * 2;     // 0..1 balanço
         const ss = sg * sg * (3 - 2 * sg);
@@ -128,6 +136,22 @@ export function computePose(s, t, phase, speed) {
   const br = 1 + Math.sin(t * 1.9) * 0.012 + Math.sin(t * 7.3) * 0.004;
   const torsoMesh = { x: br, z: 1 + (br - 1) * 0.8 };
 
+  // ---- BOMBEIO MUSCULAR (docs/ANATOMY_RESEARCH_STALKER.md §2): a
+  // barriga engrossa quando a articulação FILHA dobra (bíceps com o
+  // cotovelo, quadríceps com o joelho). Escala da MALHA (nunca do
+  // grupo — regra v3.1), amplitude pequena e limitada.
+  const bulge = {};
+  const B = (x, k, cap) => Math.min(cap, k * Math.abs(x || 0));
+  for (const sd of ["R", "L"]) {
+    const elbow = (parts["forearm_" + sd] || [0])[0];
+    const knee = (parts["shin_" + sd] || [0])[0];
+    const ankle = (parts["foot_" + sd] || [0])[0];
+    bulge["upperarm_" + sd] = B(elbow, 0.10, 0.14);
+    bulge["forearm_" + sd] = B(elbow, 0.07, 0.11);
+    bulge["thigh_" + sd] = B(knee, 0.08, 0.12);
+    bulge["shin_" + sd] = B(knee, 0.06, 0.10) + B(ankle, 0.02, 0.03);
+  }
+
   const headTremorZ = Math.sin(t * 13.0) * 0.02 * (hunting ? 2 : 1);
-  return { parts, torsoMesh, rootY, headTremorZ, W };
+  return { parts, torsoMesh, rootY, headTremorZ, bulge, W };
 }

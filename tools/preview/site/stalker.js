@@ -175,6 +175,12 @@ function animate() {
     }
     // respiração: escala SÓ na malha do tronco (grupo nunca — esticava)
     if (torsoMesh) torsoMesh.scale.set(P.torsoMesh.x, 1, P.torsoMesh.z);
+    // bombeio muscular (malha, nunca grupo): barriga engrossa com a
+    // dobragem da articulação filha (ANATOMY_RESEARCH_STALKER.md §2)
+    if (P.bulge) for (const [nm, b] of Object.entries(P.bulge)) {
+      const m = M[nm];
+      if (m) m.scale.set(1 + b, 1 - b * 0.5, 1 + b);
+    }
     creatureRoot.position.y = P.rootY;
 
     // ---- cabeça: tremor do módulo + look-at com ATRASO (a cara segue devagar)

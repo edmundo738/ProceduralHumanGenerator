@@ -316,6 +316,12 @@
    "subject": "THE STALKER v3.2 (forma/silhueta)",
    "verdict": "GATE NEGATIVO do dono + emenda medida",
    "lesson": "Dono: 'a forma/silhueta do monstro é o pior'. Diagnóstico: tubo liso de elipses = zero relevo (horror PSX lê por RELEVO: costelas/espinal/escápulas/nós-vs-cordas). Emenda: spec F1-F8 + measure_form.py; relevo Gaussiano contínuo (CARNE LIGADA) indexado à ESTAÇÃO do loft. BUG REAL apanhado pela medição: OLHOS ENTERRADOS 43mm dentro da cabeça — invisíveis desde a v2 (gate 'olhos que brilham' nunca cumprido!). Lições de instrumento: (1) contagem de gomos exige bumps alinhados às estações (bumps entre estações aliasam a zero); (2) des-tendência por ÍNDICE de anel (janela em mm < espaçamento → cada anel contra si próprio = 0.0); (3) mean10-verts media DENSIDADE da malha (usar distância a triângulos); (4) ruído por anel LIMITADO (randn +4σ inflava larguras MAX); (5) anéis inclinados (corcunda) espalham verts ±40mm em z — features por z-de-vértice diluem e 'yl<-0.35' apanhava verts laterais (espinhos de 29mm nos flancos)."
+  },
+  {
+   "date": "2026-09-24",
+   "subject": "THE STALKER v3.3 (cones+pernas unificadas+textura Minecraft)",
+   "verdict": "GATE NEGATIVO do dono + pesquisa + emenda medida",
+   "lesson": "Dono: 'cada parte parece cones e figuras geométricas conectadas; as pernas mexem-se de forma unificada; textura; compete com Minecraft'. FEITO NA ORDEM PEDIDA: (1) PESQUISA de anatomia (15 fontes, docs/ANATOMY_RESEARCH_STALKER.md): fascia=rede tensional contínua; músculo=tendão→BARRIGA a meio→tendão, barrigas CRUZAM as juntas (eu punha bojos NAS juntas: o inverso); squash/stretch c/ volume; monstro=realidade+exagero. (2) BUG REAL das pernas: módulo de postura partilhava a MESMA fase (π em falta) — andava aos saltinhos; A7 anti-fase agora métrica (−0.78). (3) Perfis músculo-tendão + suavização Laplaciana local nas juntas (fascia). (4) UV físico: v=arco/250mm → densidade de texel CONSTANTE (antes v=i/N esticava 512px por partes inteiras = Minecraft). (5) Bombeio muscular por dobragem (escala de MALHA, nunca grupo). LIÇÕES: asserts num batch grande que falha a meio NÃO GRAVA NADA (perdeu-se um edit assim — verificado por grep antes de seguir); instrumento de contacto tem de seguir a FÍSICA (garra ≤5mm; limiar 30mm media o balanço); clamp de IK = descontinuidade de 28mm/frame (heel-strike/toe-off no alvo resolve)."
   }
  ],
  "instruments": {
@@ -453,6 +459,27 @@
    "instrumento": "tools/creature/measure_form.py",
    "bug_real": "olhos enterrados 43mm (invisíveis v2-v3.1) — agora assentados na superfície",
    "glb": "4400v/8004t · digest 5ae3e746ec8ff93e"
+  },
+  "v33_anatomy_applied": {
+   "date": "2026-09-24",
+   "research": "docs/ANATOMY_RESEARCH_STALKER.md (15 fontes: fascia/miófascial, belly-tendon, squash-stretch, monster design)",
+   "gates": "GEO 17/17 + FORMA 13/13 + ANIM 10/10",
+   "key_measures": {
+    "F6_gemeo_tendao": 1.9,
+    "F6b_ante_punho": 3.0,
+    "F6c_joelho_coxa": 0.6,
+    "T1_torso_px_m": 1017,
+    "A7_anti_fase": -0.78,
+    "A8_bombeio": 0.105,
+    "A3_patin_ms": 0.0
+   },
+   "bugs_fixed": [
+    "pernas em uníssono (π em falta no módulo de postura)",
+    "bojos nas juntas em vez de barrigas (inverso da anatomia)",
+    "UV esticado por parte (textura Minecraft)",
+    "clamp do IK (salto 28mm/frame)"
+   ],
+   "glb": "4400v/8004t · digest b99761ff24886584"
   }
  }
 }

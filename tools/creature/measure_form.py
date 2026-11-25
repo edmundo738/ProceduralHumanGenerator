@@ -16,6 +16,7 @@ Saída: tabela + out/refstudy/stalker_form.json
 """
 import json
 import os
+import struct
 import sys
 
 import numpy as np
@@ -32,9 +33,13 @@ SPEC = {
     "F3_vertebras_n":     (6, 1e9),
     "F4_escapula_mm":     (6, 1e9),
     "F5_braco_contraste": (1.45, 2.1),
-    "F6_joelho_bojo":     (1.2, 1e9),
-    "F6b_cotovelo_bojo":  (1.15, 1e9),
+    "F6_gemeo_tendao":    (1.4, 1e9),     # barriga do gémeo / tendão de Aquiles
+    "F6b_ante_punho":     (1.5, 1e9),     # barriga flexora / tendão do punho
+    "F6c_joelho_coxa":    (0.50, 0.95),   # joelho nunca + largo que o quadríceps
     "F8_olho_assente_mm": (17, 25),
+    "T1_torso_px_m":      (1000, 1e9),
+    "T2_membros_px_m":    (1000, 1e9),
+    "T3_uniformidade":    (0, 2.5),
 }
 
 
@@ -120,15 +125,21 @@ def main():
         return [np.linalg.norm(V[i * n:(i + 1) * n] - V[i * n:(i + 1) * n].mean(0), axis=1).mean()
                 for i in range(nst)]
 
-    f5, f6, f6b = [], [], []
+    # ---- anatómicos (v3.3): barriga a MEIO do osso, tendão na junta
+    f5, f6, f6b, f6c = [], [], [], []
     for s in ("R", "L"):
-        ua, fa, shn = tube_rings(f"upperarm_{s}"), tube_rings(f"forearm_{s}"), tube_rings(f"shin_{s}")
-        f5.append(ua[0] / fa[2])
-        f6.append(shn[0] / shn[2])
-        f6b.append(fa[0] / fa[2])
+        ua = tube_rings(f"upperarm_{s}")
+        fa = tube_rings(f"forearm_{s}")
+        th = tube_rings(f"thigh_{s}")
+        shn = tube_rings(f"shin_{s}")
+        f5.append(ua[0] / fa[2])            # raiz (deltoideu) / meio antebraço
+        f6.append(shn[2] / shn[4])          # gémeo (f=0.35) / tornozelo (1.0)
+        f6b.append(fa[1] / fa[4])           # flexores (f=0) / punho (1.0)
+        f6c.append(shn[0] / th[1])          # joelho / quadríceps
     R["F5_braco_contraste"] = float(np.mean(f5))
-    R["F6_joelho_bojo"] = float(np.mean(f6))
-    R["F6b_cotovelo_bojo"] = float(np.mean(f6b))
+    R["F6_gemeo_tendao"] = float(np.mean(f6))
+    R["F6b_ante_punho"] = float(np.mean(f6b))
+    R["F6c_joelho_coxa"] = float(np.mean(f6c))
 
     # ---- F8: assentamento do olho = distância à SUPERFÍCIE (mínimo
     #      sobre TRIÂNGULOS da cabeça; mean10-de-verts era artefacto de
@@ -157,6 +168,43 @@ def main():
 
     rec = [surf_dist(M["eye_" + s].mean(0)) for s in ("R", "L")]
     R["F8_olho_assente_mm"] = float(np.mean(rec))
+
+    # ---- T1-T3: densidade de texel (UVs do GLB; tile=250mm, tex 512px)
+    GLB = os.path.join(ROOT, "site", "models", "stalker2_smooth.glb")
+    b = open(GLB, "rb").read()
+    jlen = struct.unpack("<I", b[12:16])[0]
+    js = json.loads(b[20:20 + jlen])
+    binOff = 20 + jlen
+    binOff += (4 - (binOff % 4)) % 4
+    blen = struct.unpack("<I", b[binOff:binOff + 4])[0]
+    BIN = b[binOff + 8:binOff + 8 + blen]
+    UVS = {}
+    for m in js["meshes"]:
+        pr = m["primitives"][0]
+        if "TEXCOORD_0" not in pr["attributes"]:
+            continue
+        ai = pr["attributes"]["TEXCOORD_0"]
+        a = js["accessors"][ai]
+        v = js["bufferViews"][a["bufferView"]]
+        o0 = v["byteOffset"] + (a.get("byteOffset") or 0)
+        UVS[m["name"]] = np.frombuffer(BIN[o0:o0 + a["count"] * 8], np.float32).reshape(-1, 2)
+    rigj = json.load(open(os.path.join(ROOT, "site", "models", "stalker2_rig.json")))["rig"]
+    PVR = {r["name"]: np.array([-r["pivot"][0], r["pivot"][2], r["pivot"][1]], float)
+           for r in rigj}
+    dens = {}
+    tv = UVS["torso"][:, 1]
+    dens["torso"] = 512.0 * (tv.max() - tv.min()) / ((T[:, 2].max() - T[:, 2].min()) / 1000.0)
+    for s in ("R", "L"):
+        for part, A, B in ((f"upperarm_{s}", "upperarm_" + s, "forearm_" + s),
+                           (f"forearm_{s}", "forearm_" + s, "hand_" + s),
+                           (f"thigh_{s}", "thigh_" + s, "shin_" + s),
+                           (f"shin_{s}", "shin_" + s, "foot_" + s)):
+            vv = UVS[part][:, 1]
+            Lb = np.linalg.norm(PVR[B] - PVR[A])
+            dens[part] = 512.0 * (vv.max() - vv.min()) / Lb
+    R["T1_torso_px_m"] = float(dens["torso"])
+    R["T2_membros_px_m"] = float(min(v for k, v in dens.items() if k != "torso"))
+    R["T3_uniformidade"] = float(max(dens.values()) / min(dens.values()))
 
     # ---- veredictos
     nfail = 0

@@ -1,6 +1,6 @@
 // THE STALKER v3 — geometria medida (build_stalker2.py) + pivôs
 // (stalker2_rig.json) → hierarquia three.js → ANIMAÇÃO PROCEDURAL
-// própria (módulo stalker_pose.js?v=db15d471: IK 2-ossos, pés plantados, joelho
+// própria (módulo stalker_pose.js?v=248b6aa0: IK 2-ossos, pés plantados, joelho
 // invertido). O módulo de postura é PURO e é partilhado com o
 // instrumento tools/creature/anim_check.mjs — a animação é MEDIDA.
 //
@@ -14,7 +14,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { computePose, stepHz } from "./stalker_pose.js?v=db15d471";
+import { computePose, stepHz } from "./stalker_pose.js?v=248b6aa0";
 
 const $ = (s) => document.querySelector(s);
 
@@ -167,7 +167,7 @@ function animate() {
     const hunting = state.s === "HUNTING";
     if (speed > 0.01) phase += dt * 2 * Math.PI * stepHz(speed) * (1 + 0.05 * Math.sin(t * 0.7));
 
-    // ---- postura (stalker_pose.js?v=db15d471 — o MESMO código que o anim_check.mjs mede)
+    // ---- postura (stalker_pose.js?v=248b6aa0 — o MESMO código que o anim_check.mjs mede)
     const P = computePose(state.s, t, phase, speed);
     for (const [nm, r] of Object.entries(P.parts)) {
       const g = G[nm];
@@ -175,6 +175,12 @@ function animate() {
     }
     // respiração: escala SÓ na malha do tronco (grupo nunca — esticava)
     if (torsoMesh) torsoMesh.scale.set(P.torsoMesh.x, 1, P.torsoMesh.z);
+    // bombeio muscular (malha, nunca grupo): barriga engrossa com a
+    // dobragem da articulação filha (ANATOMY_RESEARCH_STALKER.md §2)
+    if (P.bulge) for (const [nm, b] of Object.entries(P.bulge)) {
+      const m = M[nm];
+      if (m) m.scale.set(1 + b, 1 - b * 0.5, 1 + b);
+    }
     creatureRoot.position.y = P.rootY;
 
     // ---- cabeça: tremor do módulo + look-at com ATRASO (a cara segue devagar)

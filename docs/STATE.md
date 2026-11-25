@@ -431,3 +431,12 @@ olhos enterrados 43mm (invisíveis desde v2) → assentados na superfície
 (18.1mm). Relevo por estação do loft (anéis inclinados ±40mm);
 Gaussiana contínua = CARNE LIGADA. Painel 3 tabelas (17/9/6). GLB
 4400v/8004t 5ae3e746. Deploy por hash. Próximo: gate visual do dono.
+
+**STALKER v3.3 (2026-09-24):** dono: "cones e figuras geométricas
+ligadas; pernas unificadas; textura; parece Minecraft" → PESQUISA de
+anatomia (docs/ANATOMY_RESEARCH_STALKER.md) + aplicação medida:
+perfis tendão→barriga→tendão (F6/F6b/F6c), juntas fundidas por
+Laplaciano, PERNAS ANTI-FASE (bug real: π em falta; A7 −0.78), bombeio
+muscular A8, UV físico (T1-T3, 1017px/m). **GEO 17/17 · FORMA 13/13 ·
+ANIM 10/10.** GLB b99761ff 4400v/8004t. Deploy por hash. Próximo: gate
+visual do dono.

@@ -352,12 +352,12 @@
  },
  {
   "id": "stalker2",
-  "label": "THE STALKER v3 — GEOMETRIA+FORMA+ANIMAÇÃO MEDIDAS (17/9/6 PASS)",
+  "label": "THE STALKER v3.3 — ANATOMIA MEDIDA (17/13/10 PASS)",
   "env": {
    "HCG_BODY": "stalker2"
   },
-  "commit": "stalker-v3",
-  "digest": "5ae3e746ec8ff93e",
+  "commit": "stalker-v3.3",
+  "digest": "b99761ff24886584",
   "animated": false,
   "stalker2": true,
   "smooth": {

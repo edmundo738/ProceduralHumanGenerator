@@ -147,3 +147,54 @@ verts laterais (espinhos de 29mm nos flancos). Relevo agora INDEXADO
 v3.2.1/.2/.3 declarados a cada passo; bug REAL: olhos enterrados 43mm).
 Painel: 3 tabelas (geometria 17/17 + forma 9/9 + animação 6/6).
 Re-medições cruzadas intactas: 17/17 e 6/6.
+
+## v3.3 — specs da ANATOMIA APLICADA (declaradas ANTES de medir)
+
+Pesquisa (docs/ANATOMY_RESEARCH_STALKER.md): músculo = tendão→BARRIGA
+(a meio)→tendão, cruzando as articulações; fascia liga tudo (força
+transmite-se); squash/stretch com volume ~preservado. Bug achado por
+leitura do código: as duas pernas partilham a MESMA fase (π em falta) —
+"as pernas mexem-se de forma unificada" (gate do dono).
+
+**Forma (redefinições anatómicas — measure_form.py):**
+
+| id | o que | banda |
+|---|---|---|
+| F6 | gémeo: barriga (anel f=0.35) / tendão do tornozelo (anel 1.0) | ≥ 1.4 |
+| F6b | antebraço: barriga (anel f=0) / tendão do punho (anel 1.0) | ≥ 1.5 |
+| F6c | joelho (anel 0 canela) / barriga da coxa (anel f=0): joelho nunca mais largo que o quadríceps | 0.50–0.95 |
+
+**Animação (acrescento ao anim_check.mjs):**
+
+| id | o que | banda |
+|---|---|---|
+| A7 | anti-fase das pernas: correlação de Pearson entre coxa_R e coxa_L ao longo do ciclo (estados móveis) | ≤ −0.75 |
+| A7b | duty factor por pé (fracção do ciclo em contacto) | ≤ 0.70 |
+| A7c | duplo apoio (ambos os pés no chão) | ≤ 0.30 |
+| A8 | bombeio muscular: amplitude máx da barriga nos estados móveis | 0.02–0.15 |
+
+**Textura (densidade de texel — measure_form.py, UVs do GLB):**
+
+| id | o que | banda |
+|---|---|---|
+| T1 | densidade vertical do torso (512px · Δv / comprimento) | ≥ 1000 px/m |
+| T2 | densidade vertical de cada membro (8 membros) | ≥ 1000 px/m |
+| T3 | uniformidade torso+membros (max/min) | ≤ 2.5× |
+
+## v3.3.1 — refinamento de medição A3/A7b (declarado)
+
+Contacto do pé = garra a ≤5mm do solo (cravada). O limiar anterior
+(30mm) apanhava frames do INÍCIO do balanço — o pé descola ainda baixo
+(lift parte de 0) — e o "drift" medido era a aceleração do balanço, não
+escorregamento do apoio. Com o limiar certo, A3 volta a medir o apoio.
+
+## v3.3 — resultado medido (2026-09-24)
+
+Anatomia aplicada (docs/ANATOMY_RESEARCH_STALKER.md): **FORMA 13/13**
+(out/refstudy/stalker_form.json): F6 gémeo/tornozelo 1.9 · F6b
+flexores/punho 3.0 · F6c joelho 0.6·quadríceps · T1 1017px/m · T2
+1020px/m · T3 1.2x. **ANIMAÇÃO 10/10** (stalker_anim_check.json): A7
+anti-fase −0.78 (bug das pernas unificadas: π em falta no módulo de
+postura!) · A7b duty 0.25 · A7c duplo apoio 0.00 · A8 bombeio 0.105.
+A3 drift 0.00 (contacto = garra ≤5mm; heel-strike/toe-off no alvo do
+tornozelo tira o clamp do IK). Geometria 17/17 intacta.

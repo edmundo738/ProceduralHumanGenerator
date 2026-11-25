@@ -450,3 +450,32 @@ lineares — silhueta genérica, não de terror.
   inflava larguras MAX).
 - Ciclo: 6 FAIL → 2 → 0; re-medições cruzadas intactas (17/17, 6/6).
   GLB 4400v/8004t, digest 5ae3e746ec8ff93e. Painel com 3 tabelas.
+
+## 21. STALKER v3.3 — ANATOMIA PESQUISADA E APLICADA (2026-09-24)
+
+Dono: "pesquisa sobre anatomia… como cada peça se comunica; depois como
+modelar e como criar um monstro em condições; depois prossiga
+automaticamente ao rigor" + "cada parte parece cones e figuras
+geométricas conectadas; as pernas são duas que se mexem de forma
+unificada".
+
+- **Pesquisa** (docs/ANATOMY_RESEARCH_STALKER.md, 15 fontes): fascia =
+  rede tensional contínua (30-40% da força contorna tendões); músculo =
+  tendão-origem → BARRIGA a meio → tendão-inserção, cruzando juntas;
+  squash/stretch com volume; monstro = realidade + exagero estratégico.
+- **BUG das pernas unificadas** (o dono viu): o módulo de postura
+  partilhava a MESMA fase entre as duas pernas (π em falta) — andava
+  aos saltos. A7 anti-fase agora MEDIÇÃO: −0.78 (Pearson coxa_R vs
+  coxa_L).
+- **Fim dos cones**: perfis músculo-tendão (barriga a meio do osso,
+  tendão fino na junta — o INVERSO do que eu tinha), juntas fundidas
+  por suavização Laplaciana local (fascia: junção = carne).
+- **Fim da textura esticada**: UV físico (v = arco/250mm) — densidade
+  de texel constante 1017px/m, uniformidade 1.2x (medidos T1-T3).
+- **Bombeio muscular** (A8): barriga do membro engrossa com a dobragem
+  da articulação filha (escala da MALHA, nunca do grupo).
+- Instrumento A3 refinado: contacto = garra ≤5mm (o limiar de 30mm
+  media a aceleração do balanço, não o apoio); heel-strike/toe-off no
+  alvo tira o clamp do IK (drift 0.00).
+- **GEO 17/17 · FORMA 13/13 · ANIM 10/10.** GLB 4400v/8004t digest
+  b99761ff. Painel: 3 tabelas (17+13+10 linhas).

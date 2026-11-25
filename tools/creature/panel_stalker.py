@@ -63,11 +63,11 @@ def main():
     W = x0 + sum(t[0].width for t in tiles) + 20 * len(tiles) + xT + 20
     # altura: tiles OU tabela geometria (17 linhas) + tabela animação (6)
     H = max(max(t[0].height for t in tiles) + 34,
-            34 + 22 + 17 * 19 + 44 + 40 + 24 + 9 * 19 + 44 + 40 + 24 + 6 * 19 + 30)
+            34 + 22 + 17 * 19 + 44 + 40 + 24 + 13 * 19 + 44 + 40 + 24 + 10 * 19 + 30)
     panel = Image.new("L", (W, H), 24)
     dr = ImageDraw.Draw(panel)
 
-    dr.text((x0, 6), "THE STALKER v3 — MEDIDO: GEOMETRIA 17/17 · FORMA 9/9 · ANIMAÇÃO 6/6", font=fT, fill=235)
+    dr.text((x0, 6), "THE STALKER v3.3 — ANATOMIA MEDIDA: GEO 17/17 · FORMA 13/13 · ANIM 10/10", font=fT, fill=235)
     x = x0
     for img, name in tiles:
         panel.paste(img, (x, 40))
@@ -115,16 +115,19 @@ def main():
         vdf = {k: ("PASS" if (fm2[k] >= v[0] and fm2[k] <= v[1]) else "FAIL")
                for k, v in spf.items()}
         for k in ("F1_costelas_n", "F1b_costelas_amp", "F2_espinha_mm", "F3_vertebras_n",
-                  "F4_escapula_mm", "F5_braco_contraste", "F6_joelho_bojo",
-                  "F6b_cotovelo_bojo", "F8_olho_assente_mm"):
+                  "F4_escapula_mm", "F5_braco_contraste", "F6_gemeo_tendao",
+                  "F6b_ante_punho", "F6c_joelho_coxa", "F8_olho_assente_mm",
+                  "T1_torso_px_m", "T2_membros_px_m", "T3_uniformidade"):
             v, p2 = fm2[k], vdf[k]
             lo, hi = spf[k]
             if k.endswith("_n"):
-                vv, unit = f"{int(v)}", "gomos"
-            elif "contraste" in k or "bojo" in k:
-                vv, unit = f"{v:.2f}", "x"
+                vv = f"{int(v)}"
+            elif k.startswith("T"):
+                vv = f"{v:.0f}" if k != "T3_uniformidade" else f"{v:.1f}x"
+            elif "contraste" in k or "tendao" in k or "punho" in k or "coxa" in k:
+                vv = f"{v:.2f}x"
             else:
-                vv, unit = f"{v:.1f}", "mm"
+                vv = f"{v:.1f}mm"
             band = f"[{lo:g}..{hi:g}]" if hi < 1e8 else f"≥{lo:g}"
             fill = 235 if p2 == "PASS" else 120
             xc = xt
@@ -144,16 +147,18 @@ def main():
         y += 24
         am, sp, vd = aj["measures"], aj["spec"], aj["verdicts"]
         for k in ("A1_ossos_mm", "A2_sola_min_mm", "A3_patin_ms", "A4_bob_mm",
-                  "A5_topo_de_pe_m", "A6_topo_dormant_m"):
+                  "A5_topo_de_pe_m", "A6_topo_dormant_m", "A7_anti_fase",
+                  "A7b_duty", "A7c_duplo_apoio", "A8_bombeio"):
             v, p = am[k], vd[k]
             lo, hi = sp[k]
             unit = "mm" if k.endswith("_mm") else ("m/s" if k.endswith("_ms") else "m")
-            if k.endswith("_ms") and k == "A3_patin_ms":
+            if k == "A3_patin_ms":
                 band = f"[0..{aj['a3_band_ms']:.2f}]"
                 vv = f"{v:.2f}"
-            elif k == "A5_topo_de_pe_m":
+            elif k in ("A5_topo_de_pe_m", "A7_anti_fase", "A7b_duty",
+                       "A7c_duplo_apoio", "A8_bombeio"):
                 band = f"[{lo:g}..{hi:g}]"
-                vv = f"{v:.2f}"
+                vv = f"{v:.3f}" if k == "A8_bombeio" else f"{v:.2f}"
             else:
                 band = f"[{lo:g}..{hi:g}]"
                 vv = f"{v:.1f}{unit}"
