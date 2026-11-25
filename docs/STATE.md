@@ -394,3 +394,9 @@ Variant 'waifu3'; painel waifu_v3.png no TOPO. Shells v2 rejeitadas pelo dono.
 termina com rebuild+deploy+servidor vivo+curls. Cache-buster agora TAMBÉM em
 app.js/generator.js/style.css (hash no build) — o browser cacheava os scripts
 e o dono via versões velhas.
+
+**THE STALKER v1 (2026-09-24):** criatura de terror PSX-sujo — texturas IA
+(albedo+height) + mapas computados (normal/rough/AO) 512px posterizados;
+rig Michelle + retarget Xbot; cena stalker.html com FSM 7 estados, look-at
+atrasado, dentes, respiração sintetizada, ruído por clique. Variant 'stalker'
++ conceito no TOPO dos renders.

@@ -320,3 +320,26 @@ textura negra de pele."  (As shells v2 foram REJEITADAS.)
 - Painel waifu_v3.png; variant 'waifu3' (animated).
 - Nota honesta: as 3 imagens de referência do dono não são visíveis neste
   ambiente — o critério final é o olho dele no 3D.
+
+
+## 16. THE STALKER — O Encharcado (2026-09-24, pedido do dono)
+
+"Umanoide que mal se coloca de pé, pele meio vermelha, líquido vermelho
+seco e gosmento a sair aberto pelos poros, olhos pretos, quando abre a
+boca vários dentes, parece uma larva, tipo morcego ou rato depenado e
+depelado" + directriz PSX moderno sujo com PBR.
+
+- **Texturas GERADAS por IA** (generate_image): albedo + height; mapas
+  COMPUTADOS (não fingidos): normal por Sobel do height, roughness com
+  máscara húmida (secreção brilha), AO; 512px + posterização 31 níveis
+  + dither Bayer 4x4 = o 'PSX sujo'. Conceito gerado (bloqueado 1× pela
+  moderação; retry estilizado passou).
+- **Modelo**: rig Michelle (Mixamo) — texturas transplantadas; Samba/TPose
+  preservados; Xbot retonado para idle/walk/run.
+- **Cena de teste** (stalker.html): FSM de 7 estados com AUTO, look-at
+  com ATRASO e tremor, corcunda + braços longos procedurais, olhos
+  emissivos, boca com 2 fileiras de dentes que abre em HUNTING,
+  respiração irregular, PSX (meia resolução, grain, flicker), respiração
+  SINTETIZADA (WebAudio), clique no chão = ruído → investigação.
+- Nota: o texto do dono mencionava o repo Nsambo; implementado no
+  ProceduralHumanGenerator (sessão actual) — portável depois.

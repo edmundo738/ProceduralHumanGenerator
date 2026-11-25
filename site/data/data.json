@@ -328,6 +328,29 @@
     "bytes": 3267264
    },
    "desc": "WAIFU v3 — ASSETS REAIS baixados da net (three.js/MIT): Michelle (cabelo, roupa e texturas de verdade) com PELE NEGRA recolorida na textura (selectiva, roupa/cabelo intactos) + ANIMAÇÕES REAIS: 💃 Samba embutida + idle/andar/correr/concordar/negar retonados do Xbot. Usa a barra de botões acima do modelo."
+  },
+  {
+   "id": "stalker",
+   "label": "THE STALKER — O Encharcado (PBR/PSX)",
+   "env": {
+    "HCG_BODY": "stalker"
+   },
+   "commit": "stalker-v1",
+   "digest": "c838851b04d6e3fb",
+   "animated": true,
+   "smooth": {
+    "verts": 16340,
+    "faces": 0,
+    "quads": 0,
+    "bytes": 3757216
+   },
+   "cage": {
+    "verts": 16340,
+    "faces": 0,
+    "quads": 0,
+    "bytes": 3757216
+   },
+   "desc": "stalker"
   }
  ],
  "metrics": {

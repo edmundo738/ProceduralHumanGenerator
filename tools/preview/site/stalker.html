@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THE STALKER — cena de teste</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": {
+        "three": "./vendor/three/three.module.js",
+        "three/addons/": "./vendor/three/addons/"
+    } }
+  </script>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+    #scene { position: fixed; inset: 0; }
+    #scene canvas { width: 100% !important; height: 100% !important; image-rendering: pixelated; }
+    #ui { position: fixed; top: 0; left: 0; right: 0; display: flex; flex-wrap: wrap; gap: 6px;
+          padding: 10px; background: linear-gradient(#000c, #0000); z-index: 10; }
+    #ui button { background: #1a0505; color: #d88; border: 1px solid #5a1515; border-radius: 5px;
+                 padding: 7px 10px; font: 12.5px system-ui; cursor: pointer; }
+    #ui button:hover { background: #2a0a0a; }
+    #ui button.on { background: #4a0f0f; border-color: #c33; color: #fff; }
+    #status { position: fixed; bottom: 12px; left: 12px; color: #a66; font: 12.5px system-ui;
+              z-index: 10; text-shadow: 0 1px 2px #000; }
+    #grain { position: fixed; inset: -50px; pointer-events: none; z-index: 9; opacity: .17;
+             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)' opacity='0.6'/></svg>");
+             animation: gr .45s steps(3) infinite; }
+    @keyframes gr { 0%{transform:translate(0,0)} 33%{transform:translate(-20px,12px)} 66%{transform:translate(14px,-18px)} 100%{transform:translate(0,0)} }
+    #vig { position: fixed; inset: 0; pointer-events: none; z-index: 8;
+           background: radial-gradient(ellipse at 50% 45%, transparent 42%, #000 105%); }
+    a { color: #a55; }
+  </style>
+</head>
+<body>
+  <div id="scene"></div>
+  <div id="ui">
+    <button id="auto" class="on">🧠 AUTO</button>
+    <button data-s="DORMANT">Dormant</button>
+    <button data-s="ROAMING">Roaming</button>
+    <button data-s="INVESTIGATING">Investigar</button>
+    <button data-s="STALKING">Stalking</button>
+    <button data-s="HUNTING">Hunting</button>
+    <button data-s="LOST">Lost</button>
+    <button data-s="DISAPPEARING">Desaparecer</button>
+    <button id="snd">🔊 som</button>
+    <a href="index.html" style="align-self:center; margin-left:8px">← site</a>
+  </div>
+  <div id="status">THE STALKER · <span id="st">a carregar…</span> · clique no chão para fazer RUÍDO</div>
+  <div id="grain"></div><div id="vig"></div>
+  <script type="module" src="stalker.js"></script>
+</body>
+</html>

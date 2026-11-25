@@ -352,5 +352,18 @@
    "tecnica": "pele recolorida DENTRO do atlas albedo (mascara de pele classica + multiplicacao [0.40,0.29,0.24] preservando sombreado); GLB reconstruido byte-a-byte (so a imagem muda)",
    "animacoes_site": "AnimationMixer + SkeletonUtils.retargetClip(Xbot->Michelle) + crossfade; barra de botoes"
   }
+ },
+ "creature_stalker": {
+  "date": "2026-09-24",
+  "conceito": "THE STALKER — O Encharcado (dono: humanoide ambíguo, pele vermelho-escuro, secreção viscosa nos poros, olhos negros com brilho vermelho, boca larva com dentes)",
+  "pipeline": "texturas GERADAS por IA (generate_image: albedo + height) → mapas COMPUTADOS (normal Sobel k=2.2, roughness com wet-mask, AO do height) → 512px + posterização 31 níveis + dither Bayer 4x4 (PSX moderno sujo) → GLB Michelle (rig Mixamo) com 3 imagens substituídas + occlusionTexture (reconstrução byte-a-byte, offsets recomputados)",
+  "cena_teste": "stalker.html/stalker.js: FSM 7 estados (DORMANT/ROAMING/INVESTIGATING/STALKING/HUNTING/LOST/DISAPPEARING) com AUTO; look-at com atraso+tremor; corcunda+braços 1.16x procedurais sobre o clip; olhos emissivos + boca com 2 fileiras de dentes (anexados ao osso Head); respiração irregular procedural; PSX: meia resolução + pixelated + grain + flicker de luz; ÁUDIO respiração sintetizada (WebAudio); clique no chão = ruído → INVESTIGATING",
+  "regras_comportamentais": "nunca saber a posição exacta do jogador; orbita em STALKING; para a 1.35m em HUNTING; reaparece sem teleport visível (fog)",
+  "arquivos": [
+   "site/textures/stalker_*.png",
+   "site/models/stalker_*.glb",
+   "tools/creature/build_stalker.py",
+   "tools/preview/site/stalker.*"
+  ]
  }
 }
