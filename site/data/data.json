@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb",
  "variants": [
   {
    "id": "antes",
@@ -350,7 +350,7 @@
     "quads": 0,
     "bytes": 3757216
    },
-   "desc": "stalker"
+   "desc": "THE STALKER — O Encharcado: humanoide ambíguo de pele vermelho-escuro (pessoa? ave? larva?) com secreção viscosa nos poros e olhos negros que brilham no escuro. Texturas PBR GERADAS por IA + mapas COMPUTADOS (normal/rough/AO), 512px posterizados com dither (PSX moderno sujo). Rig Mixamo + clips. Cena própria: stalker.html."
   }
  ],
  "metrics": {
@@ -630,6 +630,11 @@
   }
  ],
  "renders": [
+  {
+   "src": "stalker_concept.png",
+   "title": "THE STALKER — conceito (gerado por IA, PSX moderno sujo)",
+   "caption": "Pedido do dono: monstro de terror — humanoide ambíguo (pessoa? ave? larva?), pele vermelho-escuro com secreção viscosa saindo dos poros, olhos negros que brilham vermelho no escuro, boca que abre como uma larva com várias fileiras de dentes. Texturas PBR GERADAS por IA + mapas COMPUTADOS (normal por Sobel do height, roughness com zonas húmidas, AO) em 512px com posterização+dither Bayer (PSX sujo). Abre stalker.html: cena de teste com FSM comportamental (7 estados), look-at com atraso, boca com dentes, respiração sintetizada."
+  },
   {
    "src": "waifu_v3.png",
    "title": "WAIFU v3 — ASSETS REAIS (baixados) + PELE NEGRA + ANIMAÇÕES (frente/perfil/costas)",

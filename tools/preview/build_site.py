@@ -27,6 +27,7 @@ DOCS = os.path.join(ROOT, "docs", "head_phaseA")
 THREE_VERSION = "0.186.1"
 
 DESC = {
+    "stalker": "THE STALKER — O Encharcado: humanoide ambíguo de pele vermelho-escuro (pessoa? ave? larva?) com secreção viscosa nos poros e olhos negros que brilham no escuro. Texturas PBR GERADAS por IA + mapas COMPUTADOS (normal/rough/AO), 512px posterizados com dither (PSX moderno sujo). Rig Mixamo + clips. Cena própria: stalker.html.",
     "waifu3": "WAIFU v3 — ASSETS REAIS baixados da net (three.js/MIT): Michelle (cabelo, roupa e texturas de verdade) com PELE NEGRA recolorida na textura (selectiva, roupa/cabelo intactos) + ANIMAÇÕES REAIS: 💃 Samba embutida + idle/andar/correr/concordar/negar retonados do Xbot. Usa a barra de botões acima do modelo.",
     "waifu2": "WAIFU v2 — CABELO bob (com franja), VESTIDO rosa sakura (topo + saia A), BOTAS chocolate; tudo construído por invólucro sobre a própria geometria = ajuste perfeito. ANIMADA no visualizador: respira, balança e PESTANEJA. ~14k tris com roupa.",
     "waifu": "WAIFU v1 — fundação anime CC (pack SimpleRig do dono): corpo+olhos+boca+mãos montados, ~5k tris LOW POLY com UVs, cores kawaii (pele/olhos escuros/boca rosa), sombreamento TOON. Estatura 1.58 m estilo Zelda; WHR 0.70; gap mama 26 (banda refs).",
