@@ -81,7 +81,8 @@ def _G(x, c, w):
     return float(np.exp(-((x - c) / max(w, 1e-6)) ** 2))
 
 
-def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0, mod=None):
+def loft(pts, rads, e1=None, e2=None, n=24, noise=0.0, mod=None,
+         cap_start=True, cap_end=True):
     """Tubo ao longo da polilinha pts (N,3); rads (N,) raio base.
     e1/e2: factores elípticos (N,) nos eixos b1/b2. mod(c, v) → fracção
     do raio local (RELEVO: costelas/espinal/órbitas — Gaussiana contínua,
@@ -126,12 +127,17 @@ def loft(pts, rads, e1=None, e2=None, n=24, caps=True, noise=0.0, mod=None):
             a, b = i * n + j, i * n + k
             c_, d = (i + 1) * n + k, (i + 1) * n + j
             T.append((a, b, c_)); T.append((a, c_, d))
-    if caps:                                     # tampas em leque
-        for (idx, tri) in ((0, (0, 1, 2)), (N - 1, (0, 2, 1))):
-            base = idx * n
-            for j in range(1, n - 1):
-                T.append((base, base + j, base + j + 1) if tri[0] == 0 else
-                         (base, base + j + 1, base + j))
+    # tampas em leque: cap_start=False quando a raiz fica ENTERRADA
+    # dentro de outra parte (fim das 'tampas de cilindro' expostas —
+    # directriz do dono: o tubo solda-se, não encaixa)
+    if cap_start:
+        base = 0
+        for j in range(1, n - 1):
+            T.append((base, base + j, base + j + 1))
+    if cap_end:
+        base = (N - 1) * n
+        for j in range(1, n - 1):
+            T.append((base, base + j + 1, base + j))
     return V, np.array(T), UV
 
 
@@ -224,7 +230,7 @@ def lap_smooth(V, T, center, rad, iters=3, lam=0.35):
     return V
 
 
-def densify(P, R, E1=None, E2=None, mult=2):
+def densify(P, R, E1=None, E2=None, mult=2, smooth_r=False):
     """Duplica estações (interp linear) + suavização C1 nos interiores:
     resolução z para o RELEVO (costelas/vértebras precisam de ~35mm)."""
     N = len(P)
@@ -239,6 +245,18 @@ def densify(P, R, E1=None, E2=None, mult=2):
     # NÃO suavizar R/E: os raios das estações são os valores medidos
     # (a suavização achatou o dip da cintura → M12 FAIL, apanhado pela
     # re-medição 17/17)
+    if smooth_r:
+        # MEMBROS: suavizar só os índices INTERPOLADOS (múltiplos de mult
+        # = estações originais intactas): contorno suave sem comer as
+        # barrigas/tendões medidos (S4, directriz 'segue o contorno')
+        orig = np.zeros(len(R2), bool)
+        orig[::mult] = True
+        for _ in range(2):
+            newR = R2.copy()
+            inner = np.arange(1, len(R2) - 1)
+            sel = inner[~orig[1:-1]]
+            newR[sel] = (R2[sel - 1] + 2 * R2[sel] + R2[sel + 1]) / 4.0
+            R2 = newR
     return P2, R2, E12, E22
 
 
@@ -273,11 +291,14 @@ def build():
     Hp = np.array([0.000, 0.040, 1.523])          # pivô na base do crânio
     pitch = 0.60                                   # 34.4°
     d = np.array([0.0, np.sin(pitch), np.cos(pitch)])
-    P = np.stack([Hp + s_ * d for s_ in (0.00, 0.05, 0.11, 0.18, 0.245)])
-    R = np.array([0.070, 0.098, 0.108, 0.092, 0.055])
-    E1 = np.array([0.95, 1.05, 1.10, 1.02, 0.85])
+    # COLAR (S3): estação base desce 10mm e alarga (r77 > pescoço 65)
+    # → a base do crânio SOBREPÕE o topo do pescoço (pele contínua)
+    P = np.stack([Hp + s_ * d for s_ in (0.000, 0.047, 0.10, 0.165, 0.245)])
+    R = np.array([0.077, 0.100, 0.110, 0.094, 0.056])
+    E1 = np.array([0.98, 1.05, 1.10, 1.02, 0.85])
     P, R, E1, _ = densify(P, R, E1, None, mult=2)                   # 9 estações
-    V, T, UV = loft(P, R, E1, None, n=24, noise=0.02, mod=head_mod)
+    V, T, UV = loft(P, R, E1, None, n=24, noise=0.02, mod=head_mod,
+                    cap_start=False)   # base aberta: enterrada no pescoço
     parts["head"] = (V, T, UV)
     rig.append({"name": "head", "parent": "torso", "pivot": list(Hp)})
 
@@ -329,17 +350,24 @@ def build():
         rig.append({"name": "eye_" + nm, "parent": "head", "pivot": list(Hp)})
 
     # ---- membros: tubos enraizados DENTRO do tronco + esfera no pivô
-    def limb(name, parent, pivot, A, B, r0, r1, n=16, joint=True, root_frac=0.12,
-             profile=None):
+    def limb(name, parent, pivot, A, B, r0, r1, n=20, joint=True, root_frac=0.12,
+             profile=None, P=None, Rv=None, dens=3):
         # profile: 5 multiplicadores por estação (f=-root,0,0.35,0.7,1) —
-        # CONTRASTE DE VOLUME: nó na raiz/junções vs meio-corda fino
-        # (terror PSX: deltóide inchado + antebraço de corda)
-        dirv = np.asarray(B, float) - np.asarray(A, float)
-        P = np.stack([A + (dirv) * f for f in (-root_frac, 0.0, 0.35, 0.7, 1.0)])
-        R = np.array([r0, r0 * 0.97, (r0 + r1) / 2, r1 * 1.05, r1])
-        if profile:
-            R = R * np.asarray(profile, float)
-        V, T, UV = loft(P, R, None, None, n=n, noise=0.02)
+        # CONTRASTE DE VOLUME: tendão na raiz vs barriga a meio
+        # (terror PSX: bíceps + antebraço de corda)
+        # P/Rv: estações EXPLÍCITAS (ombro: raiz tendão ENTERRADA no peito
+        # — S1; fim do 'vulcão/canudo' com a tampa ao lado do pescoço)
+        if P is None:
+            dirv = np.asarray(B, float) - np.asarray(A, float)
+            P = np.stack([A + (dirv) * f for f in (-root_frac, 0.0, 0.35, 0.7, 1.0)])
+            R = np.array([r0, r0 * 0.97, (r0 + r1) / 2, r1 * 1.05, r1])
+            if profile:
+                R = R * np.asarray(profile, float)
+        else:
+            R = np.asarray(Rv, float)
+        if dens and dens > 1:
+            P, R, _, _ = densify(P, R, None, None, mult=dens, smooth_r=True)
+        V, T, UV = loft(P, R, None, None, n=n, noise=0.012, cap_start=False)
         if joint:
             Vs, Ts = sphere(np.asarray(A, float), max(r0, r1) * 1.12, 9)
             V, T, UV = merge((V, T, UV), (Vs, Ts, np.zeros((len(Vs), 2))))
@@ -356,9 +384,23 @@ def build():
         uaL, faL = (0.400, 0.435) if s == 1 else (0.392, 0.427)   # assim 16mm (M17)
         el = sh + np.array([s * 0.055, -0.095, -uaL])
         wr = el + np.array([s * 0.018, 0.075, -faL])
+        # OMBRO SOLDADO (S1/S4): a raiz é um TENDÃO de 30mm ENTERRADO no
+        # peito (x=118 << meia-largura ~170); o deltoideu EMERGE do volume
+        # do tronco e curva por cima do ombro — sem tampa, sem esfera,
+        # sem anel a flutuar (o bug media a raiz a z=1535!)
         limb("upperarm_" + nm, "torso", sh, sh + np.array([s * 0.05, -0.02, 0.06]), el, 0.048, 0.038,
-             profile=[1.10, 1.30, 1.14, 0.88, 0.98])   # deltoideu→bíceps→tendão
+             joint=False, dens=3,
+             P=np.array([
+                 [s * 0.150, -0.045, 1.435],    # tendão DENTRO da tampa (disco horizontal)
+                 [s * 0.160, -0.068, 1.360],    # desce pela tampa (raiz ~pivô do ombro)
+                 [s * 0.180, -0.090, 1.330],    # deltoideu EMERGE sob a tampa
+                 [s * 0.196, -0.113, 1.245],    # bíceps
+                 [s * 0.214, -0.148, 1.110],
+                 el,
+             ]),
+             Rv=[0.024, 0.040, 0.052, 0.050, 0.045, 0.041])
         limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.038, 0.027,
+             root_frac=0.05,
              profile=[1.00, 1.30, 1.00, 0.78, 0.60])   # flexores→corda no punho
         # mão (M4: 120-180mm): palma 55 + dedos 100-120
         palm_d = (wr - el) / np.linalg.norm(wr - el)
@@ -372,7 +414,7 @@ def build():
             fdir = palm_d + np.array([s * (k - 1.5) * 0.22, 0.18, -0.10])
             fdir /= np.linalg.norm(fdir)
             Pf = np.stack([base - fdir * 0.01, base + fdir * (0.082 - 0.008 * abs(k - 1.5)) * fl])
-            hand.append(loft(Pf, np.array([0.0080, 0.0036]), None, None, 8, caps=True))
+            hand.append(loft(Pf, np.array([0.0080, 0.0036]), None, None, 8))
         base = palm_c - palm_d * 0.018 + np.array([s * 0.024, 0.01, 0.012])
         fdir = np.array([s * 0.8, 0.35, -0.3]); fdir /= np.linalg.norm(fdir)
         hand.append(loft(np.stack([base, base + fdir * 0.062 * fl]), np.array([0.0072, 0.0034]), None, None, 8))
@@ -384,10 +426,14 @@ def build():
         hip = np.array([s * 0.064, 0.008, 1.060])
         knee = hip + np.array([s * 0.008, -0.045, -0.500])
         ankle = knee + np.array([0, 0.030, -0.475])
-        limb("thigh_" + nm, "torso", hip, hip + np.array([0, 0, 0.06]), knee, 0.070, 0.050, root_frac=0.06,
-             profile=[1.06, 1.32, 1.16, 0.88, 1.08])   # quad (barriga)→tendão→joelho
+        # COXA SOLDADA (S2): raiz tendão (r42) ENTERRADA na bacia
+        # (x=56+42=98 < meia-largura ~120); o quad EMERGE da pelve
+        limb("thigh_" + nm, "torso", hip, np.array([s * 0.056, 0.010, 1.046]), knee, 0.070, 0.050,
+             root_frac=0.06, joint=False,
+             profile=[0.64, 1.06, 1.16, 0.88, 1.08])   # tendão→quad→joelho (Δr≤12: S4)
         limb("shin_" + nm, "thigh_" + nm, knee, knee - (knee - hip) * 0.04, ankle, 0.048, 0.033,
-             profile=[1.10, 0.96, 1.10, 0.86, 0.70])   # condilos→gémeo→tendão de Aquiles
+             root_frac=0.05,
+             profile=[0.95, 0.96, 1.10, 0.86, 0.70])   # raiz fina→gémeo→tendão de Aquiles
         foot = []
         Pd = np.stack([ankle, ankle + np.array([0, 0.105, -0.065]), ankle + np.array([0, 0.185, -0.075])])
         foot.append(loft(Pd, np.array([0.036, 0.030, 0.012]), np.array([1.0, 0.9, 0.8]), np.array([0.75, 0.55, 0.45]), 12))

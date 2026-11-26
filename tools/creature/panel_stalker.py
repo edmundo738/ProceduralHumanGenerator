@@ -63,11 +63,11 @@ def main():
     W = x0 + sum(t[0].width for t in tiles) + 20 * len(tiles) + xT + 20
     # altura: tiles OU tabela geometria (17 linhas) + tabela animação (6)
     H = max(max(t[0].height for t in tiles) + 34,
-            34 + 22 + 17 * 19 + 44 + 40 + 24 + 13 * 19 + 44 + 40 + 24 + 10 * 19 + 30)
+            34 + 22 + 17 * 19 + 44 + 40 + 24 + 19 * 19 + 44 + 40 + 24 + 10 * 19 + 30)
     panel = Image.new("L", (W, H), 24)
     dr = ImageDraw.Draw(panel)
 
-    dr.text((x0, 6), "THE STALKER v3.3 — ANATOMIA MEDIDA: GEO 17/17 · FORMA 13/13 · ANIM 10/10", font=fT, fill=235)
+    dr.text((x0, 6), "THE STALKER v3.4 — SOLDADURA: GEO 17/17 · FORMA 19/19 · ANIM 10/10", font=fT, fill=235)
     x = x0
     for img, name in tiles:
         panel.paste(img, (x, 40))
@@ -117,11 +117,16 @@ def main():
         for k in ("F1_costelas_n", "F1b_costelas_amp", "F2_espinha_mm", "F3_vertebras_n",
                   "F4_escapula_mm", "F5_braco_contraste", "F6_gemeo_tendao",
                   "F6b_ante_punho", "F6c_joelho_coxa", "F8_olho_assente_mm",
-                  "T1_torso_px_m", "T2_membros_px_m", "T3_uniformidade"):
+                  "T1_torso_px_m", "T2_membros_px_m", "T3_uniformidade",
+                  "S1a_raiz_braco_dentro", "S1b_raiz_braco_r_mm",
+                  "S2a_raiz_coxa_dentro", "S2b_raiz_coxa_r_mm",
+                  "S3_colar_mind_z", "S4_dr_anel_mm"):
             v, p2 = fm2[k], vdf[k]
             lo, hi = spf[k]
-            if k.endswith("_n"):
-                vv = f"{int(v)}"
+            if k.endswith("_n") or k.endswith("_dentro"):
+                vv = f"{int(v)}/20"
+            elif k.startswith("S"):
+                vv = f"{v:.1f}mm"
             elif k.startswith("T"):
                 vv = f"{v:.0f}" if k != "T3_uniformidade" else f"{v:.1f}x"
             elif "contraste" in k or "tendao" in k or "punho" in k or "coxa" in k:
@@ -143,7 +148,7 @@ def main():
     if os.path.exists(ANIM):
         aj = json.load(open(ANIM))
         y += 40
-        dr.text((xt, y), f"ANIMAÇÃO (anim_check.mjs) · {aj['n_pass']}/6 PASS", font=fb, fill=235)
+        dr.text((xt, y), f"ANIMAÇÃO (anim_check.mjs) · {aj['n_pass']}/{len(aj['spec'])} PASS", font=fb, fill=235)
         y += 24
         am, sp, vd = aj["measures"], aj["spec"], aj["verdicts"]
         for k in ("A1_ossos_mm", "A2_sola_min_mm", "A3_patin_ms", "A4_bob_mm",

@@ -480,6 +480,27 @@
     "clamp do IK (salto 28mm/frame)"
    ],
    "glb": "4400v/8004t · digest b99761ff24886584"
+  },
+  "v34_soldadura": {
+   "date": "2026-09-24",
+   "gate_dono": "ombros = vulcões/canudos; contorno não segue suavemente (curso Blender: soldar, tampas DENTRO, deltoideu ENVOLVE)",
+   "gates": "GEO 17/17 + FORMA 19/19 + ANIM 10/10",
+   "key_measures": {
+    "S1a_raiz_braco_dentro": "20/20",
+    "S1b_raiz_braco_r_mm": 24.0,
+    "S2a_raiz_coxa_dentro": "20/20",
+    "S2b_raiz_coxa_r_mm": 44.8,
+    "S3_colar_mind_z": 1479.8,
+    "S4_dr_anel_mm": 9.9,
+    "F5_braco_contraste_redef": 1.9
+   },
+   "bugs_fixed": [
+    "anel raiz do braço a z=1535 (16/16 fora do torso) = vulcão",
+    "tampas de cilindro expostas nas raízes (cap_start abolido)",
+    "distância assinada mentia (winding invertido; ray-cast por paridade)",
+    "métricas por índice de estação quebravam com a densificação (janelas por f na linha óssea)"
+   ],
+   "glb": "5312v/9806t · digest 36e57e105d6c3fbc"
   }
  }
 }

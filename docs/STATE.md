@@ -440,3 +440,13 @@ Laplaciano, PERNAS ANTI-FASE (bug real: π em falta; A7 −0.78), bombeio
 muscular A8, UV físico (T1-T3, 1017px/m). **GEO 17/17 · FORMA 13/13 ·
 ANIM 10/10.** GLB b99761ff 4400v/8004t. Deploy por hash. Próximo: gate
 visual do dono.
+
+**STALKER v3.4 (2026-09-24):** gate "ombros = vulcões/canudos, contorno
+não segue" → prova numérica (anel raiz a z=1535, 16/16 FORA) + SPEC S1–
+S4 declarada ANTES. Ray-cast por paridade (distância assinada mentia:
+winding invertido; §v3.4.1) → tendões-raiz enterrados (braço r24 DENTRO
+da tampa, coxa r45 na bacia, 20/20), deltoideu emerge sob a tampa,
+tampas de tubo ABOLIDAS (cap_start=False), Δr≤12mm, colar do crânio
+r77 (M8 61.4). F5 redef por linha óssea. **GEO 17/17 · FORMA 19/19 ·
+ANIM 10/10.** GLB 36e57e10 5312v/9806t. Painel 2500×1176. Deploy por
+hash + cache-buster GLB. Próximo: gate visual do dono.

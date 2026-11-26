@@ -352,19 +352,19 @@
  },
  {
   "id": "stalker2",
-  "label": "THE STALKER v3.3 — ANATOMIA MEDIDA (17/13/10 PASS)",
+  "label": "THE STALKER v3.4 — SOLDADURA (17/19/10 PASS): gate dos 'vulcões/canudos' cumprido por MEDIÇÃO — anéis raiz dos membros 20/20 DENTRO do torso (tendão enterrado; era 16/16 FORA a z=1535), deltoideu emerge por baixo da tampa SEM bola colada, tampas de tubo abolidas (solda, não encaixa), colar do crânio r77 sobrepõe o pescoço, gradiente Δr≤12mm. Mantém anatomia v3.3.",
   "env": {
    "HCG_BODY": "stalker2"
   },
   "commit": "stalker-v3.3",
-  "digest": "b99761ff24886584",
+  "digest": "36e57e105d6c3fbc",
   "animated": false,
   "stalker2": true,
   "smooth": {
-   "verts": 4400,
-   "faces": 8004,
+   "verts": 5312,
+   "faces": 9806,
    "quads": 0,
-   "bytes": 3795888
+   "bytes": 3846692
   },
   "cage": {
    "verts": 4400,

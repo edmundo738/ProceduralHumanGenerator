@@ -40,6 +40,13 @@ SPEC = {
     "T1_torso_px_m":      (1000, 1e9),
     "T2_membros_px_m":    (1000, 1e9),
     "T3_uniformidade":    (0, 2.5),
+    # ---- v3.4 SOLDADURA (gate: "ombros = vulcões/canudos")
+    "S1a_raiz_braco_dentro": (20, 20),
+    "S1b_raiz_braco_r_mm":   (0, 34),
+    "S2a_raiz_coxa_dentro":  (20, 20),
+    "S2b_raiz_coxa_r_mm":    (0, 46),
+    "S3_colar_mind_z":       (1460, 1500),
+    "S4_dr_anel_mm":         (0, 12),
 }
 
 
@@ -119,27 +126,93 @@ def main():
             best = max(best, v)
     R["F4_escapula_mm"] = float(best)
 
-    # ---- membros: anéis do TUBO (16 verts/anel × 5 estações)
-    def tube_rings(part, n=16, nst=5):
-        V = M[part][:n * nst]
-        return [np.linalg.norm(V[i * n:(i + 1) * n] - V[i * n:(i + 1) * n].mean(0), axis=1).mean()
-                for i in range(nst)]
+    # ---- anatómicos v3.3/v3.4: anéis por LINHA ÓSSEA (f = projecção
+    #      nos pivôs do rig — robusto à densificação; 13 estações × 20)
+    rigj = json.load(open(os.path.join(ROOT, "site", "models", "stalker2_rig.json")))["rig"]
+    # pivôs: METROS no frame glTF [−x,z,y] → build frame, ×1000 → MM
+    # (read_meshes devolve mm; sem a escala o f era lixo — janelas vazias)
+    PVR = {r["name"]: np.array([-r["pivot"][0], r["pivot"][2], r["pivot"][1]], float) * 1000.0
+           for r in rigj}
 
-    # ---- anatómicos (v3.3): barriga a MEIO do osso, tendão na junta
+    def f_rings(part, A, B, n=20, nst=13):
+        V = M[part][:nst * n]
+        out = []
+        for i in range(nst):
+            rg = V[i * n:(i + 1) * n]
+            c = rg.mean(0)
+            ab = B - A
+            f = float((c - A) @ ab / (ab @ ab))
+            out.append((f, float(np.linalg.norm(rg - c, axis=1).mean())))
+        return out
+
+    def mrf(part, A, B, f0, f1):
+        return [r for f, r in f_rings(part, A, B) if f0 <= f <= f1]
+
     f5, f6, f6b, f6c = [], [], [], []
-    for s in ("R", "L"):
-        ua = tube_rings(f"upperarm_{s}")
-        fa = tube_rings(f"forearm_{s}")
-        th = tube_rings(f"thigh_{s}")
-        shn = tube_rings(f"shin_{s}")
-        f5.append(ua[0] / fa[2])            # raiz (deltoideu) / meio antebraço
-        f6.append(shn[2] / shn[4])          # gémeo (f=0.35) / tornozelo (1.0)
-        f6b.append(fa[1] / fa[4])           # flexores (f=0) / punho (1.0)
-        f6c.append(shn[0] / th[1])          # joelho / quadríceps
+    S4max = 0.0
+    for sd in ("R", "L"):
+        sh, el, wr = PVR[f"upperarm_{sd}"], PVR[f"forearm_{sd}"], PVR[f"hand_{sd}"]
+        hip, kn, an = PVR[f"thigh_{sd}"], PVR[f"shin_{sd}"], PVR[f"foot_{sd}"]
+        uaR = f_rings(f"upperarm_{sd}", sh, el)
+        faR = f_rings(f"forearm_{sd}", el, wr)
+        thR = f_rings(f"thigh_{sd}", hip, kn)
+        shR = f_rings(f"shin_{sd}", kn, an)
+        # F5 redefinido (§v3.4): raio MÁX do braço na janela deltoideu
+        # (a raiz agora é TENDÃO enterrado — não conta p/ o contraste)
+        f5.append(max(r for f, r in uaR if -0.12 <= f <= 0.45) /
+                  np.mean(mrf(f"forearm_{sd}", el, wr, 0.3, 0.6)))
+        f6.append(np.mean(mrf(f"shin_{sd}", kn, an, 0.25, 0.45)) /
+                  np.mean(mrf(f"shin_{sd}", kn, an, 0.9, 1.05)))
+        f6b.append(np.mean(mrf(f"forearm_{sd}", el, wr, -0.05, 0.15)) /
+                   np.mean(mrf(f"forearm_{sd}", el, wr, 0.9, 1.05)))
+        f6c.append(np.mean(mrf(f"shin_{sd}", kn, an, -0.05, 0.10)) /
+                   np.mean(mrf(f"thigh_{sd}", hip, kn, 0.25, 0.45)))
+        for ringset in (uaR, faR, thR, shR):
+            rs = [r for _, r in ringset]
+            S4max = max(S4max, max(abs(rs[i + 1] - rs[i]) for i in range(len(rs) - 1)))
     R["F5_braco_contraste"] = float(np.mean(f5))
     R["F6_gemeo_tendao"] = float(np.mean(f6))
     R["F6b_ante_punho"] = float(np.mean(f6b))
     R["F6c_joelho_coxa"] = float(np.mean(f6c))
+    R["S4_dr_anel_mm"] = float(S4max)
+
+    # ---- S1/S2: anel RAIZ (primeiros 20 verts) DENTRO do torso
+    _, IDX = read_meshes(os.path.join(ROOT, "site", "models", "stalker2_smooth.glb"),
+                         with_index=True)
+    TT, TI = M["torso"], IDX["torso"]
+
+    # ray-cast por PARIDADE (Möller–Trumbore, contagem ímpar = dentro):
+    # independente do winding — a tampa inferior do torso tem winding
+    # invertido (o teste pelo normal do triângulo mais próximo marcava
+    # o INTERIOR da pelvis como 'fora')
+    _A = TT[TI[:, 0]]
+    _B = TT[TI[:, 1]]
+    _C = TT[TI[:, 2]]
+    _E1, _E2 = _B - _A, _C - _A
+    _D = np.array([1.0, 0.0131, 0.0071])
+    _D = _D / np.linalg.norm(_D)
+    _H = np.cross(_D, _E2)
+    _DET = (_E1 * _H).sum(1)
+    _OK = np.abs(_DET) > 1e-9
+    _F = np.zeros_like(_DET)
+    _F[_OK] = 1.0 / _DET[_OK]
+
+    def inside(p):
+        s_ = p - _A
+        u = (s_ * _H).sum(1) * _F
+        q_ = np.cross(s_, _E1)
+        v = (_D * q_).sum(1) * _F
+        t = (_E2 * q_).sum(1) * _F
+        hit = _OK & (u >= 0) & (u <= 1) & (v >= 0) & (u + v <= 1) & (t > 1e-6)
+        return float(hit.sum() % 2 == 1)
+
+    R["S1a_raiz_braco_dentro"] = float(sum(inside(v) for v in M["upperarm_R"][:20]))
+    R["S1b_raiz_braco_r_mm"] = float(np.linalg.norm(
+        M["upperarm_R"][:20] - M["upperarm_R"][:20].mean(0), axis=1).mean())
+    R["S2a_raiz_coxa_dentro"] = float(sum(inside(v) for v in M["thigh_R"][:20]))
+    R["S2b_raiz_coxa_r_mm"] = float(np.linalg.norm(
+        M["thigh_R"][:20] - M["thigh_R"][:20].mean(0), axis=1).mean())
+    R["S3_colar_mind_z"] = float(M["head"][:, 2].min())
 
     # ---- F8: assentamento do olho = distância à SUPERFÍCIE (mínimo
     #      sobre TRIÂNGULOS da cabeça; mean10-de-verts era artefacto de
@@ -189,6 +262,7 @@ def main():
         o0 = v["byteOffset"] + (a.get("byteOffset") or 0)
         UVS[m["name"]] = np.frombuffer(BIN[o0:o0 + a["count"] * 8], np.float32).reshape(-1, 2)
     rigj = json.load(open(os.path.join(ROOT, "site", "models", "stalker2_rig.json")))["rig"]
+    # pivôs: METROS no frame glTF [−x, z, y] (comprimentos ósseos T1/T2)
     PVR = {r["name"]: np.array([-r["pivot"][0], r["pivot"][2], r["pivot"][1]], float)
            for r in rigj}
     dens = {}

@@ -98,3 +98,17 @@ sincronizado com a dobragem da articulação filha (bulge 3–9%).
 | 3 | blend Laplaciano das juntas (fim de esferas+cones) | F4 já cobre relevo; validação visual por painel |
 | 4 | bombeio muscular por dobragem (squash) | A8 |
 | 5 | UV físico (tiles de 250mm — densidade constante) | T1–T3 |
+
+## 6. Directrizes do dono (curso colado 2026-09-24)
+
+- Peças só encostadas = Nível 1; o alvo é continuidade anatómica
+  (Nível 3): "a pele tem de passar sem interrupção do peito para o
+  ombro e do tronco para a coxa".
+- Tampas dos tubos: apagar/esconder DENTRO; bridge/weld das arestas.
+- Deltoideu ENVOLVE a articulação (nunca "bola perfeita colada");
+  axila com volume; ombro penetra o volume do tronco.
+- Membros NÃO de espessura uniforme (já em v3.3) e transições por
+  GEOMETRIA, não por iluminação.
+- Hierarquia: volumes primários → secundários → detalhes; suavizar sem
+  apagar separações anatómicas.
+- O que não se mede não se afirma (regra v3 aplicada à soldadura: S1–S4).

@@ -479,3 +479,28 @@ unificada".
   alvo tira o clamp do IK (drift 0.00).
 - **GEO 17/17 · FORMA 13/13 · ANIM 10/10.** GLB 4400v/8004t digest
   b99761ff. Painel: 3 tabelas (17+13+10 linhas).
+
+## 22. STALKER v3.4 — SOLDADURA: FIM DOS "VULCÕES/CANUDOS" (2026-09-24)
+
+Dono: "os ombros da criatura parecem vulcões ou canudos, não segue
+suavemente o contorno entre as partes" + curso Blender (soldar/bridge,
+tampas escondidas DENTRO, deltoideu ENVOLVE o ombro, hierarquia
+primário→secundário→detalhe).
+
+- **Prova do bug**: o anel raiz do braço estava a z=1535 (ALTURA DO
+  PESCOÇO!), 16/16 verts fora do torso, r 52.9 + tampa plana exposta +
+  esfera de junta = o "vulcão". A coxa: 9/16 fora (bolas nas ancas).
+- **Método**: ray-cast por paridade ao mesh do torso (a distância
+  assinada mentia — winding invertido na tampa inferior; §v3.4.1).
+- **Construção**: tendões-raiz ENTERRADOS (braço r24 dentro da tampa do
+  ombro, disco horizontal; coxa r45 dentro da bacia); deltoideu emerge
+  por BAIXO da tampa (nunca bola colada); cap_start=False — as tampas
+  de cilindro foram abolidas (o tubo solda, não encaixa); gradiente
+  Δr entre anéis ≤ 12mm (S4); colar r77 na base do crânio sobrepõe o
+  pescoço (pele contínua; M8 ≥ 60 respeitado — 61.4).
+- **Re-instrumento**: métricas de membros por LINHA ÓSSEA (janelas em
+  f), F5 redefinido (raio máx deltoideu na janela f∈[−0.12,0.45] /
+  antebraço médio — a raiz é tendão enterrado, não conta).
+- **GEO 17/17 · FORMA 19/19 · ANIM 10/10.** GLB 5312v/9806t digest
+  36e57e10. Painel 3 tabelas (17+19+10) 2500×1176. Deploy por hash
+  com cache-buster no GLB.

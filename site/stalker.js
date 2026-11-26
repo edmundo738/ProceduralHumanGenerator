@@ -49,7 +49,7 @@ const M = {};           // meshes por parte
 let creatureRoot = null, headG = null, mandibleG = null, eyeMats = [], torsoMesh = null;
 
 async function load() {
-  const gltf = await loader.loadAsync("models/stalker2_smooth.glb");
+  const gltf = await loader.loadAsync("models/stalker2_smooth.glb?v=36e57e10");
   const def = await (await fetch("models/stalker2_rig.json?v=" + Date.now())).json();
   creatureRoot = new THREE.Group();
   scene.add(creatureRoot);

@@ -198,3 +198,63 @@ anti-fase −0.78 (bug das pernas unificadas: π em falta no módulo de
 postura!) · A7b duty 0.25 · A7c duplo apoio 0.00 · A8 bombeio 0.105.
 A3 drift 0.00 (contacto = garra ≤5mm; heel-strike/toe-off no alvo do
 tornozelo tira o clamp do IK). Geometria 17/17 intacta.
+
+## v3.4 — spec da SOLDADURA (declarada ANTES; gate: "ombros = vulcões")
+
+Prova numérica do estado actual (2026-09-24): anel raiz do braço a
+z=1535 (altura do pescoço), 16/16 verts FORA do torso, r=52.9mm + tampa
+plana + esfera — o "vulcão/canudo". Coxa: 9/16 fora (bolas nas ancas).
+Directriz do dono (curso colado): soldar as peças (bridge), tampas
+escondidas DENTRO, deltoideu ENVOLVE o ombro (não bola colada), pele
+passa sem interrupção.
+
+| id | o que | banda |
+|---|---|---|
+| S1a | anel raiz do braço (primeira estação): verts DENTRO do torso (distância assinada) | 20/20 |
+| S1b | raio do anel raiz do braço (tendão) | ≤ 34mm |
+| S2a | anel raiz da coxa: verts dentro do torso | 20/20 |
+| S2b | raio do anel raiz da coxa | ≤ 46mm |
+| S3 | colar da base do crânio sobrepõe o pescoço (z mín da cabeça) | 1.460–1.500 |
+| S4 | variação de raio entre anéis ADJACENTES dos membros (contorno suave) | ≤ 12mm |
+
+Método: distância assinada ao mesh do torso (triângulo mais próximo,
+sinal pelo normal). Anéis por ordem de vértices (topologia).
+**F5 redefinido** (refinamento declarado): raio MÁX do braço na janela
+f∈[−0.12, 0.45] (deltoideu, medido à linha óssea) / raio médio do
+antebraço f∈[0.3, 0.6] — a raiz agora é TENDÃO enterrado (não deve
+contar para o contraste).
+
+## v3.4.1 — refinamentos de método (durante a medição, calibrados)
+
+O método declarado (distância assinada pelo normal do triângulo mais
+próximo) **mentia**: a tampa inferior do torso tem winding invertido
+(normal aponta para dentro) e o corte do ombro é PINÇADO (trapézio +
+tampa = dois lóbos com aperto no meio — por isso "interior" aparecia
+fragmentado). Substituído por **ray-cast por paridade** (Möller–
+Trumbore, contagem ímpar de atravessamentos; independente do winding).
+Calibração: pontos interiores (z 1075/1100/1200/1300/1450) = DENTRO,
+exteriores = fora, e 3 direcções de raio distintas concordam em todos
+os pontos de teste. Os anéis passaram a ser medidos **por linha óssea**
+(f = projecção nos pivôs do rig, janelas por f) em vez de índice de
+estação — a densificação (mult=3) mudou a contagem de estações e o
+índice já não significava nada (v3.3 media 5 estações; agora 13-16).
+
+## v3.4 — resultado medido (2026-09-24)
+
+**FORMA 19/19** (out/refstudy/stalker_form.json): S1a 20/20 · S1b
+24.0mm · S2a 20/20 · S2b 44.8mm · S3 1479.8mm · S4 9.9mm · F5
+(redef, deltoideu/antebraço) 1.9 · F6 1.8 · F6b 2.8 · F6c 0.6 · F1-F4/
+F8/T1-T3 inalterados PASS. **GEO 17/17** (M8 61.4 — o colar da cabeça
+não pode descer mais que ~8mm sem quebrar M8; equilíbrio calibrado).
+**ANIM 10/10** (re-medido: A7 −0.78, A8 0.105, drift 0.00).
+
+Construção: braço com estações EXPLÍCITAS — tendão r24 desce de DENTRO
+da tampa do ombro (0.150,−0.045,1.435; anel ~horizontal = disco
+perpendicular à descida), deltoideu r52 EMERGE por baixo da tampa,
+bíceps→cotovelo r41; coxa: tendão r45 na bacia (20/20); canela/ante-
+braço root_frac 0.05 (raiz dentro do membro pai); cap_start=False em
+todos os tubos de membro e na base do crânio (tampas de cilindro
+ABOLIDAS — o tubo solda, não encaixa); densify mult=3 com suavização
+de r só nos pontos interpolados (estações originais intactas). GLB
+5312v/9806t digest 36e57e105d6c3fbc. Painel 2500×1176 (3 tabelas:
+17+19+10). Deploy por hash + cache-buster no GLB.
