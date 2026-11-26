@@ -382,8 +382,11 @@ def build():
     for s, nm in ((1, "R"), (-1, "L")):
         sh = np.array([s * 0.170, -0.065, 1.420])
         uaL, faL = (0.400, 0.435) if s == 1 else (0.392, 0.427)   # assim 16mm (M17)
-        el = sh + np.array([s * 0.055, -0.095, -uaL])
-        wr = el + np.array([s * 0.018, 0.075, -faL])
+        # v3.5 (C2): cotovelo/punho quase SOB o ombro (x 0.185) — o
+        # deriva-fora (170→225→243) fazia o braço ler-se como canudo
+        # pendurado ao lado do tronco magro
+        el = sh + np.array([s * 0.015, -0.095, -uaL])
+        wr = el + np.array([0.0, 0.075, -faL])
         # OMBRO SOLDADO (S1/S4): a raiz é um TENDÃO de 30mm ENTERRADO no
         # peito (x=118 << meia-largura ~170); o deltoideu EMERGE do volume
         # do tronco e curva por cima do ombro — sem tampa, sem esfera,
@@ -391,17 +394,20 @@ def build():
         limb("upperarm_" + nm, "torso", sh, sh + np.array([s * 0.05, -0.02, 0.06]), el, 0.048, 0.038,
              joint=False, dens=3,
              P=np.array([
-                 [s * 0.150, -0.045, 1.435],    # tendão DENTRO da tampa (disco horizontal)
-                 [s * 0.160, -0.068, 1.360],    # desce pela tampa (raiz ~pivô do ombro)
-                 [s * 0.180, -0.090, 1.330],    # deltoideu EMERGE sob a tampa
-                 [s * 0.196, -0.113, 1.245],    # bíceps
-                 [s * 0.214, -0.148, 1.110],
-                 el,
+                 [s * 0.150, -0.045, 1.435],    # tendão DENTRO da tampa (S1: 20/20)
+                 [s * 0.168, -0.068, 1.405],    # sobe à linha do ombro (tronco ~196 aqui)
+                 [s * 0.172, -0.078, 1.380],    # DELTOIDEU MÁX na linha do ombro (C1)
+                 [s * 0.176, -0.100, 1.295],    # bíceps (afina p/ baixo: C2)
+                 [s * 0.180, -0.130, 1.160],
+                 el,                            # cotovelo r31
              ]),
-             Rv=[0.024, 0.040, 0.052, 0.050, 0.045, 0.041])
-        limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.038, 0.027,
-             root_frac=0.05,
-             profile=[1.00, 1.30, 1.00, 0.78, 0.60])   # flexores→corda no punho
+             Rv=[0.024, 0.038, 0.044, 0.038, 0.035, 0.031])
+        # C2: SEM esfera no cotovelo (a bola r45 era o ponto mais largo de
+        # TODO o braço — "bola colada" do curso do dono); raiz r31.4
+        # entra DENTRO do fim do braço (r31) — a dobra é carne, não bola
+        limb("forearm_" + nm, "upperarm_" + nm, el, el - (el - sh) * 0.05, wr, 0.033, 0.027,
+             root_frac=0.05, joint=False,
+             profile=[0.95, 1.02, 1.00, 0.78, 0.60])   # flexores→corda no punho
         # mão (M4: 120-180mm): palma 55 + dedos 100-120
         palm_d = (wr - el) / np.linalg.norm(wr - el)
         palm_c = wr + palm_d * 0.045

@@ -76,7 +76,7 @@
    "name": "forearm_R",
    "parent": "upperarm_R",
    "pivot": [
-    -0.225,
+    -0.185,
     1.02,
     -0.16
    ]
@@ -85,7 +85,7 @@
    "name": "hand_R",
    "parent": "forearm_R",
    "pivot": [
-    -0.243,
+    -0.185,
     0.585,
     -0.085
    ]
@@ -103,7 +103,7 @@
    "name": "forearm_L",
    "parent": "upperarm_L",
    "pivot": [
-    0.225,
+    0.185,
     1.028,
     -0.16
    ]
@@ -112,7 +112,7 @@
    "name": "hand_L",
    "parent": "forearm_L",
    "pivot": [
-    0.243,
+    0.185,
     0.601,
     -0.085
    ]

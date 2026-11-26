@@ -501,6 +501,22 @@
     "métricas por índice de estação quebravam com a densificação (janelas por f na linha óssea)"
    ],
    "glb": "5312v/9806t · digest 36e57e105d6c3fbc"
+  },
+  "v35_contorno": {
+   "date": "2026-09-24",
+   "gate_dono": "não corrigiste nada (o canudo persistia)",
+   "gates": "GEO 17/17 + FORMA 21/21 + ANIM 10/10",
+   "key_measures": {
+    "C1_degrau_mm": 10.6,
+    "C2_cone_mm": 1.3
+   },
+   "bugs_fixed": [
+    "esfera de junção do cotovelo r44.7 = ponto mais largo do braço (bola colada)",
+    "pivôs do braço derivavam para fora (170→225→243): tubo pendurado ao lado do tronco",
+    "barriga do antebraço r48 acima do deltoideu (cone invertido)",
+    "deltoideu máx abaixo da linha do ombro (zona onde o tronco já afunila)"
+   ],
+   "glb": "4988v/9230t · digest 1dbd59ca6fa5416e"
   }
  }
 }

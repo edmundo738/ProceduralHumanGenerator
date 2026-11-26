@@ -47,6 +47,9 @@ SPEC = {
     "S2b_raiz_coxa_r_mm":    (0, 46),
     "S3_colar_mind_z":       (1460, 1500),
     "S4_dr_anel_mm":         (0, 12),
+    # ---- v3.5 CONTORNO DO BRAÇO (gate: "não corrigiste nada" — canudo)
+    "C1_degrau_mm":         (0, 12),
+    "C2_cone_mm":           (-1e9, 8),
 }
 
 
@@ -213,6 +216,19 @@ def main():
     R["S2b_raiz_coxa_r_mm"] = float(np.linalg.norm(
         M["thigh_R"][:20] - M["thigh_R"][:20].mean(0), axis=1).mean())
     R["S3_colar_mind_z"] = float(M["head"][:, 2].min())
+
+    # ---- C1/C2: PERFIL DA SILHUETA FRONTAL (união de todas as malhas;
+    #      é o que o dono VÊ — largura máx |x| por fatia de z)
+    VU = np.vstack([M[k] for k in M])
+
+    def wmax(z0, z1):
+        sel = VU[(VU[:, 2] >= z0) & (VU[:, 2] < z1)]
+        return float(np.abs(sel[:, 0]).max()) if len(sel) else 0.0
+
+    zs = np.arange(1280, 1440, 25)
+    ws = [wmax(z, z + 25) for z in zs]
+    R["C1_degrau_mm"] = float(max(abs(ws[i + 1] - ws[i]) for i in range(len(ws) - 1)))
+    R["C2_cone_mm"] = float(wmax(1000, 1060) - wmax(1310, 1400))
 
     # ---- F8: assentamento do olho = distância à SUPERFÍCIE (mínimo
     #      sobre TRIÂNGULOS da cabeça; mean10-de-verts era artefacto de

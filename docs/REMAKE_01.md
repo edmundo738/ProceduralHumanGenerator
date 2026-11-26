@@ -504,3 +504,21 @@ primário→secundário→detalhe).
 - **GEO 17/17 · FORMA 19/19 · ANIM 10/10.** GLB 5312v/9806t digest
   36e57e10. Painel 3 tabelas (17+19+10) 2500×1176. Deploy por hash
   com cache-buster no GLB.
+
+## 23. STALKER v3.5 — CONTORNO DO BRAÇO: o canudo era o COTOVELO (2026-09-24)
+
+Dono: "não corrigiste nada" — tinha razão em parte: o vulcão do pescoço
+sumiu (w(z): 281→193 em z1450, medido), mas o braço continuava um
+CANUDO: silhueta frontal ALARGAVA para baixo (deltoideu 235 → bíceps
+250 → cotovelo 271 — cone invertido). O ponto mais largo de todo o
+braço era a ESFERA de junção do cotovelo (r44.7) + a barriga do
+antebraço (r48) — literalmente a "bola colada" que o curso do dono
+proíbe.
+
+- **SPEC declarada antes** (C1 degrau ≤12mm/25mm; C2 cone: cotovelo −
+  deltoideu ≤ +8mm) e o antes MEDIDO: C1 22.6 · C2 +35.5 (FAIL FAIL).
+- Pivôs do braço: 170→225→243 (deriva-fora) → vertical sob o ombro
+  (0.185); deltoideu r44 na LINHA do ombro; afinamento monótono até
+  r31; esfera do cotovelo removida; raiz do antebraço dentro do braço.
+- **GEO 17/17 · FORMA 21/21 · ANIM 10/10** (C1 10.6 · C2 +1.3). GLB
+  4988v/9230t digest 1dbd59ca. Painel 2500×1214. Deploy por hash.

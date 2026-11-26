@@ -258,3 +258,42 @@ ABOLIDAS — o tubo solda, não encaixa); densify mult=3 com suavização
 de r só nos pontos interpolados (estações originais intactas). GLB
 5312v/9806t digest 36e57e105d6c3fbc. Painel 2500×1176 (3 tabelas:
 17+19+10). Deploy por hash + cache-buster no GLB.
+
+## v3.5 — spec do CONTORNO DO BRAÇO (declarada ANTES; dono: "não corrigiste nada")
+
+O dono tem razão em parte: a massa-vulcão a z=1535 SUMIU (perfil w:
+z1450 281→193, z1500 272→166 — medido), mas o braço continua a ler-se
+como CANUDO: a silhueta frontal ALARGA para BAIXO — deltoideu 235 →
+bíceps 250 → COTOVELO 271 (o ponto mais largo do membro!) — um cone
+invertido pendurado ao lado de um tronco de 100mm na cintura. Causa
+medida: pivôs do braço derivam para fora (ombro x170 → cotovelo x225 →
+punho x243) e o deltoideu máx está a z1330, ABAIXO da linha do ombro
+(tronco 196 em z1380-1465, mas 157 em z1330 — o tubo atravessa a zona
+onde o tronco já afunila).
+
+| id | o que | banda |
+|---|---|---|
+| C1 | degrau do contorno frontal: máx \|Δw\| por passo de 25mm na banda z∈[1280,1440] (largura da silhueta = união de TODAS as malhas, vista frontal ortográfica) | ≤ 12mm |
+| C2 | cone invertido: largura máx na banda do cotovelo z∈[1000,1060] − largura máx na banda do deltoideu z∈[1310,1400] (o braço AFFINA para baixo; nunca o cotovelo/antebraço proximal é o ponto mais largo) | ≤ +8mm |
+
+v3.3 media C1 ~86mm/25mm (o vulcão); v3.4 actual: C1 ~11 (passa) mas
+**C2 = +39 (FALHA — o canudo)**. Construção prevista: pivôs do braço
+quase verticais (cotovelo x 0.185, punho x 0.185), deltoideu máx r46
+EM z1380 (na linha do ombro, onde o tronco tem 196), afinamento
+monótono até r33 no cotovelo, barriga do antebraço 0.043.
+
+## v3.5 — resultado medido (2026-09-24)
+
+**FORMA 21/21**: C1 10.6mm (era 22.6) · C2 +1.3mm (era **+35.5** — o
+cone invertido: a ESFERA do cotovelo r44.7 + barriga do antebraço eram
+o ponto mais largo de todo o braço) · F5 1.6 · F6b 2.0 · S1-S4 e
+restantes inalterados PASS. **GEO 17/17** (pivôs do braço movidos:
+cotovelo/punho x 0.225/0.243 → 0.185 — M2/M3/M11/M17 re-medidos PASS,
+todos z-based). **ANIM 10/10**.
+
+Construção: braço quase VERTICAL sob o ombro (o deriva-fora 170→225→
+243 pendurava o tubo ao lado do tronco magro); deltoideu máx r44 NA
+linha do ombro (z1380, tronco 196 — emerge do volume, sem degrau);
+afinamento monótono 44→38→35→31 até ao cotovelo; esfera do cotovelo
+REMOVIDA ("bola colada"); raiz do antebraço r31.4 entra dentro do fim
+do braço (r31). GLB 4988v/9230t digest 1dbd59ca. Painel 2500×1214.

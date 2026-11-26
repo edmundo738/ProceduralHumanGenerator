@@ -53,7 +53,7 @@ async function load() {
   // fetch dos BYTES que vão ser renderizados → SHA-1 calculado NO BROWSER
   // → carimbo no ecrã. O digest é do GLB RENDERIZADO, não de uma string
   // escondida no código. (E o ?v no URL mata o cache do GLB velho.)
-  const url = "models/stalker2_smooth.glb?v=36e57e10";
+  const url = "models/stalker2_smooth.glb?v=1dbd59ca";
   const buf = await (await fetch(url)).arrayBuffer();
   const gltf = await loader.parse(buf, "");
   let dig = "sha1?";
@@ -63,7 +63,7 @@ async function load() {
   } catch (e) { /* contexto não-seguro: sem digest */ }
   const tag = document.createElement("div");
   tag.id = "ver";
-  tag.textContent = "GLB RENDERIZADO AGORA: STALKER v3.4 SOLDADURA · sha1 " + dig + " · 5312v/9806t";
+  tag.textContent = "GLB RENDERIZADO AGORA: STALKER v3.5 CONTORNO · sha1 " + dig + " · 4988v/9230t";
   tag.style.cssText = "position:fixed;bottom:6px;left:8px;color:#8f8;font:11px monospace;"
     + "z-index:99;text-shadow:0 1px 2px #000;pointer-events:none";
   document.body.appendChild(tag);

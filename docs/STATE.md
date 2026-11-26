@@ -450,3 +450,11 @@ tampas de tubo ABOLIDAS (cap_start=False), Δr≤12mm, colar do crânio
 r77 (M8 61.4). F5 redef por linha óssea. **GEO 17/17 · FORMA 19/19 ·
 ANIM 10/10.** GLB 36e57e10 5312v/9806t. Painel 2500×1176. Deploy por
 hash + cache-buster GLB. Próximo: gate visual do dono.
+
+**STALKER v3.5 (2026-09-24):** dono: "não corrigiste nada" → tinha
+razão: o cotovelo (esfera r45+barriga) era o ponto mais LARGO do braço
+(C2 +35.5 — cone invertido/canudo). SPEC C1/C2 declarada antes; pivôs
+verticais sob o ombro, deltoideu na linha do ombro, esfera do cotovelo
+removida. **GEO 17/17 · FORMA 21/21 · ANIM 10/10** (C1 10.6, C2 +1.3).
+GLB 1dbd59ca 4988v/9230t. Badge de prova na página (SHA-1 no browser).
+Próximo: gate visual do dono.

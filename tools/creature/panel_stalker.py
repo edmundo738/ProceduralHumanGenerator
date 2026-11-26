@@ -63,11 +63,11 @@ def main():
     W = x0 + sum(t[0].width for t in tiles) + 20 * len(tiles) + xT + 20
     # altura: tiles OU tabela geometria (17 linhas) + tabela animação (6)
     H = max(max(t[0].height for t in tiles) + 34,
-            34 + 22 + 17 * 19 + 44 + 40 + 24 + 19 * 19 + 44 + 40 + 24 + 10 * 19 + 30)
+            34 + 22 + 17 * 19 + 44 + 40 + 24 + 21 * 19 + 44 + 40 + 24 + 10 * 19 + 30)
     panel = Image.new("L", (W, H), 24)
     dr = ImageDraw.Draw(panel)
 
-    dr.text((x0, 6), "THE STALKER v3.4 — SOLDADURA: GEO 17/17 · FORMA 19/19 · ANIM 10/10", font=fT, fill=235)
+    dr.text((x0, 6), "THE STALKER v3.5 — CONTORNO: GEO 17/17 · FORMA 21/21 · ANIM 10/10", font=fT, fill=235)
     x = x0
     for img, name in tiles:
         panel.paste(img, (x, 40))
@@ -120,7 +120,8 @@ def main():
                   "T1_torso_px_m", "T2_membros_px_m", "T3_uniformidade",
                   "S1a_raiz_braco_dentro", "S1b_raiz_braco_r_mm",
                   "S2a_raiz_coxa_dentro", "S2b_raiz_coxa_r_mm",
-                  "S3_colar_mind_z", "S4_dr_anel_mm"):
+                  "S3_colar_mind_z", "S4_dr_anel_mm",
+                  "C1_degrau_mm", "C2_cone_mm"):
             v, p2 = fm2[k], vdf[k]
             lo, hi = spf[k]
             if k.endswith("_n") or k.endswith("_dentro"):

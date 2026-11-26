@@ -1,5 +1,5 @@
 {
- "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 36e57e105d6c3fbc",
+ "buildline": "realistic_female · seed 42 · cinza neutro, sem cabelo · branch arena/01a0d51d · antes 5f4cca658b590976 · faseA 36e4ed980833e2a3 · a2b 74b26997887c6580 · n1 92dc3aa66b3fc4fd · f1 28be5bf88bc9bab4 · f2 f900e2327198fcb5 · t1 9ed92eee38c0ee3d · m00 d6ce7b046f6a089a · w02 1452663b067adcd4 · w03 1ed74e508a171d8a · w05 856cd322e0696f08 · waifu 28606978867289ec · waifu2 14d33719be7db544 · waifu3 aac748dc53ee51c8 · stalker c838851b04d6e3fb · stalker2 1dbd59ca",
  "variants": [
   {
    "id": "antes",
@@ -354,19 +354,19 @@
   },
   {
    "id": "stalker2",
-   "label": "THE STALKER v3.4 — SOLDADURA (17/19/10 PASS): gate dos 'vulcões/canudos' cumprido por MEDIÇÃO — anéis raiz dos membros 20/20 DENTRO do torso (tendão enterrado; era 16/16 FORA a z=1535), deltoideu emerge por baixo da tampa SEM bola colada, tampas de tubo abolidas (solda, não encaixa), colar do crânio r77 sobrepõe o pescoço, gradiente Δr≤12mm. Mantém anatomia v3.3.",
+   "label": "THE STALKER v3.5 — CONTORNO (17/21/10 PASS): 'não corrigiste nada' — tinha razão: o COTOVELO (esfera r45 + barriga) era o ponto mais largo de todo o braço (cone invertido = canudo; medido C2 +35.5mm). Corrigido por MEDIÇÃO: braço vertical sob o ombro, deltoideu máx r44 NA linha do ombro, afinamento monótono até r31, esfera do cotovelo removida. C1 degrau do contorno 22.6→10.6mm · C2 +35.5→+1.3mm. Mantém v3.4 (raízes 20/20 dentro do torso) e v3.3 (anatomia, anti-fase, UV físico).",
    "env": {
     "HCG_BODY": "stalker2"
    },
    "commit": "stalker-v3.3",
-   "digest": "36e57e105d6c3fbc",
+   "digest": "1dbd59ca",
    "animated": false,
    "stalker2": true,
    "smooth": {
-    "verts": 5312,
-    "faces": 9806,
+    "verts": 4988,
+    "faces": 9230,
     "quads": 0,
-    "bytes": 3846692
+    "bytes": 3829416
    },
    "cage": {
     "verts": 4400,
