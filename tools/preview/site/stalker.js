@@ -49,7 +49,24 @@ const M = {};           // meshes por parte
 let creatureRoot = null, headG = null, mandibleG = null, eyeMats = [], torsoMesh = null;
 
 async function load() {
-  const gltf = await loader.loadAsync("models/stalker2_smooth.glb");
+  // PROVA NA PÁGINA (directriz do dono: "quero ver se estás a mentir"):
+  // fetch dos BYTES que vão ser renderizados → SHA-1 calculado NO BROWSER
+  // → carimbo no ecrã. O digest é do GLB RENDERIZADO, não de uma string
+  // escondida no código. (E o ?v no URL mata o cache do GLB velho.)
+  const url = "models/stalker2_smooth.glb?v=36e57e10";
+  const buf = await (await fetch(url)).arrayBuffer();
+  const gltf = await loader.parse(buf, "");
+  let dig = "sha1?";
+  try {
+    const h = await crypto.subtle.digest("SHA-1", buf);
+    dig = [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 8);
+  } catch (e) { /* contexto não-seguro: sem digest */ }
+  const tag = document.createElement("div");
+  tag.id = "ver";
+  tag.textContent = "GLB RENDERIZADO AGORA: STALKER v3.4 SOLDADURA · sha1 " + dig + " · 5312v/9806t";
+  tag.style.cssText = "position:fixed;bottom:6px;left:8px;color:#8f8;font:11px monospace;"
+    + "z-index:99;text-shadow:0 1px 2px #000;pointer-events:none";
+  document.body.appendChild(tag);
   const def = await (await fetch("models/stalker2_rig.json?v=" + Date.now())).json();
   creatureRoot = new THREE.Group();
   scene.add(creatureRoot);
